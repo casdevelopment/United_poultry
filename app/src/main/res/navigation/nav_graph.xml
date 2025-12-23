@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/OnBoardFirstFragment">
+
+    <fragment
+        android:id="@+id/OnBoardFirstFragment"
+        android:name="com.example.unitedpoultry.Welcome.fragments.OnBoardFirstFragment"
+        android:label="First Fragment" >
+        <action
+            android:id="@+id/action_first_to_second"
+            app:destination="@id/OnBoardSecondFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/OnBoardSecondFragment"
+        android:name="com.example.unitedpoultry.Welcome.fragments.OnBoardSecondFragment"
+        android:label="Second Fragment">
+        <action
+            android:id="@+id/action_second_to_third"
+            app:destination="@id/OnBoardThirdFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/OnBoardThirdFragment"
+        android:name="com.example.unitedpoultry.Welcome.fragments.OnBoardThirdFragment"
+        android:label="Third Fragment">
+        <action
+            android:id="@+id/action_third_to_forth"
+            app:destination="@id/OnBoardForthFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/OnBoardForthFragment"
+        android:name="com.example.unitedpoultry.Welcome.fragments.OnBoardForthFragment"
+        android:label="Forth Fragment">
+        <action
+            android:id="@+id/action_forth_to_fifth"
+            app:destination="@id/OnBoardFifthFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/OnBoardFifthFragment"
+        android:name="com.example.unitedpoultry.Welcome.fragments.OnBoardFifthFragment"
+        android:label="Fifth Fragment">
+        <action
+            android:id="@+id/action_fifth_to_forth"
+            app:destination="@id/OnBoardForthFragment" />
+
+
+    </fragment>
+
+    <!-- Add third, fourth, fifth fragments similarly -->
+</navigation>

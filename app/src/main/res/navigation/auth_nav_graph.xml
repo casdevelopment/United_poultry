@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/auth_nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.unitedpoultry.Authentications.fragments.LoginFragment"
+        android:label="Login Fragment">
+        <action
+            android:id="@+id/action_login_to_createAccount"
+            app:destination="@id/createAccountFragment" />
+        <action
+            android:id="@+id/action_login_to_forgot"
+            app:destination="@id/forgotPasswordFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createAccountFragment"
+        android:name="com.example.unitedpoultry.Authentications.fragments.CreateAccountFragment"
+        android:label="CreateAccount Fragment">
+        <action
+            android:id="@+id/action_createAccount_to_login"
+            app:destination="@id/loginFragment" />
+
+        <action
+            android:id="@+id/action_createAccount_to_forgot"
+            app:destination="@id/forgotPasswordFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.example.unitedpoultry.Authentications.fragments.ForgetPasswordFragment"
+        android:label="Forgot Password Fragment">
+        <action
+            android:id="@+id/action_forgot_to_verification"
+            app:destination="@id/verificationCodeFragment" />
+        <action
+            android:id="@+id/action_forgot_to_login"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/verificationCodeFragment"
+        android:name="com.example.unitedpoultry.Authentications.fragments.VerificationCodeFragment"
+        android:label="Verification Code Fragment">
+        <action
+            android:id="@+id/action_verification_to_Verified"
+            app:destination="@id/OtpVerifiedFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/OtpVerifiedFragment"
+        android:name="com.example.unitedpoultry.Authentications.fragments.OtpVerifiedFragment"
+        android:label="otp Verified Fragment">
+        <action
+            android:id="@+id/action_verified_to_dailyRate"
+            app:destination="@id/DailyRateEntryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DailyRateEntryFragment"
+        android:name="com.example.unitedpoultry.Authentications.fragments.DailyRateEntryFragment"
+        android:label="daily rate Fragment">
+        <!--        <action-->
+        <!--            android:id="@+id/action_verification_to_Verified"-->
+        <!--            app:destination="@id/OtpVerifiedFragment" />-->
+    </fragment>
+
+</navigation>

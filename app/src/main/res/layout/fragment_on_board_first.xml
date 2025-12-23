@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    tools:context=".Welcome.fragments.OnBoardFirstFragment">
+
+<!-- Top Image -->
+<ImageView
+    android:id="@+id/imgTop"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:src="@drawable/onboardfirstimage"
+    android:scaleType="fitCenter"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_margin="24dp"
+    app:layout_constraintHeight_percent="0.45"/>
+
+<!-- Title Text -->
+<TextView
+    android:id="@+id/tvTitle"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:text="@string/first_t1"
+    android:textSize="22sp"
+    android:textColor="@color/white"
+    android:fontFamily="@font/quicksand"
+    app:layout_constraintTop_toBottomOf="@id/imgTop"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="16dp"
+    android:layout_marginStart="50dp"
+    android:layout_marginEnd="50dp"
+    android:gravity="center"
+   />
+
+<!-- Description Text -->
+<TextView
+    android:id="@+id/tvDescription"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:text="@string/first_t2"
+    android:textSize="14sp"
+    android:textColor="@color/black"
+    android:fontFamily="@font/poppins"
+    app:layout_constraintTop_toBottomOf="@id/tvTitle"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="30dp"
+    android:layout_marginStart="50dp"
+    android:layout_marginEnd="50dp"
+    android:gravity="center"/>
+
+<!-- Bottom-left: Dots / Progress indicator -->
+    <ImageView
+        android:id="@+id/imgDots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/dotsf1"
+        android:contentDescription="Dots"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvDescription"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="20dp"/>
+
+    <!-- Arrow -->
+    <ImageButton
+        android:id="@+id/btnNext"
+        android:layout_width="78dp"
+        android:layout_height="78dp"
+        android:background="@drawable/circle_white"
+        android:src="@drawable/arrowf1"
+        android:contentDescription="Next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/imgDots"
+        app:layout_constraintBottom_toBottomOf="@id/imgDots"
+        android:layout_marginRight="20dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

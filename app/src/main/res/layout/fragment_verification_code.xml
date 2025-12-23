@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    tools:context=".Authentications.fragments.VerificationCodeFragment">
+
+    <!-- Top Image -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="50dp"
+        android:fontFamily="@font/quicksand"
+        android:gravity="center"
+        android:text="@string/verification_code_title"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.045" />
+
+    <ImageView
+        android:id="@+id/imgTop"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/verificationcodeimage"
+        android:scaleType="fitCenter"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintHeight_percent="0.45"/>
+
+    <!-- Title Text -->
+    <TextView
+        android:id="@+id/tvText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/verification_code_t1"
+        android:textSize="22sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:fontFamily="@font/quicksand"
+        app:layout_constraintTop_toBottomOf="@id/imgTop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:gravity="center"
+        />
+
+    <!-- Description Text -->
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/verification_code_t2"
+        android:textSize="14sp"
+        android:textColor="@color/primary"
+        android:fontFamily="@font/poppins"
+        app:layout_constraintTop_toBottomOf="@id/tvText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:gravity="center"/>
+
+
+    <LinearLayout
+        android:id="@+id/otpContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@id/tvDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- OTP 1 -->
+        <EditText
+            android:id="@+id/etOtp1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/otp_box_bg"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:hint="0"
+            android:fontFamily="@font/poppins"
+            android:textStyle="bold"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/black"
+            android:layout_marginEnd="10dp"/>
+
+        <!-- OTP 2 -->
+        <EditText
+            android:id="@+id/etOtp2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/otp_box_bg"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:hint="0"
+            android:fontFamily="@font/poppins"
+            android:textStyle="bold"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/black"
+            android:layout_marginEnd="10dp"/>
+
+        <!-- OTP 3 -->
+        <EditText
+            android:id="@+id/etOtp3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/otp_box_bg"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:hint="0"
+            android:fontFamily="@font/poppins"
+            android:textStyle="bold"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/black"
+            android:layout_marginEnd="10dp"/>
+
+        <!-- OTP 4 -->
+        <EditText
+            android:id="@+id/etOtp4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/otp_box_bg"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:hint="0"
+            android:fontFamily="@font/poppins"
+            android:textStyle="bold"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnVerify"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:text="@string/verification_code_b1"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_continue_bg"
+        app:backgroundTint="@null"
+        android:fontFamily="@font/poppins"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintTop_toBottomOf="@id/otpContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/btnVerify"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="30dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/verification_code_t3"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/sub_primary" />
+
+        <!-- Sign Up clickable -->
+        <TextView
+            android:id="@+id/tvResendOtp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/verification_code_t4"
+            android:textSize="12sp"
+            android:textColor="@color/primary"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins"
+            android:layout_marginStart="4dp"/>
+
+
+    </LinearLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

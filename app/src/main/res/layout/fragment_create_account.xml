@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/signupbackground"
+    tools:context=".Authentications.fragments.CreateAccountFragment">
+
+
+
+    <!-- Title Text -->
+
+    <!-- Description Text -->
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/quicksand"
+        android:gravity="center"
+        android:text="@string/signup_title"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.29" />
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="@string/signup_e1"
+        android:drawableStart="@drawable/emailvector"
+        android:drawablePadding="10dp"
+        android:background="@drawable/edit_text_bg"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:textColor="@color/black44"
+        android:textSize="12sp"
+        android:fontFamily="@font/poppins"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"/>
+
+    <LinearLayout
+        android:id="@+id/usernameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/etEmail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
+
+
+        <EditText
+            android:id="@+id/etFirstName"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:hint="@string/signup_e2"
+            android:drawableStart="@drawable/personvector"
+            android:drawablePadding="10dp"
+            android:background="@drawable/edit_text_bg"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textColor="@color/black44"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins"
+            android:layout_marginEnd="10dp"/>
+
+        <EditText
+            android:id="@+id/etLastName"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:hint="@string/signup_e3"
+            android:drawableStart="@drawable/personvector"
+            android:drawablePadding="10dp"
+            android:background="@drawable/edit_text_bg"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textColor="@color/black44"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins" />
+
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="@string/login_e2"
+        android:drawableStart="@drawable/passwordvector"
+        android:drawableEnd="@drawable/hidevector"
+        android:drawablePadding="10dp"
+        android:background="@drawable/edit_text_bg"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:textColor="@color/black44"
+        android:textSize="12sp"
+        android:fontFamily="@font/poppins"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@id/usernameLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"/>
+
+
+    <EditText
+        android:id="@+id/etConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="@string/signup_e4"
+        android:drawableStart="@drawable/passwordvector"
+        android:drawableEnd="@drawable/hidevector"
+        android:drawablePadding="10dp"
+        android:background="@drawable/edit_text_bg"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:textColor="@color/black44"
+        android:textSize="12sp"
+        android:fontFamily="@font/poppins"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@id/etPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"/>
+
+
+    <LinearLayout
+        android:id="@+id/rememberForgotLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/etConfirmPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
+
+        <!-- Remember Me Checkbox + Text -->
+        <CheckBox
+            android:id="@+id/cbRememberMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_c1"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins"
+            android:buttonTint="@color/primary"
+            android:textColor="@color/sub_primary" />
+
+        <!-- Spacer to push Forgot Password to right -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Forgot Password Text -->
+        <TextView
+            android:id="@+id/tvForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_t1"
+            android:textSize="12sp"
+            android:textColor="@color/primary"
+            android:fontFamily="@font/poppins"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnContinueEmail"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:text="@string/signup_b1"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_continue_bg"
+        app:backgroundTint="@null"
+        android:fontFamily="@font/poppins"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintTop_toBottomOf="@id/rememberForgotLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/orContinue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/login_t2"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/raleway"
+        app:layout_constraintTop_toBottomOf="@id/btnContinueEmail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:gravity="center"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnContinueGoogle"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:text="@string/login_b2"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary"
+        android:background="@drawable/btn_light_bg"
+        app:backgroundTint="@null"
+        app:icon="@drawable/googlevector"
+        app:iconTint="@null"
+        app:iconGravity="textStart"
+        app:iconPadding="12dp"
+        android:fontFamily="@font/poppins"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintTop_toBottomOf="@id/orContinue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+
+    <LinearLayout
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="30dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tvSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signup_t1"
+            android:textSize="15sp"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/sub_primary" />
+
+        <!-- Sign Up clickable -->
+        <TextView
+            android:id="@+id/tvLoginClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signup_t2"
+            android:textSize="15sp"
+            android:textColor="@color/primary"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins"
+            android:layout_marginStart="4dp"/>
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

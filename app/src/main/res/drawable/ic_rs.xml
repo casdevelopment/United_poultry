@@ -1,0 +1,22 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Space for Rs text -->
+    <item>
+        <shape android:shape="rectangle">
+            <!-- Total width for Rs + spacing -->
+            <size android:width="64dp"/>
+            <solid android:color="@android:color/transparent"/>
+        </shape>
+    </item>
+
+    <!-- Vertical divider (moved right) -->
+    <item android:left="58dp">
+        <shape android:shape="rectangle">
+            <size android:width="1dp"/>
+            <!-- 40% black -->
+            <solid android:color="@color/black17"/>
+        </shape>
+    </item>
+
+
+</layer-list>

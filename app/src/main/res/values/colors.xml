@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="black44">#70000000</color>
+    <color name="black75">#BF000000</color>
+    <color name="black60">#99000000</color>
+    <color name="black17">#2B000000</color>
+    <color name="blackLight">#96000000</color>
+    <color name="black8">#14000000</color>
+
+    <color name="gray">#C2C2C3</color>
+    <color name="gray26">#42C2C2C3</color>
+    <color name="grayshade">#697779</color>
+    <color name="grayshade25">#40697779</color>
+
+
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="white74">#BDFFFFFF</color>
+    <color name="white60">#99FFFFFF</color>
+    <color name="white20">#33FFFFFF</color>
+
+    <color name="primary">#1D7A84</color>
+    <color name="primary20">#331D7A84</color>
+    <color name="primaryLight">#261D7A84</color>
+
+
+
+
+    <color name="brown">#55000000</color>
+
+
+
+
+
+    <color name="pink15">#26FE55D4</color>
+
+    <color name="green15">#2604D97D</color>
+    <color name="green">#00B969</color>
+
+    <color name="purple">#A21C87</color>
+    <color name="purple15">#26A21C87</color>
+    <color name="purple9">#F6E9F4</color>
+
+    <color name="blue">#2181EF</color>
+    <color name="blue15">#262181EF</color>
+    <color name="blue9">#E0FFFF</color>
+
+
+
+    <color name="red">#F0171A</color>
+
+    <color name="primary9">#EBF3F4</color>
+
+
+    <color name="sub_primary">#FEAE55</color>
+    <color name="sub_primary18">#2EFEAE55</color>
+    <color name="sub_primary9">#FFF8F0</color>
+
+    <color name="mint15">#26D2FFF4</color>
+    <color name="mint">#099F79</color>
+
+</resources>
