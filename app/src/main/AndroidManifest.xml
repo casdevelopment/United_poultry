@@ -13,6 +13,18 @@
         android:theme="@style/Theme.UnitedPoultry"
         tools:targetApi="31">
         <activity
+            android:name=".AdminDashBoard.AdminDashBoardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Profile.MyPerformanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Profile.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Profile.MyProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".History.CollectionHistoryActivity"
             android:exported="false" />
         <activity
@@ -62,13 +74,12 @@
             android:exported="false" />
         <activity
             android:name=".RiderDashBoard.RiderDashBoardActivity"
-            android:exported="true"/> <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar"> -->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+            android:exported="true" /> <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
         <activity
             android:name=".Authentications.AuthenticationActivity"
             android:exported="false" />
@@ -77,12 +88,13 @@
             android:exported="false" />
         <activity
             android:name=".Splash.SplashActivity"
-            android:exported="true" > <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar"> -->
-         <intent-filter>
-         <action android:name="android.intent.action.MAIN" />
-         <category android:name="android.intent.category.LAUNCHER" />
-         </intent-filter>
-         </activity>
+            android:exported="true"> <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar"> -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="false" />

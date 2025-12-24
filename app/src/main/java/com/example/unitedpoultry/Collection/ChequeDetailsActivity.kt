@@ -37,8 +37,5 @@ class ChequeDetailsActivity : AppCompatActivity() {
             startActivity(intent)
 
         }
-
-
-
     }
 }

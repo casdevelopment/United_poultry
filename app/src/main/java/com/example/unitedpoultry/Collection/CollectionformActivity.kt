@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.unitedpoultry.NewSale.Adapter.SelectShopAdapter
 import com.example.unitedpoultry.databinding.ActivityCollectionformBinding
-import com.example.unitedpoultry.databinding.ActivitySaleFormBinding
 
 class CollectionformActivity : AppCompatActivity() {
 
