@@ -13,8 +13,32 @@
         android:theme="@style/Theme.UnitedPoultry"
         tools:targetApi="31">
         <activity
-            android:name=".AdminDashBoard.AdminDashBoardActivity"
+            android:name=".AdminShopModule.AdminEditShopActivity"
             android:exported="false" />
+        <activity
+            android:name=".AdminShopModule.AdminAddNewShopActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminShopModule.AdminShopDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminShopModule.AdminShopListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminArea.EditAreaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminArea.AddNewAreaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminDashBoard.AdminDashBoardActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Profile.MyPerformanceActivity"
             android:exported="false" />
@@ -88,13 +112,12 @@
             android:exported="false" />
         <activity
             android:name=".Splash.SplashActivity"
-            android:exported="true"> <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar"> -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" /> <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
         <activity
             android:name=".MainActivity"
             android:exported="false" />

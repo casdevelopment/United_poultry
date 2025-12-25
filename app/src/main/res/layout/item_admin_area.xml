@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_bg"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Status Icon -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/iconContainer"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/ivIcon"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/locationdotvector"
+                    app:tint="@color/white"
+                    android:layout_gravity="center"/>
+            </androidx.cardview.widget.CardView>
+
+
+
+
+
+            <!-- Text Container -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvAreaName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Gulberg"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="15dp"/>
+
+                    <TextView
+                        android:id="@+id/tvAreaAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Lahore, Punjab"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:layout_marginLeft="5dp"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/ivEdit"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/circle_white"
+                    android:contentDescription="Status"
+                    android:src="@drawable/editadminareavector"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:id="@+id/totalShopsLayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_round_12"
+                android:gravity="center"
+                android:layout_marginEnd="10dp">
+
+                <TextView
+                    android:id="@+id/tvTotalShops"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="17"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center"
+                    android:text="Shops"
+                    android:textColor="@color/blackLight"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/visitedTodayLayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_round_12"
+                android:gravity="center"
+                android:layout_marginEnd="10dp">
+
+                <TextView
+                    android:id="@+id/tvRiders"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="7"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Riders"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="14sp"
+                    android:textColor="@color/blackLight"
+                    android:gravity="center"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pendingLayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_round_12"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tvRecieveable"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Rs.95000"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Receivable"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="14sp"
+                    android:textColor="@color/blackLight"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnViewShops"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="View Shops"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:layout_margin="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_continue_bg"
+            app:backgroundTint="@null"
+            android:fontFamily="@font/poppins"
+            app:icon="@drawable/addressvector"
+            app:iconGravity="textStart"
+            app:iconPadding="15dp"
+            app:iconSize="18dp"
+            />
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+

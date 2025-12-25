@@ -1,23 +1,20 @@
 package com.example.unitedpoultry.RiderDashBoard
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.RiderDashBoard.fragments.AddressFragment
 import com.example.unitedpoultry.RiderDashBoard.fragments.HistoryFragment
 import com.example.unitedpoultry.RiderDashBoard.fragments.HomeFragment
 import com.example.unitedpoultry.RiderDashBoard.fragments.ProfileFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.unitedpoultry.databinding.ActivityRiderDashBoardBinding
 
 
 
 class RiderDashBoardActivity : AppCompatActivity() {
 
-    private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var binding: ActivityRiderDashBoardBinding
 
     // Keep fragment instances
     private val homeFragment = HomeFragment()
@@ -28,10 +25,9 @@ class RiderDashBoardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_rider_dash_board)
+        binding = ActivityRiderDashBoardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        bottomNavigationView = findViewById(R.id.bottom_navigation)
 
         // Add all fragments, show only home
         supportFragmentManager.beginTransaction()
@@ -41,9 +37,9 @@ class RiderDashBoardActivity : AppCompatActivity() {
             .add(R.id.fragment_container, homeFragment, "home")
             .commit()
 
-        bottomNavigationView.selectedItemId = R.id.nav_home
+        binding.bottomNavigation.selectedItemId = R.id.nav_home
 
-        bottomNavigationView.setOnItemSelectedListener { item ->
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> switchFragment(homeFragment)
                 R.id.nav_address -> switchFragment(addressFragment)
