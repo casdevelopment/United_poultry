@@ -1,0 +1,33 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- CHECKED -->
+    <item android:state_checked="true">
+        <layer-list>
+            <!-- Primary background -->
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/primary"/>
+                    <!-- small radius if you want soft corners -->
+                    <corners android:radius="6dp"/>
+                </shape>
+            </item>
+
+            <!-- White Tick -->
+            <item
+                android:gravity="center"
+                android:drawable="@drawable/ic_check_white"/>
+        </layer-list>
+    </item>
+
+    <!-- UNCHECKED -->
+    <item>
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="2dp"
+                android:color="@color/primary"/>
+            <solid android:color="@android:color/transparent"/>
+            <corners android:radius="6dp"/>
+        </shape>
+    </item>
+
+</selector>

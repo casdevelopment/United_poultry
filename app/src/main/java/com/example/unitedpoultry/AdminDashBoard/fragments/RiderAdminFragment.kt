@@ -1,60 +1,111 @@
 package com.example.unitedpoultry.AdminDashBoard.fragments
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.unitedpoultry.AdminArea.AddNewAreaActivity
+import com.example.unitedpoultry.AdminRiderModule.model.AdminRiderModel
+import com.example.unitedpoultry.AdminRiderModule.Adapter.AdminRidersAdapter
+import com.example.unitedpoultry.AdminRiderModule.AdminAddNewRiderActivity
 import com.example.unitedpoultry.R
+import com.example.unitedpoultry.databinding.FragmentRiderAdminBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RiderAdminFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RiderAdminFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentRiderAdminBinding
+    private lateinit var adapter: AdminRidersAdapter
+    private var currentFilter = "ALL"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_rider_admin, container, false)
+    ): View {
+        binding = FragmentRiderAdminBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RiderAdminFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RiderAdminFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.fabAdd.setOnClickListener {
+            val intent = Intent(requireContext(), AdminAddNewRiderActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Dummy data
+        val areaList = mutableListOf(
+            AdminRiderModel("Ahmed Hassan", "15 Mar 2024", "Active", 17, 7, 95000),
+            AdminRiderModel("Malik Ahmed", "20 Jan 2024", "Offline", 12, 5, 45000),
+            AdminRiderModel("Ahsan Ali", "10 Apr 2024", "Active", 20, 9, 120000),
+            AdminRiderModel("Muhammad Asim", "02 Feb 2024", "Suspended", 8, 2, 10000)
+        )
+
+        // Setup RecyclerView
+        adapter = AdminRidersAdapter(areaList)
+        binding.rvRiders.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvRiders.adapter = adapter
+
+        updateFilterCounts()
+        highlightFilter("ALL")
+
+        binding.etSearch.addTextChangedListener {
+            adapter.filter(it.toString(), currentFilter)
+        }
+
+        binding.filterAll.setOnClickListener { applyFilter("ALL") }
+        binding.filterActive.setOnClickListener { applyFilter("Active") }
+        binding.filterOffline.setOnClickListener { applyFilter("Offline") }
+        binding.filterSuspended.setOnClickListener { applyFilter("Suspended") }
+
+        // Show total areas
+  //      binding.tvAreasCount.text = "${areaList.size} areas"
+
+        // Search functionality
+//        binding.etSearch.addTextChangedListener { editable ->
+//            adapter.filter(editable.toString())
+//        }
+//        binding.fabAdd.setOnClickListener {
+//            val intent = Intent(requireContext(), AddNewAreaActivity::class.java)
+//            startActivity(intent)
+//        }
+
+    }
+
+    private fun applyFilter(type: String) {
+        currentFilter = type
+        adapter.filter(binding.etSearch.text.toString(), type)
+        highlightFilter(type)
+    }
+
+    private fun updateFilterCounts() {
+        binding.filterAll.text = "All (${adapter.countByStatus("ALL")})"
+        binding.filterActive.text = "Active (${adapter.countByStatus("Active")})"
+        binding.filterOffline.text = "Offline (${adapter.countByStatus("Offline")})"
+        binding.filterSuspended.text = "Suspended (${adapter.countByStatus("Suspended")})"
+    }
+
+    private fun highlightFilter(type: String) {
+        val allFilters = listOf(binding.filterAll, binding.filterActive, binding.filterOffline, binding.filterSuspended)
+        allFilters.forEach {
+            it.setBackgroundResource(R.drawable.filter_bg)
+            it.setTextColor(Color.BLACK)
+        }
+
+        val selected = when(type) {
+            "Active" -> binding.filterActive
+            "Offline" -> binding.filterOffline
+            "Suspended" -> binding.filterSuspended
+            else -> binding.filterAll
+        }
+
+        selected.setBackgroundResource(R.drawable.filter_bg_selected)
+        selected.setTextColor(Color.WHITE)
     }
 }

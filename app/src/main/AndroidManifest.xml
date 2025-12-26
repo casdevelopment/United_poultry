@@ -13,6 +13,18 @@
         android:theme="@style/Theme.UnitedPoultry"
         tools:targetApi="31">
         <activity
+            android:name=".AdminRiderModule.AdminEditRiderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminRiderModule.AdminAssignAreasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminRiderModule.AdminRiderDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminRiderModule.AdminAddNewRiderActivity"
+            android:exported="false" />
+        <activity
             android:name=".AdminShopModule.AdminEditShopActivity"
             android:exported="false" />
         <activity
