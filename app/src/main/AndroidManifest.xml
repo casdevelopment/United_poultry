@@ -13,6 +13,27 @@
         android:theme="@style/Theme.UnitedPoultry"
         tools:targetApi="31">
         <activity
+            android:name=".AdminSettingModule.AdminAboutAndHelpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminSettingModule.AdminPrinterSettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminSettingModule.AdminRateManagmentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminSettingModule.AdminEditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminSettingModule.SettingHomeActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".AdminRiderModule.AdminEditRiderActivity"
             android:exported="false" />
         <activity
@@ -44,13 +65,11 @@
             android:exported="false" />
         <activity
             android:name=".AdminDashBoard.AdminDashBoardActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" /> <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
         <activity
             android:name=".Profile.MyPerformanceActivity"
             android:exported="false" />
