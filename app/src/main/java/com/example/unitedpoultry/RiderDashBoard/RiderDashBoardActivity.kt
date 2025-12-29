@@ -3,6 +3,7 @@ package com.example.unitedpoultry.RiderDashBoard
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.RiderDashBoard.fragments.AddressFragment
 import com.example.unitedpoultry.RiderDashBoard.fragments.HistoryFragment
@@ -12,7 +13,7 @@ import com.example.unitedpoultry.databinding.ActivityRiderDashBoardBinding
 
 
 
-class RiderDashBoardActivity : AppCompatActivity() {
+class RiderDashBoardActivity : BaseActivity() {
 
     private lateinit var binding: ActivityRiderDashBoardBinding
 
@@ -27,6 +28,11 @@ class RiderDashBoardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRiderDashBoardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        configureStatusBar(
+            isLightBackground = false, // false = white icons
+            colorResId = R.color.primary
+        )
 
 
         // Add all fragments, show only home

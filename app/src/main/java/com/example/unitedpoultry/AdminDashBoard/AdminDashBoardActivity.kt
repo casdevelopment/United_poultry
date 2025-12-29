@@ -7,11 +7,12 @@ import com.example.unitedpoultry.AdminDashBoard.fragments.AreasAdminFragment
 import com.example.unitedpoultry.AdminDashBoard.fragments.HomeAdminFragment
 import com.example.unitedpoultry.AdminDashBoard.fragments.ReportsAdminFragment
 import com.example.unitedpoultry.AdminDashBoard.fragments.RiderAdminFragment
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.ActivityAdminDashBoardBinding
 
 
-class AdminDashBoardActivity : AppCompatActivity() {
+class AdminDashBoardActivity : BaseActivity() {
 
     private lateinit var binding: ActivityAdminDashBoardBinding
 
@@ -26,6 +27,12 @@ class AdminDashBoardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminDashBoardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        configureStatusBar(
+            isLightBackground = false, // false = white icons
+            colorResId = R.color.primary
+        )
+
 
 
         // Add all fragments, show only home

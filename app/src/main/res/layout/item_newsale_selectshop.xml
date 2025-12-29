@@ -4,8 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="12dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+
     app:cardElevation="2dp">
 
 
@@ -13,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="12dp"
+        android:padding="10dp"
         android:gravity="center_vertical">
 
         <TextView
@@ -26,7 +29,7 @@
             android:text="BA"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:fontFamily="@font/poppins" />
 
 
@@ -43,7 +46,7 @@
                     android:fontFamily="@font/poppins"
                     android:text="Jalal Sons"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="15dp"/>

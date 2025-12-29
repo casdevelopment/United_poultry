@@ -4,10 +4,11 @@ package com.example.unitedpoultry.Profile
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.databinding.ActivityChangePasswordBinding
 
 
-class ChangePasswordActivity : AppCompatActivity() {
+class ChangePasswordActivity : BaseActivity() {
 
     private lateinit var binding: ActivityChangePasswordBinding
 
@@ -17,6 +18,10 @@ class ChangePasswordActivity : AppCompatActivity() {
         binding = ActivityChangePasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        configureStatusBar(
+            isLightBackground = true,
+            colorResId = android.R.color.white
+        )
         binding.backArrow.setOnClickListener {
             finish()
         }

@@ -6,15 +6,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.unitedpoultry.R
 import androidx.core.widget.addTextChangedListener
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.databinding.ActivitySaleHistoryBinding
 
-class SaleHistoryActivity : AppCompatActivity() {
+class SaleHistoryActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySaleHistoryBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        configureStatusBar(
+            isLightBackground = false, // false = white icons
+            colorResId = R.color.primary
+        )
+
         binding = ActivitySaleHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

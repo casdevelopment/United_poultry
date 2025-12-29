@@ -67,11 +67,11 @@
 
         <ImageButton
             android:id="@+id/notifications"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/bell"
             android:contentDescription="icon"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_gravity="center_vertical"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="centerInside"
@@ -138,7 +138,7 @@
                         android:fontFamily="@font/quicksand"
                         android:text="You’re Offline"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -173,10 +173,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:cardCornerRadius="12dp"
-            app:cardElevation="2dp"
+            app:cardElevation="0dp"
             app:cardUseCompatPadding="true"
-            android:backgroundTint="@color/primary"
-            android:visibility="gone">
+            android:backgroundTint="@color/primary">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -342,8 +341,8 @@
                 android:padding="16dp">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/circle_white"
                     android:contentDescription="Status"
@@ -389,7 +388,7 @@
             android:fontFamily="@font/poppins"
             android:text="Yesterday’s Summary"
             android:textColor="@color/primary"
-            android:textSize="22sp" />
+            android:textSize="20sp" />
 
 
     <LinearLayout
@@ -417,8 +416,8 @@
                 android:layout_marginEnd="20dp">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/totalsalesvector"
                     android:contentDescription="icon" />
 
@@ -430,7 +429,7 @@
                     android:text="Rs 123456"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -455,8 +454,8 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/collectedsalevector"
                     android:contentDescription="icon" />
 
@@ -468,7 +467,7 @@
                     android:text="Rs 123456"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -503,8 +502,8 @@
                 android:layout_marginEnd="20dp">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/boxsolidsalesvector"
                     android:contentDescription="icon" />
 
@@ -516,7 +515,7 @@
                     android:text="12"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -541,8 +540,8 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/shopvisitedvector"
                     android:contentDescription="icon" />
 
@@ -554,7 +553,7 @@
                     android:text="34"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -585,7 +584,7 @@
             android:fontFamily="@font/poppins"
             android:text="Quick Actions"
             android:textColor="@color/primary"
-            android:textSize="22sp" />
+            android:textSize="20sp" />
 
 
 
@@ -599,7 +598,7 @@
         <LinearLayout
             android:id="@+id/quickNewLayout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp"
             android:layout_weight="1"
@@ -609,8 +608,8 @@
 
             <ImageView
                 android:id="@+id/quickNewImage"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:contentDescription="icon" />
 
 
@@ -621,7 +620,7 @@
                 android:text="New Sales"
                 android:textStyle="bold"
                 android:fontFamily="@font/poppins"
-                android:textSize="10sp"
+                android:textSize="8sp"
                 android:textColor="@color/blackLight"
                 android:layout_gravity="center"/>
 
@@ -630,7 +629,7 @@
         <LinearLayout
             android:id="@+id/quickCollectLayout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp"
             android:layout_weight="1"
@@ -641,8 +640,8 @@
 
             <ImageView
                 android:id="@+id/quickCollectImage"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:contentDescription="icon" />
 
 
@@ -653,7 +652,7 @@
                 android:text="Collect"
                 android:textStyle="bold"
                 android:fontFamily="@font/poppins"
-                android:textSize="10sp"
+                android:textSize="8sp"
                 android:textColor="@color/blackLight"
                 android:layout_gravity="center"/>
 
@@ -662,7 +661,7 @@
         <LinearLayout
             android:id="@+id/quickShopLayout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp"
             android:layout_weight="1"
@@ -672,8 +671,8 @@
 
             <ImageView
                 android:id="@+id/quickShopImage"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:contentDescription="icon" />
 
 
@@ -684,7 +683,7 @@
                 android:text="My shops"
                 android:textStyle="bold"
                 android:fontFamily="@font/poppins"
-                android:textSize="10sp"
+                android:textSize="8sp"
                 android:textColor="@color/blackLight"
                 android:layout_gravity="center"/>
 
@@ -693,7 +692,7 @@
         <LinearLayout
             android:id="@+id/quickHistoryLayout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp"
             android:layout_weight="1"
@@ -702,8 +701,8 @@
 
             <ImageView
                 android:id="@+id/quickHistoryImage"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:contentDescription="icon" />
 
 
@@ -714,7 +713,7 @@
                 android:text="History"
                 android:textStyle="bold"
                 android:fontFamily="@font/poppins"
-                android:textSize="10sp"
+                android:textSize="8sp"
                 android:textColor="@color/blackLight"
                 android:layout_gravity="center"/>
 

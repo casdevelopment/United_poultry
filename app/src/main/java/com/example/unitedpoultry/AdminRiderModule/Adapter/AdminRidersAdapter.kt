@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.unitedpoultry.AdminRiderModule.AdminEditRiderActivity
 import com.example.unitedpoultry.AdminRiderModule.AdminRiderDetailsActivity
 import com.example.unitedpoultry.AdminRiderModule.model.AdminRiderModel
 import com.example.unitedpoultry.R
@@ -48,6 +49,7 @@ class AdminRidersAdapter(
         val tvShops: TextView = itemView.findViewById(R.id.tvShops)
         val tvTodaySale: TextView = itemView.findViewById(R.id.tvTodaySale)
         val btnViewDetails: View = itemView.findViewById(R.id.btnViewDetails)
+        val btnEdit: View = itemView.findViewById(R.id.btnEdit)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RiderViewHolder {
@@ -74,6 +76,31 @@ class AdminRidersAdapter(
         holder.tvInitials.backgroundTintList =
             ContextCompat.getColorStateList(holder.itemView.context, iconColor)
 
+
+        holder.btnViewDetails.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, AdminRiderDetailsActivity::class.java)
+
+            // Pass data
+            intent.putExtra("RIDER_NAME", item.name)
+            intent.putExtra("STATUS", item.status)
+            intent.putExtra("AREAS", item.areas)
+            intent.putExtra("SHOPS", item.shops)
+            intent.putExtra("SALE", item.todaySale)
+            intent.putExtra("initial", getInitials(item.name))
+
+            context.startActivity(intent)
+        }
+
+        holder.btnEdit.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, AdminEditRiderActivity::class.java)
+
+            // Pass data
+            intent.putExtra("RIDER_NAME", item.name)
+
+            context.startActivity(intent)
+        }
 
         holder.btnViewDetails.setOnClickListener {
             val context = holder.itemView.context

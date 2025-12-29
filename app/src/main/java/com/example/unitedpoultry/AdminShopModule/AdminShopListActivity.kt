@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.unitedpoultry.AdminArea.AddNewAreaActivity
 import com.example.unitedpoultry.AdminShopModule.Adapter.AdminShopListAdapter
 import com.example.unitedpoultry.AdminShopModule.model.AdminShopModel
+import com.example.unitedpoultry.BaseActivity
+import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.ActivityAdminShopListBinding
 
-class AdminShopListActivity : AppCompatActivity() {
+class AdminShopListActivity : BaseActivity() {
 
     private lateinit var binding: ActivityAdminShopListBinding
     private lateinit var adapter: AdminShopListAdapter
@@ -19,6 +21,12 @@ class AdminShopListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminShopListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        configureStatusBar(
+            isLightBackground = false, // false = white icons
+            colorResId = R.color.primary
+        )
+
 
         binding.backArrow.setOnClickListener { finish() }
 

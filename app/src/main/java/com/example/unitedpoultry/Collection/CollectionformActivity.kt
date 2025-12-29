@@ -3,10 +3,11 @@ package com.example.unitedpoultry.Collection
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.NewSale.Adapter.SelectShopAdapter
 import com.example.unitedpoultry.databinding.ActivityCollectionformBinding
 
-class CollectionformActivity : AppCompatActivity() {
+class CollectionformActivity : BaseActivity() {
 
     private lateinit var binding: ActivityCollectionformBinding
     private lateinit var adapter: SelectShopAdapter
@@ -17,6 +18,10 @@ class CollectionformActivity : AppCompatActivity() {
         binding = ActivityCollectionformBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        configureStatusBar(
+            isLightBackground = true,
+            colorResId = android.R.color.white
+        )
         binding.backArrow.setOnClickListener {
             finish()
         }

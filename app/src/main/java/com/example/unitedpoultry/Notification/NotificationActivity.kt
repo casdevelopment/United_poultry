@@ -3,12 +3,13 @@ package com.example.unitedpoultry.Notification
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.Notification.Adapter.NotificationAdapter
 import com.example.unitedpoultry.Notification.model.NotificationModel
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.ActivityNotificationBinding
 
-class NotificationActivity : AppCompatActivity() {
+class NotificationActivity : BaseActivity() {
 
     private lateinit var binding: ActivityNotificationBinding
 
@@ -16,6 +17,11 @@ class NotificationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityNotificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        configureStatusBar(
+            isLightBackground = true,
+            colorResId = android.R.color.white
+        )
 
         // Dummy data
         val dummyList = listOf(

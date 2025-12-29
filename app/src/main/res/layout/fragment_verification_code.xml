@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
-    tools:context=".Authentications.fragments.VerificationCodeFragment">
+    android:fillViewport="true"
+    >
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="20dp">
+
 
     <!-- Top Image -->
     <TextView
@@ -15,7 +24,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="50dp"
-        android:fontFamily="@font/quicksand"
+        android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="@string/verification_code_title"
         android:textColor="@color/black"
@@ -51,7 +60,7 @@
         android:textSize="22sp"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:fontFamily="@font/quicksand"
+        android:fontFamily="sans-serif-medium"
         app:layout_constraintTop_toBottomOf="@id/imgTop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -214,3 +223,5 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

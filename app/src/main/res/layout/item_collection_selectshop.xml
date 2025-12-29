@@ -4,9 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
     app:cardCornerRadius="12dp"
+
     app:cardElevation="0dp">
 
 
@@ -14,8 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:padding="10dp"
         android:gravity="center_vertical">
 
         <TextView
@@ -28,7 +30,7 @@
             android:text="BA"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:fontFamily="@font/poppins" />
 
 
@@ -51,7 +53,7 @@
                     android:fontFamily="@font/poppins"
                     android:text="Jalal Sons"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="15dp"
@@ -80,7 +82,7 @@
                     android:fontFamily="@font/poppins"
                     android:text="Due"
                     android:textColor="@color/black75"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="15dp"
@@ -94,7 +96,7 @@
                     android:fontFamily="@font/poppins"
                     android:text="Rs.12,500"
                     android:textColor="@color/red"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
                     android:layout_marginLeft="5dp"
                     android:gravity="end"/>

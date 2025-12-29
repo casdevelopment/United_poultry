@@ -8,11 +8,12 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.unitedpoultry.AdminRiderModule.Adapter.RiderAssignedAreasAdapter
 import com.example.unitedpoultry.AdminRiderModule.model.AdminAssignedAreasModel
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.databinding.ActivityAdminEditRiderBinding
 
 
 
-class AdminEditRiderActivity : AppCompatActivity() {
+class AdminEditRiderActivity : BaseActivity() {
 
     private lateinit var binding: ActivityAdminEditRiderBinding
     private lateinit var adapter: RiderAssignedAreasAdapter
@@ -22,10 +23,16 @@ class AdminEditRiderActivity : AppCompatActivity() {
         binding = ActivityAdminEditRiderBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        configureStatusBar(
+            isLightBackground = true,
+            colorResId = android.R.color.white
+        )
+
+
         binding.backArrow.setOnClickListener { finish() }
 
 
-        val name = intent.getStringExtra("name") ?: "N/A"
+        val name = intent.getStringExtra("RIDER_NAME") ?: "N/A"
 
         binding.etFullName.setText(name)
 

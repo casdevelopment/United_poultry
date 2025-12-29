@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.core.widget.addTextChangedListener
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.NewSale.Adapter.SelectShopAdapter
 import com.example.unitedpoultry.NewSale.model.ShopModel
 import com.example.unitedpoultry.RiderDashBoard.RiderDashBoardActivity
@@ -13,7 +14,7 @@ import com.example.unitedpoultry.databinding.ActivitySaleFormBinding
 import com.example.unitedpoultry.databinding.ActivitySaleSuccessBinding
 import com.example.unitedpoultry.databinding.ActivitySelectShopBinding
 
-class SaleSuccessActivity : AppCompatActivity() {
+class SaleSuccessActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySaleSuccessBinding
     private lateinit var adapter: SelectShopAdapter
@@ -24,7 +25,10 @@ class SaleSuccessActivity : AppCompatActivity() {
         binding = ActivitySaleSuccessBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        configureStatusBar(
+            isLightBackground = true,
+            colorResId = android.R.color.white
+        )
 
         binding.btnNewSale.setOnClickListener {
             val intent = Intent(this, SelectShopActivity::class.java)

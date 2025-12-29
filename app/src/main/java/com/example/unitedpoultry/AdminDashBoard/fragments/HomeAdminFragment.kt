@@ -1,5 +1,6 @@
 package com.example.unitedpoultry.AdminDashBoard.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.unitedpoultry.AdminHome.Adapter.ShopVisitedAdapter
 import com.example.unitedpoultry.AdminHome.model.ShopvisitedModel
+import com.example.unitedpoultry.AdminSettingModule.SettingHomeActivity
+import com.example.unitedpoultry.Authentications.AuthenticationActivity
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.FragmentHomeAdminBinding
 
@@ -53,6 +56,11 @@ class HomeAdminFragment : Fragment() {
 
         binding.tvRemainingShops.text = "$remainingShops%"
         binding.pRemainingShops.progress = remainingShops
+
+        binding.profile.setOnClickListener {
+            val intent = Intent(requireContext(), SettingHomeActivity::class.java)
+            startActivity(intent)
+        }
 
 
     }

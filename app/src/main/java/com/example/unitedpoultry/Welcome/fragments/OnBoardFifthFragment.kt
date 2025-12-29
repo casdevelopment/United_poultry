@@ -40,6 +40,12 @@ class OnBoardFifthFragment : Fragment() {
             startActivity(intent)
         }
 
+        binding.btnContinueEmail.setOnClickListener {
+
+            val intent = Intent(requireContext(), AuthenticationActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
 }

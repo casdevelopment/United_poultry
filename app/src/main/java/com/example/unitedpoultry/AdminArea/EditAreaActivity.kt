@@ -2,9 +2,10 @@ package com.example.unitedpoultry.AdminArea
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.databinding.ActivityEditAreaBinding
 
-class EditAreaActivity : AppCompatActivity() {
+class EditAreaActivity : BaseActivity() {
 
     private lateinit var binding: ActivityEditAreaBinding
 
@@ -14,6 +15,11 @@ class EditAreaActivity : AppCompatActivity() {
         // Initialize view binding
         binding = ActivityEditAreaBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        configureStatusBar(
+            isLightBackground = true,
+            colorResId = android.R.color.white
+        )
 
         // Receive the data from intent
         val areaName = intent.getStringExtra("AREA_NAME") ?: ""

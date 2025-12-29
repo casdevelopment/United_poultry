@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/dailyrateentrybackground"
-    tools:context=".Authentications.fragments.DailyRateEntryFragment">
+    android:fillViewport="true"
+    >
 
-    <!-- Top Image -->
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dailyrateentrybackground"
+        android:paddingBottom="20dp">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -37,7 +42,7 @@
         android:textSize="24sp"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:fontFamily="@font/quicksand"
+        android:fontFamily="sans-serif-medium"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,7 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/daily_rate_t1"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:fontFamily="@font/quicksand"
@@ -161,7 +166,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/rs"
-                    android:textSize="20sp"
+                    android:textSize="17sp"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
                     android:textColor="@color/black"
@@ -184,7 +189,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|start"
                     android:paddingStart="12dp"
-                    android:textSize="25sp"
+                    android:textSize="20sp"
                     android:hint="Enter amount"
                     android:fontFamily="@font/poppins"
                     android:textStyle="bold"
@@ -302,3 +307,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

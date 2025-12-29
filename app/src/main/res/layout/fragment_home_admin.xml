@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
             android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,14 +30,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
-            
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                
-                
-            
+
+
+
 
             <androidx.cardview.widget.CardView
                 android:layout_width="70dp"
@@ -95,7 +95,7 @@
             </LinearLayout>
 
             <ImageButton
-                android:id="@+id/notifications"
+                android:id="@+id/profile"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center_vertical"
@@ -125,7 +125,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:padding="12dp"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="10dp">
 
 
                     <TextView
@@ -178,7 +179,8 @@
                 android:layout_marginEnd="8dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="6dp"
-                android:backgroundTint="@color/white">
+                android:backgroundTint="@color/white"
+                android:visibility="gone">
 
 
                 <LinearLayout
@@ -258,7 +260,8 @@
                 android:layout_margin="8dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -500,25 +503,27 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                app:cardCornerRadius="12dp"
-                android:padding="12dp">
+                android:orientation="horizontal"
+                android:padding="5dp"
+                app:cardCornerRadius="12dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/cardReceivables"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:backgroundTint="@color/white"
                         app:cardCornerRadius="12dp"
-                        app:cardElevation="6dp"
-                        android:backgroundTint="@color/white">
+                        app:cardElevation="6dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -570,12 +575,13 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/cardSaleReport"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:backgroundTint="@color/sub_primary18"
                         app:cardCornerRadius="12dp"
-                        app:cardElevation="0dp"
-                        android:layout_marginTop="10dp"
-                        android:backgroundTint="@color/sub_primary18">
+                        app:cardElevation="0dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -636,12 +642,13 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/cardAreaReport"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="6dp"
+                        android:layout_margin="5dp"
                         android:backgroundTint="@color/primary"
-                        android:layout_marginTop="10dp">
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -671,6 +678,7 @@
                                 android:textStyle="bold"
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginTop="5dp"
+                                android:gravity="center"
                                 android:layout_gravity="center_horizontal"/>
 
                             <TextView
@@ -703,16 +711,19 @@
                     android:layout_marginRight="5dp">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/cardRiderReport"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:backgroundTint="@color/sub_primary18"
                         app:cardCornerRadius="12dp"
-                        app:cardElevation="0dp"
-                        android:backgroundTint="@color/sub_primary18">
+                        app:cardElevation="0dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:paddingTop="10dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -769,10 +780,10 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="6dp"
+                        android:layout_margin="5dp"
                         android:backgroundTint="@color/primary"
-                        android:layout_marginTop="10dp">
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="6dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -826,10 +837,10 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="6dp"
+                        android:layout_margin="5dp"
                         android:backgroundTint="@color/white"
-                        android:layout_marginTop="10dp">
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="6dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -916,14 +927,19 @@
 
             </LinearLayout>
 
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvVisitedShops"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="true"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="10dp"/>
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="16dp"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:nestedScrollingEnabled="false"/>
+
 
 
             <com.google.android.material.button.MaterialButton

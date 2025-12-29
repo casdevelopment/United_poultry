@@ -10,7 +10,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/collectionhistorybackground">
+        android:background="@drawable/collectionhistorybackground"
+        android:paddingBottom="20dp">
 
 
         <LinearLayout
@@ -30,8 +31,8 @@
 
             <ImageView
                 android:id="@+id/backArrow"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/backarrowwhitevector"
                 android:contentDescription="Back"
                 android:layout_gravity="center_vertical"/>
@@ -43,12 +44,13 @@
 
             <ImageView
                 android:id="@+id/sales"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/salesdotsvector"
                 android:contentDescription="Back"
                 android:layout_marginEnd="20dp"
                 />
+
 
         </LinearLayout>
 
@@ -56,7 +58,6 @@
             android:id="@+id/topLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:orientation="vertical"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -101,10 +102,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Rs. 11,162"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
-                android:layout_marginStart="6dp"
                 android:gravity="center"
                 android:layout_marginTop="10dp"/>
 
@@ -114,10 +114,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Receipt # RCP-2025-0892"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
-                android:layout_marginStart="6dp"
+                android:layout_marginBottom="10dp"
                 android:gravity="center" />
 
 
@@ -125,21 +125,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:layout_marginBottom="20dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardBoxes"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="120dp"
+                    android:layout_height="match_parent"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="6dp"
-                    android:layout_marginBottom="10dp"
+                    android:paddingBottom="2dp"
                     android:backgroundTint="@color/white">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center"
                         android:paddingTop="10dp">
@@ -150,8 +152,9 @@
                             android:fontFamily="@font/poppins"
                             android:text="Cash"
                             android:textColor="@color/mint"
-                            android:textSize="18sp"
+                            android:textSize="15sp"
                             android:textStyle="bold"
+                            android:layout_marginTop="10dp"
                             android:layout_gravity="center_horizontal"/>
 
                         <TextView
@@ -163,6 +166,7 @@
                             android:textSize="12sp"
                             android:textStyle="bold"
                             android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
                             android:layout_gravity="center_horizontal"/>
 
                     </LinearLayout>
@@ -175,7 +179,7 @@
                     android:id="@+id/cardBoxRate"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="120dp"
+                    android:layout_height="match_parent"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="6dp"
                     android:layout_marginLeft="10dp"
@@ -183,10 +187,10 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:paddingTop="10dp">
+                        android:padding="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -194,8 +198,9 @@
                             android:fontFamily="@font/poppins"
                             android:text="Rs.28000"
                             android:textColor="@color/mint"
-                            android:textSize="18sp"
+                            android:textSize="15sp"
                             android:textStyle="bold"
+                            android:layout_marginTop="10dp"
                             android:layout_gravity="center_horizontal"/>
 
                         <TextView
@@ -207,6 +212,7 @@
                             android:textSize="12sp"
                             android:textStyle="bold"
                             android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
                             android:layout_gravity="center_horizontal"/>
 
                     </LinearLayout>
@@ -219,7 +225,7 @@
                     android:id="@+id/cardDiscount"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="120dp"
+                    android:layout_height="match_parent"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="6dp"
                     android:layout_marginLeft="10dp"
@@ -227,10 +233,10 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:paddingTop="10dp">
+                        android:padding="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -238,8 +244,9 @@
                             android:fontFamily="@font/poppins"
                             android:text="Rs. 13000"
                             android:textColor="@color/red"
-                            android:textSize="18sp"
+                            android:textSize="15sp"
                             android:textStyle="bold"
+                            android:layout_marginTop="10dp"
                             android:layout_gravity="center_horizontal"/>
 
                         <TextView
@@ -251,6 +258,7 @@
                             android:textSize="12sp"
                             android:textStyle="bold"
                             android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
                             android:layout_gravity="center_horizontal"/>
 
                     </LinearLayout>
@@ -258,11 +266,6 @@
 
 
                 </androidx.cardview.widget.CardView>
-
-
-
-
-
 
             </LinearLayout>
 
@@ -272,9 +275,10 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp"
-                android:padding="16dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
+                android:padding="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginBottom="8dp"
                 android:backgroundTint="@color/white">
 
@@ -283,8 +287,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="12dp"
+                    android:padding="15dp"
                     android:gravity="center_vertical">
+
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -308,7 +314,7 @@
                             android:fontFamily="@font/poppins"
                             android:text="Shop Details"
                             android:textColor="@color/black"
-                            android:textSize="18sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="5dp"/>
@@ -335,7 +341,7 @@
                             android:text="BA"
                             android:textColor="@color/white"
                             android:textStyle="bold"
-                            android:textSize="20sp"
+                            android:textSize="17sp"
                             android:fontFamily="@font/poppins"
                             android:backgroundTint="@color/mint"
                             android:layout_gravity="center_vertical"/>
@@ -356,7 +362,7 @@
                                 android:fontFamily="@font/poppins"
                                 android:text="Jalal Sons"
                                 android:textColor="@color/black"
-                                android:textSize="18sp"
+                                android:textSize="15sp"
                                 android:textStyle="bold"
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginTop="5dp"/>
@@ -390,21 +396,23 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardTotal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="6dp"
-                android:padding="16dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="20dp">
+                app:cardElevation="2dp"
+                android:padding="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="8dp">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="12dp"
+                    android:padding="15dp"
                     android:gravity="center_vertical">
 
                     <LinearLayout
@@ -429,7 +437,7 @@
                             android:fontFamily="@font/poppins"
                             android:text="Collection Details"
                             android:textColor="@color/black"
-                            android:textSize="18sp"
+                            android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="5dp"/>
@@ -441,8 +449,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="10dp"
-                        android:layout_marginLeft="15dp">
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp">
 
 
                         <TextView
@@ -452,18 +460,17 @@
                             android:fontFamily="@font/poppins"
                             android:text="Date and Time"
                             android:textColor="@color/black60"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:layout_marginRight="10dp"/>
 
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="3 Dec 2025, 10:45 AM"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:gravity="end"/>
 
@@ -479,12 +486,13 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"/>
 
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="10dp"
-                        android:layout_marginLeft="15dp">
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp">
 
 
                         <TextView
@@ -494,18 +502,17 @@
                             android:fontFamily="@font/poppins"
                             android:text="Payment Method"
                             android:textColor="@color/black60"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:layout_marginRight="10dp"/>
 
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="Cash"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:gravity="end"/>
 
@@ -521,12 +528,13 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"/>
 
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="10dp"
-                        android:layout_marginLeft="15dp">
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp">
 
 
                         <TextView
@@ -536,18 +544,17 @@
                             android:fontFamily="@font/poppins"
                             android:text="Amount Collected"
                             android:textColor="@color/black60"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:layout_marginRight="10dp"/>
 
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="Rs. 15,000"
                             android:textColor="@color/mint"
-                            android:textSize="16sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:gravity="end"/>
 
@@ -560,19 +567,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="6dp"
-                android:padding="16dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="30dp">
+                app:cardElevation="2dp"
+                android:padding="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="8dp">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="12dp"
+                    android:padding="15dp"
                     android:gravity="center_vertical">
 
                     <LinearLayout
@@ -597,7 +604,7 @@
                             android:fontFamily="@font/poppins"
                             android:text="Balance Information"
                             android:textColor="@color/black"
-                            android:textSize="18sp"
+                            android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="5dp"/>
@@ -609,8 +616,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="10dp"
-                        android:layout_marginLeft="15dp">
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp">
 
 
                         <TextView
@@ -620,18 +627,17 @@
                             android:fontFamily="@font/poppins"
                             android:text="Previous Balance"
                             android:textColor="@color/black60"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:layout_marginRight="10dp"/>
 
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="Rs. 28,000"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:gravity="end"/>
 
@@ -651,8 +657,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="10dp"
-                        android:layout_marginLeft="15dp">
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp">
 
 
                         <TextView
@@ -662,18 +668,17 @@
                             android:fontFamily="@font/poppins"
                             android:text="New Collection "
                             android:textColor="@color/black60"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:layout_marginRight="10dp"/>
 
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="Rs. 15,000"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:gravity="end"/>
 
@@ -694,8 +699,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="10dp"
-                        android:layout_marginLeft="15dp">
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp">
 
 
                         <TextView
@@ -705,18 +710,17 @@
                             android:fontFamily="@font/poppins"
                             android:text="Remaining Balance"
                             android:textColor="@color/black60"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:layout_marginRight="10dp"/>
 
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="Rs. 13,000"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:gravity="end"/>
 
@@ -737,8 +741,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="10dp"
-                        android:layout_marginLeft="15dp">
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp">
 
 
                         <TextView
@@ -748,7 +752,7 @@
                             android:fontFamily="@font/poppins"
                             android:text="Last Clearing Date"
                             android:textColor="@color/black60"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:layout_marginRight="10dp"/>
 
@@ -758,7 +762,7 @@
                             android:fontFamily="@font/poppins"
                             android:text="28 Nov 2025"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:gravity="end"/>
 
@@ -779,8 +783,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="10dp"
-                        android:layout_marginLeft="15dp">
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp">
 
 
                         <TextView
@@ -790,18 +794,17 @@
                             android:fontFamily="@font/poppins"
                             android:text="Last Collection Amount"
                             android:textColor="@color/black60"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:layout_marginRight="10dp"/>
 
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="Rs. 10,000"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:gravity="end"/>
 
@@ -822,8 +825,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="10dp"
-                        android:layout_marginLeft="15dp">
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp">
 
 
                         <TextView
@@ -833,18 +836,17 @@
                             android:fontFamily="@font/poppins"
                             android:text="Total Outstanding this Month"
                             android:textColor="@color/black60"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:layout_marginRight="10dp"/>
 
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="Rs. 45,000"
                             android:textColor="@color/mint"
-                            android:textSize="16sp"
+                            android:textSize="15sp"
                             android:textStyle="bold"
                             android:gravity="end"/>
 

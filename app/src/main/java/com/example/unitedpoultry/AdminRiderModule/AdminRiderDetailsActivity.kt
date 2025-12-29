@@ -7,10 +7,12 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.unitedpoultry.AdminRiderModule.Adapter.RiderAssignedAreasAdapter
 import com.example.unitedpoultry.AdminRiderModule.model.AdminAssignedAreasModel
+import com.example.unitedpoultry.BaseActivity
+import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.ActivityAdminRiderDetailsBinding
 
 
-class AdminRiderDetailsActivity : AppCompatActivity() {
+class AdminRiderDetailsActivity : BaseActivity() {
 
     private lateinit var binding: ActivityAdminRiderDetailsBinding
     private lateinit var adapter: RiderAssignedAreasAdapter
@@ -19,6 +21,12 @@ class AdminRiderDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminRiderDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        configureStatusBar(
+            isLightBackground = false, // false = white icons
+            colorResId = R.color.primary
+        )
+
 
         binding.backArrow.setOnClickListener { finish() }
 

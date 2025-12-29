@@ -1,11 +1,12 @@
 package com.example.unitedpoultry.History
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import com.example.unitedpoultry.BaseActivity
+import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.ActivityCollectionHistoryBinding
 
 
-class CollectionHistoryActivity : AppCompatActivity() {
+class CollectionHistoryActivity : BaseActivity() {
 
     private lateinit var binding: ActivityCollectionHistoryBinding
 
@@ -14,6 +15,12 @@ class CollectionHistoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCollectionHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        configureStatusBar(
+            isLightBackground = false,
+            colorResId = R.color.mint
+        )
+
 
         binding.backArrow.setOnClickListener {
             finish()

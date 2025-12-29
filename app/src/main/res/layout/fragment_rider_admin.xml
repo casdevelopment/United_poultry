@@ -64,7 +64,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tLayout"
-        android:layout_marginTop="110dp">
+        android:layout_marginTop="90dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etSearch"

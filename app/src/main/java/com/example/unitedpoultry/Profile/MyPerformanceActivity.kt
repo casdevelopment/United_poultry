@@ -4,12 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.Profile.Adapter.AreaStatusAdapter
 import com.example.unitedpoultry.Profile.model.AreaStatusModel
 import com.example.unitedpoultry.databinding.ActivityMyPerformanceBinding
 
 
-class MyPerformanceActivity : AppCompatActivity() {
+class MyPerformanceActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMyPerformanceBinding
 
@@ -18,6 +19,10 @@ class MyPerformanceActivity : AppCompatActivity() {
         binding = ActivityMyPerformanceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        configureStatusBar(
+            isLightBackground = true,
+            colorResId = android.R.color.white
+        )
         binding.backArrow.setOnClickListener {
             finish()
         }

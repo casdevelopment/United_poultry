@@ -4,13 +4,14 @@ package com.example.unitedpoultry.Collection
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.NewSale.Adapter.SelectShopAdapter
 import com.example.unitedpoultry.RiderDashBoard.RiderDashBoardActivity
 import com.example.unitedpoultry.databinding.ActivityCollectionSuccessBinding
 import com.example.unitedpoultry.databinding.ActivitySaleSuccessBinding
 
 
-class CollectionSuccessActivity : AppCompatActivity() {
+class CollectionSuccessActivity : BaseActivity() {
 
     private lateinit var binding: ActivityCollectionSuccessBinding
     private lateinit var adapter: SelectShopAdapter
@@ -20,6 +21,12 @@ class CollectionSuccessActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCollectionSuccessBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        configureStatusBar(
+            isLightBackground = true,
+            colorResId = android.R.color.white
+        )
+
 
         val name = intent.getStringExtra("name") ?: "Unknown"
         val address = intent.getStringExtra("address") ?: "Unknown"

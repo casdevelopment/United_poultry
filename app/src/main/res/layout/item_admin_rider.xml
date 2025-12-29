@@ -242,7 +242,7 @@
                 android:text="View Details"
                 android:textAllCaps="false"
                 app:icon="@drawable/hidevector"
-                android:textSize="14sp"
+                android:textSize="11sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:background="@drawable/btn_continue_bg"
@@ -259,7 +259,7 @@
                 android:text="Edit"
                 android:layout_weight="1"
                 android:textAllCaps="false"
-                android:textSize="14sp"
+                android:textSize="11sp"
                 android:textStyle="bold"
                 app:icon="@drawable/editsinglevector"
                 android:textColor="@color/primary"
@@ -267,7 +267,7 @@
                 app:backgroundTint="@null"
                 app:iconTint="@null"
                 app:iconGravity="textStart"
-                app:iconPadding="12dp"
+                app:iconPadding="10dp"
                 android:fontFamily="@font/poppins" />
 
 

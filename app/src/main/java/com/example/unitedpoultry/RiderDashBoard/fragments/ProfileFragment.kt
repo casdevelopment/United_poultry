@@ -14,6 +14,7 @@ import com.example.unitedpoultry.Notification.NotificationActivity
 import com.example.unitedpoultry.Profile.ChangePasswordActivity
 import com.example.unitedpoultry.Profile.MyPerformanceActivity
 import com.example.unitedpoultry.Profile.MyProfileActivity
+import com.example.unitedpoultry.Welcome.WelcomeActivity
 import com.example.unitedpoultry.databinding.FragmentHomeBinding
 import com.example.unitedpoultry.databinding.FragmentProfileBinding
 import com.google.android.material.button.MaterialButton
@@ -59,7 +60,7 @@ class ProfileFragment : Fragment() {
                 dialog.dismiss()
 
                 // Go to LoginActivity & clear back stack
-                val intent = Intent(requireContext(), AuthenticationActivity::class.java)
+                val intent = Intent(requireContext(), WelcomeActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
 

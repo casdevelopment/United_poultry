@@ -9,8 +9,9 @@ import com.example.unitedpoultry.ShopModule.Adapter.ShopsAdapter
 import com.example.unitedpoultry.ShopModule.model.ShopsRecord
 import com.example.unitedpoultry.databinding.ActivityShopListBinding
 import androidx.core.widget.addTextChangedListener
+import com.example.unitedpoultry.BaseActivity
 
-class ShopListActivity : AppCompatActivity() {
+class ShopListActivity : BaseActivity() {
 
     private lateinit var binding: ActivityShopListBinding
     private lateinit var adapter: ShopsAdapter
@@ -20,6 +21,12 @@ class ShopListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityShopListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        configureStatusBar(
+            isLightBackground = false, // false = white icons
+            colorResId = R.color.primary
+        )
+
 
         binding.backArrow.setOnClickListener {
             finish()

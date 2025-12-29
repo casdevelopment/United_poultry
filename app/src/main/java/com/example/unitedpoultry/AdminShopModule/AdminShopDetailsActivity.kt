@@ -5,11 +5,12 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.ActivityAdminShopDetailsBinding
 
 
-class AdminShopDetailsActivity : AppCompatActivity() {
+class AdminShopDetailsActivity : BaseActivity() {
 
     private lateinit var binding: ActivityAdminShopDetailsBinding
 
@@ -19,6 +20,11 @@ class AdminShopDetailsActivity : AppCompatActivity() {
         // Initialize view binding
         binding = ActivityAdminShopDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        configureStatusBar(
+            isLightBackground = false, // false = white icons
+            colorResId = R.color.primary
+        )
 
 
         val name = intent.getStringExtra("name") ?: ""

@@ -5,12 +5,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.core.widget.addTextChangedListener
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.NewSale.Adapter.SelectShopAdapter
 import com.example.unitedpoultry.NewSale.model.ShopModel
 import com.example.unitedpoultry.databinding.ActivitySaleFormBinding
 import com.example.unitedpoultry.databinding.ActivitySelectShopBinding
 
-class SaleFormActivity : AppCompatActivity() {
+class SaleFormActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySaleFormBinding
     private lateinit var adapter: SelectShopAdapter
@@ -20,6 +21,12 @@ class SaleFormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySaleFormBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        configureStatusBar(
+            isLightBackground = true,
+            colorResId = android.R.color.white
+        )
+
 
         binding.backArrow.setOnClickListener {
             finish()

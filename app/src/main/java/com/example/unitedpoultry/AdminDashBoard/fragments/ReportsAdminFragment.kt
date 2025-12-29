@@ -1,60 +1,93 @@
 package com.example.unitedpoultry.AdminDashBoard.fragments
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.unitedpoultry.R
+import androidx.fragment.app.Fragment
+import com.example.unitedpoultry.AdminReportModule.AreaReport.AdminAreaReportActivity
+import com.example.unitedpoultry.AdminReportModule.CollectionReport.AdminCollectionReportActivity
+import com.example.unitedpoultry.AdminReportModule.DiscountReport.AdminDiscountReportActivity
+import com.example.unitedpoultry.AdminReportModule.ReceivablesReport.AdminReceivableReportActivity
+import com.example.unitedpoultry.AdminReportModule.RiderReport.AdminRiderReportActivity
+import com.example.unitedpoultry.AdminReportModule.SaleReport.AdminSalesReportActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.example.unitedpoultry.databinding.FragmentReportsAdminBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ReportsAdminFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class ReportsAdminFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentReportsAdminBinding
+   // private lateinit var shopAdapter: ShopVisitedAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_reports_admin, container, false)
+    ): View {
+        binding = FragmentReportsAdminBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ReportsAdminFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ReportsAdminFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.cardCollection.setOnClickListener {
+            val intent = Intent(requireContext(), AdminCollectionReportActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.cardRiderReport.setOnClickListener {
+            val intent = Intent(requireContext(), AdminRiderReportActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.cardReceivables.setOnClickListener {
+            val intent = Intent(requireContext(), AdminReceivableReportActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.cardAreaReport.setOnClickListener {
+            val intent = Intent(requireContext(), AdminAreaReportActivity::class.java)
+            startActivity(intent)
+        }
+
+
+        binding.cardDiscountReport.setOnClickListener {
+            val intent = Intent(requireContext(), AdminDiscountReportActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.cardSaleReport.setOnClickListener {
+            val intent = Intent(requireContext(), AdminSalesReportActivity::class.java)
+            startActivity(intent)
+        }
+
+//        val  = listOf(
+//            ShopvisitedModel("Jalal Sons", "Last visit: 3 days ago. Rs. 12500. 12 orders", R.drawable.visitedshopimage1),
+//            ShopvisitedModel("Al-Fatah Store", "Last visit: 5 days ago. Cash collection", R.drawable.visitedshopimage2),
+//            ShopvisitedModel("Green Valley Mart", "Last visit: 2 days ago. Cash collection", R.drawable.visitedshopimage1),
+//            ShopvisitedModel("Mini Mart Central", "Last visit: 1 day ago. 9 Boxes. Credit", R.drawable.visitedshopimage2)
+//        )
+//
+//        shopAdapter = ShopVisitedAdapter(historyList.toMutableList())
+//        binding.rvVisitedShops.layoutManager = LinearLayoutManager(requireContext())
+//        binding.rvVisitedShops.adapter = shopAdapter
+
+//        val assignedShops = 40
+//        val visitedShops = 30
+//        val remainingShops = 10
+//
+//        binding.tvAssignedShops.text = "$assignedShops%"
+//        binding.pAssignedshops.progress = assignedShops
+//
+//        binding.tVisitedShops.text = "$visitedShops%"
+//        binding.pVisitedShops.progress = visitedShops
+//
+//        binding.tvRemainingShops.text = "$remainingShops%"
+//        binding.pRemainingShops.progress = remainingShops
+
+
     }
 }

@@ -6,12 +6,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.unitedpoultry.AdminDashBoard.AdminDashBoardActivity
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.ActivityAdminAddNewShopBinding
 import com.example.unitedpoultry.databinding.ActivityAdminShopDetailsBinding
 
 
-class AdminAddNewShopActivity : AppCompatActivity() {
+class AdminAddNewShopActivity : BaseActivity() {
 
     private lateinit var binding: ActivityAdminAddNewShopBinding
 
@@ -21,6 +22,12 @@ class AdminAddNewShopActivity : AppCompatActivity() {
         // Initialize view binding
         binding = ActivityAdminAddNewShopBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        configureStatusBar(
+            isLightBackground = true,
+            colorResId = android.R.color.white
+        )
+
 
 
         binding.backArrow.setOnClickListener {

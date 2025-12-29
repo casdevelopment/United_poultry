@@ -6,10 +6,11 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.Welcome.WelcomeActivity
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity :  BaseActivity() {
 
     private lateinit var dot1: TextView
     private lateinit var dot2: TextView
@@ -21,6 +22,11 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        configureStatusBar(
+            isLightBackground = false, // false = white icons
+            colorResId = R.color.primary
+        )
 
         dot1 = findViewById(R.id.dot1)
         dot2 = findViewById(R.id.dot2)

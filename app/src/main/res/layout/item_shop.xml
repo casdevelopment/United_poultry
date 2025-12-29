@@ -4,7 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
     app:cardCornerRadius="12dp"
     app:cardElevation="2dp">
 
@@ -12,7 +15,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:gravity="center_vertical">
 
         <!-- NAME + STATUS -->
         <LinearLayout
@@ -31,7 +38,7 @@
                 android:text="BA"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:fontFamily="@font/poppins" />
 
 
@@ -51,13 +58,14 @@
                         android:id="@+id/tvName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="5dp"
                         android:fontFamily="@font/poppins"
                         android:text="Gulberg"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="15dp"/>
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvAddress"
@@ -77,9 +85,9 @@
                     android:layout_height="wrap_content"
                     android:padding="6dp"
                     android:text="PENDING"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     android:layout_gravity="center_vertical"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     android:background="@drawable/status_bg_visited"/>
             </LinearLayout>
 
@@ -93,7 +101,7 @@
             android:layout_height="2dp"
             android:background="@color/brown"
             android:elevation="2dp"
-            android:layout_margin="20dp"/>
+            android:layout_margin="10dp"/>
 
 
         <LinearLayout
@@ -120,7 +128,7 @@
                     android:text="Last Visit"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     android:textColor="@color/black60"
                     android:layout_gravity="center"/>
 
@@ -132,7 +140,7 @@
                     android:text="2 Days ago"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     android:gravity="center"
                     android:textColor="@color/primary"
                     android:layout_gravity="center"/>
@@ -156,7 +164,7 @@
                     android:text="Rate"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     android:textColor="@color/black60"
                     android:layout_gravity="center"/>
 
@@ -168,7 +176,7 @@
                     android:text="Rs 1,200"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_gravity="center"/>
@@ -192,7 +200,7 @@
                     android:text="Due Amount"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     android:textColor="@color/black60"
                     android:layout_gravity="center"/>
 
@@ -204,7 +212,7 @@
                     android:text="Rs. 12,500"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     android:gravity="center"
                     android:textColor="@color/primary"
                     android:layout_gravity="center"/>
@@ -213,7 +221,7 @@
 
         </LinearLayout>
 
-    <LinearLayout
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -227,7 +235,7 @@
             android:text="New Sale"
             android:textAllCaps="false"
             app:icon="@drawable/addcirclevector"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@drawable/btn_continue_bg"
@@ -244,7 +252,7 @@
             android:text="Collect"
             android:layout_weight="1"
             android:textAllCaps="false"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:icon="@drawable/collectvector"
             android:textColor="@color/primary"

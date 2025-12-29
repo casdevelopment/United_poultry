@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.Collection.SelectShopCollectionActivity
 import com.example.unitedpoultry.NewSale.SaleSuccessActivity
 import com.example.unitedpoultry.NewSale.SelectShopActivity
@@ -12,7 +13,7 @@ import com.example.unitedpoultry.ShopModule.Adapter.RecentActivityAdapter
 import com.example.unitedpoultry.ShopModule.model.RecentActivityModel
 import com.example.unitedpoultry.databinding.ActivityShopDetailsBinding
 
-class ShopDetailsActivity : AppCompatActivity() {
+class ShopDetailsActivity : BaseActivity() {
 
     private lateinit var binding: ActivityShopDetailsBinding
     private lateinit var adapter: RecentActivityAdapter
@@ -20,6 +21,12 @@ class ShopDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        configureStatusBar(
+            isLightBackground = false, // false = white icons
+            colorResId = R.color.primary
+        )
+
 
         // ✅ Initialize DataBinding
         binding = ActivityShopDetailsBinding.inflate(layoutInflater)

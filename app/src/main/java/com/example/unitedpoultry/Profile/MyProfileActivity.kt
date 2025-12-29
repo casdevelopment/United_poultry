@@ -2,10 +2,11 @@ package com.example.unitedpoultry.Profile
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.NewSale.Adapter.SelectShopAdapter
 import com.example.unitedpoultry.databinding.ActivityMyProfileBinding
 
-class MyProfileActivity : AppCompatActivity() {
+class MyProfileActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMyProfileBinding
 
@@ -13,6 +14,12 @@ class MyProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMyProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        configureStatusBar(
+            isLightBackground = true,
+            colorResId = android.R.color.white
+        )
+
 
         binding.backArrow.setOnClickListener {
             finish()

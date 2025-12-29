@@ -4,15 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
     app:cardCornerRadius="12dp"
+    android:layout_margin="6dp"
     app:cardElevation="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="10dp">
 
         <!-- NAME + STATUS -->
         <LinearLayout
@@ -23,8 +23,8 @@
 
             <ImageView
                 android:id="@+id/ivIcon"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/totalsalesvector"
                 android:contentDescription="icon"
                 android:layout_gravity="center_vertical"/>
@@ -50,9 +50,9 @@
                         android:fontFamily="@font/poppins"
                         android:text="Jalal Sons"
                         android:textColor="@color/primary"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         android:textStyle="bold"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"/>
 
                     <TextView
@@ -62,8 +62,8 @@
                         android:fontFamily="@font/poppins"
                         android:text="Last visit: 3 days ago . Rs. 12500. 12 orders"
                         android:textColor="@color/black60"
-                        android:textSize="12sp"
-                        android:layout_marginLeft="15dp"/>
+                        android:textSize="10sp"
+                        android:layout_marginLeft="10dp"/>
 
 
                 </LinearLayout>
@@ -72,10 +72,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:layout_marginRight="5dp"
                     android:backgroundTint="@color/primary"
                     android:background="@drawable/capsule_bg_sales"
@@ -85,7 +85,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Visited"
-                        android:textSize="12sp"
+                        android:textSize="8sp"
                         android:textStyle="bold"
                         android:textColor="@color/primary"
                         android:layout_marginStart="6dp"

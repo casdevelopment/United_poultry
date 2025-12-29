@@ -5,11 +5,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.example.unitedpoultry.AdminDashBoard.AdminDashBoardActivity
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.ActivityAdminAssignAreasBinding
 
 
-class AdminAssignAreasActivity : AppCompatActivity() {
+class AdminAssignAreasActivity : BaseActivity() {
 
     private lateinit var binding: ActivityAdminAssignAreasBinding
   //  private lateinit var adapter: RiderAssignedAreasAdapter
@@ -19,7 +20,13 @@ class AdminAssignAreasActivity : AppCompatActivity() {
         binding = ActivityAdminAssignAreasBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-    //    binding.backArrow.setOnClickListener { finish() }
+        configureStatusBar(
+            isLightBackground = true,
+            colorResId = android.R.color.white
+        )
+
+
+        //    binding.backArrow.setOnClickListener { finish() }
 
 
         val name = intent.getStringExtra("name") ?: "N/A"

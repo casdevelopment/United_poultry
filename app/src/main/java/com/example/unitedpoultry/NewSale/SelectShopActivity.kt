@@ -4,11 +4,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.core.widget.addTextChangedListener
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.NewSale.Adapter.SelectShopAdapter
 import com.example.unitedpoultry.NewSale.model.ShopModel
 import com.example.unitedpoultry.databinding.ActivitySelectShopBinding
 
-class SelectShopActivity : AppCompatActivity() {
+class SelectShopActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySelectShopBinding
     private lateinit var adapter: SelectShopAdapter
@@ -18,6 +19,12 @@ class SelectShopActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySelectShopBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        configureStatusBar(
+            isLightBackground = true,
+            colorResId = android.R.color.white
+        )
+
 
         binding.backArrow.setOnClickListener {
             finish()

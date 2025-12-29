@@ -933,6 +933,7 @@
 
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/logoutCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="12dp"

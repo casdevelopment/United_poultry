@@ -1,5 +1,6 @@
 package com.example.unitedpoultry.Authentications.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,22 +10,18 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.RiderDashBoard.RiderDashBoardActivity
+import com.example.unitedpoultry.AdminDashBoard.AdminDashBoardActivity
 import com.example.unitedpoultry.databinding.FragmentLoginBinding
-
-
 
 class LoginFragment : Fragment() {
 
-
-    private lateinit var binding : FragmentLoginBinding
+    private lateinit var binding: FragmentLoginBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-
-
         return binding.root
     }
 
@@ -40,21 +37,35 @@ class LoginFragment : Fragment() {
         }
 
         binding.btnContinueEmail.setOnClickListener {
-            val intent = Intent(requireContext(), RiderDashBoardActivity::class.java)
-            startActivity(intent)
+            navigateToDashboard()
         }
 
         binding.btnContinueGoogle.setOnClickListener {
-            val intent = Intent(requireContext(), RiderDashBoardActivity::class.java)
-            startActivity(intent)
+            navigateToDashboard()
         }
-
-//        binding.btnNext.setOnClickListener {
-//
-//            val intent = Intent(requireContext(), AuthenticationActivity::class.java)
-//            startActivity(intent)
-//        }
-
     }
 
+    // ------------------------
+    // USER TYPE CHECK
+    // ------------------------
+    private fun navigateToDashboard() {
+
+        val prefs = requireActivity()
+            .getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE)
+
+        val userType = prefs.getString("USER_TYPE", "user")
+
+        if (userType == "admin") {
+            startActivity(
+                Intent(requireContext(), AdminDashBoardActivity::class.java)
+            )
+        } else {
+            startActivity(
+                Intent(requireContext(), RiderDashBoardActivity::class.java)
+            )
+        }
+
+        // Optional: prevent going back to login
+        requireActivity().finish()
+    }
 }

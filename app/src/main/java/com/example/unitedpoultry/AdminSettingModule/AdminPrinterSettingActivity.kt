@@ -3,12 +3,13 @@ package com.example.unitedpoultry.AdminSettingModule
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.databinding.ActivityAdminEditProfileBinding
 import com.example.unitedpoultry.databinding.ActivityAdminPrinterSettingBinding
 import com.example.unitedpoultry.databinding.ActivityAdminRateManagmentBinding
 
 
-class AdminPrinterSettingActivity : AppCompatActivity() {
+class AdminPrinterSettingActivity : BaseActivity() {
 
     private lateinit var binding: ActivityAdminPrinterSettingBinding
 
@@ -19,6 +20,11 @@ class AdminPrinterSettingActivity : AppCompatActivity() {
         binding = ActivityAdminPrinterSettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        configureStatusBar(
+            isLightBackground = true,
+            colorResId = android.R.color.white
+        )
 
 //        val name = intent.getStringExtra("name") ?: ""
 //        val address = intent.getStringExtra("address") ?: ""

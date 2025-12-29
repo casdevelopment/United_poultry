@@ -3,10 +3,11 @@ package com.example.unitedpoultry.AdminSettingModule
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.databinding.ActivityAdminAboutAndHelpBinding
 
 
-class AdminAboutAndHelpActivity : AppCompatActivity() {
+class AdminAboutAndHelpActivity : BaseActivity() {
 
     private lateinit var binding: ActivityAdminAboutAndHelpBinding
 
@@ -16,6 +17,12 @@ class AdminAboutAndHelpActivity : AppCompatActivity() {
         // Initialize view binding
         binding = ActivityAdminAboutAndHelpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        configureStatusBar(
+            isLightBackground = true,
+            colorResId = android.R.color.white
+        )
+
 
 
 //        val name = intent.getStringExtra("name") ?: ""
