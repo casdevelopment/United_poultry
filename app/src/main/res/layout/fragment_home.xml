@@ -9,169 +9,178 @@
 
 
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/riderdashboardonlinebackground">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Top Image -->
 
-    <LinearLayout
-        android:id="@+id/topLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.035"
-        >
-
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/topPortion"
         android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="50dp"
-            android:fontFamily="@font/quicksand"
-            android:text="Hello, Ahmed!"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            />
-
-        <TextView
-            android:id="@+id/tvDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tuesday, 3 Dec 2025"
-            android:textSize="12sp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:fontFamily="@font/poppins"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="50dp" />
-
-
-    </LinearLayout>
-
-        <ImageButton
-            android:id="@+id/notifications"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/bell"
-            android:contentDescription="icon"
-            android:layout_marginEnd="20dp"
-            android:layout_gravity="center_vertical"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:scaleType="centerInside"
-            app:tint="@null"
-            android:clickable="true"
-            android:focusable="true"/>
-
-
-
-
-
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_height="250dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topLayout">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card"
+        <ImageView
+            android:id="@+id/bgImage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp"
-            app:cardUseCompatPadding="true">
+            android:layout_height="230dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bgfull" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                >
 
-                <!-- Status Icon -->
-                <ImageView
-                    android:id="@+id/signalStatus"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/circle_white"
-                    android:contentDescription="Status"
-                    android:src="@drawable/offlinevector" />
-
-                <!-- Text Container -->
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tvStatusTitle"
+                        android:id="@+id/tvTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="50dp"
                         android:fontFamily="@font/quicksand"
-                        android:text="You’re Offline"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:text="Hello, Ahmed!"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        />
 
                     <TextView
-                        android:id="@+id/tvStatusSubtitle"
+                        android:id="@+id/tvDescription"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Tuesday, 3 Dec 2025"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
                         android:fontFamily="@font/poppins"
-                        android:text="Toggle to start receiving work"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="50dp" />
+
+
                 </LinearLayout>
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/toggleStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:checked="false"
-                    app:showText="false"
-                    app:thumbTint="@color/white"
-                    app:trackTint="@color/switch_track_selector" />
+                <ImageButton
+                    android:id="@+id/notifications"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/bell"
+                    android:contentDescription="icon"
+                    android:layout_marginEnd="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:scaleType="centerInside"
+                    app:tint="@null"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+
+
+
+
             </LinearLayout>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:layout_marginTop="40dp"
+                android:layout_gravity="bottom"
+                app:cardUseCompatPadding="true">
 
-        </androidx.cardview.widget.CardView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <!-- Status Icon -->
+                    <ImageView
+                        android:id="@+id/signalStatus"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/circle_white"
+                        android:contentDescription="Status"
+                        android:src="@drawable/offlinevector" />
+
+                    <!-- Text Container -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvStatusTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand"
+                            android:text="You’re Offline"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvStatusSubtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Toggle to start receiving work"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/toggleStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:checked="true"
+                        app:showText="false"
+                        app:thumbTint="@color/white"
+                        app:trackTint="@color/switch_track_selector" />
+                </LinearLayout>
 
 
+            </androidx.cardview.widget.CardView>
+
+
+
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topPortion">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/todayTargetCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
             app:cardUseCompatPadding="true"
@@ -192,7 +201,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Today’s Target"
+                        android:text="Today’s Egg Target"
                         android:textStyle="bold"
                         android:textSize="20sp"
                         android:fontFamily="@font/quicksand"
@@ -221,7 +230,7 @@
                     android:progress="72"
                     android:max="100"
                     android:progressTint="@color/sub_primary"
-                    android:backgroundTint="@color/primary20"
+                    android:backgroundTint="@color/primary"
                     android:indeterminate="false"
                     android:clipToOutline="true"/>
 
@@ -243,7 +252,7 @@
                             android:id="@+id/shopVisited"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="28"
+                            android:text="12000"
                             android:textStyle="bold"
                             android:fontFamily="@font/poppins"
                             android:textSize="16sp"
@@ -253,7 +262,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Shops Visited"
+                            android:text="Total Eggs"
                             android:textStyle="bold"
                             android:fontFamily="@font/poppins"
                             android:textSize="12sp"
@@ -272,17 +281,17 @@
                             android:id="@+id/targetShop"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="40"
-                            android:textStyle="bold"
+                            android:layout_gravity="center"
                             android:fontFamily="@font/poppins"
-                            android:textSize="16sp"
+                            android:text="10000"
                             android:textColor="@color/white"
-                            android:layout_gravity="center"/>
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Target Shops"
+                            android:text="Egg Sold"
                             android:textStyle="bold"
                             android:fontFamily="@font/poppins"
                             android:textSize="12sp"
@@ -300,7 +309,7 @@
                             android:id="@+id/remainingShop"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="10"
+                            android:text="2000"
                             android:textStyle="bold"
                             android:fontFamily="@font/poppins"
                             android:textSize="16sp"
@@ -328,7 +337,7 @@
             android:id="@+id/todayTargetCardOffline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_margin="8dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
             app:cardUseCompatPadding="false"
@@ -410,7 +419,7 @@
                 android:orientation="vertical"
                 android:padding="16dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/primary20"
+                android:backgroundTint="@color/green15"
                 android:background="@drawable/rounded_bg"
                 android:gravity="center"
                 android:layout_marginEnd="20dp">
@@ -418,7 +427,7 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/totalsalesvector"
+                    android:src="@drawable/card1"
                     android:contentDescription="icon" />
 
                 <TextView
@@ -435,7 +444,7 @@
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Total Sales"
+                    android:text="Total Amount"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
                     android:textSize="14sp"
@@ -449,14 +458,14 @@
                 android:orientation="vertical"
                 android:padding="16dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/sub_primary18"
+                android:backgroundTint="@color/primary20"
                 android:background="@drawable/rounded_bg"
                 android:gravity="center">
 
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/collectedsalevector"
+                    android:src="@drawable/totalsalesvector"
                     android:contentDescription="icon" />
 
                 <TextView
@@ -473,7 +482,7 @@
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Collected"
+                    android:text="Total Sales"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
                     android:textSize="14sp"
@@ -496,7 +505,7 @@
                 android:orientation="vertical"
                 android:padding="16dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/pink15"
+                android:backgroundTint="@color/sub_primary18"
                 android:background="@drawable/rounded_bg"
                 android:gravity="center"
                 android:layout_marginEnd="20dp">
@@ -504,7 +513,7 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/boxsolidsalesvector"
+                    android:src="@drawable/card2"
                     android:contentDescription="icon" />
 
                 <TextView
@@ -512,7 +521,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="12"
+                    android:text="Rs. 150000"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
                     android:textSize="16sp"
@@ -521,7 +530,7 @@
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Boxes Sold"
+                    android:text="Payment received"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
                     android:textSize="14sp"
@@ -535,14 +544,14 @@
                 android:orientation="vertical"
                 android:padding="16dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/green15"
+                android:backgroundTint="@color/pink15"
                 android:background="@drawable/rounded_bg"
                 android:gravity="center">
 
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/shopvisitedvector"
+                    android:src="@drawable/card3"
                     android:contentDescription="icon" />
 
                 <TextView
@@ -550,7 +559,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="34"
+                    android:text="Rs. 150000"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
                     android:textSize="16sp"
@@ -559,7 +568,7 @@
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Shops Visited"
+                    android:text="Due payment"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
                     android:textSize="14sp"
@@ -569,10 +578,7 @@
 
         </LinearLayout>
 
-
-
     </LinearLayout>
-
 
         <TextView
             android:layout_width="wrap_content"
@@ -587,145 +593,195 @@
             android:textSize="20sp" />
 
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp"
-        android:layout_marginBottom="30dp">
-
         <LinearLayout
-            android:id="@+id/quickNewLayout"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_bg"
-            android:gravity="center"
-            android:layout_marginEnd="5dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:layout_marginBottom="30dp">
 
-            <ImageView
-                android:id="@+id/quickNewImage"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:contentDescription="icon" />
+            <LinearLayout
+                android:id="@+id/quickNewLayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_bg"
+                android:gravity="center"
+                android:layout_marginEnd="5dp"
+                >
+
+                <ImageView
+                    android:id="@+id/quickNewImage"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription="icon" />
 
 
-            <TextView
-                android:layout_marginTop="5dp"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="New Sales"
-                android:textStyle="bold"
-                android:fontFamily="@font/poppins"
-                android:textSize="8sp"
-                android:textColor="@color/blackLight"
-                android:layout_gravity="center"/>
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="New Sale"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="8sp"
+                    android:textColor="@color/blackLight"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/quickCollectLayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_weight="1"
+
+                android:background="@drawable/rounded_bg"
+                android:gravity="center"
+                android:layout_marginEnd="5dp">
+
+                <ImageView
+                    android:id="@+id/quickCollectImage"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription="icon" />
+
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Waste"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="8sp"
+                    android:textColor="@color/blackLight"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/quickShopLayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_bg"
+                android:gravity="center"
+                android:layout_marginEnd="5dp">
+
+                <ImageView
+                    android:id="@+id/quickShopImage"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription="icon" />
+
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Return"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="8sp"
+                    android:textColor="@color/blackLight"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/quickHistoryLayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_bg"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/quickHistoryImage"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription="icon" />
+
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="History"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="8sp"
+                    android:textColor="@color/blackLight"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
+
+
         <LinearLayout
-            android:id="@+id/quickCollectLayout"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_weight="1"
-
-            android:background="@drawable/rounded_bg"
-            android:gravity="center"
-            android:layout_marginEnd="5dp">
-
-            <ImageView
-                android:id="@+id/quickCollectImage"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:contentDescription="icon" />
-
+            android:id="@+id/pendingshops"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
             <TextView
-                android:layout_marginTop="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="Collect"
-                android:textStyle="bold"
                 android:fontFamily="@font/poppins"
-                android:textSize="8sp"
-                android:textColor="@color/blackLight"
-                android:layout_gravity="center"/>
+                android:text="Pending Shops"
+                android:textColor="@color/primary"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="15dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:text="View All"
+                android:textColor="@color/sub_primary"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginRight="10dp"/>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/quickShopLayout"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_bg"
-            android:gravity="center"
-            android:layout_marginEnd="5dp">
 
-            <ImageView
-                android:id="@+id/quickShopImage"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:contentDescription="icon" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvVisitedShops"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:nestedScrollingEnabled="false"/>
 
 
-            <TextView
-                android:layout_marginTop="5dp"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="My shops"
-                android:textStyle="bold"
-                android:fontFamily="@font/poppins"
-                android:textSize="8sp"
-                android:textColor="@color/blackLight"
-                android:layout_gravity="center"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/quickHistoryLayout"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_bg"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/quickHistoryImage"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:contentDescription="icon" />
 
 
-            <TextView
-                android:layout_marginTop="5dp"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="History"
-                android:textStyle="bold"
-                android:fontFamily="@font/poppins"
-                android:textSize="8sp"
-                android:textColor="@color/blackLight"
-                android:layout_gravity="center"/>
 
-        </LinearLayout>
+
+
 
     </LinearLayout>
 
 
-
-
-
-    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

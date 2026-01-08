@@ -124,9 +124,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="20dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp">
+                android:layout_marginBottom="10dp"
+                android:paddingTop="5dp">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardBoxes"
@@ -135,7 +134,7 @@
                     android:layout_height="match_parent"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
-                    android:paddingBottom="2dp"
+                    app:cardUseCompatPadding="true"
                     android:backgroundTint="@color/white">
 
                     <LinearLayout
@@ -143,7 +142,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:paddingTop="10dp">
+                        android:padding="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -180,8 +179,8 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="6dp"
-                    android:layout_marginLeft="10dp"
+                    app:cardElevation="2dp"
+                    app:cardUseCompatPadding="true"
                     android:backgroundTint="@color/white">
 
                     <LinearLayout
@@ -226,8 +225,8 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="6dp"
-                    android:layout_marginLeft="10dp"
+                    app:cardElevation="2dp"
+                    app:cardUseCompatPadding="true"
                     android:backgroundTint="@color/white">
 
                     <LinearLayout
@@ -275,7 +274,6 @@
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp"
                 android:padding="10dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="8dp"
@@ -293,7 +291,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingLeft="20dp">
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
 
 
                         <ImageView
@@ -302,7 +301,8 @@
                             android:layout_marginEnd="10dp"
                             android:background="@drawable/square_white"
                             android:contentDescription="Status"
-                            android:src="@drawable/homesinglevector"
+                            android:src="@drawable/homevectorsvg"
+                            app:tint="@color/primary"
                             android:layout_gravity="center_vertical"/>
 
                         <TextView
@@ -324,14 +324,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingLeft="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:gravity="center_vertical"
                         android:layout_marginTop="10dp">
 
                         <TextView
                             android:id="@+id/tvInitials"
-                            android:layout_width="55dp"
-                            android:layout_height="55dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_marginEnd="10dp"
                             android:background="@drawable/square_white"
                             android:gravity="center"
@@ -398,7 +399,6 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp"
-                android:padding="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
@@ -416,7 +416,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingLeft="20dp">
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
 
 
                         <ImageView
@@ -425,7 +426,7 @@
                             android:layout_marginEnd="10dp"
                             android:background="@drawable/square_white"
                             android:contentDescription="Status"
-                            android:src="@drawable/detailsinglevector"
+                            android:src="@drawable/detailscleansvg"
                             android:layout_gravity="center_vertical"/>
 
                         <TextView
@@ -446,7 +447,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:layout_marginTop="15dp">
 
 
@@ -487,7 +489,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:layout_marginTop="15dp">
 
 
@@ -529,7 +532,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:layout_marginTop="15dp">
 
 
@@ -571,7 +575,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:layout_marginTop="15dp">
 
 
@@ -613,7 +618,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:layout_marginTop="15dp">
 
 

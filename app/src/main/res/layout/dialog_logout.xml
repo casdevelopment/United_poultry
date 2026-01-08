@@ -1,106 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="15dp"
-    android:background="@drawable/square_white"
-    android:gravity="center_horizontal">
-
-    <!-- Image at the top -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/iconContainer"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        app:cardCornerRadius="40dp"
-        app:cardElevation="0dp"
-        android:backgroundTint="@color/red20"
-        app:cardBackgroundColor="@color/white"
-        app:cardUseCompatPadding="true">
-
-    <ImageView
-        android:id="@+id/ivIcon"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_gravity="center"
-        android:src="@drawable/logoutvector"/>
-</androidx.cardview.widget.CardView>
-
-
-
-    <!-- Title -->
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout?"
-        android:textSize="22sp"
-        android:fontFamily="@font/poppins"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="10dp"/>
-
-    <!-- Description -->
-    <TextView
-        android:id="@+id/tvDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Are you sure you want to logout from your account?"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:gravity="center"
-        android:layout_marginBottom="24dp"/>
-
-    <!-- Buttons Horizontal -->
-    <LinearLayout
-        android:id="@+id/buttonCard"
+<com.google.android.material.card.MaterialCardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/quantityCard"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="50dp">
+        android:layout_margin="10dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/white">
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCancel"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="Cancel"
-            android:textAllCaps="false"
-            android:textSize="12sp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:gravity="center">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/iconContainer"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="40dp"
+            app:cardElevation="0dp"
+            android:backgroundTint="@color/red20"
+            app:cardBackgroundColor="@color/white"
+            app:cardUseCompatPadding="true">
+
+            <ImageView
+                android:id="@+id/ivIcon"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:src="@drawable/logoutclearsvg"/>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout?"
+            android:textSize="22sp"
+            android:fontFamily="@font/poppins"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:background="@drawable/btn_continue_bg"
-            app:backgroundTint="@color/red20"
-            android:fontFamily="@font/poppins"
-            android:layout_marginRight="10dp"
-            />
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="10dp"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnLogout"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="Logout"
-            android:textAllCaps="false"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:background="@drawable/btn_red_bg"
-            app:backgroundTint="@null"
-            android:fontFamily="@font/poppins"
-            android:layout_marginRight="10dp"
-            />
+        <!-- Description -->
+        <TextView
+            android:id="@+id/tvDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Are you sure you want to logout from your account?"
+            android:textSize="16sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/black"
+            android:gravity="center" />
+
+        <!-- Buttons Horizontal -->
+        <LinearLayout
+            android:id="@+id/buttonCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/quantityCard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="30dp">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancel"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="Cancel"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:background="@drawable/btn_continue_bg"
+                app:backgroundTint="@color/red20"
+                android:fontFamily="@font/poppins"
+                android:layout_marginRight="10dp"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="Logout"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:background="@drawable/btn_red_bg"
+                app:backgroundTint="@null"
+                android:fontFamily="@font/poppins"
+                android:layout_marginRight="10dp"
+                />
 
 
 
@@ -109,5 +115,13 @@
 
 
 
+
+
+            <!-- Title -->
+
+
+
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

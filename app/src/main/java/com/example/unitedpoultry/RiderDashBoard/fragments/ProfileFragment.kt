@@ -48,6 +48,9 @@ class ProfileFragment : Fragment() {
                 .setCancelable(true)
                 .create()
 
+            // 🔥 THIS LINE FIXES THE EDGES
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
             val btnCancel = dialogView.findViewById<MaterialButton>(R.id.btnCancel)
             val btnLogout = dialogView.findViewById<MaterialButton>(R.id.btnLogout)
 
@@ -59,17 +62,15 @@ class ProfileFragment : Fragment() {
 
                 dialog.dismiss()
 
-                // Go to LoginActivity & clear back stack
                 val intent = Intent(requireContext(), WelcomeActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
-
-                // Optional: finish hosting activity
                 requireActivity().finish()
             }
 
             dialog.show()
         }
+
 
 
 

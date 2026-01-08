@@ -234,7 +234,7 @@
             android:layout_weight="1"
             android:text="New Sale"
             android:textAllCaps="false"
-            app:icon="@drawable/addcirclevector"
+            app:icon="@drawable/circleaddsvg"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/white"
@@ -254,13 +254,13 @@
             android:textAllCaps="false"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:icon="@drawable/collectvector"
+            app:icon="@drawable/colectprimarysvg"
             android:textColor="@color/primary"
             android:background="@drawable/btn_light_bg"
             app:backgroundTint="@null"
             app:iconTint="@null"
             app:iconGravity="textStart"
-            app:iconPadding="12dp"
+            app:iconPadding="15dp"
             android:fontFamily="@font/poppins" />
 
 

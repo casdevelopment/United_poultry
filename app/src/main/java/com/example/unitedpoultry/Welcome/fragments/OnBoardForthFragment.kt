@@ -1,6 +1,7 @@
 package com.example.unitedpoultry.Welcome.fragments
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +30,13 @@ class OnBoardForthFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.primary)
+
+        // Optional: Change status bar icons to dark if needed
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            activity?.window?.decorView?.systemUiVisibility = 0 // light icons: 0, dark icons: View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
 
         // User option click
         binding.optionRider.setOnClickListener {
@@ -81,5 +89,13 @@ class OnBoardForthFragment : Fragment() {
         prefs.edit()
             .putString("USER_TYPE", type)
             .apply()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        requireActivity().window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
     }
 }

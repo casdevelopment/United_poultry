@@ -310,7 +310,7 @@
                             android:layout_height="60dp"
                             android:layout_marginEnd="10dp"
                             android:background="@drawable/square_white"
-                            android:src="@drawable/personcontactvector" />
+                            android:src="@drawable/profileprimarysvg" />
 
 
 
@@ -368,7 +368,7 @@
                             android:layout_height="60dp"
                             android:layout_marginEnd="10dp"
                             android:background="@drawable/square_white"
-                            android:src="@drawable/phonecontactvector" />
+                            android:src="@drawable/contactsvg" />
 
 
 
@@ -426,7 +426,7 @@
                             android:layout_height="60dp"
                             android:layout_marginEnd="10dp"
                             android:background="@drawable/square_white"
-                            android:src="@drawable/locationcontactvector" />
+                            android:src="@drawable/locationpurplesvg" />
 
 
 
@@ -485,7 +485,7 @@
                             android:layout_height="60dp"
                             android:layout_marginEnd="10dp"
                             android:background="@drawable/square_white"
-                            android:src="@drawable/cardcontactvector" />
+                            android:src="@drawable/cardbluesvg" />
 
 
 

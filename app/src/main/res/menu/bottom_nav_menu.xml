@@ -3,24 +3,24 @@
 
     <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/homevector"
+        android:icon="@drawable/homevectorsvg"
         android:title="Home"/>
 
     <item
         android:id="@+id/nav_history"
-        android:icon="@drawable/historyvector"
+        android:icon="@drawable/historyvectorsvg"
         android:title="History"/>
 
     <item
         android:id="@+id/nav_address"
-        android:icon="@drawable/addressvector"
+        android:icon="@drawable/areavectorsvg"
         android:title="Areas"/>
 
 
 
     <item
         android:id="@+id/nav_profile"
-        android:icon="@drawable/profilevector"
+        android:icon="@drawable/profilevectorsvg"
         android:title="Profile"/>
 
 </menu>

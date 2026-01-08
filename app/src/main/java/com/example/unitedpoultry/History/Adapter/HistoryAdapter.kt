@@ -34,7 +34,7 @@ class HistoryAdapter(
         if (item.type.equals("Sale", true)) {
 
             // Sale → Box icon + black amount
-            holder.ivIcon.setImageResource(R.drawable.boxesvector)
+            holder.ivIcon.setImageResource(R.drawable.boxprimarysvg)
             holder.tvAmount.setTextColor(
                 holder.itemView.context.getColor(R.color.black)
             )
@@ -42,7 +42,7 @@ class HistoryAdapter(
         } else if (item.type.equals("Collection", true)) {
 
             // Collection → Card icon + green amount
-            holder.ivIcon.setImageResource(R.drawable.activitycardvector)
+            holder.ivIcon.setImageResource(R.drawable.cardsubprimarysvg)
             holder.tvAmount.setTextColor(
                 holder.itemView.context.getColor(R.color.green)
             )

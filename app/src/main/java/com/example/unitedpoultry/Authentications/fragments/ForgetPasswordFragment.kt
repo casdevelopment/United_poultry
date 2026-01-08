@@ -30,13 +30,39 @@ class ForgetPasswordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnSendOtp.setOnClickListener {
-            findNavController().navigate(R.id.action_forgot_to_verification)
+
+        }
+
+        binding.btnSendOtp.setOnClickListener {
+            if (validateInputs()) {
+
+                findNavController().navigate(R.id.action_forgot_to_verification)
+            }
+
         }
 
         binding.tvSignInClick.setOnClickListener {
             findNavController().navigate(R.id.action_forgot_to_login)
         }
 
+    }
+
+    private fun validateInputs(): Boolean {
+        var valid = true
+
+        binding.etEmailError.visibility = View.GONE
+
+        val email = binding.etEmail.text.toString().trim()
+
+
+        if (email.isEmpty()) {
+            binding.etEmailError.visibility = View.VISIBLE
+            binding.etEmailError.setText ("Email or Username required")
+
+            valid = false
+        }
+
+        return valid
     }
 
 }

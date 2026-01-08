@@ -40,7 +40,7 @@
                 android:id="@+id/ivIcon"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:src="@drawable/locationdotvector"
+                android:src="@drawable/locationsvg"
                 app:tint="@color/white"
                 android:layout_gravity="center"/>
         </androidx.cardview.widget.CardView>

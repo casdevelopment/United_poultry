@@ -11,7 +11,7 @@
     <string name="login_t2">OR</string>
     <string name="login_b2">Continue with google</string>
     <string name="login_t3">Don\'t have an account?</string>
-    <string name="login_t4">Sign Up</string>
+    <string name="login_t4"><u>Sign Up</u></string>
     <string name="signup_title">Create an account</string>
     <string name="signup_e1">Email</string>
     <string name="signup_e2">First name</string>

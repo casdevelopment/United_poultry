@@ -37,13 +37,13 @@ class RecentActivityAdapter(
 
         if (activity.type == "cash") {
             holder.tvAmount.text = "-Rs ${activity.amount}"
-            holder.ivType.setImageResource(R.drawable.activitycardvector)
+            holder.ivType.setImageResource(R.drawable.cardsubprimarysvg)
             holder.tvAmount.setTextColor(
                 context.getColor(R.color.primary)
             )
         } else {
             holder.tvAmount.text = "Rs ${activity.amount}"
-            holder.ivType.setImageResource(R.drawable.boxesvector)
+            holder.ivType.setImageResource(R.drawable.boxprimarysvg)
             holder.tvAmount.setTextColor(
                 context.getColor(R.color.black)
             )

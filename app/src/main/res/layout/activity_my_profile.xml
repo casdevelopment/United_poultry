@@ -4,19 +4,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:paddingBottom="40dp">
+    android:fillViewport="true">
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:paddingBottom="20dp">
 
     <LinearLayout
         android:id="@+id/tLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -33,14 +35,13 @@
             android:elevation="4dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp">
+            android:paddingStart="5dp">
 
             <!-- Back Arrow -->
             <ImageView
                 android:id="@+id/backArrow"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
@@ -56,45 +57,38 @@
                 android:fontFamily="@font/poppins"
                 android:text="My Profile"
                 android:textColor="@color/black"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <View
-        android:id="@+id/divider"
-        android:layout_width="0dp"
-        android:layout_height="2dp"
-        android:background="@color/brown"
-        android:elevation="6dp"
-        app:layout_constraintTop_toBottomOf="@id/titleBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.cardview.widget.CardView
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginEnd="10dp"
-            app:cardCornerRadius="27.5dp"
-            app:cardElevation="6dp"
+            android:layout_marginStart="5dp"
             android:layout_gravity="center"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="6dp"
             app:cardUseCompatPadding="true"
-            app:cardBackgroundColor="@color/white"
-            android:layout_marginLeft="5dp">
-
-            <TextView
-                android:id="@+id/tvInitials"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="BA"
-                android:textColor="@color/primary"
-                android:textStyle="bold"
-                android:textSize="32sp"
-                android:fontFamily="@font/poppins"/>
-        </androidx.cardview.widget.CardView>
-
+            app:cardBackgroundColor="@color/white">
 
         <TextView
+            android:id="@+id/tvInitials"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="BA"
+            android:textColor="@color/primary"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:fontFamily="@font/poppins"
+            android:background="@drawable/circle_white"/>
+    </androidx.cardview.widget.CardView>
+
+
+
+    <TextView
             android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -113,6 +107,7 @@
             android:textColor="@color/black"
             android:layout_marginStart="6dp"
             android:gravity="center"
+            android:layout_marginTop="3dp"
             android:layout_marginBottom="2dp"/>
 
 
@@ -122,6 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="5dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:paddingStart="25dp"
@@ -149,10 +145,10 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
             app:cardElevation="6dp"
-            android:padding="16dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:visibility="gone">
 
 
             <LinearLayout
@@ -189,14 +185,12 @@
                         android:layout_height="50dp"
                         app:cardCornerRadius="12dp"
                         app:cardElevation="0dp"
-                        android:layout_gravity="center"
-                        android:backgroundTint="@color/primary20">
+                        android:layout_gravity="center">
 
                         <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:src="@drawable/profilevector"
-                            app:tint="@color/primary"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/profileprimarysvg"
                             android:layout_gravity="center"/>
                     </androidx.cardview.widget.CardView>
 
@@ -232,19 +226,11 @@
                                 android:text="Ahmed Hassan"
                                 android:textColor="@color/black"
                                 android:textStyle="bold"
-                                android:textSize="16sp"
+                                android:textSize="14sp"
                                 android:layout_marginLeft="5dp"/>
 
                         </LinearLayout>
 
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/circle_white"
-                            android:contentDescription="Status"
-                            android:src="@drawable/nextarrowsinglevector"
-                            android:layout_gravity="center_vertical"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -271,14 +257,12 @@
                         android:layout_height="50dp"
                         app:cardCornerRadius="12dp"
                         app:cardElevation="0dp"
-                        android:layout_gravity="center"
-                        android:backgroundTint="@color/sub_primary18">
+                        android:layout_gravity="center">
 
                         <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:src="@drawable/cnicsinglevector"
-                            app:tint="@color/sub_primary"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/cniccleansvg"
                             android:layout_gravity="center"/>
                     </androidx.cardview.widget.CardView>
 
@@ -317,20 +301,12 @@
                                 android:fontFamily="@font/poppins"
                                 android:text="35201-1234567-9"
                                 android:textColor="@color/black"
-                                android:textSize="16sp"
+                                android:textSize="14sp"
                                 android:textStyle="bold"
                                 android:layout_marginLeft="5dp"/>
 
                         </LinearLayout>
 
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/circle_white"
-                            android:contentDescription="Status"
-                            android:src="@drawable/nextarrowsinglevector"
-                            android:layout_gravity="center_vertical"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -358,14 +334,12 @@
                         android:layout_height="50dp"
                         app:cardCornerRadius="12dp"
                         app:cardElevation="0dp"
-                        android:layout_gravity="center"
-                        android:backgroundTint="@color/mint20">
+                        android:layout_gravity="center">
 
                         <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:src="@drawable/calendervector"
-                            app:tint="@color/mint"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/calendercleansvg"
                             android:layout_gravity="center"/>
                     </androidx.cardview.widget.CardView>
 
@@ -403,20 +377,12 @@
                                 android:fontFamily="@font/poppins"
                                 android:text="15 Mar 1995"
                                 android:textColor="@color/black"
-                                android:textSize="16sp"
+                                android:textSize="14sp"
                                 android:textStyle="bold"
                                 android:layout_marginLeft="5dp"/>
 
                         </LinearLayout>
 
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/circle_white"
-                            android:contentDescription="Status"
-                            android:src="@drawable/nextarrowsinglevector"
-                            android:layout_gravity="center_vertical"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -445,14 +411,12 @@
                         android:layout_height="50dp"
                         app:cardCornerRadius="12dp"
                         app:cardElevation="0dp"
-                        android:layout_gravity="center"
-                        android:backgroundTint="@color/pink20">
+                        android:layout_gravity="center">
 
                         <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:src="@drawable/calendervector"
-                            app:tint="@color/pink"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/calenderclean2svg"
                             android:layout_gravity="center"/>
                     </androidx.cardview.widget.CardView>
 
@@ -491,19 +455,11 @@
                                 android:text="1 Jan 2025"
                                 android:textColor="@color/black"
                                 android:textStyle="bold"
-                                android:textSize="16sp"
+                                android:textSize="14sp"
                                 android:layout_marginLeft="5dp"/>
 
                         </LinearLayout>
 
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/circle_white"
-                            android:contentDescription="Status"
-                            android:src="@drawable/nextarrowsinglevector"
-                            android:layout_gravity="center_vertical"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -517,7 +473,6 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
             app:cardElevation="6dp"
-            android:padding="16dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="20dp">
@@ -527,7 +482,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="12dp"
+                android:padding="15dp"
                 android:gravity="center_vertical">
 
 
@@ -557,14 +512,12 @@
                         android:layout_height="50dp"
                         app:cardCornerRadius="12dp"
                         app:cardElevation="0dp"
-                        android:layout_gravity="center"
-                        android:backgroundTint="@color/primary20">
+                        android:layout_gravity="center">
 
                         <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:src="@drawable/phonesinglevector"
-                            app:tint="@color/primary"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/contactprimarysvg"
                             android:layout_gravity="center"/>
                     </androidx.cardview.widget.CardView>
 
@@ -596,7 +549,7 @@
                                 android:text="+923214567890"
                                 android:textColor="@color/black"
                                 android:textStyle="bold"
-                                android:textSize="16sp"
+                                android:textSize="14sp"
                                 android:layout_marginLeft="5dp"/>
 
 
@@ -628,14 +581,12 @@
                         android:layout_height="50dp"
                         app:cardCornerRadius="12dp"
                         app:cardElevation="0dp"
-                        android:layout_gravity="center"
-                        android:backgroundTint="@color/sub_primary18">
+                        android:layout_gravity="center">
 
                         <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:src="@drawable/phonesinglevector"
-                            app:tint="@color/sub_primary"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/contactsvg"
                             android:layout_gravity="center"/>
                     </androidx.cardview.widget.CardView>
 
@@ -668,7 +619,7 @@
                                 android:fontFamily="@font/poppins"
                                 android:text="35201-1234567-9"
                                 android:textColor="@color/black"
-                                android:textSize="16sp"
+                                android:textSize="14sp"
                                 android:textStyle="bold"
                                 android:layout_marginLeft="5dp"/>
 
@@ -699,14 +650,12 @@
                         android:layout_height="50dp"
                         app:cardCornerRadius="12dp"
                         app:cardElevation="0dp"
-                        android:layout_gravity="center"
-                        android:backgroundTint="@color/mint20">
+                        android:layout_gravity="center">
 
                         <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:src="@drawable/locationsinglevector"
-                            app:tint="@color/mint"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/locationprimarysvg"
                             android:layout_gravity="center"/>
                     </androidx.cardview.widget.CardView>
 
@@ -739,7 +688,7 @@
                                 android:fontFamily="@font/poppins"
                                 android:text="Shop # 45, Main Market, Gulberg |||"
                                 android:textColor="@color/black"
-                                android:textSize="16sp"
+                                android:textSize="14sp"
                                 android:textStyle="bold"
                                 android:layout_marginLeft="5dp"/>
 
@@ -755,25 +704,24 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
             app:cardElevation="6dp"
-            android:padding="16dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="12dp"
+                android:padding="15dp"
                 android:gravity="center_vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingLeft="20dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
 
 
                     <ImageView
@@ -782,7 +730,7 @@
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/square_white"
                         android:contentDescription="Status"
-                        android:src="@drawable/employeevector"
+                        android:src="@drawable/infocleansvg"
                         android:layout_gravity="center_vertical"/>
 
                     <TextView
@@ -803,8 +751,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:layout_marginLeft="15dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp">
 
 
                     <TextView
@@ -845,8 +794,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:layout_marginLeft="15dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp">
 
 
                     <TextView
@@ -888,8 +838,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:layout_marginLeft="15dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp">
 
 
                     <TextView
@@ -931,8 +882,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:layout_marginLeft="15dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp">
 
 
                     <TextView
@@ -973,8 +925,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:layout_marginLeft="15dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp">
 
 
                     <TextView
@@ -1016,8 +969,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:layout_marginLeft="15dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp">
 
 
                     <TextView
@@ -1052,25 +1006,24 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
             app:cardElevation="6dp"
-            android:padding="16dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="12dp"
+                android:padding="15dp"
                 android:gravity="center_vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingLeft="20dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
 
 
                     <ImageView
@@ -1079,7 +1032,7 @@
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/square_white"
                         android:contentDescription="Status"
-                        android:src="@drawable/atmvector"
+                        android:src="@drawable/cardcleansvg"
                         android:layout_gravity="center_vertical"/>
 
                     <TextView
@@ -1100,8 +1053,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:layout_marginLeft="15dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp">
 
 
                     <TextView
@@ -1142,8 +1096,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:layout_marginLeft="15dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp">
 
 
                     <TextView
@@ -1185,8 +1140,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:layout_marginLeft="15dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp">
 
 
                     <TextView
@@ -1228,8 +1184,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:layout_marginLeft="15dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp">
 
 
                     <TextView
@@ -1270,8 +1227,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:layout_marginLeft="15dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp">
 
 
                     <TextView
@@ -1307,24 +1265,24 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
             app:cardElevation="6dp"
-            android:padding="16dp"
+            android:layout_marginTop="20dp"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="20dp">
+            android:layout_marginEnd="8dp">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="12dp"
+                android:padding="15dp"
                 android:gravity="center_vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingLeft="20dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
 
 
                     <ImageView
@@ -1333,7 +1291,7 @@
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/square_white"
                         android:contentDescription="Status"
-                        android:src="@drawable/locksinglevector"
+                        android:src="@drawable/lockvectorfinal"
                         app:tint="@color/primary"
                         android:layout_gravity="center_vertical"/>
 
@@ -1355,8 +1313,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:layout_marginLeft="15dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp">
 
 
                     <TextView
@@ -1396,8 +1355,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:layout_marginLeft="15dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp">
 
 
                     <TextView
@@ -1439,8 +1399,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:layout_marginLeft="15dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp">
 
 
                     <TextView
@@ -1492,7 +1453,7 @@
                 android:layout_weight="1"
                 android:text="Edit Profile"
                 android:textAllCaps="false"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:background="@drawable/btn_continue_bg"
@@ -1508,14 +1469,11 @@
                 android:text="Download Profile PDF"
                 android:layout_weight="1"
                 android:textAllCaps="false"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:textStyle="bold"
                 android:textColor="@color/primary"
                 android:background="@drawable/btn_light_bg"
                 app:backgroundTint="@null"
-                app:iconTint="@color/primary"
-                app:iconGravity="textStart"
-                app:iconPadding="12dp"
                 android:fontFamily="@font/poppins"
                 />
 

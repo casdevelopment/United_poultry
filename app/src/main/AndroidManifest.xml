@@ -84,7 +84,7 @@
             android:exported="false" />
         <activity
             android:name=".AdminDashBoard.AdminDashBoardActivity"
-            android:exported="true" /> <!-- <intent-filter> -->
+            android:exported="true"/>  <!-- <intent-filter> -->
 <!--         <intent-filter>-->
 <!--         <action android:name="android.intent.action.MAIN" />-->
 <!--         <category android:name="android.intent.category.LAUNCHER" />-->
@@ -157,7 +157,12 @@
 <!--         </activity>-->
         <activity
             android:name=".Authentications.AuthenticationActivity"
-            android:exported="false" />
+            android:exported="true" />
+<!--                 <intent-filter>-->
+<!--                 <action android:name="android.intent.action.MAIN" />-->
+<!--                 <category android:name="android.intent.category.LAUNCHER" />-->
+<!--                 </intent-filter>-->
+<!--                 </activity>-->
         <activity
             android:name=".Welcome.WelcomeActivity"
             android:exported="false" />

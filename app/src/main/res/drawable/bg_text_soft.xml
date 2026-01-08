@@ -5,6 +5,6 @@
     <corners android:radius="6dp"/>
 
     <!-- 17% black background -->
-    <solid android:color="@color/primary20"/>
+    <solid android:color="@color/primary9"/>
 
 </shape>

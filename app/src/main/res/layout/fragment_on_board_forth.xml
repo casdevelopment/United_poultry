@@ -9,11 +9,12 @@
         >
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/onboardforthbackground"
-            android:paddingBottom="20dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/onboarding4n"
+        android:paddingBottom="20dp">
+
 
 
 
@@ -24,7 +25,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="@string/forth_t2"
+        android:text="Choose Your Role"
         android:textSize="20sp"
         android:textColor="@color/black"
         android:fontFamily="sans-serif-medium"
@@ -32,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="25dp"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:gravity="center"
@@ -85,7 +86,7 @@
                 android:background="@color/primary"
                 android:contentDescription="App Logo"
                 android:scaleType="centerCrop"
-                android:src="@drawable/onboardforthimage1" />
+                android:src="@drawable/onboarding4final1" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -96,7 +97,7 @@
                 android:text="@string/forth_t6"
                 android:textColor="@color/primary"
                 android:textSize="15sp"
-                android:textStyle="normal" />
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -131,7 +132,7 @@
                 android:background="@color/sub_primary"
                 android:contentDescription="App Logo"
                 android:scaleType="centerCrop"
-                android:src="@drawable/onboardforthimage2" />
+                android:src="@drawable/onboarding4final2" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -142,7 +143,7 @@
                 android:text="@string/forth_t8"
                 android:textColor="@color/sub_primary"
                 android:textSize="15sp"
-                android:textStyle="normal"
+                android:textStyle="bold"
 
 
                 />

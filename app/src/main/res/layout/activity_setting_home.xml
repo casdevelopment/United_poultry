@@ -4,20 +4,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:paddingBottom="40dp">
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="30dp"
+        android:paddingBottom="20dp"
         android:background="@drawable/profilebackground">
 
         <LinearLayout
             android:id="@+id/tLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -27,20 +28,52 @@
             app:layout_constraintVertical_bias="0.05">
 
 
-            <TextView
-                android:id="@+id/tvInitials"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/square_white"
-                android:gravity="center"
-                android:text="BA"
-                android:textColor="@color/primary"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:fontFamily="@font/poppins"
-                android:backgroundTint="@color/white"
-                android:layout_gravity="center"/>
+<!--            <TextView-->
+<!--                android:id="@+id/tvInitials"-->
+<!--                android:layout_width="55dp"-->
+<!--                android:layout_height="55dp"-->
+<!--                android:layout_marginEnd="10dp"-->
+<!--                android:background="@drawable/square_white"-->
+<!--                android:gravity="center"-->
+<!--                android:text="BA"-->
+<!--                android:textColor="@color/primary"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textSize="20sp"-->
+<!--                android:fontFamily="@font/poppins"-->
+<!--                android:backgroundTint="@color/white"-->
+<!--                android:layout_gravity="center"/>-->
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <!-- Initials Circle -->
+                <TextView
+                    android:id="@+id/tvInitials"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:background="@drawable/square_white"
+                    android:gravity="center"
+                    android:text="BA"
+                    android:textColor="@color/primary"
+                    android:textStyle="bold"
+                    android:textSize="24sp"
+                    android:fontFamily="@font/poppins" />
+
+                <!-- Small Tick -->
+                <ImageView
+                    android:id="@+id/ivTick"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:src="@drawable/yellowcamerasvg"
+                    android:background="@drawable/circle_white"
+                    android:padding="2dp"
+                    />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/tvName"
@@ -103,10 +136,9 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="6dp"
-                android:padding="16dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="20dp">
+                android:layout_marginEnd="8dp">
 
 
                 <LinearLayout
@@ -145,14 +177,13 @@
                             android:layout_height="50dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
-                            android:layout_gravity="center"
-                            android:backgroundTint="@color/primary20">
+                            android:layout_gravity="center">
 
                             <ImageView
                                 android:id="@+id/ivIcon"
-                                android:layout_width="28dp"
-                                android:layout_height="28dp"
-                                android:src="@drawable/profilevector"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/profileprimarysvg"
                                 app:tint="@color/primary"
                                 android:layout_gravity="center"/>
                         </androidx.cardview.widget.CardView>
@@ -343,14 +374,12 @@
                             android:layout_height="50dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
-                            android:layout_gravity="center"
-                            android:backgroundTint="@color/purple15">
+                            android:layout_gravity="center">
 
                             <ImageView
-                                android:layout_width="28dp"
-                                android:layout_height="28dp"
-                                android:src="@drawable/dollarpurplevector"
-                                app:tint="@color/purple"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/purpledollarsvg"
                                 android:layout_gravity="center"/>
                         </androidx.cardview.widget.CardView>
 
@@ -435,19 +464,16 @@
 
                         <!-- Status Icon -->
                         <androidx.cardview.widget.CardView
-
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
-                            android:layout_gravity="center"
-                            android:backgroundTint="@color/blue15">
+                            android:layout_gravity="center">
 
                             <ImageView
-                                android:layout_width="28dp"
-                                android:layout_height="28dp"
-                                android:src="@drawable/printvector"
-                                app:tint="@color/blue"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/blueprintersvg"
                                 android:layout_gravity="center"/>
                         </androidx.cardview.widget.CardView>
 
@@ -553,17 +579,15 @@
                             android:layout_height="50dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
-                            android:layout_gravity="center"
-                            android:backgroundTint="@color/purple15">
+                            android:layout_gravity="center">
 
-                            <ImageView
-                                android:layout_width="28dp"
-                                android:layout_height="28dp"
-                                android:src="@drawable/notificationsinglevector"
-                                app:tint="@color/purple"
-                                android:layout_gravity="center"/>
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/purplebellsvg"
+                            android:layout_gravity="center"/>
+
                         </androidx.cardview.widget.CardView>
-
 
 
 
@@ -633,20 +657,18 @@
 
                         <!-- Status Icon -->
                         <androidx.cardview.widget.CardView
-
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
-                            android:layout_gravity="center"
-                            android:backgroundTint="@color/mint20">
+                            android:layout_gravity="center">
 
                             <ImageView
-                                android:layout_width="28dp"
-                                android:layout_height="28dp"
-                                android:src="@drawable/globevector"
-                                app:tint="@color/mint"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/greenglobesvg"
                                 android:layout_gravity="center"/>
+
                         </androidx.cardview.widget.CardView>
 
 
@@ -765,14 +787,12 @@
                             android:layout_height="50dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
-                            android:layout_gravity="center"
-                            android:backgroundTint="@color/purple15">
+                            android:layout_gravity="center">
 
                             <ImageView
-                                android:layout_width="28dp"
-                                android:layout_height="28dp"
-                                android:src="@drawable/helpsinglevector"
-                                app:tint="@color/brownn"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/brownquestionmarksvg"
                                 android:layout_gravity="center"/>
                         </androidx.cardview.widget.CardView>
 
@@ -845,19 +865,16 @@
 
                         <!-- Status Icon -->
                         <androidx.cardview.widget.CardView
-
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
-                            android:layout_gravity="center"
-                            android:backgroundTint="@color/pink20">
+                            android:layout_gravity="center">
 
                             <ImageView
-                                android:layout_width="28dp"
-                                android:layout_height="28dp"
-                                android:src="@drawable/helpsinglevector"
-                                app:tint="@color/pink"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/purplequestionsvg"
                                 android:layout_gravity="center"/>
                         </androidx.cardview.widget.CardView>
 
@@ -967,14 +984,12 @@
                             android:layout_height="50dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
-                            android:layout_gravity="center"
-                            android:backgroundTint="@color/red20">
+                            android:layout_gravity="center">
 
                             <ImageView
-                                android:layout_width="28dp"
-                                android:layout_height="28dp"
-                                android:src="@drawable/logoutvector"
-                                app:tint="@color/red"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/logoutsvg"
                                 android:layout_gravity="center"/>
                         </androidx.cardview.widget.CardView>
 

@@ -22,7 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="50dp"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
@@ -41,14 +41,14 @@
         android:id="@+id/imgTop"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/verificationcodeimage"
+        android:src="@drawable/otpverifiactionsvg"
         android:scaleType="fitCenter"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintHeight_percent="0.45"/>
 
     <!-- Title Text -->
@@ -94,7 +94,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintTop_toBottomOf="@id/tvDescription"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -193,7 +193,8 @@
         app:layout_constraintTop_toBottomOf="@id/btnVerify"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp"
         android:gravity="center">
 
         <TextView
@@ -202,7 +203,7 @@
             android:text="@string/verification_code_t3"
             android:textSize="12sp"
             android:fontFamily="@font/poppins"
-            android:textColor="@color/sub_primary" />
+            android:textColor="@color/black" />
 
         <!-- Sign Up clickable -->
         <TextView
@@ -211,7 +212,7 @@
             android:layout_height="wrap_content"
             android:text="@string/verification_code_t4"
             android:textSize="12sp"
-            android:textColor="@color/primary"
+            android:textColor="@color/sub_primary"
             android:textStyle="bold"
             android:fontFamily="@font/poppins"
             android:layout_marginStart="4dp"/>

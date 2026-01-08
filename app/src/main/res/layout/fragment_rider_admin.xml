@@ -21,14 +21,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.05">
 
-        <ImageView
-            android:id="@+id/backArrow"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/backarrowwhitevector"
-            android:contentDescription="Back"
-            android:layout_marginStart="10dp"
-            />
+<!--        <ImageView-->
+<!--            android:id="@+id/backArrow"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:src="@drawable/backarrowwhitevector"-->
+<!--            android:contentDescription="Back"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            />-->
 
         <TextView
             android:id="@+id/tvAreaName"
@@ -70,7 +70,7 @@
             android:id="@+id/etSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Search records"
+            android:hint="Search Riders..."
             android:padding="14dp"
             android:textColor="@color/black"
             android:textColorHint="@color/black44"
@@ -102,7 +102,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="10dp"
         android:layout_margin="10dp">
 
 
@@ -119,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:id="@+id/filterAll"
-                android:textSize="12dp"
+                android:textSize="10dp"
                 android:text="All"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
@@ -135,7 +134,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Active"
-                android:textSize="12dp"
+                android:textSize="10dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:layout_marginEnd="4dp"
@@ -150,7 +149,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Offline"
-                android:textSize="12dp"
+                android:textSize="10dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:layout_marginEnd="4dp"
@@ -165,7 +164,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Suspended"
-                android:textSize="12dp"
+                android:textSize="10dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:gravity="center"
@@ -183,21 +182,29 @@
             android:id="@+id/rvRiders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp" />
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/fabAdd"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_margin="16dp"
-        android:contentDescription="Add"
-        android:backgroundTint="@color/primary"
-        app:srcCompat="@drawable/addvector"
-        app:tint="@color/white"
+        app:cardBackgroundColor="@color/primary"
+        app:cardElevation="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/pplussvg"
+            app:tint="@color/white"
+            android:scaleType="center"
+            android:padding="12dp"/>
+    </com.google.android.material.card.MaterialCardView>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

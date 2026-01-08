@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="12dp"
-    android:layout_margin="6dp"
+    android:layout_margin="4dp"
     app:cardElevation="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="12dp">
 
         <!-- NAME + STATUS -->
         <LinearLayout
@@ -52,8 +52,7 @@
                         android:textColor="@color/primary"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginLeft="10dp" />
 
                     <TextView
                         android:id="@+id/subTitle"
@@ -76,7 +75,6 @@
                     android:paddingBottom="3dp"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
-                    android:layout_marginRight="5dp"
                     android:backgroundTint="@color/primary"
                     android:background="@drawable/capsule_bg_sales"
                     android:layout_gravity="center">
@@ -88,7 +86,6 @@
                         android:textSize="8sp"
                         android:textStyle="bold"
                         android:textColor="@color/primary"
-                        android:layout_marginStart="6dp"
                         android:layout_gravity="center_vertical"/>
                 </LinearLayout>
             </LinearLayout>

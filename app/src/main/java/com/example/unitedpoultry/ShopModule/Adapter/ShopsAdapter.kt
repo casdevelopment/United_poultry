@@ -53,12 +53,12 @@ class ShopsAdapter(
         if (item.dues == 0) {
             holder.tvDues.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.black))
             holder.btnDeal.text = "View"
-            holder.btnDeal.icon = ContextCompat.getDrawable(holder.itemView.context, R.drawable.eyevector)
+            holder.btnDeal.icon = ContextCompat.getDrawable(holder.itemView.context, R.drawable.eyevectorfinal)
 
         } else {
             holder.tvDues.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.red))
             holder.btnDeal.text = "Collect"
-            holder.btnDeal.icon = ContextCompat.getDrawable(holder.itemView.context, R.drawable.collectvector)
+            holder.btnDeal.icon = ContextCompat.getDrawable(holder.itemView.context, R.drawable.colectprimarysvg)
 
         }
 

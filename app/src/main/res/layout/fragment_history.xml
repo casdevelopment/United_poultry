@@ -10,62 +10,74 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/dashboardbackgroundhistory">
+        android:layout_height="wrap_content">
 
 
-        <LinearLayout
-            android:id="@+id/tLayout"
-            android:layout_width="match_parent"
+
+
+        <FrameLayout
+            android:id="@+id/topPortion"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:orientation="horizontal"
-            android:layout_marginTop="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            android:background="@android:color/transparent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.05">
-
-
-
-            <TextView
-                android:id="@+id/tvAreaName"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:fontFamily="@font/poppins"
-                android:text="History"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginStart="40dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <ImageView
-                android:id="@+id/backArrow"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/historybigvector"
-                android:contentDescription="Back"
-                android:layout_marginEnd="20dp"
-                />
+                android:id="@+id/bgImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bgfull" />
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/tLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="60dp">
+
+
+
+                <TextView
+                    android:id="@+id/tvAreaName"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="History"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="40dp"/>
+
+                <ImageView
+                    android:id="@+id/backArrow"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/historybigvector"
+                    android:contentDescription="Back"
+                    android:layout_marginEnd="20dp"
+                    />
+
+            </LinearLayout>
+
+        </FrameLayout>
 
 
         <LinearLayout
             android:id="@+id/topLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
             android:orientation="vertical"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tLayout">
+            app:layout_constraintTop_toBottomOf="@id/topPortion">
 
             <LinearLayout
                 android:id="@+id/filterLayout"

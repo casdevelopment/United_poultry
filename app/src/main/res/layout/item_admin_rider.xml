@@ -4,15 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
     app:cardCornerRadius="12dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginBottom="10dp"
     app:cardElevation="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="12dp"
         android:orientation="vertical"
-        android:padding="12dp">
+        >
 
         <!-- NAME + STATUS -->
         <LinearLayout
@@ -54,10 +57,10 @@
                         android:fontFamily="@font/poppins"
                         android:text="Ahmed Hassan"
                         android:textColor="@color/black"
-                        android:textSize="15sp"
+                        android:textSize="14sp"
                         android:textStyle="bold"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginTop="15dp"/>
+                        android:layout_marginTop="10dp"/>
 
                     <TextView
                         android:id="@+id/tvJoiningDate"
@@ -80,7 +83,7 @@
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:layout_marginRight="5dp"
-                    android:backgroundTint="@color/primary"
+                    android:backgroundTint="@color/mint"
                     android:background="@drawable/capsule_bg_sales"
                     android:layout_gravity="center">
                     <TextView
@@ -90,7 +93,7 @@
                         android:text="Active"
                         android:textSize="12sp"
                         android:textStyle="bold"
-                        android:textColor="@color/primary"
+                        android:textColor="@color/mint"
                         android:layout_marginStart="6dp"
                         android:layout_gravity="center_vertical"/>
                 </LinearLayout>
@@ -98,15 +101,6 @@
 
 
         </LinearLayout>
-
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/brown"
-            android:elevation="2dp"
-            android:layout_margin="20dp"/>
 
 
         <LinearLayout
@@ -133,7 +127,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="17"
+                    android:text="14"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
                     android:textSize="15sp"
@@ -173,7 +167,7 @@
                     android:text="7"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     android:textColor="@color/black"
                     android:layout_gravity="center"/>
 
@@ -209,7 +203,7 @@
                     android:text="Rs.95000"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     android:textColor="@color/black"
                     android:layout_gravity="center"/>
 
@@ -241,7 +235,7 @@
                 android:layout_weight="1"
                 android:text="View Details"
                 android:textAllCaps="false"
-                app:icon="@drawable/hidevector"
+                app:icon="@drawable/eyevectorfinal"
                 android:textSize="11sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
@@ -261,7 +255,7 @@
                 android:textAllCaps="false"
                 android:textSize="11sp"
                 android:textStyle="bold"
-                app:icon="@drawable/editsinglevector"
+                app:icon="@drawable/singleditsvg"
                 android:textColor="@color/primary"
                 android:background="@drawable/btn_light_bg"
                 app:backgroundTint="@null"

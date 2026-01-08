@@ -8,33 +8,36 @@
     tools:context=".Welcome.fragments.OnBoardFirstFragment">
 
 <!-- Top Image -->
-<ImageView
-    android:id="@+id/imgTop"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:src="@drawable/onboardfirstimage"
-    android:scaleType="fitCenter"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:layout_margin="24dp"
-    app:layout_constraintHeight_percent="0.45"/>
+    <ImageView
+        android:id="@+id/imgTop"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/onboardonesvg"
+        android:scaleType="centerCrop"
+        android:background="@null"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.45"
+        android:layout_margin="35dp"/>
+
 
 <!-- Title Text -->
 <TextView
     android:id="@+id/tvTitle"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:text="@string/first_t1"
+    android:text="Experience Fast and Reliable Delivery "
     android:textSize="22sp"
-    android:textColor="@color/white"
-    android:fontFamily="@font/quicksand"
+    android:textColor="@color/black"
+    android:fontFamily="@font/poppins"
+    android:textStyle="bold"
     app:layout_constraintTop_toBottomOf="@id/imgTop"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    android:layout_marginTop="16dp"
-    android:layout_marginStart="50dp"
-    android:layout_marginEnd="50dp"
+    android:layout_marginTop="14dp"
+    android:layout_marginStart="30dp"
+    android:layout_marginEnd="30dp"
     android:gravity="center"
    />
 
@@ -60,7 +63,7 @@
         android:id="@+id/imgDots"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/dotsf1"
+        android:src="@drawable/dot1svg"
         android:contentDescription="Dots"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/tvDescription"
@@ -68,12 +71,12 @@
         android:layout_marginLeft="30dp"/>
 
     <!-- Arrow -->
-    <ImageButton
+    <ImageView
         android:id="@+id/btnNext"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:background="@drawable/circle_white"
-        android:src="@drawable/arrowf1"
+        android:src="@drawable/group_1261157058"
         android:contentDescription="Next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/imgDots"
