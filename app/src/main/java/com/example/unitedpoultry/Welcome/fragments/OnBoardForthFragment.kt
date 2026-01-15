@@ -40,7 +40,7 @@ class OnBoardForthFragment : Fragment() {
 
         // User option click
         binding.optionRider.setOnClickListener {
-            selectUserType("user")
+            selectUserType("rider")
         }
 
         // Admin option click
@@ -73,7 +73,7 @@ class OnBoardForthFragment : Fragment() {
     private fun selectUserType(type: String) {
         selectedUserType = type
 
-        if (type == "user") {
+        if (type == "rider") {
             binding.optionRider.setBackgroundResource(R.drawable.border_selected)
             binding.optionAdmin.setBackgroundResource(R.drawable.bg_admin_unselected)
         } else {

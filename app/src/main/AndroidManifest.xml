@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.unitedpoultry"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
+        android:name=".MyApplication"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -12,6 +20,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UnitedPoultry"
         tools:targetApi="31">
+
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+
+
         <activity
             android:name=".BaseActivity"
             android:exported="false" />
@@ -75,16 +97,20 @@
             android:exported="false" />
         <activity
             android:name=".AdminShopModule.AdminShopListActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <activity
             android:name=".AdminArea.EditAreaActivity"
             android:exported="false" />
+
         <activity
             android:name=".AdminArea.AddNewAreaActivity"
             android:exported="false" />
+
         <activity
             android:name=".AdminDashBoard.AdminDashBoardActivity"
-            android:exported="true"/>  <!-- <intent-filter> -->
+            android:exported="true"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>  <!-- <intent-filter> -->
 <!--         <intent-filter>-->
 <!--         <action android:name="android.intent.action.MAIN" />-->
 <!--         <category android:name="android.intent.category.LAUNCHER" />-->
@@ -157,7 +183,8 @@
 <!--         </activity>-->
         <activity
             android:name=".Authentications.AuthenticationActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
 <!--                 <intent-filter>-->
 <!--                 <action android:name="android.intent.action.MAIN" />-->
 <!--                 <category android:name="android.intent.category.LAUNCHER" />-->

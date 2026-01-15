@@ -65,13 +65,23 @@
                     android:layout_weight="1" />
 
                 <!-- Contact Icon -->
-                <ImageView
-                    android:id="@+id/btnEdit"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/editShop"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/adminshopeditvector"
-                    android:contentDescription="Contact"
-                    android:layout_gravity="center_vertical"/>
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/ice_blue15">
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/editclean"
+                        app:tint="@color/white"
+                        android:layout_gravity="center"/>
+                </androidx.cardview.widget.CardView>
+
             </LinearLayout>
 
             <TextView
@@ -330,7 +340,7 @@
                                 android:id="@+id/ivIcon"
                                 android:layout_width="28dp"
                                 android:layout_height="28dp"
-                                android:src="@drawable/profilevector"
+                                android:src="@drawable/contactclean"
                                 app:tint="@color/primary"
                                 android:layout_gravity="center"/>
                         </androidx.cardview.widget.CardView>
@@ -365,7 +375,7 @@
                                     android:layout_marginTop="10dp"/>
 
                                 <TextView
-                                    android:id="@+id/tvMessage"
+                                    android:id="@+id/tvContactName"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins"
@@ -409,7 +419,7 @@
                             <ImageView
                                 android:layout_width="28dp"
                                 android:layout_height="28dp"
-                                android:src="@drawable/phonesinglevector"
+                                android:src="@drawable/phoneclean"
                                 app:tint="@color/primary"
                                 android:layout_gravity="center"/>
                         </androidx.cardview.widget.CardView>
@@ -490,7 +500,7 @@
                             <ImageView
                                 android:layout_width="28dp"
                                 android:layout_height="28dp"
-                                android:src="@drawable/locationsinglevector"
+                                android:src="@drawable/locationclean"
                                 app:tint="@color/primary"
                                 android:layout_gravity="center"/>
                         </androidx.cardview.widget.CardView>
@@ -598,7 +608,7 @@
                             <ImageView
                                 android:layout_width="28dp"
                                 android:layout_height="28dp"
-                                android:src="@drawable/percentvector"
+                                android:src="@drawable/percentclean"
                                 app:tint="@color/primary"
                                 android:layout_gravity="center"/>
                         </androidx.cardview.widget.CardView>
@@ -677,7 +687,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:src="@drawable/cardcontactvector"
+                                android:src="@drawable/cardclean"
                                 app:tint="@color/primary" />
                         </androidx.cardview.widget.CardView>
 

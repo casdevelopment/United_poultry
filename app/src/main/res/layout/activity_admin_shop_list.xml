@@ -1,153 +1,230 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:background="@color/white">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="20dp"
-        android:background="@drawable/riderdashboardonlinebackground">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:background="@color/white">
 
-
-        <LinearLayout
-            android:id="@+id/tLayout"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:orientation="horizontal"
-            android:layout_marginTop="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.05">
+            android:layout_height="wrap_content">
 
+            <!-- Top Curve Image -->
             <ImageView
-                android:id="@+id/backArrow"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/backarrowwhitevector"
-                android:contentDescription="Back"
-                android:layout_marginStart="10dp"
-                />
+                android:id="@+id/ivCurve"
+                android:layout_width="0dp"
+                android:layout_height="220dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/bgdotsclean"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-            <TextView
-                android:id="@+id/tvAreaName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:fontFamily="@font/poppins"
-                android:text="Gulberg Shops"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/searchLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusTopStart="16dp"
-            app:boxCornerRadiusTopEnd="16dp"
-            app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusBottomEnd="16dp"
-            app:boxStrokeWidth="1dp"
-            app:boxStrokeColor="@color/white"
-            app:boxBackgroundColor="@color/primary20"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tLayout"
-            android:layout_marginTop="110dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etSearch"
+            <!-- Title inside curve -->
+            <LinearLayout
+                android:id="@+id/tLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Search Shops..."
-                android:padding="14dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black44"
-                android:background="@null"
-                android:singleLine="true"
-                android:drawableStart="@drawable/searchvector"
-                android:drawablePadding="10dp"/>
+                android:layout_marginStart="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="@id/ivCurve"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="32dp">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/backArrow"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:cardElevation="0dp"
+                    android:background="@drawable/square_white"
+                    android:backgroundTint="@color/ice_blue15"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/singlearrow"
+                        app:tint="@color/white"
+                        android:layout_gravity="center"/>
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tvAreaName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Gulberg Shops"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
 
 
-        <LinearLayout
-            android:id="@+id/topLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/searchLayout">
-
-            <TextView
+            <!-- Search Bar inside curve -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/searchLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/quicksand"
-                android:text="All Shops"
-                android:textColor="@color/primary"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusTopStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxStrokeWidth="1dp"
+                app:boxStrokeColor="@color/primary"
+                app:boxBackgroundColor="@color/primary20"
+                app:hintEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tLayout"
+                android:layout_marginTop="100dp">
 
-            <TextView
-                android:id="@+id/tvShopsCount"
-                android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Search Shops..."
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black44"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textSize="14dp"
+                    android:drawableStart="@drawable/searchvector"
+                    android:drawablePadding="10dp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <!-- Content container below curve -->
+            <LinearLayout
+                android:id="@+id/contentContainer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:text="45 Shops"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintTop_toBottomOf="@id/searchLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <!-- Top row (All Areas title etc.) -->
+                <LinearLayout
+                    android:id="@+id/topLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/quicksand"
+                        android:text="All Shops"
+                        android:textColor="@color/primary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvShopsCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="45 Shops"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <!-- RecyclerView for areas -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvShopList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:clipToPadding="false"
+                    android:padding="5dp" />
+
+                <!-- Empty State -->
+                <LinearLayout
+                    android:id="@+id/layoutEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:padding="40dp">
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:src="@drawable/nodata"
+                        app:tint="@color/black44"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No Records Found"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="16dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Try adding new items or refresh the list"
+                        android:textSize="14sp"
+                        android:textColor="@color/black60"
+                        android:layout_marginTop="6dp"/>
+                </LinearLayout>
 
 
-        </LinearLayout>
+            </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvShopList"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:padding="5dp"
-            android:layout_margin="10dp"
-            android:nestedScrollingEnabled="true"
-            app:layout_constraintTop_toBottomOf="@id/topLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabAdd"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="16dp"
-            android:contentDescription="Add"
-            android:backgroundTint="@color/primary"
-            app:srcCompat="@drawable/addvector"
-            app:tint="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/fabAdd"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="@color/primary"
+        app:cardElevation="6dp"
+        android:layout_gravity="bottom|end">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/pplussvg"
+            android:scaleType="center"
+            android:padding="12dp"
+            app:tint="@color/white"/>
+    </com.google.android.material.card.MaterialCardView>
+
+</FrameLayout>

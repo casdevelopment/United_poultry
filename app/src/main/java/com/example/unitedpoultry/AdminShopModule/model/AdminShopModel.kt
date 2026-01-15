@@ -1,10 +1,39 @@
 package com.example.unitedpoultry.AdminShopModule.model
 
-data class AdminShopModel(
+data class Area(
+    val id: Int,
     val name: String,
-    val address: String,
-    val status: String,
-    val total: Int,
-    val Discount: String,
-    val recieveable: Int,
+    val description: String,
+    val city: String,
+    val is_active: Boolean,
+    val created_at: String,
+    val updated_at: String
 )
+
+data class ShopModel(
+    val id: Int,
+    val name: String,
+    val contact_person: String,
+    val phone_number: String,
+    val area_id: Int,
+    val address: String,
+    val image: String?,
+    val discount_per_petti: String,
+    val is_active: Boolean,
+    val created_at: String,
+    val updated_at: String,
+    val area: Area
+)
+
+data class ShopsPagination(
+    val last_page: Int,
+    val current_page: Int,
+    val total_matching_record: Int
+)
+
+data class ShopsData(
+    val shops: List<ShopModel>,
+    val pagination: ShopsPagination
+)
+
+

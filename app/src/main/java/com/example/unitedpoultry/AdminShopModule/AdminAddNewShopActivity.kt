@@ -1,43 +1,274 @@
 package com.example.unitedpoultry.AdminShopModule
 
-import android.content.Intent
-import android.content.res.ColorStateList
+import android.Manifest
+import android.app.Activity
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
+import android.view.WindowManager
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.unitedpoultry.AdminDashBoard.AdminDashBoardActivity
+import com.bumptech.glide.Glide
+import com.example.unitedpoultry.AdminShopModule.viewmodel.AddShopViewModel
 import com.example.unitedpoultry.BaseActivity
-import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.ActivityAdminAddNewShopBinding
-import com.example.unitedpoultry.databinding.ActivityAdminShopDetailsBinding
+import com.example.unitedpoultry.util.AppUtil
+import com.google.gson.Gson
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
+import java.io.FileOutputStream
+import com.example.unitedpoultry.network.retrofit.BaseResponse
 
 
 class AdminAddNewShopActivity : BaseActivity() {
 
     private lateinit var binding: ActivityAdminAddNewShopBinding
+    private val viewModel: AddShopViewModel by viewModel()
+
+    private var selectedImageFile: File? = null
+
+    // ------------------ GALLERY ------------------
+    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        uri?.let { handleGalleryImage(it) }
+    }
+
+    // ------------------ CAMERA ------------------
+    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
+        bitmap?.let { handleCameraImage(it) } ?: Toast.makeText(this, "Failed to capture image", Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Initialize view binding
         binding = ActivityAdminAddNewShopBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        configureStatusBar(
-            isLightBackground = true,
-            colorResId = android.R.color.white
-        )
+        configureStatusBar(true, android.R.color.white)
+        setupClicks()
+        resetImageViews()
+    }
 
+    private fun setupClicks() {
+        binding.backArrow.setOnClickListener { finish() }
 
+        binding.btnCancel.setOnClickListener { finish() }
 
-        binding.backArrow.setOnClickListener {
-            finish()
-        }
-
+        binding.imageContainer.setOnClickListener { showImagePickerDialog() }
         binding.btnSave.setOnClickListener {
-            val intent = Intent(this, AdminDashBoardActivity::class.java)
-            startActivity(intent)
+            if (validateInputs()) callAddShopApi()
+        }
+    }
+
+    // ================= IMAGE PICKER =================
+    private fun showImagePickerDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Select Image")
+            .setItems(arrayOf("Camera", "Gallery")) { _, which ->
+                when (which) {
+                    0 -> checkCameraPermissionAndOpenCamera()
+                    1 -> openGallery()
+                }
+            }
+            .show()
+    }
+
+    private fun checkCameraPermissionAndOpenCamera() {
+        when {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED -> openCamera()
+            ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA) -> {
+                AlertDialog.Builder(this)
+                    .setTitle("Camera Permission Required")
+                    .setMessage("Camera access is required to take shop images.")
+                    .setPositiveButton("Grant") { _, _ ->
+                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 101)
+                    }
+                    .setNegativeButton("Cancel", null)
+                    .show()
+            }
+            else -> ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 101)
+        }
+    }
+
+    private fun openCamera() {
+        cameraLauncher.launch(null) // TakePicturePreview automatically opens camera and returns bitmap
+    }
+
+    private fun openGallery() {
+        galleryLauncher.launch("image/*")
+    }
+
+    private fun handleCameraImage(bitmap: Bitmap) {
+        // Show immediately
+        binding.imgShop.visibility = View.VISIBLE
+        binding.imgCamera.visibility = View.GONE
+        binding.imgShop.setImageBitmap(bitmap)
+
+        // Save bitmap to file for API upload
+        selectedImageFile = File(getExternalFilesDir(null), "shop_${System.currentTimeMillis()}.jpg")
+        FileOutputStream(selectedImageFile!!).use { out ->
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+        }
+    }
+
+    private fun handleGalleryImage(uri: Uri) {
+        selectedImageFile = getFileFromUri(uri)
+        binding.imgShop.visibility = View.VISIBLE
+        binding.imgCamera.visibility = View.GONE
+
+        Glide.with(this)
+            .load(selectedImageFile)
+            .centerCrop()
+            .into(binding.imgShop)
+    }
+
+    private fun getFileFromUri(uri: Uri): File {
+        val inputStream = contentResolver.openInputStream(uri)!!
+        val tempFile = File(cacheDir, "upload_${System.currentTimeMillis()}.jpg")
+        inputStream.use { input -> tempFile.outputStream().use { output -> input.copyTo(output) } }
+        return tempFile
+    }
+
+    private fun resetImageViews() {
+        selectedImageFile = null
+        binding.imgShop.visibility = View.GONE
+        binding.imgCamera.visibility = View.VISIBLE
+    }
+
+    // ================= VALIDATION =================
+    private fun validateInputs(): Boolean {
+        var valid = true
+        binding.etShopNameError.visibility = View.GONE
+        binding.etContactNameError.visibility = View.GONE
+        binding.etPhoneNumberError.visibility = View.GONE
+        binding.etAreaError.visibility = View.GONE
+        binding.etAddressError.visibility = View.GONE
+        binding.etDiscountError.visibility = View.GONE
+        binding.etImageError.visibility = View.GONE
+
+        if (binding.etShopName.text.toString().trim().isEmpty())
+            { binding.etShopNameError.show("Shop name required");
+                valid = false }
+
+        if (binding.etContactName.text.toString().trim().isEmpty()) {
+            binding.etContactNameError.show("Contact person required");
+            valid = false }
+        val phone = binding.etPhoneNumber.text.toString().trim()
+        if (phone.isEmpty()) {
+            binding.etPhoneNumberError.show("Phone number required");
+            valid = false }
+        else if (phone.length < 11) {
+            binding.etPhoneNumberError.show("Enter valid phone number");
+            valid = false }
+
+        if (binding.etAddress.text.toString().trim().isEmpty()) {
+            binding.etAddressError.show("Address required");
+            valid = false }
+
+        if (binding.etDiscount.text.toString().trim().isEmpty()) {
+            binding.etDiscountError.show("Discount required");
+            valid = false }
+        if (selectedImageFile == null) {
+            binding.etImageError.show("Shop image required");
+            valid = false }
+
+        return valid
+    }
+
+    private fun TextView.show(msg: String) {
+        visibility = View.VISIBLE
+        text = msg
+    }
+
+    // ================= API CALL =================
+    private fun callAddShopApi() {
+        val isActive = if (binding.toggleStatus.isChecked) "1" else "0"
+        val areaIdString = intent.getStringExtra("AREA_ID") ?: "0"
+
+        val name = binding.etShopName.text.toString().trim().toRequestBody()
+        val contactPerson = binding.etContactName.text.toString().trim().toRequestBody()
+        val phoneNumber = binding.etPhoneNumber.text.toString().trim().toRequestBody()
+        val areaId = areaIdString.toRequestBody()
+        val address = binding.etAddress.text.toString().trim().toRequestBody()
+        val discount = binding.etDiscount.text.toString().trim().toRequestBody()
+        val active = isActive.toRequestBody()
+
+        val imagePart = selectedImageFile?.let {
+            MultipartBody.Part.createFormData("image", it.name, it.asRequestBody("image/*".toMediaTypeOrNull()))
+        } ?: run {
+            Toast.makeText(this, "Image file not selected", Toast.LENGTH_SHORT).show()
+            return
         }
 
+        AppUtil.startLoader(this)
+        viewModel.addShop(name, contactPerson, phoneNumber, areaId, address, discount, active, imagePart)
+            .observe(this) { apiResponse ->
+                AppUtil.stopLoader()
+                when (apiResponse.status) {
+                    com.example.unitedpoultry.network.Status.SUCCESS -> {
+                        val retrofitResponse = apiResponse.data
+                        if (retrofitResponse != null) {
+                            if (retrofitResponse.isSuccessful) {
+                                val baseResponse = retrofitResponse.body()
+                                val message = baseResponse?.message ?: "Shop added"
+                                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+                                // If API says success, finish activity
+                                if (baseResponse?.result == "success")
+                                    setResult(Activity.RESULT_OK)
+                                    finish()
+
+                            } else {
+                                // HTTP error (like 401, 422, 500)
+                                val errorMessage = try {
+                                    val errorBody = retrofitResponse.errorBody()?.string()
+                                    if (!errorBody.isNullOrEmpty()) {
+                                        val baseResponse =
+                                            Gson().fromJson(errorBody, BaseResponse::class.java)
+                                        baseResponse.message ?: "Something went wrong"
+                                    } else {
+                                        "Something went wrong"
+                                    }
+                                } catch (e: Exception) {
+                                    "Something went wrong"
+                                }
+                                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            Toast.makeText(this, "No response from server", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    com.example.unitedpoultry.network.Status.ERROR -> {
+                        Toast.makeText(this, apiResponse.message ?: "Network error", Toast.LENGTH_SHORT).show()
+                    }
+
+                    com.example.unitedpoultry.network.Status.LOADING -> {
+                        /* Loader already handled */
+                    }
+                }
+            }
+    }
+
+
+    private fun String.toRequestBody() = toRequestBody("text/plain".toMediaTypeOrNull())
+
+    override fun onResume() {
+        super.onResume()
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 101 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) openCamera()
+        else Toast.makeText(this, "Camera permission required", Toast.LENGTH_SHORT).show()
     }
 }

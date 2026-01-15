@@ -26,17 +26,17 @@
             <!-- Status Icon -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/iconContainer"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp"
                 android:layout_gravity="center">
 
                 <ImageView
                     android:id="@+id/ivIcon"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:src="@drawable/locationdotvector"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/locationlsvg"
                     app:tint="@color/white"
                     android:layout_gravity="center"/>
             </androidx.cardview.widget.CardView>
@@ -66,7 +66,7 @@
                         android:fontFamily="@font/poppins"
                         android:text="Gulberg"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         android:textStyle="bold"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="15dp"/>
@@ -85,12 +85,12 @@
 
                 <ImageView
                     android:id="@+id/ivEdit"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/circle_white"
                     android:contentDescription="Status"
-                    android:src="@drawable/editadminareavector"
+                    android:src="@drawable/editlsvg"
                     android:layout_gravity="center_vertical"/>
 
             </LinearLayout>
@@ -122,7 +122,7 @@
                     android:text="17"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@color/black"
                     android:layout_gravity="center"/>
 
@@ -130,12 +130,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/poppins"
                     android:gravity="center"
                     android:text="Shops"
                     android:textColor="@color/blackLight"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -159,18 +158,17 @@
                     android:text="7"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@color/black"
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:text="Riders"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:textColor="@color/blackLight"
                     android:gravity="center"
                     android:layout_gravity="center"/>
@@ -195,18 +193,17 @@
                     android:text="Rs.95000"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@color/black"
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:text="Receivable"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:textColor="@color/blackLight"
                     android:layout_gravity="center"/>
 
@@ -220,14 +217,14 @@
             android:layout_height="48dp"
             android:text="View Shops"
             android:textAllCaps="false"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:layout_margin="20dp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@drawable/btn_continue_bg"
             app:backgroundTint="@null"
             android:fontFamily="@font/poppins"
-            app:icon="@drawable/addressvector"
+            app:icon="@drawable/areavectorsvg"
             app:iconGravity="textStart"
             app:iconPadding="15dp"
             app:iconSize="18dp"

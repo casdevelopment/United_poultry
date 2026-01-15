@@ -1,25 +1,34 @@
 package com.example.unitedpoultry.AdminRiderModule
 
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.unitedpoultry.AdminRiderModule.Adapter.RiderAssignedAreasAdapter
-import com.example.unitedpoultry.AdminRiderModule.model.AdminAssignedAreasModel
+import android.view.View
+import android.view.WindowManager
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import com.example.unitedpoultry.AdminRiderModule.model.RiderEditRequestModel
+import com.example.unitedpoultry.AdminRiderModule.viewmodel.EditRiderViewModel
+import com.example.unitedpoultry.AdminShopModule.viewmodel.DeleteRiderViewModel
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.databinding.ActivityAdminEditRiderBinding
-
-
+import com.example.unitedpoultry.network.Status
+import com.example.unitedpoultry.util.AppUtil
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AdminEditRiderActivity : BaseActivity() {
 
     private lateinit var binding: ActivityAdminEditRiderBinding
-    private lateinit var adapter: RiderAssignedAreasAdapter
+    private val viewModel: EditRiderViewModel by viewModel()
+    private val viewModel1: DeleteRiderViewModel by viewModel()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Initialize view binding
         binding = ActivityAdminEditRiderBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -29,23 +38,179 @@ class AdminEditRiderActivity : BaseActivity() {
         )
 
 
-        binding.backArrow.setOnClickListener { finish() }
 
 
-        val name = intent.getStringExtra("RIDER_NAME") ?: "N/A"
+        showData()
 
-        binding.etFullName.setText(name)
+        setupClicks()
 
-        binding.etPhoneNumber.setText("0345678623")
+    }
 
-        binding.etEmail.setText("Ahmed@gmail.com")
+    private fun showData(){
+        val name = intent.getStringExtra("NAME") ?: ""
+        val cnic = intent.getStringExtra("CNIC") ?: ""
+        val email = intent.getStringExtra("EMAIL") ?: ""
+        val phone = intent.getStringExtra("PHONE") ?: ""
+        val address = intent.getStringExtra("ADDRESS") ?: ""
+        val username = intent.getStringExtra("USERNAME") ?: ""
+        val password = intent.getStringExtra("PASSWORD") ?: ""
 
-        binding.etCnic.setText("34567-9732786-0")
-
-        binding.etEmail.setText("Ahmed@gmail.com")
-
-                binding.etname.setText(name)
 
 
+        // Set values to views
+        binding.etName.setText(name)
+        binding.etCnic.setText(cnic)
+        binding.etEmail.setText(email)
+        binding.etPhoneNumber.setText(phone)
+        binding.etAddress.setText(address)
+        binding.etUserName.setText(username)
+        binding.etPassword.setText(password)
+
+    }
+
+    private fun setupClicks() {
+        binding.backArrow.setOnClickListener {
+            setResult(Activity.RESULT_OK)
+            finish()
+        }
+
+        binding.btnCancel.setOnClickListener {
+            setResult(Activity.RESULT_OK)
+            finish()
+        }
+
+        binding.btnSave.setOnClickListener {
+            if (validateInputs()) {
+                callEditAreaApi()
+            }
+        }
+
+        binding.btnDeleteShops.setOnClickListener {
+            showDeleteConfirmation()
+        }
+    }
+
+
+    private fun validateInputs(): Boolean {
+        var valid = true
+
+        binding.etNameError.visibility = View.GONE
+        binding.etAddressError.visibility = View.GONE
+        binding.etPasswordError.visibility = View.GONE
+
+
+        if (binding.etName.text.toString().trim().isEmpty()) {
+            binding.etNameError.visibility = View.VISIBLE
+            binding.etNameError.text = "Name required"
+            valid = false
+        }
+
+        if (binding.etAddress.text.toString().trim().isEmpty()) {
+            binding.etAddressError.visibility = View.VISIBLE
+            binding.etAddressError.text = "Address required"
+            valid = false
+        }
+
+        if (binding.etPassword.text.toString().trim().isEmpty()) {
+            binding.etPasswordError.visibility = View.VISIBLE
+            binding.etPasswordError.text = "Password required"
+            valid = false
+        }
+
+        return valid
+    }
+
+
+    private fun callEditAreaApi() {
+
+        val id = intent.getIntExtra("ID", 0)
+
+        val request = RiderEditRequestModel(
+            name = binding.etName.text.toString().trim(),
+            address = binding.etAddress.text.toString().trim(),
+            password = binding.etPassword.text.toString().trim()
+        )
+
+        viewModel.editRider(id,request).observe(this) { apiResponse ->
+
+            when (apiResponse.status) {
+
+                Status.LOADING -> {
+                    AppUtil.startLoader(this)
+                }
+
+                Status.SUCCESS -> {
+                    AppUtil.stopLoader()
+
+                    val response = apiResponse.data
+                    if (response != null && response.isSuccessful) {
+
+                        val baseResponse = response.body()
+
+
+                        Toast.makeText(this, baseResponse?.message ?: "Success", Toast.LENGTH_LONG).show()
+
+                        if (baseResponse?.result == "success") {
+                            setResult(Activity.RESULT_OK)
+                            finish()
+
+                        }
+
+                    } else {
+                        Toast.makeText(this,
+                            "Something went wrong", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                Status.ERROR -> {
+                    AppUtil.stopLoader()
+                    Toast.makeText(this, apiResponse.message ?: "Network Error", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+
+    private fun showDeleteConfirmation() {
+        AlertDialog.Builder(this)
+            .setTitle("Delete Shop")
+            .setMessage("Are you sure you want to delete this Rider?")
+            .setPositiveButton("Yes") { _, _ -> callDeleteShopApi() }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
+    private fun callDeleteShopApi() {
+        AppUtil.startLoader(this)
+
+        val id = intent.getIntExtra("ID", 0)
+
+        viewModel1.deleteRider(id).observe(this) { response ->
+            AppUtil.stopLoader()
+            val message = response.data?.body()?.message ?: "Shop deleted"
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+            // Close activity if success
+            if (response.data?.body()?.result == "success")
+            {
+
+
+                if (response.data.body()?.result == "success") {
+                    val intent = Intent()
+                    intent.putExtra("ACTION", "DELETED")
+                    setResult(Activity.RESULT_OK, intent)
+                    finish()
+                }
+
+
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        window.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+        )
     }
 }

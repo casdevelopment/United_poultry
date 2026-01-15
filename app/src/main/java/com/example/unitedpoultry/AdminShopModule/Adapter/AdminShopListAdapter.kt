@@ -10,15 +10,16 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.unitedpoultry.AdminShopModule.AdminShopDetailsActivity
-import com.example.unitedpoultry.AdminShopModule.AdminShopListActivity
-import com.example.unitedpoultry.AdminShopModule.model.AdminShopModel
+
+import com.example.unitedpoultry.AdminShopModule.model.ShopModel
 import com.example.unitedpoultry.R
 
 class AdminShopListAdapter(
-    private val originalList: MutableList<AdminShopModel>
+    private var originalList: MutableList<ShopModel>,
+    private val areaId: Int
 ) : RecyclerView.Adapter<AdminShopListAdapter.ViewHolder>() {
 
-    private var filteredList: MutableList<AdminShopModel> = originalList.toMutableList()
+    private var filteredList: MutableList<ShopModel> = originalList.toMutableList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -31,13 +32,14 @@ class AdminShopListAdapter(
 
         holder.tvName.text = item.name
         holder.tvAddress.text = item.address
-        holder.tvTotalShops.text = item.total.toString()
-        holder.tvDiscount.text = item.Discount
-        holder.tvReceivable.text = "Rs. ${item.recieveable}"
-        holder.statusText.text = item.status
+        holder.tvDiscount.text = item.discount_per_petti + "%"
+        holder.statusText.text = if (item.is_active == true) "Active" else "Inactive"
 
-        when (item.status.lowercase()) {
-            "active" -> {
+        holder.tvTotalShops.text = "-"
+        holder.tvReceivable.text = "-"
+
+        when (item.is_active) {
+            true -> {
                 holder.statusLayout.backgroundTintList =
                     ColorStateList.valueOf(
                         ContextCompat.getColor(holder.itemView.context, R.color.green)
@@ -47,7 +49,7 @@ class AdminShopListAdapter(
                 )
             }
 
-            "inactive" -> {
+            false -> {
                 holder.statusLayout.backgroundTintList =
                     ColorStateList.valueOf(
                         ContextCompat.getColor(holder.itemView.context, R.color.black)
@@ -72,39 +74,45 @@ class AdminShopListAdapter(
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
             val intent = Intent(context, AdminShopDetailsActivity::class.java)
-            intent.putExtra("name", item.name)
-            intent.putExtra("address", item.address)
-            intent.putExtra("total", item.total)
-            intent.putExtra("Discount", item.Discount)
-            intent.putExtra("recieveable", item.recieveable)
-            intent.putExtra("status", item.status)
+            intent.putExtra("ID", item.id)
+            intent.putExtra("AREA_ID", areaId)
+
             context.startActivity(intent)
         }
+
+
+
+        // set colors based on status...
     }
 
     override fun getItemCount(): Int = filteredList.size
+
+    fun updateList(newList: List<ShopModel>) {
+        originalList.clear()
+        originalList.addAll(newList)
+        filteredList = originalList.toMutableList()
+        notifyDataSetChanged()
+    }
 
     fun filter(query: String) {
         filteredList = if (query.isBlank()) {
             originalList.toMutableList()
         } else {
             originalList.filter {
-                it.name.contains(query, true) ||
-                        it.address.contains(query, true)
+                it.name.contains(query, true) || it.address.contains(query, true)
             }.toMutableList()
         }
         notifyDataSetChanged()
     }
 
-    fun getFilteredCount(): Int = filteredList.size
-
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val tvName: TextView = v.findViewById(R.id.tvName)
         val tvAddress: TextView = v.findViewById(R.id.tvAddress)
-        val tvTotalShops: TextView = v.findViewById(R.id.tvTotalShops)
         val tvDiscount: TextView = v.findViewById(R.id.tvDiscount)
-        val tvReceivable: TextView = v.findViewById(R.id.tvReceivable)
         val statusText: TextView = v.findViewById(R.id.statusText)
+        val tvTotalShops: TextView = v.findViewById(R.id.tvTotalShops)
+        val tvReceivable: TextView = v.findViewById(R.id.tvReceivable)
         val statusLayout: LinearLayout = v.findViewById(R.id.statusLayout)
+
     }
 }

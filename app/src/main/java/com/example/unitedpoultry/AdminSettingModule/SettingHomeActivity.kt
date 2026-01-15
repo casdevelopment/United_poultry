@@ -7,14 +7,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.R
+import com.example.unitedpoultry.SessionManager
+import com.example.unitedpoultry.Splash.SplashActivity
 import com.example.unitedpoultry.Welcome.WelcomeActivity
 import com.example.unitedpoultry.databinding.ActivitySettingHomeBinding
 import com.google.android.material.button.MaterialButton
+import org.koin.android.ext.android.inject
 
 
 class SettingHomeActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySettingHomeBinding
+
+    private val sessionManager: SessionManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,13 +55,10 @@ class SettingHomeActivity : BaseActivity() {
 
                 dialog.dismiss()
 
-                // Navigate to WelcomeActivity & clear back stack
-                val intent = Intent(this, WelcomeActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-
-                // Finish current activity
+                sessionManager.logout()
+                startActivity(Intent(this, SplashActivity::class.java))
                 finish()
+
             }
 
             dialog.show()

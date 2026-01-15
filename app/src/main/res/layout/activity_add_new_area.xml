@@ -10,8 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:paddingBottom="20dp">
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/tLayout"
@@ -34,20 +33,28 @@
                 android:elevation="4dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp">
+                android:padding="16dp">
 
                 <!-- Back Arrow -->
-                <ImageView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/backArrow"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    app:cardCornerRadius="12dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:contentDescription="Back"
-                    android:src="@drawable/backarrownvector" />
+                    app:cardElevation="0dp"
+                    android:background="@drawable/square_white"
+                    android:backgroundTint="@color/primary20"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/singlearrow"
+                        app:tint="@color/black"
+                        android:layout_gravity="center"/>
+                </androidx.cardview.widget.CardView>
 
                 <!-- Title -->
                 <TextView
@@ -58,7 +65,7 @@
                     android:fontFamily="@font/poppins"
                     android:text="Add New Area"
                     android:textColor="@color/black"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -78,7 +85,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Admin"
-                        android:textSize="12sp"
+                        android:textSize="8sp"
                         android:textStyle="bold"
                         android:textColor="@color/sub_primary"
                         android:layout_marginStart="6dp"
@@ -88,15 +95,6 @@
 
             </LinearLayout>
 
-            <View
-                android:id="@+id/divider"
-                android:layout_width="0dp"
-                android:layout_height="2dp"
-                android:background="@color/brown"
-                android:elevation="6dp"
-                app:layout_constraintTop_toBottomOf="@id/titleBar"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -109,8 +107,7 @@
             android:backgroundTint="@color/primary"
             app:layout_constraintTop_toBottomOf="@id/rateAndDiscount"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="10dp">
+            app:layout_constraintEnd_toEndOf="parent">
 
 
             <TextView
@@ -119,22 +116,35 @@
                 android:fontFamily="@font/poppins"
                 android:text="Area Name"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/etCurrentPassword"
+                android:id="@+id/etAreaName"
+                android:hint="Enter area name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter area name"
-                android:background="@drawable/edit_text_bg"
+                android:background="@drawable/edit_text_bg_black"
                 android:textColor="@color/black60"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
-                android:padding="20dp"
                 android:layout_marginBottom="10dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:scrollHorizontally="true"
+                android:imeOptions="actionDone"
                 />
+
+            <TextView
+                android:id="@+id/etAreaNameError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="11sp"
+                android:visibility="gone"
+                android:layout_marginBottom="7dp"
+                android:layout_marginStart="10dp"/>
 
 
             <TextView
@@ -143,26 +153,28 @@
                 android:fontFamily="@font/poppins"
                 android:text="Description"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"/>
 
-                        <EditText
-                            android:id="@+id/etNote"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:minHeight="90dp"
-                            android:gravity="top|start"
-                            android:inputType="textMultiLine"
-                            android:maxLines="5"
-                            android:hint="Enter area description (optional)"
-                            android:background="@drawable/edit_text_bg"
-                            android:textColor="@color/black60"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:layout_marginTop="10dp"
-                            android:padding="20dp"
-                            />
+
+
+            <EditText
+                android:id="@+id/etDescription"
+                android:hint="Enter area description (optional)"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="90dp"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:maxLines="3"
+                android:background="@drawable/edit_text_bg_black"
+                android:textColor="@color/black60"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:imeOptions="actionDone"
+                />
 
 
             <TextView
@@ -171,22 +183,37 @@
                 android:fontFamily="@font/poppins"
                 android:text="City"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"/>
 
+
             <EditText
+                android:id="@+id/etCity"
+                android:hint="Enter City"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Lahore"
-                android:background="@drawable/edit_text_bg"
+                android:background="@drawable/edit_text_bg_black"
                 android:textColor="@color/black60"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
-                android:padding="20dp"
                 android:layout_marginBottom="10dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:scrollHorizontally="true"
+                android:imeOptions="actionDone"
                 />
+
+            <TextView
+                android:id="@+id/etCityError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:layout_marginBottom="7dp"
+                android:layout_marginStart="10dp"/>
 
 
             <androidx.cardview.widget.CardView
@@ -280,7 +307,6 @@
                     app:iconTint="@null"
                     app:iconGravity="textStart"
                     app:iconPadding="12dp"
-                    android:fontFamily="@font/poppins"
                     android:layout_marginRight="10dp"/>
 
                 <com.google.android.material.button.MaterialButton
@@ -295,7 +321,6 @@
                     android:textColor="@color/white"
                     android:background="@drawable/btn_continue_bg"
                     app:backgroundTint="@null"
-                    android:fontFamily="@font/poppins"
                     />
 
 

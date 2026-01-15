@@ -45,10 +45,37 @@
         android:id="@+id/verificationCodeFragment"
         android:name="com.example.unitedpoultry.Authentications.fragments.VerificationCodeFragment"
         android:label="Verification Code Fragment">
+
+        <!-- Add email argument -->
+        <argument
+            android:name="email"
+            app:argType="string"
+            android:defaultValue="" />
+
         <action
-            android:id="@+id/action_verification_to_Verified"
+            android:id="@+id/action_verification_to_reset"
+            app:destination="@id/newPasswordFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/newPasswordFragment"
+        android:name="com.example.unitedpoultry.Authentications.fragments.NewPasswordFragment"
+        android:label="Reset password fragment">
+
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <argument
+            android:name="otp"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/action_reset_to_Verified"
             app:destination="@id/OtpVerifiedFragment" />
     </fragment>
+
+
 
     <fragment
         android:id="@+id/OtpVerifiedFragment"

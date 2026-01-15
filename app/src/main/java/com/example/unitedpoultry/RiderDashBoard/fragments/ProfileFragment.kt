@@ -14,14 +14,18 @@ import com.example.unitedpoultry.Notification.NotificationActivity
 import com.example.unitedpoultry.Profile.ChangePasswordActivity
 import com.example.unitedpoultry.Profile.MyPerformanceActivity
 import com.example.unitedpoultry.Profile.MyProfileActivity
+import com.example.unitedpoultry.SessionManager
+import com.example.unitedpoultry.Splash.SplashActivity
 import com.example.unitedpoultry.Welcome.WelcomeActivity
 import com.example.unitedpoultry.databinding.FragmentHomeBinding
 import com.example.unitedpoultry.databinding.FragmentProfileBinding
 import com.google.android.material.button.MaterialButton
+import org.koin.android.ext.android.inject
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
+    private val sessionManager: SessionManager by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,7 +66,9 @@ class ProfileFragment : Fragment() {
 
                 dialog.dismiss()
 
-                val intent = Intent(requireContext(), WelcomeActivity::class.java)
+                sessionManager.logout()
+
+                val intent = Intent(requireContext(), SplashActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 requireActivity().finish()

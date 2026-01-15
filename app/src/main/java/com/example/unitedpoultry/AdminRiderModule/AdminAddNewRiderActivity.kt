@@ -1,24 +1,29 @@
 package com.example.unitedpoultry.AdminRiderModule
 
-import android.content.Intent
-import android.content.res.ColorStateList
+import android.app.Activity
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import com.example.unitedpoultry.AdminDashBoard.AdminDashBoardActivity
+import android.view.View
+import android.view.WindowManager
+import android.widget.Toast
+import com.example.unitedpoultry.AdminArea.model.AddAreaRequestModel
+import com.example.unitedpoultry.AdminArea.viewmodel.AddAreaViewModel
+import com.example.unitedpoultry.AdminRiderModule.model.RiderRequestModel
+import com.example.unitedpoultry.AdminRiderModule.viewmodel.AddRiderViewModel
 import com.example.unitedpoultry.BaseActivity
-import com.example.unitedpoultry.R
+import com.example.unitedpoultry.databinding.ActivityAddNewAreaBinding
 import com.example.unitedpoultry.databinding.ActivityAdminAddNewRiderBinding
-
+import com.example.unitedpoultry.network.Status
+import com.example.unitedpoultry.util.AppUtil
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AdminAddNewRiderActivity : BaseActivity() {
 
     private lateinit var binding: ActivityAdminAddNewRiderBinding
+    private val viewModel: AddRiderViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Initialize view binding
         binding = ActivityAdminAddNewRiderBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -27,16 +32,140 @@ class AdminAddNewRiderActivity : BaseActivity() {
             colorResId = android.R.color.white
         )
 
+        setupClicks()
+    }
 
-
+    private fun setupClicks() {
         binding.backArrow.setOnClickListener {
-            finish()
-        }
+            setResult(Activity.RESULT_OK)
+            finish() }
+
+        binding.btnCancel.setOnClickListener {
+            setResult(Activity.RESULT_OK)
+            finish() }
 
         binding.btnSave.setOnClickListener {
-            val intent = Intent(this, AdminDashBoardActivity::class.java)
-            startActivity(intent)
+            if (validateInputs()) {
+                callAddRiderApi()
+            }
+        }
+    }
+
+    private fun validateInputs(): Boolean {
+        var valid = true
+
+        binding.etNameError.visibility = View.GONE
+        binding.etCnicError.visibility = View.GONE
+        binding.etEmailError.visibility = View.GONE
+        binding.etPhoneNumberError.visibility = View.GONE
+        binding.etAddressError.visibility = View.GONE
+        binding.etUserNameError.visibility = View.GONE
+        binding.etPasswordError.visibility = View.GONE
+
+
+        if (binding.etName.text.toString().trim().isEmpty()) {
+            binding.etNameError.visibility = View.VISIBLE
+            binding.etNameError.text = "Name required"
+            valid = false
         }
 
+        if (binding.etCnic.text.toString().trim().isEmpty()) {
+            binding.etCnicError.visibility = View.VISIBLE
+            binding.etCnicError.text = "Cnic required"
+            valid = false
+        }
+
+        if (binding.etEmail.text.toString().trim().isEmpty()) {
+            binding.etEmailError.visibility = View.VISIBLE
+            binding.etEmailError.text = "Email required"
+            valid = false
+        }
+
+        if (binding.etPhoneNumber.text.toString().trim().isEmpty()) {
+            binding.etPhoneNumberError.visibility = View.VISIBLE
+            binding.etPhoneNumberError.text = "Phone number required"
+            valid = false
+        }
+
+        if (binding.etAddress.text.toString().trim().isEmpty()) {
+            binding.etAddressError.visibility = View.VISIBLE
+            binding.etAddressError.text = "Address required"
+            valid = false
+        }
+
+        if (binding.etUserName.text.toString().trim().isEmpty()) {
+            binding.etUserNameError.visibility = View.VISIBLE
+            binding.etUserNameError.text = "User Name required"
+            valid = false
+        }
+
+        if (binding.etPassword.text.toString().trim().isEmpty()) {
+            binding.etPasswordError.visibility = View.VISIBLE
+            binding.etPasswordError.text = "Password required"
+            valid = false
+        }
+
+        return valid
+    }
+
+    private fun callAddRiderApi() {
+
+
+        val request = RiderRequestModel(
+            name = binding.etName.text.toString().trim(),
+            email = binding.etEmail.text.toString().trim(),
+            username = binding.etUserName.text.toString().trim(),
+            phone_number = binding.etPhoneNumber.text.toString().trim(),
+            cnic = binding.etCnic.text.toString().trim(),
+            address = binding.etAddress.text.toString().trim(),
+            password = binding.etPassword.text.toString().trim(),
+            is_active = true // ✅ backend expects Int
+        )
+
+        viewModel.addRider(request).observe(this) { apiResponse ->
+
+            when (apiResponse.status) {
+
+                Status.LOADING -> {
+                    AppUtil.startLoader(this)
+                }
+
+                Status.SUCCESS -> {
+                    AppUtil.stopLoader()
+
+                    val response = apiResponse.data
+                    if (response != null && response.isSuccessful) {
+
+                        val baseResponse = response.body()
+
+                        // ✅ Always show backend message
+                        Toast.makeText(this, baseResponse?.message ?: "Success", Toast.LENGTH_LONG).show()
+
+                        // ✅ Close screen only on success
+                        if (baseResponse?.result == "success") {
+
+                            setResult(Activity.RESULT_OK)
+                            finish()
+                        }
+
+                    } else {
+                        Toast.makeText(this,
+                            "Something went wrong", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                Status.ERROR -> {
+                    AppUtil.stopLoader()
+                    Toast.makeText(this, apiResponse.message ?: "Network Error", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        window.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+        )
     }
 }

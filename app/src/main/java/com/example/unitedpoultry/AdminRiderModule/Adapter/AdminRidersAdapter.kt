@@ -1,55 +1,45 @@
 package com.example.unitedpoultry.AdminRiderModule.Adapter
 
+
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.unitedpoultry.AdminRiderModule.AdminEditRiderActivity
+import com.example.unitedpoultry.AdminArea.EditAreaActivity
+import com.example.unitedpoultry.AdminArea.model.AreaModel
 import com.example.unitedpoultry.AdminRiderModule.AdminRiderDetailsActivity
-import com.example.unitedpoultry.AdminRiderModule.model.AdminRiderModel
+import com.example.unitedpoultry.AdminRiderModule.model.RiderModel
+import com.example.unitedpoultry.AdminShopModule.AdminShopListActivity
 import com.example.unitedpoultry.R
-
+import com.google.android.material.button.MaterialButton
 
 class AdminRidersAdapter(
-    private val list: MutableList<AdminRiderModel>
+    private val riderList: MutableList<RiderModel>
 ) : RecyclerView.Adapter<AdminRidersAdapter.RiderViewHolder>() {
 
-    private val originalList = ArrayList(list)
-
-    fun filter(query: String, status: String) {
-        list.clear()
-        for (item in originalList) {
-            val matchSearch = item.name.contains(query, true) || item.joiningDate.contains(query, true)
-            val matchStatus = status == "ALL" || item.status == status
-            if (matchSearch && matchStatus) list.add(item)
-        }
-        notifyDataSetChanged()
-    }
-
-    fun countByStatus(status: String) = originalList.count { status == "ALL" || it.status == status }
+    private val originalList = mutableListOf<RiderModel>()
+    private val filteredList = mutableListOf<RiderModel>()
 
     private val iconColors = listOf(
-        R.color.primary,     // Icon background
+        R.color.primary,
         R.color.sub_primary,
         R.color.purple,
         R.color.blue
     )
 
-
     inner class RiderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        val tvInitials: TextView = itemView.findViewById(R.id.tvInitials)
         val tvRiderName: TextView = itemView.findViewById(R.id.tvRiderName)
-        val tvJoiningDate: TextView = itemView.findViewById(R.id.tvJoiningDate)
+        val tvAddress: TextView = itemView.findViewById(R.id.tvAddress)
         val riderStatus: TextView = itemView.findViewById(R.id.riderStatus)
-        val tvAreas: TextView = itemView.findViewById(R.id.tvAreas)
-        val tvShops: TextView = itemView.findViewById(R.id.tvShops)
-        val tvTodaySale: TextView = itemView.findViewById(R.id.tvTodaySale)
-        val btnViewDetails: View = itemView.findViewById(R.id.btnViewDetails)
-        val btnEdit: View = itemView.findViewById(R.id.btnEdit)
+        val statusLayout: LinearLayout = itemView.findViewById(R.id.statusLayout)
+        val tvInitials: TextView = itemView.findViewById(R.id.tvInitials)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RiderViewHolder {
@@ -59,67 +49,107 @@ class AdminRidersAdapter(
     }
 
     override fun onBindViewHolder(holder: RiderViewHolder, position: Int) {
-        val item = list[position]
-
+        val item = filteredList[position]
 
         holder.tvRiderName.text = item.name
-        holder.tvJoiningDate.text = "Joined. ${item.joiningDate}"
-        holder.riderStatus.text = item.status
-        holder.tvAreas.text = item.areas.toString()
-        holder.tvShops.text = item.shops.toString()
-        holder.tvTodaySale.text = "Rs. ${item.todaySale.toString()}"
-
+        holder.tvAddress.text = item.address
         holder.tvInitials.text = getInitials(item.name)
 
         val iconColor = iconColors[position % iconColors.size]
 
-        holder.tvInitials.backgroundTintList =
-            ContextCompat.getColorStateList(holder.itemView.context, iconColor)
 
+        if (item.is_active) {
 
-        holder.btnViewDetails.setOnClickListener {
+            holder.statusLayout.backgroundTintList =
+                ColorStateList.valueOf(
+                    ContextCompat.getColor(holder.itemView.context, R.color.green)
+                )
+            holder.riderStatus.setTextColor(
+                ContextCompat.getColor(holder.itemView.context, R.color.mint)
+            )
+
+            holder.tvInitials.backgroundTintList =
+                ContextCompat.getColorStateList(holder.itemView.context, iconColor)
+
+        } else {
+            holder.statusLayout.backgroundTintList =
+                ColorStateList.valueOf(
+                    ContextCompat.getColor(holder.itemView.context, R.color.black60)
+                )
+            holder.riderStatus.setTextColor(
+                ContextCompat.getColor(holder.itemView.context, R.color.black60)
+            )
+
+            holder.tvInitials.backgroundTintList =
+                ContextCompat.getColorStateList(holder.itemView.context, R.color.black17)
+        }
+
+        holder.itemView.setOnClickListener {
             val context = holder.itemView.context
             val intent = Intent(context, AdminRiderDetailsActivity::class.java)
-
-            // Pass data
-            intent.putExtra("RIDER_NAME", item.name)
-            intent.putExtra("STATUS", item.status)
-            intent.putExtra("AREAS", item.areas)
-            intent.putExtra("SHOPS", item.shops)
-            intent.putExtra("SALE", item.todaySale)
-            intent.putExtra("initial", getInitials(item.name))
-
-            context.startActivity(intent)
-        }
-
-        holder.btnEdit.setOnClickListener {
-            val context = holder.itemView.context
-            val intent = Intent(context, AdminEditRiderActivity::class.java)
-
-            // Pass data
-            intent.putExtra("RIDER_NAME", item.name)
+//            intent.putExtra("INITIALS",getInitials(item.name))
+            intent.putExtra("ID", item.id)
+//            intent.putExtra("EMAIL", item.email)
+//            intent.putExtra("USER_NAME", item.username)
+//            intent.putExtra("CNIC", item.cnic)
+//            intent.putExtra("PHONE_NUMBER", item.phone_number)
+//            intent.putExtra("ADDRESS", item.address)
+//            intent.putExtra("IS_ACTIVE", item.is_active)
+//            intent.putExtra("IMAGE", item.image)
+//            intent.putExtra("ROLE_ID", item.role_id)
 
             context.startActivity(intent)
         }
 
-        holder.btnViewDetails.setOnClickListener {
-            val context = holder.itemView.context
-            val intent = Intent(context, AdminRiderDetailsActivity::class.java)
 
-            // Pass data
-            intent.putExtra("RIDER_NAME", item.name)
-            intent.putExtra("STATUS", item.status)
-            intent.putExtra("AREAS", item.areas)
-            intent.putExtra("SHOPS", item.shops)
-            intent.putExtra("SALE", item.todaySale)
-            intent.putExtra("initial", getInitials(item.name))
 
-            context.startActivity(intent)
-        }
 
     }
 
-    override fun getItemCount(): Int = list.size
+    override fun getItemCount(): Int = filteredList.size
+
+    // 🔹 Called from Fragment after API response
+    fun updateList(newList: List<RiderModel>) {
+        originalList.clear()
+        originalList.addAll(newList)
+
+        filteredList.clear()
+        filteredList.addAll(newList)
+
+        notifyDataSetChanged()
+    }
+
+    // 🔹 SEARCH + STATUS FILTER
+    fun filter(query: String, status: String) {
+        filteredList.clear()
+
+        val search = query.trim().lowercase()
+
+        for (item in originalList) {
+            val matchSearch =
+                item.name.lowercase().contains(search) ||
+                        item.address!!.lowercase().contains(search)
+
+            val matchStatus =
+                status == "ALL" ||
+                        (status == "Active" && item.is_active) ||
+                        (status == "Inactive" && !item.is_active)
+
+            if (matchSearch && matchStatus) {
+                filteredList.add(item)
+            }
+        }
+
+        notifyDataSetChanged()
+    }
+
+    fun countByStatus(status: String): Int {
+        return when (status) {
+            "Active" -> originalList.count { it.is_active }
+            "Inactive" -> originalList.count { !it.is_active }
+            else -> originalList.size
+        }
+    }
 
     private fun getInitials(name: String): String {
         val parts = name.trim().split(" ")

@@ -6,11 +6,22 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.unitedpoultry.AdminDashBoard.AdminDashBoardActivity
+import com.example.unitedpoultry.Authentications.AuthenticationActivity
+import com.example.unitedpoultry.Authentications.login.model.LoginResponseModel
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.R
+import com.example.unitedpoultry.RiderDashBoard.RiderDashBoardActivity
+import com.example.unitedpoultry.SessionManager
 import com.example.unitedpoultry.Welcome.WelcomeActivity
+import com.example.unitedpoultry.util.AppConstants
+import com.google.gson.Gson
+import kotlinx.coroutines.delay
+import org.koin.android.ext.android.inject
 
 class SplashActivity :  BaseActivity() {
+
+    private val sessionManager: SessionManager by inject()
 
     private lateinit var dot1: TextView
     private lateinit var dot2: TextView
@@ -35,8 +46,9 @@ class SplashActivity :  BaseActivity() {
         animateDots()
 
         handler.postDelayed({
-            val intent = Intent(this@SplashActivity, WelcomeActivity::class.java)
-            startActivity(intent)
+
+            navigateFunction()
+
             finish() // Prevent returning to splash when back is pressed
         }, 4000) // 4000 milliseconds = 4 seconds
     }
@@ -61,7 +73,31 @@ class SplashActivity :  BaseActivity() {
         })
     }
 
-    override fun onDestroy() {
+    private fun navigateFunction(){
+
+        if (sessionManager.isLoggedIn()) {
+            // setting token
+            AppConstants.AUTH_TOKEN = sessionManager.getToken().toString()
+
+            //  getting user info
+            AppConstants.userData =
+                Gson().fromJson( sessionManager.getUserInfo(), LoginResponseModel::class.java)
+
+            if(AppConstants.userData!!.role_id == 1){
+                startActivity(Intent(this@SplashActivity, AdminDashBoardActivity::class.java))
+                finish()
+            }else if (AppConstants.userData!!.role_id == 2){
+                startActivity(Intent(this@SplashActivity, RiderDashBoardActivity::class.java))
+                finish()
+            }
+        } else {
+            startActivity(Intent(this@SplashActivity, WelcomeActivity::class.java))
+            finish()
+        }
+    }
+
+
+        override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacksAndMessages(null)
     }

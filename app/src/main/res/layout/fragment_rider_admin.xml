@@ -1,210 +1,247 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/riderdashboardonlinebackground">
+    android:background="@color/white">
 
-
-    <LinearLayout
-        android:id="@+id/tLayout"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:orientation="horizontal"
-        android:layout_marginTop="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:background="@color/white">
 
-<!--        <ImageView-->
-<!--            android:id="@+id/backArrow"-->
-<!--            android:layout_width="40dp"-->
-<!--            android:layout_height="40dp"-->
-<!--            android:src="@drawable/backarrowwhitevector"-->
-<!--            android:contentDescription="Back"-->
-<!--            android:layout_marginStart="10dp"-->
-<!--            />-->
-
-        <TextView
-            android:id="@+id/tvAreaName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:fontFamily="@font/poppins"
-            android:text="Riders"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/searchLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-
-        app:boxBackgroundMode="outline"
-        app:boxCornerRadiusTopStart="16dp"
-        app:boxCornerRadiusTopEnd="16dp"
-        app:boxCornerRadiusBottomStart="16dp"
-        app:boxCornerRadiusBottomEnd="16dp"
-        app:boxStrokeWidth="1dp"
-        app:boxStrokeColor="@color/white"
-        app:boxBackgroundColor="@color/primary20"
-        app:hintEnabled="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tLayout"
-        android:layout_marginTop="90dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etSearch"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Search Riders..."
-            android:padding="14dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black44"
-            android:background="@null"
-            android:singleLine="true"
-            android:drawableStart="@drawable/searchvector"
-            android:drawablePadding="10dp"/>
+            android:layout_height="wrap_content">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <!-- Top Curve Image -->
+            <ImageView
+                android:id="@+id/ivCurve"
+                android:layout_width="0dp"
+                android:layout_height="220dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/bgdotsclean"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="0dp"
-        android:layout_height="2dp"
-        android:background="@color/brown"
-        android:elevation="2dp"
-        app:layout_constraintTop_toBottomOf="@id/searchLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="20dp"/>
+            <!-- Title inside curve -->
+            <LinearLayout
+                android:id="@+id/tLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="@id/ivCurve"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="32dp">
+
+                <TextView
+                    android:id="@+id/tvAreaName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Supplier"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
 
-    <!-- MAIN CONTENT -->
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/divider"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="10dp">
 
-
-
-        <LinearLayout
-            android:id="@+id/filterLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="4"
-            android:orientation="horizontal">
-
-            <TextView
+            <!-- Search Bar inside curve -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/searchLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/filterAll"
-                android:textSize="10dp"
-                android:text="All"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:layout_marginEnd="4dp"
-                android:textStyle="bold"
-                android:textColor="@color/black60"
-                android:background="@drawable/filter_bg"
-                android:gravity="center"/>
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusTopStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxStrokeWidth="1dp"
+                app:boxStrokeColor="@color/primary"
+                app:boxBackgroundColor="@color/primary20"
+                app:hintEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tLayout"
+                android:layout_marginTop="100dp">
 
-            <TextView
-                android:id="@+id/filterActive"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Search Supplier..."
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black44"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textSize="14dp"
+                    android:drawableStart="@drawable/searchvector"
+                    android:drawablePadding="10dp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/divider"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_height="2dp"
+                android:background="@color/brown"
+                android:elevation="2dp"
+                app:layout_constraintTop_toBottomOf="@id/searchLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_margin="20dp"/>
+
+            <LinearLayout
+                android:id="@+id/filterLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Active"
-                android:textSize="10dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:layout_marginEnd="4dp"
-                android:textStyle="bold"
-                android:textColor="@color/black60"
-                android:gravity="center"
-                android:background="@drawable/filter_bg"/>
+                android:weightSum="4"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_margin="10dp">
 
-            <TextView
-                android:id="@+id/filterOffline"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/filterAll"
+                    android:textSize="10dp"
+                    android:text="All"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginEnd="4dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black60"
+                    android:background="@drawable/filter_bg"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/filterActive"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Active"
+                    android:textSize="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginEnd="4dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black60"
+                    android:gravity="center"
+                    android:background="@drawable/filter_bg"/>
+
+                <TextView
+                    android:id="@+id/filterInactive"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Inactive"
+                    android:textSize="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginEnd="4dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black60"
+                    android:gravity="center"
+                    android:background="@drawable/filter_bg"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Offline"
-                android:textSize="10dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:layout_marginEnd="4dp"
-                android:textStyle="bold"
-                android:textColor="@color/black60"
-                android:gravity="center"
-                android:background="@drawable/filter_bg"/>
+                app:layout_constraintTop_toBottomOf="@id/filterLayout">
 
-            <TextView
-                android:id="@+id/filterSuspended"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Suspended"
-                android:textSize="10dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:gravity="center"
-                android:layout_marginEnd="4dp"
-                android:textStyle="bold"
-                android:textColor="@color/black60"
-                android:background="@drawable/filter_bg"/>
-        </LinearLayout>
-        <!--        </HorizontalScrollView>-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvRiders"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    />
 
 
+                <LinearLayout
+                    android:id="@+id/layoutEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:padding="40dp">
 
-        <!-- RECYCLER VIEW -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvRiders"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp" />
-    </LinearLayout>
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:src="@drawable/nodata"
+                        app:tint="@color/black44"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No Records Found"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="16dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Try adding new items or refresh the list"
+                        android:textSize="14sp"
+                        android:textColor="@color/black60"
+                        android:layout_marginTop="6dp"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/fabAdd"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_margin="16dp"
         app:cardBackgroundColor="@color/primary"
         app:cardElevation="6dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_gravity="bottom|end">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/pplussvg"
-            app:tint="@color/white"
             android:scaleType="center"
-            android:padding="12dp"/>
+            android:padding="12dp"
+            app:tint="@color/white"/>
     </com.google.android.material.card.MaterialCardView>
 
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
