@@ -10,6 +10,7 @@ import com.example.unitedpoultry.AdminRiderModule.viewmodel.AddRiderViewModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.EditRiderViewModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.RiderDetailsViewModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.RiderViewModel
+import com.example.unitedpoultry.AdminSettingModule.viewmodel.AdminSettingViewModel
 import com.example.unitedpoultry.AdminShopModule.viewmodel.AddShopViewModel
 import com.example.unitedpoultry.AdminShopModule.viewmodel.DeleteRiderViewModel
 import com.example.unitedpoultry.AdminShopModule.viewmodel.DeleteShopViewModel
@@ -55,6 +56,7 @@ val viewModelModule= module{
     viewModel { RiderDetailsViewModel(get()) }
     viewModel { EditRiderViewModel(get()) }
     viewModel { DeleteRiderViewModel(get()) }
+    viewModel { AdminSettingViewModel(get()) }
 
 }
 

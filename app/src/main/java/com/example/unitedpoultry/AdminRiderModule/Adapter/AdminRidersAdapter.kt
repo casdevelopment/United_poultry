@@ -72,6 +72,7 @@ class AdminRidersAdapter(
                 ContextCompat.getColorStateList(holder.itemView.context, iconColor)
 
         } else {
+            holder.riderStatus.text="Inactive"
             holder.statusLayout.backgroundTintList =
                 ColorStateList.valueOf(
                     ContextCompat.getColor(holder.itemView.context, R.color.black60)

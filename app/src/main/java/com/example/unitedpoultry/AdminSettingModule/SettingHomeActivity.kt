@@ -2,24 +2,30 @@ package com.example.unitedpoultry.AdminSettingModule
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
+import com.example.unitedpoultry.AdminSettingModule.viewmodel.AdminSettingViewModel
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.SessionManager
 import com.example.unitedpoultry.Splash.SplashActivity
-import com.example.unitedpoultry.Welcome.WelcomeActivity
 import com.example.unitedpoultry.databinding.ActivitySettingHomeBinding
+import com.example.unitedpoultry.network.Status
+import com.example.unitedpoultry.util.AppUtil
+import com.example.unitedpoultry.util.showToast
 import com.google.android.material.button.MaterialButton
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.collections.set
 
 
 class SettingHomeActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySettingHomeBinding
+    private lateinit var fields: HashMap<Any, Any>
 
     private val sessionManager: SessionManager by inject()
+    private val viewModel: AdminSettingViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,12 +98,97 @@ class SettingHomeActivity : BaseActivity() {
         }
 
 
-
-
-
 //        binding.backArrow.setOnClickListener {
 //            finish()
 //        }
+        binding.productManagement.setOnClickListener {
+            val dialogView = layoutInflater.inflate(R.layout.dialog_add_product, null)
 
+            val dialog = AlertDialog.Builder(this@SettingHomeActivity)
+                .setView(dialogView)
+                .setCancelable(true)
+                .create()
+
+            // 🔥 THIS LINE FIXES THE EDGES
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+            val btnCancel = dialogView.findViewById<MaterialButton>(R.id.btnCancel)
+            val btnSave = dialogView.findViewById<MaterialButton>(R.id.btnSave)
+            val etName =
+                dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etName)
+            val etPacking =
+                dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etPacking)
+            val etEggsCount =
+                dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etEggsCount)
+            val etPrice =
+                dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etPrice)
+
+            btnCancel.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            btnSave.setOnClickListener {
+                val name = etName.text.toString().trim()
+                val packing = etPacking.text.toString().trim()
+                val eggsCount = etEggsCount.text.toString().toIntOrNull() ?: 0
+                val price = etPrice.text.toString().toIntOrNull() ?: 0
+
+                if (validateInput(name, packing, eggsCount, price)) {
+                    fields = HashMap()
+                    fields["name"] = name
+                    fields["packing"] = packing
+                    fields["eggs_count"] = eggsCount.toString()
+                    fields["price"] = price.toString()
+                    fields["is_active"] = true
+                    saveProduct(fields)
+                    dialog.dismiss()
+
+                } else {
+                    showToast("Please fill all fields correctly")
+
+                }
+
+
+            }
+
+            dialog.show()
+        }
+
+    }
+
+    private fun validateInput(
+        name: String,
+        packing: String,
+        eggsCount: Int,
+        price: Int
+    ): Boolean {
+        return name.isNotEmpty() &&
+                packing.isNotEmpty() &&
+                eggsCount > 0 &&
+                price > 0
+    }
+
+    private fun saveProduct(fields: HashMap<Any, Any>) {
+
+        viewModel.createProduct(fields).observe(this@SettingHomeActivity) { serverResponse ->
+
+            when (serverResponse.status) {
+
+                Status.SUCCESS -> {
+                    AppUtil.stopLoader()
+                    showToast(serverResponse.message.toString())
+                }
+
+                Status.ERROR -> {
+                    AppUtil.stopLoader()
+                    showToast("Not able to save the product")
+                }
+
+                Status.LOADING -> {
+                    AppUtil.startLoader(this@SettingHomeActivity)
+                }
+            }
+
+        }
     }
 }

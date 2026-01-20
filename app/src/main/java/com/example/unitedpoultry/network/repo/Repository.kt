@@ -9,6 +9,7 @@ import com.example.unitedpoultry.AdminRiderModule.model.RiderDataResponceModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderEditRequestModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderRequestModel
+import com.example.unitedpoultry.AdminSettingModule.DataModel.RateData
 import com.example.unitedpoultry.AdminShopModule.model.ShopDetailsResponseModel
 import com.example.unitedpoultry.AdminShopModule.model.ShopsData
 import com.example.unitedpoultry.Authentications.forgetpassword.ForgotPasswordRequestModel
@@ -120,6 +121,14 @@ class Repository(private val api: ApiInterface) {
 
     suspend fun deleteRider(ShopId: Int): Response<BaseResponse<Any>> {
         return api.deleteRider(ShopId)
+    }
+
+    suspend fun createProduct(fields: HashMap<Any, Any>): Response<BaseResponse<Any>> {
+        return api.createProduct(fields)
+    }
+
+    suspend fun rateHistory(page: Int): Response<BaseResponse<RateData>> {
+        return api.rateHistory(page)
     }
 
 }

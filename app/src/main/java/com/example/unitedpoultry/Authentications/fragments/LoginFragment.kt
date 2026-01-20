@@ -24,6 +24,7 @@ import com.example.unitedpoultry.databinding.FragmentLoginBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse
 import com.example.unitedpoultry.util.AppConstants
+import com.example.unitedpoultry.util.AppConstants.TYPE
 import com.example.unitedpoultry.util.AppUtil
 import com.google.gson.Gson
 import org.koin.android.ext.android.inject
@@ -122,8 +123,10 @@ class LoginFragment : Fragment() {
 
     private fun callLoginApi() {
         val loginRequest = LoginRequestModel(
+            TYPE.toString(),
             binding.etEmail.text.toString().trim(),
-            binding.etPassword.text.toString().trim()
+            binding.etPassword.text.toString().trim(),
+
         )
 
         viewModel.login(loginRequest).observe(viewLifecycleOwner) { apiResponse ->

@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.FragmentOnBoardForthBinding
+import com.example.unitedpoultry.util.AppConstants.TYPE
 
 class OnBoardForthFragment : Fragment() {
 
@@ -41,10 +42,12 @@ class OnBoardForthFragment : Fragment() {
         // User option click
         binding.optionRider.setOnClickListener {
             selectUserType("rider")
+            TYPE="seller"
         }
 
         // Admin option click
         binding.optionAdmin.setOnClickListener {
+            TYPE="admin"
             selectUserType("admin")
         }
 

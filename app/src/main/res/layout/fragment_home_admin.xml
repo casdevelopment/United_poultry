@@ -28,7 +28,7 @@
             <ImageView
                 android:id="@+id/bgImage"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="250dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/bgfull" />
 
@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="0dp"
                 >
 
                 <LinearLayout
@@ -174,6 +174,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -263,6 +264,200 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/topPortion">
 
+
+            <!-- Search Bar inside curve -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_margin="5dp"
+                android:id="@+id/searchLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxStrokeWidth="1dp"
+                app:boxStrokeColor="@color/primary"
+                app:boxBackgroundColor="@color/primary20"
+                app:hintEnabled="false"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Search Supplier..."
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black44"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textSize="14dp"
+                    android:drawableStart="@drawable/searchvector"
+                    android:drawablePadding="10dp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:weightSum="3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    android:background="@color/white">
+
+                    <RelativeLayout
+                        android:padding="4dp"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_marginTop="10dp"
+                            tools:text="12"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/primary"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins"
+                            android:id="@+id/activeSuppliersTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:gravity="center"
+                            android:text="@string/active_suppliers"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/grayshade"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins"
+                            android:layout_below="@id/activeSuppliersTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </RelativeLayout>
+
+
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    android:background="@color/white">
+
+                    <RelativeLayout
+                        android:padding="4dp"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_marginTop="10dp"
+                            tools:text="12"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/primary"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins"
+                            android:id="@+id/pendingApprovalTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:gravity="center"
+                            android:text="@string/pending_approval"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/grayshade"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins"
+                            android:layout_below="@id/pendingApprovalTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </RelativeLayout>
+
+
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    android:background="@color/white">
+
+                    <RelativeLayout
+                        android:padding="4dp"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_marginTop="10dp"
+                            tools:text="12"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/primary"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins"
+                            android:id="@+id/totalProductsTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:gravity="center"
+                            android:text="@string/total_products"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/grayshade"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins"
+                            android:layout_below="@id/totalProductsTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </RelativeLayout>
+
+
+
+                </androidx.cardview.widget.CardView>
+
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:layout_marginTop="10dp"
+                android:text="Active Suppliers"
+                android:textColor="@color/primary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginStart="10dp"
+                />
+
+            <!--RecyclerView-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvRiders"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:layout_margin="5dp"
+
+                />
 
 
 
@@ -393,6 +588,7 @@
 
 
                         <LinearLayout
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
@@ -421,6 +617,7 @@
                         </LinearLayout>
 
                         <ProgressBar
+                            android:visibility="gone"
                             android:id="@+id/pAssignedshops"
                             style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="match_parent"
@@ -434,8 +631,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:layout_marginTop="12dp"
-                            android:layout_marginBottom="8dp">
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="10dp">
 
                             <TextView
                                 android:id="@+id/tvAreaName2"
@@ -458,6 +655,7 @@
                         </LinearLayout>
 
                         <ProgressBar
+                            android:layout_marginBottom="10dp"
                             android:id="@+id/pVisitedShops"
                             style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="match_parent"
@@ -468,6 +666,7 @@
 
                         <!-- Row 3 -->
                         <LinearLayout
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
@@ -495,6 +694,7 @@
                         </LinearLayout>
 
                         <ProgressBar
+                            android:visibility="gone"
                             android:id="@+id/pRemainingShops"
                             style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="match_parent"

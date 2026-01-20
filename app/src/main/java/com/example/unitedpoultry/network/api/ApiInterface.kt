@@ -8,6 +8,7 @@ import com.example.unitedpoultry.AdminRiderModule.model.RiderDataResponceModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderEditRequestModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderRequestModel
+import com.example.unitedpoultry.AdminSettingModule.DataModel.RateData
 import com.example.unitedpoultry.AdminShopModule.model.ShopDetailsResponseModel
 import com.example.unitedpoultry.AdminShopModule.model.ShopsData
 import com.example.unitedpoultry.Authentications.forgetpassword.ForgotPasswordRequestModel
@@ -32,7 +33,7 @@ import retrofit2.http.Query
 
 interface ApiInterface {
 
-    @POST("admin/login")  // your login API endpoint
+    @POST("login")  // your login API endpoint
     suspend fun login(@Body loginRequest: LoginRequestModel): Response<BaseResponse<LoginResponseModel>>
 
     @POST("admin/forgot-password")
@@ -118,4 +119,11 @@ interface ApiInterface {
 
     @DELETE("admin/sellers/{id}")
     suspend fun deleteRider(@Path("id") shopId: Int):Response<BaseResponse<Any>>
+
+    @POST("admin/products")
+    suspend fun createProduct(@Body  fields: HashMap<Any, Any>):Response<BaseResponse<Any>>
+
+
+    @GET("admin/rates/history")
+    suspend fun rateHistory(@Query("page") page: Int):Response<BaseResponse<RateData>>
 }
