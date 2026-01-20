@@ -26,27 +26,30 @@ class AdminShopDetailsActivity : BaseActivity() {
     private var shopId: Int = 0
 
     // ✅ refresh flag
-    private var shouldRefresh = false
+   // private var shouldRefresh = false
 
     private val editLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
             if (result.resultCode == Activity.RESULT_OK) {
 
                 when (result.data?.getStringExtra("ACTION")) {
 
                     "UPDATED" -> {
-                        shouldRefresh = true   // refresh on resume
+                        // Just refresh (onResume will handle it)
                     }
 
                     "DELETED" -> {
+                        // Tell List to refresh & close Details
                         val intent = Intent()
-                        intent.putExtra("AREA_ID", areaId)
+                        intent.putExtra("ACTION", "DELETED")
                         setResult(Activity.RESULT_OK, intent)
                         finish()
                     }
                 }
             }
         }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +58,7 @@ class AdminShopDetailsActivity : BaseActivity() {
 
         configureStatusBar(false, R.color.primary)
 
-        areaId = intent.getIntExtra("AREA_ID", 0)
+       // areaId = intent.getIntExtra("AREA_ID", 0)
         shopId = intent.getIntExtra("ID", 0)
 
         if (shopId == 0) {
@@ -64,7 +67,7 @@ class AdminShopDetailsActivity : BaseActivity() {
             return
         }
 
-        fetchShopDetails(shopId)
+        //fetchShopDetails(shopId)
 
         binding.backArrow.setOnClickListener { finish() }
 
@@ -88,16 +91,17 @@ class AdminShopDetailsActivity : BaseActivity() {
             intent.putExtra("IMAGE", shop.image)
 
             editLauncher.launch(intent)
+
         }
     }
 
     // ✅ refresh when coming back from edit
     override fun onResume() {
         super.onResume()
-        if (shouldRefresh) {
+        //if (shouldRefresh) {
             fetchShopDetails(shopId)
-            shouldRefresh = false
-        }
+            //shouldRefresh = false
+       // }
     }
 
     private fun fetchShopDetails(shopId: Int) {

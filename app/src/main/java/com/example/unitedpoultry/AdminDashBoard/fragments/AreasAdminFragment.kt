@@ -8,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.unitedpoultry.AdminArea.Adapter.AdminAreaAdapter
 import com.example.unitedpoultry.AdminArea.AddNewAreaActivity
 import com.example.unitedpoultry.AdminArea.model.AreaModel
 import com.example.unitedpoultry.AdminArea.viewmodel.AreaViewModel
-import com.example.unitedpoultry.AdminDashBoard.BaseLazyFragment
 import com.example.unitedpoultry.databinding.FragmentAreasAdminBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse
@@ -21,7 +21,7 @@ import com.example.unitedpoultry.util.AppUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import retrofit2.Response
 
-class AreasAdminFragment : BaseLazyFragment() {
+class AreasAdminFragment : Fragment() {
 
     private lateinit var binding: FragmentAreasAdminBinding
     private val viewModel: AreaViewModel by viewModel()
@@ -32,19 +32,6 @@ class AreasAdminFragment : BaseLazyFragment() {
     private var lastPage = 1
     private var isLoading = false
 
-    private val addEditAreaLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                // Refresh list after add/edit
-                areaList.clear()
-                currentPage = 1
-                fetchAreasFromApi(currentPage)
-            }
-        }
-
-    override fun onLazyLoad() {
-        fetchAreasFromApi(currentPage)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,12 +50,19 @@ class AreasAdminFragment : BaseLazyFragment() {
         setupNestedScrollPagination()
     }
 
+    override fun onResume() {
+        super.onResume()
+        areaList.clear()
+        currentPage = 1
+        fetchAreasFromApi(currentPage)
+    }
+
+
     private fun setupRecyclerView() {
         adapter = AdminAreaAdapter(mutableListOf())
-        val layoutManager = LinearLayoutManager(requireContext())
-        binding.rvAreas.layoutManager = layoutManager
+        binding.rvAreas.layoutManager = LinearLayoutManager(requireContext())
         binding.rvAreas.adapter = adapter
-        binding.rvAreas.isNestedScrollingEnabled = false // important inside NestedScrollView
+        binding.rvAreas.isNestedScrollingEnabled = false
     }
 
     private fun setupSearch() {
@@ -81,7 +75,7 @@ class AreasAdminFragment : BaseLazyFragment() {
     private fun setupFab() {
         binding.fabAdd.setOnClickListener {
             val intent = Intent(requireContext(), AddNewAreaActivity::class.java)
-            addEditAreaLauncher.launch(intent)
+            startActivity(intent)
         }
     }
 
@@ -99,7 +93,7 @@ class AreasAdminFragment : BaseLazyFragment() {
     }
 
     private fun fetchAreasFromApi(page: Int) {
-        isLoading = true // prevent duplicate calls
+        isLoading = true
         viewModel.getAreas(page).observe(viewLifecycleOwner) { apiResponse ->
             when (apiResponse.status) {
                 Status.LOADING -> if (page == 1) AppUtil.startLoader(requireContext())
@@ -115,11 +109,10 @@ class AreasAdminFragment : BaseLazyFragment() {
                         val areas = baseResponse?.data?.areas
                         val pagination = baseResponse?.data?.pagination
 
-                        // Update pagination info
                         if (pagination != null) lastPage = pagination.last_page
 
                         if (!areas.isNullOrEmpty()) {
-                            if (page == 1) areaList.clear() // reset first page
+                            if (page == 1) areaList.clear()
                             areaList.addAll(areas)
                             adapter.updateList(areaList)
                             showEmptyState(false)
@@ -127,7 +120,6 @@ class AreasAdminFragment : BaseLazyFragment() {
                             showEmptyState(true)
                         }
 
-                        // Update currentPage only after success
                         currentPage = page
                     } else if (areaList.isEmpty()) {
                         showEmptyState(true)

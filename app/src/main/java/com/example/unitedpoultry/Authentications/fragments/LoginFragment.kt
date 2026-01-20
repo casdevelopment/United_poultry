@@ -122,6 +122,7 @@ class LoginFragment : Fragment() {
 
     private fun callLoginApi() {
         val loginRequest = LoginRequestModel(
+
             binding.etEmail.text.toString().trim(),
             binding.etPassword.text.toString().trim()
         )

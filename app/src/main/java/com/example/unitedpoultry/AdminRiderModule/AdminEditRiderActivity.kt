@@ -14,6 +14,7 @@ import com.example.unitedpoultry.AdminShopModule.viewmodel.DeleteRiderViewModel
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.databinding.ActivityAdminEditRiderBinding
 import com.example.unitedpoultry.network.Status
+import com.example.unitedpoultry.network.retrofit.BaseResponse
 import com.example.unitedpoultry.util.AppUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -70,12 +71,10 @@ class AdminEditRiderActivity : BaseActivity() {
 
     private fun setupClicks() {
         binding.backArrow.setOnClickListener {
-            setResult(Activity.RESULT_OK)
             finish()
         }
 
         binding.btnCancel.setOnClickListener {
-            setResult(Activity.RESULT_OK)
             finish()
         }
 
@@ -131,7 +130,7 @@ class AdminEditRiderActivity : BaseActivity() {
             password = binding.etPassword.text.toString().trim()
         )
 
-        viewModel.editRider(id,request).observe(this) { apiResponse ->
+        viewModel.editRider(id, request).observe(this) { apiResponse ->
 
             when (apiResponse.status) {
 
@@ -147,28 +146,71 @@ class AdminEditRiderActivity : BaseActivity() {
 
                         val baseResponse = response.body()
 
-
+                        // ✅ Show backend message even on success
                         Toast.makeText(this, baseResponse?.message ?: "Success", Toast.LENGTH_LONG).show()
 
                         if (baseResponse?.result == "success") {
-                            setResult(Activity.RESULT_OK)
+                            val resultIntent = Intent()
+                            resultIntent.putExtra("ACTION", "UPDATED")
+                            setResult(Activity.RESULT_OK, resultIntent)
                             finish()
-
                         }
 
                     } else {
-                        Toast.makeText(this,
-                            "Something went wrong", Toast.LENGTH_SHORT).show()
+                        // ✅ Parse errorBody and show backend message even if HTTP is not successful
+                        try {
+                            val errorJson = response?.errorBody()?.string()
+                            val gson = com.google.gson.Gson()
+                            val errorResponse = gson.fromJson(errorJson, BaseResponse::class.java)
+                            Toast.makeText(
+                                this,
+                                errorResponse?.message ?: "Something went wrong",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                this,
+                                "Something went wrong",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
 
                 Status.ERROR -> {
                     AppUtil.stopLoader()
-                    Toast.makeText(this, apiResponse.message ?: "Network Error", Toast.LENGTH_SHORT).show()
+
+                    val response = apiResponse.data
+                    if (response != null && response.errorBody() != null) {
+                        try {
+                            // ✅ Parse errorBody and show backend message
+                            val errorJson = response.errorBody()!!.string()
+                            val gson = com.google.gson.Gson()
+                            val errorResponse = gson.fromJson(errorJson, BaseResponse::class.java)
+                            Toast.makeText(
+                                this,
+                                errorResponse?.message ?: apiResponse.message ?: "Something went wrong",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                this,
+                                apiResponse.message ?: "Something went wrong",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } else {
+                        Toast.makeText(
+                            this,
+                            apiResponse.message ?: "Network Error",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         }
     }
+
 
 
     private fun showDeleteConfirmation() {
@@ -196,9 +238,9 @@ class AdminEditRiderActivity : BaseActivity() {
 
 
                 if (response.data.body()?.result == "success") {
-                    val intent = Intent()
-                    intent.putExtra("ACTION", "DELETED")
-                    setResult(Activity.RESULT_OK, intent)
+                    val resultIntent = Intent()
+                    resultIntent.putExtra("ACTION", "DELETED")
+                    setResult(Activity.RESULT_OK, resultIntent)
                     finish()
                 }
 

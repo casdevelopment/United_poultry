@@ -173,23 +173,28 @@ class AdminEditShopActivity : BaseActivity() {
     // ================= VALIDATION =================
     private fun validateInputs(): Boolean {
         if (binding.etShopName.text.toString().trim().isEmpty()) {
-            Toast.makeText(this, "Shop name required", Toast.LENGTH_SHORT).show()
+            binding.etShopName.visibility = View.VISIBLE
+            binding.etShopName.setText("Shop Name required")
             return false
         }
         if (binding.etContactName.text.toString().trim().isEmpty()) {
-            Toast.makeText(this, "Contact person required", Toast.LENGTH_SHORT).show()
+            binding.etContactName.visibility = View.VISIBLE
+            binding.etContactName.setText("Contact Name required")
             return false
         }
         if (binding.etPhoneNumber.text.toString().trim().length < 10) {
-            Toast.makeText(this, "Valid phone number required", Toast.LENGTH_SHORT).show()
+            binding.etPhoneNumber.visibility = View.VISIBLE
+            binding.etPhoneNumber.setText("valid Phone Number required")
             return false
         }
         if (binding.etAddress.text.toString().trim().isEmpty()) {
-            Toast.makeText(this, "Address required", Toast.LENGTH_SHORT).show()
+            binding.etAddressError.visibility = View.VISIBLE
+            binding.etAddress.setText("Address required")
             return false
         }
         if (binding.etDiscount.text.toString().trim().isEmpty()) {
-            Toast.makeText(this, "Discount required", Toast.LENGTH_SHORT).show()
+            binding.etDiscount.visibility = View.VISIBLE
+            binding.etDiscount.setText("Name required")
             return false
         }
         return true
@@ -223,11 +228,15 @@ class AdminEditShopActivity : BaseActivity() {
             val message = response.data?.body()?.message ?: "Updated successfully"
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
-            if (response.data?.body()?.result == "success")
-
-                intent.putExtra("ACTION", "UPDATED")
-                setResult(Activity.RESULT_OK, intent)
+            if (response.data?.body()?.result == "success") {
+                // ✅ Return "UPDATED" to DetailsActivity
+                val resultIntent = Intent()
+                resultIntent.putExtra("ACTION", "UPDATED")
+                setResult(Activity.RESULT_OK, resultIntent)
                 finish()
+            }
+
+
         }
     }
 
@@ -270,10 +279,11 @@ class AdminEditShopActivity : BaseActivity() {
 //                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 //                startActivity(intent)
 
-                if (response.data.body()?.result == "success") {
-                    val intent = Intent()
-                    intent.putExtra("ACTION", "DELETED")
-                    setResult(Activity.RESULT_OK, intent)
+                if (response.data?.body()?.result == "success") {
+                    // ✅ Return "DELETED" to DetailsActivity
+                    val resultIntent = Intent()
+                    resultIntent.putExtra("ACTION", "DELETED")
+                    setResult(Activity.RESULT_OK, resultIntent)
                     finish()
                 }
 

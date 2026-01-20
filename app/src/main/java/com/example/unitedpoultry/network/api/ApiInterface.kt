@@ -118,4 +118,18 @@ interface ApiInterface {
 
     @DELETE("admin/sellers/{id}")
     suspend fun deleteRider(@Path("id") shopId: Int):Response<BaseResponse<Any>>
+
+
+    @Multipart
+    @POST("admin/profile/update")
+    suspend fun updateProfile(
+        @Part("name") name: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("phone") phone: RequestBody,
+        @Part("username") username: RequestBody,
+        @Part("business_name") business_name: RequestBody,
+        @Part("address") address: RequestBody,
+        @Part image: MultipartBody.Part?,
+        @Part("_method") method: RequestBody
+    ): Response<BaseResponse<Any>>
 }

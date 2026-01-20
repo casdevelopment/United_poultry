@@ -6,19 +6,13 @@ import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.unitedpoultry.AdminArea.EditAreaActivity
-import com.example.unitedpoultry.AdminArea.model.AreaModel
 import com.example.unitedpoultry.AdminRiderModule.AdminRiderDetailsActivity
 import com.example.unitedpoultry.AdminRiderModule.model.RiderModel
-import com.example.unitedpoultry.AdminShopModule.AdminShopListActivity
 import com.example.unitedpoultry.R
-import com.google.android.material.button.MaterialButton
 
 class AdminRidersAdapter(
     private val riderList: MutableList<RiderModel>
@@ -68,6 +62,10 @@ class AdminRidersAdapter(
                 ContextCompat.getColor(holder.itemView.context, R.color.mint)
             )
 
+            holder.riderStatus.text = "Active"
+
+
+
             holder.tvInitials.backgroundTintList =
                 ContextCompat.getColorStateList(holder.itemView.context, iconColor)
 
@@ -77,8 +75,10 @@ class AdminRidersAdapter(
                     ContextCompat.getColor(holder.itemView.context, R.color.black60)
                 )
             holder.riderStatus.setTextColor(
-                ContextCompat.getColor(holder.itemView.context, R.color.black60)
+                ContextCompat.getColor(holder.itemView.context, R.color.black44)
             )
+
+            holder.riderStatus.text = "Inactive"
 
             holder.tvInitials.backgroundTintList =
                 ContextCompat.getColorStateList(holder.itemView.context, R.color.black17)
@@ -87,17 +87,7 @@ class AdminRidersAdapter(
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
             val intent = Intent(context, AdminRiderDetailsActivity::class.java)
-//            intent.putExtra("INITIALS",getInitials(item.name))
             intent.putExtra("ID", item.id)
-//            intent.putExtra("EMAIL", item.email)
-//            intent.putExtra("USER_NAME", item.username)
-//            intent.putExtra("CNIC", item.cnic)
-//            intent.putExtra("PHONE_NUMBER", item.phone_number)
-//            intent.putExtra("ADDRESS", item.address)
-//            intent.putExtra("IS_ACTIVE", item.is_active)
-//            intent.putExtra("IMAGE", item.image)
-//            intent.putExtra("ROLE_ID", item.role_id)
-
             context.startActivity(intent)
         }
 

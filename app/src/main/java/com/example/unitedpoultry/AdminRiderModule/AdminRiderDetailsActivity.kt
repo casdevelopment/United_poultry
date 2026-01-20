@@ -29,22 +29,26 @@ class AdminRiderDetailsActivity : BaseActivity() {
 
     private val editLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
             if (result.resultCode == Activity.RESULT_OK) {
 
                 when (result.data?.getStringExtra("ACTION")) {
 
                     "UPDATED" -> {
-                        fetchShopDetails(riderId) // refresh details
+                        // Just refresh (onResume will handle it)
                     }
 
                     "DELETED" -> {
+                        // Tell List to refresh & close Details
                         val intent = Intent()
+                        intent.putExtra("ACTION", "DELETED")
                         setResult(Activity.RESULT_OK, intent)
-                        finish() // go back to list
+                        finish()
                     }
                 }
             }
         }
+
 
 
 
@@ -65,8 +69,6 @@ class AdminRiderDetailsActivity : BaseActivity() {
         }
 
 
-
-        fetchShopDetails(riderId)
 
         binding.backArrow.setOnClickListener { finish() }
 
@@ -114,6 +116,11 @@ class AdminRiderDetailsActivity : BaseActivity() {
 
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fetchShopDetails(riderId)
     }
 
     private fun fetchShopDetails(riderId: Int) {

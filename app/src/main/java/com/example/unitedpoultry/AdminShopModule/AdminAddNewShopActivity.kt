@@ -222,10 +222,10 @@ class AdminAddNewShopActivity : BaseActivity() {
                                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
                                 // If API says success, finish activity
-                                if (baseResponse?.result == "success")
-                                    setResult(Activity.RESULT_OK)
-                                    finish()
+                                if (baseResponse?.result == "success") {
 
+                                    finish()
+                                }
                             } else {
                                 // HTTP error (like 401, 422, 500)
                                 val errorMessage = try {
