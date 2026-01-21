@@ -8,7 +8,9 @@ data class LoginResponseModel(
     val phone_number: String,
     val username : String,
     val address: String,
-    val image: String?,             // nullable
+    val cnic: String?,
+    val image: String?,
+    val is_active: Boolean,
     val role_id: Int,
     val created_at: String,
     val updated_at: String

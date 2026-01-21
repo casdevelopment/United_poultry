@@ -19,6 +19,8 @@ import com.example.unitedpoultry.Authentications.resetpassword.ResetPasswordRequ
 import com.example.unitedpoultry.Authentications.verifyotp.VerifyOtpRequestModel
 import com.example.unitedpoultry.network.api.ApiInterface
 import com.example.unitedpoultry.network.retrofit.BaseResponse
+import com.example.unitedpoultry.rider_home.model.EggPickupData
+import com.example.unitedpoultry.rider_home.model.EggPickupRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -145,6 +147,28 @@ class Repository(private val api: ApiInterface) {
     suspend fun rateHistory(page: Int): Response<BaseResponse<RateData>> {
         return api.rateHistory(page)
 
+    }
+
+    suspend fun savePickedEggs(request: EggPickupRequest, token: String): Response<BaseResponse<EggPickupData>> {
+        return api.savePickedEggs(token, request)
+    }
+
+    suspend fun getProducts() = api.getProducts()
+
+    suspend fun getDailyStats() = api.getDailyStats()
+
+    suspend fun getRiderAreas(page: Int = 1): Response<BaseResponse<AreaDataResponseModel>> {
+        return api.getRiderAreas(page = page)
+    }
+
+    suspend fun getRiderShops(areaId: Int,page: Int = 1): Response<BaseResponse<ShopsData>> {
+        return api.getRiderShops(areaId,page = page)
+    }
+
+    suspend fun getRiderShopDetails(
+        shopId: Int
+    ): Response<BaseResponse<ShopDetailsResponseModel>> {
+        return api.getRiderShopDetails(shopId)
     }
 
 }

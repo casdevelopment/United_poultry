@@ -4,7 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.NewSale.Adapter.SelectShopAdapter
+import com.example.unitedpoultry.SessionManager
 import com.example.unitedpoultry.databinding.ActivityMyProfileBinding
+import com.example.unitedpoultry.util.AppConstants.userData
+import org.koin.android.ext.android.inject
 
 class MyProfileActivity : BaseActivity() {
 
@@ -21,41 +24,44 @@ class MyProfileActivity : BaseActivity() {
         )
 
 
+        showData()
+
         binding.backArrow.setOnClickListener {
             finish()
         }
 
-        val name = intent.getStringExtra("name") ?: "Unknown"
-        val address = intent.getStringExtra("address") ?: "Unknown"
-        val balance = intent.getStringExtra("balance") ?: "Unknown"
-
-//        binding.tvShopName.text = name
-//        binding.tvShopAddress.text = address
-//        binding.tvInitials.text = getInitials(name)
-//        binding.tvBalance.text = "Rs. $balance"
-//
-//        binding.btnConfirmCollection.setOnClickListener {
-//            val intent = Intent(this, CollectionSuccessActivity::class.java)
-//            intent.putExtra("name", name)
-//            intent.putExtra("address", address)
-//            intent.putExtra("initials",  getInitials(name))
-//            startActivity(intent)
-//
-//        }
-
-
-//        binding.cardCheque.setOnClickListener {
-//            val intent = Intent(this, ChequeDetailsActivity::class.java)
-//            intent.putExtra("name", name)
-//            intent.putExtra("address", address)
-//            intent.putExtra("initials",  getInitials(name))
-//            intent.putExtra("balance", balance)
-//            startActivity(intent)
-//
-//        }
 
 
     }
+
+    private fun showData(){
+
+        binding.tvUserName.text = userData?.username ?: "User Name"
+        binding.capsuleText.text = if (userData?.is_active == true) {
+            "Active"
+        } else {
+            "Inactive"
+        }
+
+
+        binding.tvInitials.text = getInitials(userData?.username ?: "User Name")
+
+        binding.tvFullName.text = userData?.name ?: "User Name"
+
+        binding.tvCnic.text = userData?. cnic ?: "0"
+
+        binding.dateOfBirth.text = "-"
+
+        binding.dateOfJoining.text = "-"
+
+        binding.tvContact.text = userData?.phone_number?: "0"
+
+         binding.tvEmergencyContact.text = "-"
+
+        binding.tvAddress.text = userData?.address?: "0"
+
+    }
+
     private fun getInitials(name: String): String {
         if (name.isBlank()) return ""
 

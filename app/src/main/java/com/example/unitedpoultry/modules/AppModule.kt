@@ -24,11 +24,17 @@ import com.example.unitedpoultry.Authentications.forgetpassword.ForgetPasswordVi
 import com.example.unitedpoultry.Authentications.login.viewmodel.LoginViewModel
 import com.example.unitedpoultry.Authentications.resetpassword.ResetPasswordViewModel
 import com.example.unitedpoultry.Authentications.verifyotp.OtpVerificationViewModel
+import com.example.unitedpoultry.RiderArea.viewmodel.RiderAreaViewModel
+import com.example.unitedpoultry.ShopModule.viewmodel.RiderShopListViewModel
 import com.example.unitedpoultry.SessionManager
+import com.example.unitedpoultry.ShopModule.viewmodel.RiderShopDetailsViewModel
+import com.example.unitedpoultry.adminproduct.viewmodel.GetProductViewModel
 import com.example.unitedpoultry.network.repo.Repository
 import com.example.unitedpoultry.network.retrofit.provideOkHttpClient
 import com.example.unitedpoultry.network.retrofit.provideRetrofit
 import com.example.unitedpoultry.network.retrofit.provideRetrofitInterface
+import com.example.unitedpoultry.rider_home.viewmodel.DailyStatsViewModel
+import com.example.unitedpoultry.rider_home.viewmodel.EggPickupViewModel
 import com.example.unitedpoultry.util.AppConstants.SHARED_PREF_NAME
 
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -62,6 +68,15 @@ val viewModelModule= module{
     viewModel { AdminSettingViewModel(get()) }
 
     viewModel { UpdateAdminProfileViewModel(get()) }
+
+    viewModel { EggPickupViewModel(get()) }
+
+    viewModel { GetProductViewModel(get()) }
+    viewModel { DailyStatsViewModel(get()) }
+
+    viewModel { RiderAreaViewModel(get()) }
+    viewModel { RiderShopListViewModel(get()) }
+    viewModel { RiderShopDetailsViewModel(get()) }
 
 }
 

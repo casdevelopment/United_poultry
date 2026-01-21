@@ -6,20 +6,31 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.unitedpoultry.AdminHome.Adapter.ShopVisitedAdapter
 import com.example.unitedpoultry.AdminHome.model.ShopvisitedModel
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.Notification.NotificationActivity
-import com.example.unitedpoultry.RiderDashBoard.Home.RiderHomeAdapter
+import com.example.unitedpoultry.rider_home.EggPickupActivity
+import com.example.unitedpoultry.rider_home.adapter.RiderHomeAdapter
 import com.example.unitedpoultry.databinding.FragmentHomeBinding
+import com.example.unitedpoultry.network.Status
+import com.example.unitedpoultry.network.retrofit.BaseResponse
+import com.example.unitedpoultry.rider_home.model.EggPickupData
+import com.example.unitedpoultry.rider_home.viewmodel.DailyStatsViewModel
+import com.example.unitedpoultry.rider_home.viewmodel.EggPickupViewModel
+import com.example.unitedpoultry.util.AppConstants.userData
+import com.example.unitedpoultry.util.AppUtil
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var shopAdapter: RiderHomeAdapter
+
+    private val ViewModel: DailyStatsViewModel by viewModel()
 
 
     override fun onCreateView(
@@ -33,15 +44,15 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize toggle state
-        binding.toggleStatus.isChecked = true
-        updateStatusUI(true)
+        activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.primary)
 
-
-        // Listen for toggle changes
-        binding.toggleStatus.setOnCheckedChangeListener { _, isChecked ->
-            updateStatusUI(isChecked)
+        // Optional: Change status bar icons to dark if needed
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            activity?.window?.decorView?.systemUiVisibility = 0 // light icons: 0, dark icons: View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
+
+        showData()
+        onclick()
 
         binding.notifications.setOnClickListener {
             val intent = Intent(requireContext(), NotificationActivity::class.java)
@@ -61,96 +72,62 @@ class HomeFragment : Fragment() {
 
     }
 
-    // Function to update icon and text based on toggle
-    private fun updateStatusUI(isOnline: Boolean) {
-        if (isOnline) {
-            binding.signalStatus.setImageResource(R.drawable.onlinevector)
-            binding.tvStatusTitle.text = "You’re Online"
-            binding.tvStatusSubtitle.text = "Frequently asked questions"
-            binding.todayTargetCard.visibility = View.VISIBLE
-            binding.todayTargetCardOffline.visibility = View.GONE
-            binding.tvStatesTitle.text = "Todays Payment Stats"
+    private fun showData(){
 
-            binding.pendingshops.visibility = View.VISIBLE
-            binding.rvVisitedShops.visibility = View.VISIBLE
+        binding.tvTitle.text = "Hello, ${userData?.name ?: "User Name"}"
+//        binding.tvEmail.text = userData?.email ?: "Email"
+//
+//        binding.tvInitials.text = getInitials(userData?.name)
+
+    }
 
 
-            binding.quickNewImage.setImageResource(R.drawable.quicknewvector)
-            binding.quickShopImage.setImageResource(R.drawable.boxsolidsalesvector)
-            binding.quickHistoryImage.setImageResource(R.drawable.quickhistoryvector)
-            binding.quickCollectImage.setImageResource(R.drawable.card5)
 
-            binding.quickNewLayout.backgroundTintList =
-                ContextCompat.getColorStateList(requireContext(), R.color.primary20)
+    private fun onclick(){
 
-            binding.quickCollectLayout.backgroundTintList =
-                ContextCompat.getColorStateList(requireContext(), R.color.sub_primary18)
+        binding.addEggsLayout.setOnClickListener{
 
-            binding.quickShopLayout.backgroundTintList =
-                ContextCompat.getColorStateList(requireContext(), R.color.pink15)
+            val intent = Intent(requireContext(), EggPickupActivity::class.java)
+            startActivity(intent)
+        }
 
-            binding.quickHistoryLayout.backgroundTintList =
-                ContextCompat.getColorStateList(requireContext(), R.color.green15)
+    }
 
-//            binding.rootLayout.background = ContextCompat.getDrawable(
-//                requireContext(),
-//                R.drawable.riderdashboardonlinebackground
-//            )
+    override fun onResume() {
+        super.onResume()
+        loadDailyStats()
+    }
 
-            binding.bgImage.setImageResource(R.drawable.bgfull)
+    private fun loadDailyStats() {
+        ViewModel.getDailyStats().observe(viewLifecycleOwner) { response ->
+            when (response.status) {
+                Status.LOADING -> AppUtil.startLoader(requireActivity())
 
+                Status.SUCCESS -> {
+                    AppUtil.stopLoader()
+                    val res = response.data
+                    if (res != null && res.isSuccessful) {
+                        val baseResponse = res.body() as BaseResponse<EggPickupData>?
+                        baseResponse?.data?.let { data ->
+                            binding.totalPicked.text = data.total_picked.toString()
+                            binding.totalSold.text = data.total_sold.toString()
+                            binding.totalReturned.text = data.total_returned.toString()
+                            binding.totalWaste.text = data.total_waste.toString()
+                        }
+                    }
+                }
 
-            activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.primary)
-
-            // Optional: Change status bar icons to dark if needed
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                activity?.window?.decorView?.systemUiVisibility = 0 // light icons: 0, dark icons: View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            }
-
-
-        } else {
-            binding.signalStatus.setImageResource(R.drawable.offlinevector)
-            binding.tvStatusTitle.text = "You’re Offline"
-            binding.tvStatusSubtitle.text = "Toggle to start receiving work"
-            binding.todayTargetCard.visibility = View.GONE
-            binding.todayTargetCardOffline.visibility = View.VISIBLE
-
-            binding.pendingshops.visibility = View.GONE
-            binding.rvVisitedShops.visibility = View.GONE
-
-            binding.tvStatesTitle.text = "Todays Payment Stats"
-
-            binding.quickNewImage.setImageResource(R.drawable.quicknewofflinevector)
-            binding.quickShopImage.setImageResource(R.drawable.card6)
-            binding.quickHistoryImage.setImageResource(R.drawable.quickhistoryofflinevector)
-            binding.quickCollectImage.setImageResource(R.drawable.card6)
-
-
-            binding.quickNewLayout.backgroundTintList =
-                ContextCompat.getColorStateList(requireContext(), R.color.black8)
-
-            binding.quickCollectLayout.backgroundTintList =
-                ContextCompat.getColorStateList(requireContext(), R.color.black8)
-
-            binding.quickShopLayout.backgroundTintList =
-                ContextCompat.getColorStateList(requireContext(), R.color.black8)
-
-            binding.quickHistoryLayout.backgroundTintList =
-                ContextCompat.getColorStateList(requireContext(), R.color.black8)
-
-//            binding.rootLayout.background = ContextCompat.getDrawable(
-//                requireContext(),
-//                R.drawable.homerideroffline
-//            )
-
-            binding.bgImage.setImageResource(R.drawable.offlinebg)
-
-            activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.dark)
-
-            // Optional: Change status bar icons to dark if needed
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                activity?.window?.decorView?.systemUiVisibility = 0 // light icons: 0, dark icons: View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                Status.ERROR -> {
+                    AppUtil.stopLoader()
+                    Toast.makeText(
+                        requireContext(),
+                        response.message ?: "Network error",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
+
+
 }

@@ -1,97 +1,162 @@
 package com.example.unitedpoultry.ShopModule
 
-import android.graphics.Color
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.unitedpoultry.R
-import com.example.unitedpoultry.ShopModule.Adapter.ShopsAdapter
-import com.example.unitedpoultry.ShopModule.model.ShopsRecord
-import com.example.unitedpoultry.databinding.ActivityShopListBinding
 import androidx.core.widget.addTextChangedListener
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.unitedpoultry.AdminShopModule.model.ShopModel
 import com.example.unitedpoultry.BaseActivity
+import com.example.unitedpoultry.R
+import com.example.unitedpoultry.ShopModule.Adapter.RiderShopListAdapter
+import com.example.unitedpoultry.ShopModule.viewmodel.RiderShopListViewModel
+import com.example.unitedpoultry.databinding.ActivityShopListBinding
+import com.example.unitedpoultry.network.Status
+import com.example.unitedpoultry.util.AppUtil
+import com.example.unitedpoultry.util.showToast
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ShopListActivity : BaseActivity() {
 
     private lateinit var binding: ActivityShopListBinding
-    private lateinit var adapter: ShopsAdapter
-    private var currentFilter = "ALL"
+    private lateinit var adapter: RiderShopListAdapter
+    private val viewModel: RiderShopListViewModel by viewModel()
+
+    private val shopList = mutableListOf<ShopModel>()
+    private var isLoading = false
+    private var currentPage = 1
+    private var lastPage = 1
+    private var areaId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityShopListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        configureStatusBar(
-            isLightBackground = false, // false = white icons
-            colorResId = R.color.primary
-        )
+        configureStatusBar(isLightBackground = false, colorResId = R.color.primary)
 
+        val name = intent.getStringExtra("AREA_NAME")
+        binding.tvAreaName.text = "$name Shops"
+        areaId = intent.getIntExtra("AREA_Id", 0)
+
+        setupRecyclerView()
+        setupSearch()
+        setupScrollPagination()
+        setupClicks()
+    }
+
+    // 🔥 ALWAYS refresh list when screen becomes visible
+    override fun onResume() {
+        super.onResume()
+        resetAndFetch()
+    }
+
+    private fun setupClicks() {
 
         binding.backArrow.setOnClickListener {
             finish()
         }
 
-        val areaName = intent.getStringExtra("AREA_NAME")
+    }
 
-        binding.tvAreaName.setText(areaName)
-
-        // Sample data
-        val data = mutableListOf(
-            ShopsRecord("Ali Store", "Gulberg", "VISITED", "10 Aug", 5, 0),
-            ShopsRecord("Khan Shop", "Model Town", "PENDING", "05 Aug", 4, 2000),
-            ShopsRecord("Bismillah Mart", "Johar Town", "OVERDUE", "25 Jul", 3, 5000)
+    private fun setupRecyclerView() {
+        adapter = RiderShopListAdapter(
+            originalList = mutableListOf(),
+            areaId = areaId
         )
 
-        adapter = ShopsAdapter(data)
-
-        binding.rvShops.layoutManager = LinearLayoutManager(this)
-        binding.rvShops.adapter = adapter
-
-        updateFilterCounts()
-        highlightFilter("ALL")
-
-        // Search bar
-        binding.etSearch.addTextChangedListener {
-            adapter.filter(it.toString(), currentFilter)
-        }
-
-        // Filter clicks
-        binding.filterAll.setOnClickListener { applyFilter("ALL") }
-        binding.filterVisited.setOnClickListener { applyFilter("VISITED") }
-        binding.filterPending.setOnClickListener { applyFilter("PENDING") }
-        binding.filterOverdue.setOnClickListener { applyFilter("OVERDUE") }
-
+        binding.rvShopList.layoutManager = LinearLayoutManager(this)
+        binding.rvShopList.adapter = adapter
+        binding.rvShopList.isNestedScrollingEnabled = false
     }
 
-    private fun applyFilter(type: String) {
-        currentFilter = type
-        adapter.filter(binding.etSearch.text.toString(), type)
-        highlightFilter(type)
+    private fun setupSearch() {
+        binding.etSearch.addTextChangedListener { editable ->
+            adapter.filter(editable.toString())
+            showEmptyState(adapter.itemCount == 0)
+        }
     }
 
-    private fun updateFilterCounts() {
-        binding.filterAll.text = "All (${adapter.countByStatus("ALL")})"
-        binding.filterVisited.text = "Visited (${adapter.countByStatus("VISITED")})"
-        binding.filterPending.text = "Pending (${adapter.countByStatus("PENDING")})"
-        binding.filterOverdue.text = "Overdue (${adapter.countByStatus("OVERDUE")})"
+    private fun setupScrollPagination() {
+        binding.nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            val view = binding.rvShopList.getChildAt(binding.rvShopList.childCount - 1)
+            if (view != null) {
+                val diff = view.bottom - (binding.nestedScrollView.height + scrollY)
+                if (diff <= 200 && !isLoading && currentPage < lastPage) {
+                    fetchShops(currentPage + 1)
+                }
+            }
+        }
     }
 
-    private fun highlightFilter(type: String) {
-        val allFilters = listOf(binding.filterAll, binding.filterVisited, binding.filterPending, binding.filterOverdue)
-        allFilters.forEach {
-            it.setBackgroundResource(R.drawable.filter_bg)
-            it.setTextColor(Color.BLACK)
-        }
+    // 🔁 Reset pagination + list
+    private fun resetAndFetch() {
+        shopList.clear()
+        adapter.updateList(emptyList())
+        currentPage = 1
+        lastPage = 1
+        fetchShops(1)
+    }
 
-        val selected = when(type) {
-            "VISITED" -> binding.filterVisited
-            "PENDING" -> binding.filterPending
-            "OVERDUE" -> binding.filterOverdue
-            else -> binding.filterAll
-        }
+    private fun fetchShops(page: Int) {
+        isLoading = true
 
-        selected.setBackgroundResource(R.drawable.filter_bg_selected)
-        selected.setTextColor(Color.WHITE)
+        viewModel.getRiderShops(areaId, page).observe(this) { apiResponse ->
+
+            when (apiResponse.status) {
+
+                Status.LOADING -> {
+                    if (page == 1) AppUtil.startLoader(this)
+                }
+
+                Status.SUCCESS -> {
+                    if (page == 1) AppUtil.stopLoader()
+                    isLoading = false
+
+                    val body = apiResponse.data?.body()
+
+                    if (body?.result == "success" && body.data != null) {
+
+                        lastPage = body.data.pagination.last_page
+
+                        if (!body.data.shops.isNullOrEmpty()) {
+
+                            if (page == 1) shopList.clear()
+                            shopList.addAll(body.data.shops)
+                            adapter.updateList(shopList)
+
+                            binding.tvShopsCount.text = "${shopList.size} Shops"
+                            showEmptyState(false)
+
+                        } else if (shopList.isEmpty()) {
+                            showEmptyState(true)
+                        }
+
+                        currentPage = page
+
+                    } else {
+                        if (shopList.isEmpty()) showEmptyState(true)
+                        showToast(body?.message ?: "No shops found")
+                    }
+                }
+
+                Status.ERROR -> {
+                    if (page == 1) AppUtil.stopLoader()
+                    isLoading = false
+                    if (shopList.isEmpty()) showEmptyState(true)
+                    showToast(apiResponse.message ?: "Network error")
+                }
+            }
+        }
+    }
+
+    private fun showEmptyState(show: Boolean) {
+        binding.layoutEmpty.visibility =
+            if (show) android.view.View.VISIBLE else android.view.View.GONE
+
+        binding.rvShopList.visibility =
+            if (show) android.view.View.GONE else android.view.View.VISIBLE
+
+        binding.tvShopsCount.visibility =
+            if (show) android.view.View.GONE else android.view.View.VISIBLE
     }
 }

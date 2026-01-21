@@ -19,6 +19,7 @@ import com.example.unitedpoultry.Splash.SplashActivity
 import com.example.unitedpoultry.Welcome.WelcomeActivity
 import com.example.unitedpoultry.databinding.FragmentHomeBinding
 import com.example.unitedpoultry.databinding.FragmentProfileBinding
+import com.example.unitedpoultry.util.AppConstants.userData
 import com.google.android.material.button.MaterialButton
 import org.koin.android.ext.android.inject
 
@@ -38,11 +39,29 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        // Initialize toggle state
-//        binding.toggleStatus.isChecked = false
-//        updateStatusUI(false)
-//
-//        // Listen for toggle changes
+        showData()
+        onclick()
+
+
+
+    }
+
+    private fun showData(){
+
+        binding.tvName.text = userData?.username ?: "User Name"
+        binding.capsuleText.text = if (userData?.is_active == true) {
+            "Active"
+        } else {
+            "Inactive"
+        }
+
+
+        binding.tvInitials.text = getInitials(userData?.username ?: "User Name")
+
+    }
+
+    private fun  onclick(){
+
         binding.logoutCard.setOnClickListener {
 
             val dialogView = layoutInflater.inflate(R.layout.dialog_logout, null)
@@ -85,16 +104,27 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
 
-        binding.cardChangePassword.setOnClickListener {
-            val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.cardChangePassword.setOnClickListener {
+//            val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
+//            startActivity(intent)
+//        }
 
-        binding.cardMyPerformance.setOnClickListener {
-            val intent = Intent(requireContext(), MyPerformanceActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.cardMyPerformance.setOnClickListener {
+//            val intent = Intent(requireContext(), MyPerformanceActivity::class.java)
+//            startActivity(intent)
+//        }
 
     }
+
+    private fun getInitials(name: String?): String {
+        if (name.isNullOrEmpty()) return "U" // Default initial
+        val words = name.trim().split(" ")
+        return when {
+            words.size >= 2 -> "${words[0][0]}${words[1][0]}".uppercase()
+            words.isNotEmpty() -> "${words[0][0]}".uppercase()
+            else -> "U"
+        }
+    }
+
 
 }

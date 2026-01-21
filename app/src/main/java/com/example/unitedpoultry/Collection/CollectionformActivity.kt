@@ -26,8 +26,8 @@ class CollectionformActivity : BaseActivity() {
             finish()
         }
 
-        val name = intent.getStringExtra("name") ?: "Unknown"
-        val address = intent.getStringExtra("address") ?: "Unknown"
+        val name = intent.getStringExtra("NAME") ?: "N/A"
+        val address = intent.getStringExtra("ADDRESS")?: "N/A"
         val balance = intent.getStringExtra("balance") ?: "Unknown"
 
         binding.tvShopName.text = name

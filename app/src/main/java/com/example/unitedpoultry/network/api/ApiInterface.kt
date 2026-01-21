@@ -16,14 +16,17 @@ import com.example.unitedpoultry.Authentications.login.model.LoginRequestModel
 import com.example.unitedpoultry.Authentications.login.model.LoginResponseModel
 import com.example.unitedpoultry.Authentications.resetpassword.ResetPasswordRequestModel
 import com.example.unitedpoultry.Authentications.verifyotp.VerifyOtpRequestModel
+import com.example.unitedpoultry.adminproduct.model.ProductData
 import com.example.unitedpoultry.network.retrofit.BaseResponse
+import com.example.unitedpoultry.rider_home.model.EggPickupData
+import com.example.unitedpoultry.rider_home.model.EggPickupRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -141,5 +144,30 @@ interface ApiInterface {
 
     @GET("admin/rates/history")
     suspend fun rateHistory(@Query("page") page: Int):Response<BaseResponse<RateData>>
+
+
+    @POST("seller/egg-pickup/save-picked")
+    suspend fun savePickedEggs(
+        @Header("Authorization") token: String,
+        @Body request: EggPickupRequest
+    ): Response<BaseResponse<EggPickupData>>
+
+
+    @GET("admin/products")
+    suspend fun getProducts(): Response<BaseResponse<ProductData>>
+
+    @GET("seller/egg-pickup/daily-stats")
+    suspend fun getDailyStats(): Response<BaseResponse<EggPickupData>>
+
+    @GET("seller/areas") // replace with your endpoint
+    suspend fun getRiderAreas(@Query("page") page: Int): Response<BaseResponse<AreaDataResponseModel>>
+
+    @GET("seller/shops")
+    suspend fun getRiderShops(@Query("area_id") areaId: Int, @Query("page") page: Int): Response<BaseResponse<ShopsData>>
+
+    @GET("seller/shops/{id}")
+    suspend fun getRiderShopDetails(
+        @Path("id") shopId: Int
+    ): Response<BaseResponse<ShopDetailsResponseModel>>
 
 }
