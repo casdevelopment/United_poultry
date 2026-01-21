@@ -13,6 +13,7 @@ import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.databinding.ActivityAddNewAreaBinding
 import com.example.unitedpoultry.databinding.ActivityAdminAddNewRiderBinding
 import com.example.unitedpoultry.network.Status
+import com.example.unitedpoultry.network.retrofit.BaseResponse
 import com.example.unitedpoultry.util.AppUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -37,11 +38,9 @@ class AdminAddNewRiderActivity : BaseActivity() {
 
     private fun setupClicks() {
         binding.backArrow.setOnClickListener {
-            setResult(Activity.RESULT_OK)
             finish() }
 
         binding.btnCancel.setOnClickListener {
-            setResult(Activity.RESULT_OK)
             finish() }
 
         binding.btnSave.setOnClickListener {
@@ -110,7 +109,6 @@ class AdminAddNewRiderActivity : BaseActivity() {
 
     private fun callAddRiderApi() {
 
-
         val request = RiderRequestModel(
             name = binding.etName.text.toString().trim(),
             email = binding.etEmail.text.toString().trim(),
@@ -138,29 +136,69 @@ class AdminAddNewRiderActivity : BaseActivity() {
 
                         val baseResponse = response.body()
 
-                        // ✅ Always show backend message
+                        // ✅ Show backend message on success
                         Toast.makeText(this, baseResponse?.message ?: "Success", Toast.LENGTH_LONG).show()
 
                         // ✅ Close screen only on success
                         if (baseResponse?.result == "success") {
-
-                            setResult(Activity.RESULT_OK)
                             finish()
                         }
 
                     } else {
-                        Toast.makeText(this,
-                            "Something went wrong", Toast.LENGTH_SHORT).show()
+                        // ✅ Show backend message even if HTTP is not successful
+                        try {
+                            val errorJson = response?.errorBody()?.string()
+                            val gson = com.google.gson.Gson()
+                            val errorResponse = gson.fromJson(errorJson, BaseResponse::class.java)
+                            Toast.makeText(
+                                this,
+                                errorResponse?.message ?: "Something went wrong",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                this,
+                                "Something went wrong",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
 
                 Status.ERROR -> {
                     AppUtil.stopLoader()
-                    Toast.makeText(this, apiResponse.message ?: "Network Error", Toast.LENGTH_SHORT).show()
+
+                    val response = apiResponse.data
+                    if (response != null && response.errorBody() != null) {
+                        try {
+                            // ✅ Parse errorBody and show message from backend
+                            val errorJson = response.errorBody()!!.string()
+                            val gson = com.google.gson.Gson()
+                            val errorResponse = gson.fromJson(errorJson, BaseResponse::class.java)
+                            Toast.makeText(
+                                this,
+                                errorResponse?.message ?: apiResponse.message ?: "Something went wrong",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                this,
+                                apiResponse.message ?: "Something went wrong",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } else {
+                        Toast.makeText(
+                            this,
+                            apiResponse.message ?: "Network Error",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         }
     }
+
 
     override fun onResume() {
         super.onResume()

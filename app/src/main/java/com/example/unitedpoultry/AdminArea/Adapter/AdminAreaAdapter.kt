@@ -56,6 +56,7 @@ class AdminAreaAdapter(
         holder.iconContainer.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, cardColor))
         holder.ivIcon.setColorFilter(ContextCompat.getColor(holder.itemView.context, iconColor))
 
+        // Start EditAreaActivity normally
         holder.ivEdit.setOnClickListener {
             val context = holder.itemView.context
             val intent = Intent(context, EditAreaActivity::class.java)
@@ -67,6 +68,7 @@ class AdminAreaAdapter(
             context.startActivity(intent)
         }
 
+        // Start AdminShopListActivity normally
         holder.btnViewShops.setOnClickListener {
             val context = holder.itemView.context
             val intent = Intent(context, AdminShopListActivity::class.java)
@@ -89,7 +91,9 @@ class AdminAreaAdapter(
     fun filter(query: String) {
         filteredList = if (query.isEmpty()) areaList.toMutableList()
         else areaList.filter {
-            it.name.contains(query, true) || it.description.contains(query, true) || it.city.contains(query, true)
+            it.name.contains(query, true) ||
+                    it.description.contains(query, true) ||
+                    it.city.contains(query, true)
         }.toMutableList()
         notifyDataSetChanged()
     }

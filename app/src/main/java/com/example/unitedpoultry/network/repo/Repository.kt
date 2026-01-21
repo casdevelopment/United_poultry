@@ -124,12 +124,28 @@ class Repository(private val api: ApiInterface) {
         return api.deleteRider(ShopId)
     }
 
+    suspend fun updateProfile(
+        name: RequestBody,
+        email: RequestBody,
+        phone: RequestBody,
+        username: RequestBody,
+        business_name: RequestBody,
+        address: RequestBody,
+        image: MultipartBody.Part?,
+        method: RequestBody
+    ): Response<BaseResponse<Any>> {
+        return api.updateProfile(
+            name, email, phone, username, business_name, address, image, method
+        )
+    }
+
     suspend fun createProduct(fields: HashMap<Any, Any>): Response<BaseResponse<Any>> {
         return api.createProduct(fields)
     }
 
     suspend fun rateHistory(page: Int): Response<BaseResponse<RateData>> {
         return api.rateHistory(page)
+
     }
     suspend fun todayRate(): Response<BaseResponse<RateData>> {
         return api.todayRate()
