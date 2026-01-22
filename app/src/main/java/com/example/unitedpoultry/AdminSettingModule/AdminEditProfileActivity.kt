@@ -212,7 +212,7 @@ class AdminEditProfileActivity : BaseActivity() {
 
         // Replace with your ViewModel API call
         viewModel.updateProfile(
-             name, email, phone, username, business_name,address, imagePart,method
+             name, email, phone, username, business_name,address, imagePart
         ).observe(this) { response ->
             AppUtil.stopLoader()
             val message = response.data?.body()?.message ?: "Profile updated"
