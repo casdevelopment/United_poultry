@@ -145,7 +145,9 @@ class AdminAddNewShopActivity : BaseActivity() {
 
     // ================= VALIDATION =================
     private fun validateInputs(): Boolean {
+
         var valid = true
+
         binding.etShopNameError.visibility = View.GONE
         binding.etContactNameError.visibility = View.GONE
         binding.etPhoneNumberError.visibility = View.GONE
@@ -154,34 +156,79 @@ class AdminAddNewShopActivity : BaseActivity() {
         binding.etDiscountError.visibility = View.GONE
         binding.etImageError.visibility = View.GONE
 
-        if (binding.etShopName.text.toString().trim().isEmpty())
-            { binding.etShopNameError.show("Shop name required");
-                valid = false }
+        // Shop name
 
-        if (binding.etContactName.text.toString().trim().isEmpty()) {
-            binding.etContactNameError.show("Contact person required");
-            valid = false }
+        val shopName = binding.etShopName.text.toString().trim()
+
+        if (shopName.isEmpty()) {
+            binding.etShopNameError.visibility = View.VISIBLE
+            binding.etShopNameError.text = "Shop name required"
+            valid = false
+        }else if (!shopName.matches(Regex(".*[a-zA-Z].*"))) {
+            binding.etShopNameError.visibility = View.VISIBLE
+            binding.etShopNameError.text = "Enter valid Shop name"
+            valid = false
+        }
+
+        // Contact person name (alphabets only)
+        val contactName = binding.etContactName.text.toString().trim()
+        if (contactName.isEmpty()) {
+            binding.etContactNameError.visibility = View.VISIBLE
+            binding.etContactNameError.text = "Contact person required"
+            valid = false
+        } else if (!contactName.matches(Regex("^[a-zA-Z ]+$"))) {
+            binding.etContactNameError.visibility = View.VISIBLE
+            binding.etContactNameError.text = "Enter valid name"
+            valid = false
+        }
+
+
         val phone = binding.etPhoneNumber.text.toString().trim()
+
         if (phone.isEmpty()) {
-            binding.etPhoneNumberError.show("Phone number required");
-            valid = false }
-        else if (phone.length < 11) {
-            binding.etPhoneNumberError.show("Enter valid phone number");
-            valid = false }
+            binding.etPhoneNumberError.visibility = View.VISIBLE
+            binding.etPhoneNumberError.text = "Phone number required"
+            valid = false
+        } else if (!phone.matches(Regex("^\\d{11}$"))){
+            binding.etPhoneNumberError.visibility = View.VISIBLE
+            binding.etPhoneNumberError.text = "Enter valid phone number"
+            valid = false
+        }
 
-        if (binding.etAddress.text.toString().trim().isEmpty()) {
-            binding.etAddressError.show("Address required");
-            valid = false }
 
-        if (binding.etDiscount.text.toString().trim().isEmpty()) {
-            binding.etDiscountError.show("Discount required");
-            valid = false }
         if (selectedImageFile == null) {
-            binding.etImageError.show("Shop image required");
-            valid = false }
+            binding.etImageError.visibility = View.VISIBLE
+            binding.etImageError.text = "Shop image required"
+            valid = false
+        }
+
+        val address = binding.etAddress.text.toString().trim()
+        if (address.isEmpty()) {
+            binding.etAddressError.visibility = View.VISIBLE
+            binding.etAddressError.text = "Address required"
+            valid = false
+        }else if (!address.matches(Regex(".*[a-zA-Z].*"))) {
+            binding.etAddressError.visibility = View.VISIBLE
+            binding.etAddressError.text = "Enter valid address"
+            valid = false
+        }
+
+        val discountText = binding.etDiscount.text.toString().trim()
+
+        if (discountText.isNotEmpty()) {
+            val discount = discountText.toFloatOrNull()  // parse as float for validation
+            if (discount == null || discount !in 0f..100f) {
+                binding.etDiscountError.visibility = View.VISIBLE
+                binding.etDiscountError.text = "Enter valid discount percentage"
+                valid = false
+            }
+        }
+
+
 
         return valid
     }
+
 
     private fun TextView.show(msg: String) {
         visibility = View.VISIBLE
@@ -198,7 +245,13 @@ class AdminAddNewShopActivity : BaseActivity() {
         val phoneNumber = binding.etPhoneNumber.text.toString().trim().toRequestBody()
         val areaId = areaIdString.toRequestBody()
         val address = binding.etAddress.text.toString().trim().toRequestBody()
-        val discount = binding.etDiscount.text.toString().trim().toRequestBody()
+
+        val discountValue =
+            if (binding.etDiscount.text.toString().trim().isEmpty()) "0"
+            else binding.etDiscount.text.toString().trim()
+
+        val discount = discountValue.toRequestBody()
+
         val active = isActive.toRequestBody()
 
         val imagePart = selectedImageFile?.let {

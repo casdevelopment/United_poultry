@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import com.example.unitedpoultry.AdminArea.viewmodel.AddAreaViewModel
 import com.example.unitedpoultry.AdminArea.viewmodel.AreaViewModel
+import com.example.unitedpoultry.AdminArea.viewmodel.DeleteAreaViewModel
 import com.example.unitedpoultry.AdminArea.viewmodel.EditAreaViewModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.AddRiderViewModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.EditRiderViewModel
@@ -51,9 +52,13 @@ val viewModelModule= module{
     viewModel { ForgetPasswordViewModel(get()) }
     viewModel { OtpVerificationViewModel(get()) }
     viewModel { ResetPasswordViewModel(get()) }
+
     viewModel { AreaViewModel(get()) }
     viewModel { AddAreaViewModel(get()) }
     viewModel { EditAreaViewModel(get()) }
+    viewModel { DeleteAreaViewModel(get()) }
+
+
     viewModel { ShopListViewModel(get()) }
     viewModel { AddShopViewModel(get()) }
     viewModel { ShopDetailsViewModel(get()) }
@@ -64,6 +69,7 @@ val viewModelModule= module{
     viewModel { AddRiderViewModel(get()) }
     viewModel { RiderDetailsViewModel(get()) }
     viewModel { EditRiderViewModel(get()) }
+
     viewModel { DeleteRiderViewModel(get()) }
     viewModel { AdminSettingViewModel(get()) }
 

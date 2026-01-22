@@ -1,15 +1,19 @@
 package com.example.unitedpoultry.AdminArea
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.unitedpoultry.AdminArea.model.AddAreaRequestModel
 import com.example.unitedpoultry.AdminArea.model.EditAreaRequestModel
 import com.example.unitedpoultry.AdminArea.viewmodel.AddAreaViewModel
+import com.example.unitedpoultry.AdminArea.viewmodel.DeleteAreaViewModel
 import com.example.unitedpoultry.AdminArea.viewmodel.EditAreaViewModel
+import com.example.unitedpoultry.AdminShopModule.viewmodel.DeleteRiderViewModel
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.databinding.ActivityEditAreaBinding
 import com.example.unitedpoultry.network.Status
@@ -21,6 +25,7 @@ class EditAreaActivity : BaseActivity() {
 
     private lateinit var binding: ActivityEditAreaBinding
     private val viewModel: EditAreaViewModel by viewModel()
+    private val viewModel1: DeleteAreaViewModel by viewModel()
 
 
 
@@ -74,6 +79,10 @@ class EditAreaActivity : BaseActivity() {
                 callEditAreaApi()
             }
         }
+
+        binding.btnDelete.setOnClickListener {
+            showDeleteConfirmation()
+        }
     }
 
 
@@ -81,11 +90,42 @@ class EditAreaActivity : BaseActivity() {
         var valid = true
 
         binding.etAreaNameError.visibility = View.GONE
+        binding.etCityError.visibility = View.GONE
+        binding.etDescriptionError.visibility = View.GONE
 
 
-        if (binding.etAreaName.text.toString().trim().isEmpty()) {
+        val Name = binding.etAreaName.text.toString().trim()
+        if (Name.isEmpty()) {
             binding.etAreaNameError.visibility = View.VISIBLE
             binding.etAreaNameError.text = "Name required"
+            valid = false
+        } else if (!Name.matches(Regex(".*[a-zA-Z].*"))) {
+            binding.etAreaNameError.visibility = View.VISIBLE
+            binding.etAreaNameError.text = "Enter valid area name"
+            valid = false
+        }
+
+        val description = binding.etDescription.text.toString().trim()
+        if (description.isEmpty()) {
+            binding.etDescriptionError.visibility = View.VISIBLE
+            binding.etDescriptionError.text = "Description required"
+            valid = false
+        } else if (!description.matches(Regex(".*[a-zA-Z].*"))) {
+            binding.etDescriptionError.visibility = View.VISIBLE
+            binding.etDescriptionError.text = "Enter valid Description"
+            valid = false
+        }
+
+
+
+        val city = binding.etCity.text.toString().trim()
+        if (city.isEmpty()) {
+            binding.etCityError.visibility = View.VISIBLE
+            binding.etCityError.text = "City required"
+            valid = false
+        } else if (!city.matches(Regex(".*[a-zA-Z].*"))) {
+            binding.etCityError.visibility = View.VISIBLE
+            binding.etCityError.text = "Enter valid city name"
             valid = false
         }
 
@@ -98,8 +138,10 @@ class EditAreaActivity : BaseActivity() {
         val isActive = binding.toggleStatus.isChecked
         val areaId = intent.getIntExtra("AREA_Id", 0)
 
-        val request = EditAreaRequestModel(
+        val request = AddAreaRequestModel(
             name = binding.etAreaName.text.toString().trim(),
+            city = binding.etCity.text.toString().trim(),
+            description = binding.etDescription.text.toString().trim(),
             is_active = isActive // ✅ backend expects Int
         )
 
@@ -179,6 +221,43 @@ class EditAreaActivity : BaseActivity() {
                         ).show()
                     }
                 }
+            }
+        }
+    }
+
+    private fun showDeleteConfirmation() {
+        AlertDialog.Builder(this)
+            .setTitle("Delete Shop")
+            .setMessage("Are you sure you want to delete this Rider?")
+            .setPositiveButton("Yes") { _, _ -> callDeleteShopApi() }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
+
+    private fun callDeleteShopApi() {
+        AppUtil.startLoader(this)
+
+        val areaId = intent.getIntExtra("AREA_Id", 0)
+
+        viewModel1.deleteArea(areaId).observe(this) { response ->
+            AppUtil.stopLoader()
+            val message = response.data?.body()?.message ?: "Shop deleted"
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+            // Close activity if success
+            if (response.data?.body()?.result == "success")
+            {
+
+
+                if (response.data.body()?.result == "success") {
+                    val resultIntent = Intent()
+                    resultIntent.putExtra("ACTION", "DELETED")
+                    setResult(Activity.RESULT_OK, resultIntent)
+                    finish()
+                }
+
+
             }
         }
     }

@@ -51,7 +51,7 @@ class Repository(private val api: ApiInterface) {
         return api.addArea(request)
     }
 
-    suspend fun editArea(id: Int, request: EditAreaRequestModel): Response<BaseResponse<AreaModel>> {
+    suspend fun editArea(id: Int, request: AddAreaRequestModel): Response<BaseResponse<AreaModel>> {
         return api.editArea(id, request)
     }
 
@@ -169,6 +169,10 @@ class Repository(private val api: ApiInterface) {
         shopId: Int
     ): Response<BaseResponse<ShopDetailsResponseModel>> {
         return api.getRiderShopDetails(shopId)
+    }
+
+    suspend fun deleteArea(AreaId: Int): Response<BaseResponse<Any>> {
+        return api.deleteArea(AreaId)
     }
 
 }

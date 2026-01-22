@@ -52,16 +52,41 @@ class AddNewAreaActivity : BaseActivity() {
 
         binding.etAreaNameError.visibility = View.GONE
         binding.etCityError.visibility = View.GONE
+        binding.etDescriptionError.visibility = View.GONE
 
-        if (binding.etAreaName.text.toString().trim().isEmpty()) {
+
+        val Name = binding.etAreaName.text.toString().trim()
+        if (Name.isEmpty()) {
             binding.etAreaNameError.visibility = View.VISIBLE
             binding.etAreaNameError.text = "Name required"
             valid = false
+        } else if (!Name.matches(Regex(".*[a-zA-Z].*"))) {
+            binding.etAreaNameError.visibility = View.VISIBLE
+            binding.etAreaNameError.text = "Enter valid area name"
+            valid = false
         }
 
-        if (binding.etCity.text.toString().trim().isEmpty()) {
+        val description = binding.etDescription.text.toString().trim()
+        if (description.isEmpty()) {
+            binding.etDescriptionError.visibility = View.VISIBLE
+            binding.etDescriptionError.text = "Description required"
+            valid = false
+        } else if (!description.matches(Regex(".*[a-zA-Z].*"))) {
+            binding.etDescriptionError.visibility = View.VISIBLE
+            binding.etDescriptionError.text = "Enter valid Description"
+            valid = false
+        }
+
+
+
+        val city = binding.etCity.text.toString().trim()
+        if (city.isEmpty()) {
             binding.etCityError.visibility = View.VISIBLE
             binding.etCityError.text = "City required"
+            valid = false
+        } else if (!city.matches(Regex(".*[a-zA-Z].*"))) {
+            binding.etCityError.visibility = View.VISIBLE
+            binding.etCityError.text = "Enter valid city name"
             valid = false
         }
 

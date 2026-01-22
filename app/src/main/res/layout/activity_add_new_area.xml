@@ -176,6 +176,16 @@
                 android:imeOptions="actionDone"
                 />
 
+            <TextView
+                android:id="@+id/etDescriptionError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:layout_marginBottom="7dp"
+                android:layout_marginStart="10dp"/>
+
 
             <TextView
                 android:layout_width="wrap_content"

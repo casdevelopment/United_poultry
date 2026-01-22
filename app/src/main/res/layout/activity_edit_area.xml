@@ -184,6 +184,16 @@
                     android:imeOptions="actionDone"
                     />
 
+                <TextView
+                    android:id="@+id/etDescriptionError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginStart="10dp"/>
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -210,6 +220,16 @@
                     android:scrollHorizontally="true"
                     android:imeOptions="actionDone"
                     />
+
+                <TextView
+                    android:id="@+id/etCityError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginStart="10dp"/>
 
 
                 <androidx.cardview.widget.CardView
@@ -272,6 +292,28 @@
 
 
                 </androidx.cardview.widget.CardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDelete"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="Delete Area"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_continue_bg"
+                    app:backgroundTint="@color/red"
+                    android:fontFamily="@font/poppins"
+                    app:icon="@drawable/circlecrossvector"
+                    app:iconGravity="textStart"
+                    app:iconPadding="15dp"
+                    app:iconSize="18dp"
+                    />
+
 
 
 

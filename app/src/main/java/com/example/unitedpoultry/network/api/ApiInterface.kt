@@ -55,7 +55,7 @@ interface ApiInterface {
     suspend fun addArea(@Body request: AddAreaRequestModel): Response<BaseResponse<AreaModel>>
 
     @PUT("admin/areas/{id}")
-    suspend fun editArea(@Path("id") id: Int, @Body request: EditAreaRequestModel): Response<BaseResponse<AreaModel>>
+    suspend fun editArea(@Path("id") id: Int, @Body request: AddAreaRequestModel): Response<BaseResponse<AreaModel>>
 
 
 
@@ -169,5 +169,8 @@ interface ApiInterface {
     suspend fun getRiderShopDetails(
         @Path("id") shopId: Int
     ): Response<BaseResponse<ShopDetailsResponseModel>>
+
+    @DELETE("admin/areas/{id}")
+    suspend fun deleteArea(@Path("id") AreaId: Int):Response<BaseResponse<Any>>
 
 }
