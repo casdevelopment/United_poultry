@@ -132,10 +132,10 @@ class Repository(private val api: ApiInterface) {
         business_name: RequestBody,
         address: RequestBody,
         image: MultipartBody.Part?,
-        method: RequestBody
+
     ): Response<BaseResponse<Any>> {
         return api.updateProfile(
-            name, email, phone, username, business_name, address, image, method
+            name, email, phone, username, business_name, address, image
         )
     }
 
