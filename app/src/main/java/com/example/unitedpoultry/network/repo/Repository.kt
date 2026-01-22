@@ -10,6 +10,7 @@ import com.example.unitedpoultry.AdminRiderModule.model.RiderEditRequestModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderRequestModel
 import com.example.unitedpoultry.AdminSettingModule.DataModel.RateData
+import com.example.unitedpoultry.AdminSettingModule.DataModel.UpdateRateModel
 import com.example.unitedpoultry.AdminShopModule.model.ShopDetailsResponseModel
 import com.example.unitedpoultry.AdminShopModule.model.ShopsData
 import com.example.unitedpoultry.Authentications.forgetpassword.ForgotPasswordRequestModel
@@ -133,10 +134,10 @@ class Repository(private val api: ApiInterface) {
         business_name: RequestBody,
         address: RequestBody,
         image: MultipartBody.Part?,
-        method: RequestBody
+
     ): Response<BaseResponse<Any>> {
         return api.updateProfile(
-            name, email, phone, username, business_name, address, image, method
+            name, email, phone, username, business_name, address, image
         )
     }
 
@@ -147,6 +148,12 @@ class Repository(private val api: ApiInterface) {
     suspend fun rateHistory(page: Int): Response<BaseResponse<RateData>> {
         return api.rateHistory(page)
 
+    }
+    suspend fun todayRate(): Response<BaseResponse<RateData>> {
+        return api.todayRate()
+    }
+    suspend fun updateRate(updateRateModel:UpdateRateModel): Response<BaseResponse<Any>> {
+        return api.updateRate(updateRateModel)
     }
 
     suspend fun savePickedEggs(request: EggPickupRequest, token: String): Response<BaseResponse<EggPickupData>> {

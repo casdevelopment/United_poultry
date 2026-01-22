@@ -9,6 +9,7 @@ import com.example.unitedpoultry.AdminRiderModule.model.RiderEditRequestModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderRequestModel
 import com.example.unitedpoultry.AdminSettingModule.DataModel.RateData
+import com.example.unitedpoultry.AdminSettingModule.DataModel.UpdateRateModel
 import com.example.unitedpoultry.AdminShopModule.model.ShopDetailsResponseModel
 import com.example.unitedpoultry.AdminShopModule.model.ShopsData
 import com.example.unitedpoultry.Authentications.forgetpassword.ForgotPasswordRequestModel
@@ -134,16 +135,17 @@ interface ApiInterface {
         @Part("username") username: RequestBody,
         @Part("business_name") business_name: RequestBody,
         @Part("address") address: RequestBody,
-        @Part image: MultipartBody.Part?,
-        @Part("_method") method: RequestBody
+        @Part image: MultipartBody.Part?
+
     ): Response<BaseResponse<Any>>
-    
+
     @POST("admin/products")
     suspend fun createProduct(@Body  fields: HashMap<Any, Any>):Response<BaseResponse<Any>>
 
 
     @GET("admin/rates/history")
     suspend fun rateHistory(@Query("page") page: Int):Response<BaseResponse<RateData>>
+
 
 
     @POST("seller/egg-pickup/save-picked")
@@ -172,5 +174,12 @@ interface ApiInterface {
 
     @DELETE("admin/areas/{id}")
     suspend fun deleteArea(@Path("id") AreaId: Int):Response<BaseResponse<Any>>
+
+    @GET("admin/rates")
+    suspend fun todayRate():Response<BaseResponse<RateData>>
+
+    @POST("admin/rates")
+    suspend fun updateRate(@Body updateRateModel:UpdateRateModel):Response<BaseResponse<Any>>
+
 
 }

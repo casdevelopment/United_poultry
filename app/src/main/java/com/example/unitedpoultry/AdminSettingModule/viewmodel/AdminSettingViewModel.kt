@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.unitedpoultry.AdminRiderModule.model.RiderDataResponceModel
 import com.example.unitedpoultry.AdminSettingModule.DataModel.RateData
+import com.example.unitedpoultry.AdminSettingModule.DataModel.UpdateRateModel
 import com.example.unitedpoultry.network.NetworkStates
 import com.example.unitedpoultry.network.repo.Repository
 import com.example.unitedpoultry.network.retrofit.BaseResponse
@@ -51,4 +52,29 @@ class AdminSettingViewModel (private val repository: Repository) : ViewModel() {
             }
         }
     }
+    fun todayRate(): LiveData<NetworkStates<Response<BaseResponse<RateData>>>> {
+        return liveData(Dispatchers.IO) {
+            emit(NetworkStates.loading(null))
+            try {
+                val response = repository.todayRate() // repository should accept page param
+                emit(NetworkStates.success(response))
+            } catch (e: Exception) {
+                Log.e("createProduct", "createProduct: ${e.message}")
+                emit(NetworkStates.error(null, e.message ?: "Something went wrong"))
+            }
+        }
+    }
+    fun updateRate(updateRateModel:UpdateRateModel): LiveData<NetworkStates<Response<BaseResponse<Any>>>> {
+        return liveData(Dispatchers.IO) {
+            emit(NetworkStates.loading(null))
+            try {
+                val response = repository.updateRate(updateRateModel) // repository should accept page param
+                emit(NetworkStates.success(response))
+            } catch (e: Exception) {
+                Log.e("createProduct", "createProduct: ${e.message}")
+                emit(NetworkStates.error(null, e.message ?: "Something went wrong"))
+            }
+        }
+    }
+
 }
