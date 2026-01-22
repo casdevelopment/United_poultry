@@ -17,13 +17,12 @@ class UpdateAdminProfileViewModel(private val repository: Repository) : ViewMode
         business_name: RequestBody,
         address: RequestBody,
         image: MultipartBody.Part?,
-        method: RequestBody
     ) = liveData {
         emit(NetworkStates.loading(null))
         try {
             emit(NetworkStates.success(
                 repository.updateProfile(
-                     name, email, phone,username,business_name,address,image, method
+                     name, email, phone,username,business_name,address,image
                 )
             ))
         } catch (e: Exception) {

@@ -132,8 +132,8 @@ interface ApiInterface {
         @Part("username") username: RequestBody,
         @Part("business_name") business_name: RequestBody,
         @Part("address") address: RequestBody,
-        @Part image: MultipartBody.Part?,
-        @Part("_method") method: RequestBody
+        @Part image: MultipartBody.Part?
+
     ): Response<BaseResponse<Any>>
 
     @POST("admin/products")
