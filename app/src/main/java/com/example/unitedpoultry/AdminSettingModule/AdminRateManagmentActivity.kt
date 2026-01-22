@@ -19,6 +19,9 @@ import com.example.unitedpoultry.network.Status.*
 import com.example.unitedpoultry.util.AppUtil
 import com.example.unitedpoultry.util.showToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 import kotlin.collections.mutableListOf
 import kotlin.getValue
 
@@ -140,12 +143,6 @@ class AdminRateManagmentActivity : BaseActivity(),TodayRateAdapter.OnPriceChange
                                     }
                                 }
                                 if (ratesList.isNotEmpty()) setupHistoryAdapter()
-                                /*  for (ratesListItem in ratesList) {
-                                      Log.v("getRateHistory", "price: ${ratesListItem.price}")
-                                      Log.v("getRateHistory", "product_name: ${ratesListItem.product_name}")
-                                      Log.v("getRateHistory", "date: ${ratesListItem.date}")
-                                  }
-                                  Log.v("getRateHistory", "getRateHistory: ${ratesList.size}")*/
                             }
 
                         }
@@ -233,6 +230,10 @@ class AdminRateManagmentActivity : BaseActivity(),TodayRateAdapter.OnPriceChange
 
                // Log.v("updateProductRate","product id: ${ratesListItem.product_id}"+ "product Name: ${ratesListItem.product_name}"+"-- price: ${ratesListItem.price}")
             }
+
+            val tomorrowDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Calendar.getInstance().apply { add(Calendar.DATE, 1) }.time)
+            Log.v("tomorrowDate","tomorrow "+tomorrowDate)
+          //  updateRateModel.date=tomorrowDate
             updateRateModel.rates=updateRateItem
             updateProductRateApi(updateRateModel)
             Log.v("updateProductRate","updateRateItem size ${updateRateItem.size}")
