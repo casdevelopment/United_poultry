@@ -182,5 +182,9 @@ class Repository(private val api: ApiInterface) {
         return api.deleteArea(AreaId)
     }
 
+    suspend fun adminLogout(): Response<BaseResponse<Any>> {
+        return api.adminLogout()
+    }
+
 }
 

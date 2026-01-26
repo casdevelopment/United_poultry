@@ -181,5 +181,8 @@ interface ApiInterface {
     @POST("admin/rates")
     suspend fun updateRate(@Body updateRateModel:UpdateRateModel):Response<BaseResponse<Any>>
 
+    @POST("admin/logout")
+    suspend fun adminLogout():Response<BaseResponse<Any>>
+
 
 }

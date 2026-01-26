@@ -1,11 +1,14 @@
 package com.example.unitedpoultry.AdminSettingModule
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
+import com.example.unitedpoultry.AdminSettingModule.viewmodel.AdminLogoutViewModel
 import com.example.unitedpoultry.AdminShopModule.AdminEditShopActivity
 import com.example.unitedpoultry.AdminSettingModule.viewmodel.AdminSettingViewModel
 import com.example.unitedpoultry.BaseActivity
@@ -30,6 +33,7 @@ class SettingHomeActivity : BaseActivity() {
 
     private val sessionManager: SessionManager by inject()
     private val viewModel: AdminSettingViewModel by viewModel()
+    private val viewModel1: AdminLogoutViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,9 +111,7 @@ class SettingHomeActivity : BaseActivity() {
 
                 dialog.dismiss()
 
-                sessionManager.logout()
-                startActivity(Intent(this, SplashActivity::class.java))
-                finish()
+                callLogoutApi()
 
             }
 
@@ -240,4 +242,45 @@ class SettingHomeActivity : BaseActivity() {
 
         }
     }
+
+
+    private fun callLogoutApi() {
+
+        viewModel1.adminLogout().observe(this) { response ->
+
+            when (response.status) {
+
+                Status.LOADING -> {
+                    AppUtil.startLoader(this)
+                }
+
+                Status.SUCCESS -> {
+                    AppUtil.stopLoader()
+
+                    val body = response.data?.body()
+
+                    if (body?.result == "success") {
+
+                        sessionManager.logout()
+
+                        val intent = Intent(this, SplashActivity::class.java)
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                        finish()
+
+                    } else {
+                        showToast(body?.message ?: "Logout failed")
+                    }
+                }
+
+                Status.ERROR -> {
+                    AppUtil.stopLoader()
+                    showToast("Logout failed. Please try again")
+                }
+            }
+        }
+    }
+
+
 }

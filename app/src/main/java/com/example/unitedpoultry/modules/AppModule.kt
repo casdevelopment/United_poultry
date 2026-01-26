@@ -11,6 +11,7 @@ import com.example.unitedpoultry.AdminRiderModule.viewmodel.AddRiderViewModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.EditRiderViewModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.RiderDetailsViewModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.RiderViewModel
+import com.example.unitedpoultry.AdminSettingModule.viewmodel.AdminLogoutViewModel
 
 import com.example.unitedpoultry.AdminSettingModule.viewmodel.UpdateAdminProfileViewModel
 import com.example.unitedpoultry.AdminSettingModule.viewmodel.AdminSettingViewModel
@@ -64,6 +65,8 @@ val viewModelModule= module{
     viewModel { ShopDetailsViewModel(get()) }
     viewModel { UpdateShopViewModel(get()) }
     viewModel { DeleteShopViewModel(get()) }
+
+    viewModel { AdminLogoutViewModel(get()) }
 
     viewModel { RiderViewModel(get()) }
     viewModel { AddRiderViewModel(get()) }
