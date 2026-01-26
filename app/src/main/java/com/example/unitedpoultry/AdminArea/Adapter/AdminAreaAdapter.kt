@@ -45,7 +45,7 @@ class AdminAreaAdapter(
         val item = filteredList[position]
 
         holder.tvAreaName.text = item.name
-        holder.tvAreaAddress.text = "${item.city}, ${item.description}"
+        holder.tvAreaAddress.text = item.city
         holder.tvTotalShops.text = item.shops_count.toString()
         holder.tvRiders.text = "-"        // ignore for now
         holder.tvRecieveable.text = "-"

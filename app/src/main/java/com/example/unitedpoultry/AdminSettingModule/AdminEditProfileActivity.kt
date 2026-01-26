@@ -89,14 +89,6 @@ class AdminEditProfileActivity : BaseActivity() {
        // }
     }
 
-//    private fun getInitials(name: String): String {
-//        val words = name.trim().split(" ")
-//        return when {
-//            words.size >= 2 -> "${words[0][0]}${words[1][0]}".uppercase()
-//            words.isNotEmpty() -> "${words[0][0]}".uppercase()
-//            else -> "U"
-//        }
-//    }
 
     private fun setupClicks() {
         // Back
@@ -199,8 +191,6 @@ class AdminEditProfileActivity : BaseActivity() {
         val business_name = binding.etBusinessName.text.toString().toRequestBody()
         val address = binding.etAddress.text.toString().toRequestBody()
 
-        val type = "PUT"
-        val method = type.toRequestBody()
 
         val imagePart = selectedImageFile?.let {
             MultipartBody.Part.createFormData(

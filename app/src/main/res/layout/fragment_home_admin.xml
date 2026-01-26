@@ -1,42 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white">
 
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-       >
+        android:layout_height="wrap_content">
 
+    <!-- Top Curve Image -->
+    <ImageView
+        android:id="@+id/ivCurve"
+        android:layout_width="0dp"
+        android:layout_height="220dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/bgdotsclean"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-        <FrameLayout
-            android:id="@+id/topPortion"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingBottom="2dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <ImageView
-                android:id="@+id/bgImage"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bgfull" />
-
-            <LinearLayout
+    <LinearLayout
+        android:id="@+id/tLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="0dp"
+               app:layout_constraintTop_toTopOf="@id/ivCurve"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
                 >
 
                 <LinearLayout
@@ -48,20 +50,20 @@
                     android:layout_marginEnd="5dp">
 
 
-                    <TextView
-                        android:id="@+id/tvInitials"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/circle_white"
-                        android:gravity="center"
-                        android:text="BA"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:backgroundTint="@color/sub_primary"
-                        android:layout_marginEnd="10dp"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/poppins" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvInitials"-->
+<!--                        android:layout_width="50dp"-->
+<!--                        android:layout_height="50dp"-->
+<!--                        android:background="@drawable/circle_white"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="BA"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textSize="18sp"-->
+<!--                        android:backgroundTint="@color/sub_primary"-->
+<!--                        android:layout_marginEnd="10dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:fontFamily="@font/poppins" />-->
 
 
 
@@ -78,7 +80,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginEnd="50dp"
                             android:fontFamily="@font/quicksand"
-                            android:text="Ahmed Hassan"
+                            android:text="Welcome Admin"
                             android:textStyle="bold"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
@@ -89,7 +91,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/poppins"
-                            android:text="27/11/2025 7:30am"
+                            android:text="Manage your suppliers"
                             android:textColor="@color/white"
                             android:textSize="12sp" />
 
@@ -106,12 +108,13 @@
                         android:contentDescription="icon"
                         android:focusable="true"
                         android:scaleType="centerInside"
-                        android:src="@drawable/menuiconsvg"
+                        android:src="@drawable/settingmainsvg"
                         app:tint="@null" />
 
                 </LinearLayout>
 
                 <androidx.cardview.widget.CardView
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -251,7 +254,9 @@
 
 
             </LinearLayout>
-        </FrameLayout>
+
+
+
 
         <LinearLayout
             android:id="@+id/topLayout"
@@ -262,25 +267,30 @@
             android:layout_marginEnd="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/topPortion">
+            app:layout_constraintTop_toBottomOf="@id/tLayout">
 
 
             <!-- Search Bar inside curve -->
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_margin="5dp"
                 android:id="@+id/searchLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 app:boxBackgroundMode="outline"
-                app:boxCornerRadiusTopStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxCornerRadiusTopStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusBottomEnd="16dp"
                 app:boxStrokeWidth="1dp"
                 app:boxStrokeColor="@color/primary"
                 app:boxBackgroundColor="@color/primary20"
                 app:hintEnabled="false"
-                >
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tLayout"
+                android:layout_marginTop="100dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etSearch"
@@ -324,7 +334,7 @@
                             tools:text="12"
                             android:layout_centerHorizontal="true"
                             android:textColor="@color/primary"
-                            android:textSize="18sp"
+                            android:textSize="16sp"
                             android:textStyle="bold"
                             android:fontFamily="@font/poppins"
                             android:id="@+id/activeSuppliersTv"
@@ -335,7 +345,7 @@
                             android:text="@string/active_suppliers"
                             android:layout_centerHorizontal="true"
                             android:textColor="@color/grayshade"
-                            android:textSize="16sp"
+                            android:textSize="13sp"
                             android:textStyle="bold"
                             android:fontFamily="@font/poppins"
                             android:layout_below="@id/activeSuppliersTv"
@@ -1092,7 +1102,8 @@
                 android:gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:padding="12dp"
-                android:layout_marginEnd="8dp">
+                android:layout_marginEnd="8dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="0dp"
@@ -1122,7 +1133,8 @@
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:clipChildren="false"
-                android:nestedScrollingEnabled="false"/>
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone"/>
 
 
 
@@ -1144,7 +1156,8 @@
                 android:layout_marginBottom="30dp"
                 app:layout_constraintTop_toBottomOf="@id/rememberForgotLayout"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"/>
 
 
 
@@ -1152,3 +1165,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
+</FrameLayout>
