@@ -26,3 +26,15 @@ data class EggPickupData(
     val total_waste: Int,
     val picked_items: List<PickedItemResponse>
 )
+
+data class DailyPaymentStatsData(
+
+    val total_shops: Int,
+    val today_total_visited_shops: Int,
+    val today_total_cash_received: String,
+    val today_total_eggs_picked: Int,
+    val today_total_eggs_sold: Int,
+    val today_total_eggs_returned: Int,
+    val today_total_eggs_waste: Int,
+)
+

@@ -1,18 +1,19 @@
-package com.example.unitedpoultry.NewSale
+package com.example.unitedpoultry.exchange_return
+
 
 import android.content.Intent
 import android.os.Bundle
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.RiderDashBoard.RiderDashBoardActivity
-import com.example.unitedpoultry.databinding.ActivitySaleSuccessBinding
+import com.example.unitedpoultry.databinding.ActivityReturnSucessBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 
-class SaleSuccessActivity : BaseActivity() {
+class ReturnSucessActivity : BaseActivity() {
 
-    private lateinit var binding: ActivitySaleSuccessBinding
+    private lateinit var binding: ActivityReturnSucessBinding
 
     private var totalQuantity = 0
     private var totalAmount = 0.0
@@ -29,7 +30,7 @@ class SaleSuccessActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySaleSuccessBinding.inflate(layoutInflater)
+        binding = ActivityReturnSucessBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         configureStatusBar(
@@ -41,17 +42,6 @@ class SaleSuccessActivity : BaseActivity() {
 
 
         binding.btnNewSale.setOnClickListener {
-            val intent = Intent(this, SaleFormActivity::class.java)
-
-            intent.putExtra("SHOP_ID", shopId)
-            intent.putExtra("AREA_ID", areaId)
-            intent.putExtra("NAME", name)
-            intent.putExtra("ADDRESS", address)
-            intent.putExtra("DISCOUNT", discount)
-
-
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
             finish()
         }
 
@@ -67,23 +57,25 @@ class SaleSuccessActivity : BaseActivity() {
 
     }
 
-    private fun showData(){
-
-        totalQuantity = intent.getIntExtra("TOTAL_QUANTITY", 0)
-        totalAmount = intent.getDoubleExtra("TOTAL_AMOUNT", 0.0)
+    private fun showData() {
+        // Get values from Intent safely
+        val totalQuantityStr = intent.getStringExtra("TOTAL_QUANTITY") ?: "0"
+        val totalAmountStr = intent.getStringExtra("TOTAL_AMOUNT") ?: "0.0"
         name = intent.getStringExtra("SHOP_NAME") ?: ""
         address = intent.getStringExtra("ADDRESS") ?: ""
         initials = intent.getStringExtra("INITIALS") ?: ""
 
+        // Convert strings to numeric types for formatting
+        val totalQuantityInt = totalQuantityStr.toIntOrNull() ?: 0
+        val totalAmountDouble = totalAmountStr.toDoubleOrNull() ?: 0.0
+
+        // Assign to UI
         binding.tvShopName.text = name
         binding.tvShopAddress.text = address
         binding.tvInitials.text = initials
-
-        binding.tvQuantity.text = totalQuantity.toString()
-        binding.tvTotal.text  = "Rs. %.2f".format(totalAmount)
-
+        binding.tvQuantity.text = totalQuantityInt.toString()
+        binding.tvTotal.text = "Rs. %.2f".format(totalAmountDouble)
         binding.tvDate.text = getTodayDate()
-
     }
 
     private fun getTodayDate(): String {

@@ -3,18 +3,16 @@ package com.example.unitedpoultry.NewSale
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.core.widget.addTextChangedListener
 import com.example.unitedpoultry.BaseActivity
-import com.example.unitedpoultry.NewSale.Adapter.SelectShopAdapter
-import com.example.unitedpoultry.NewSale.model.ShopModel
-import com.example.unitedpoultry.adminproduct.adapter.ProductAdapter
-import com.example.unitedpoultry.adminproduct.model.Product
-import com.example.unitedpoultry.adminproduct.model.ProductData
-import com.example.unitedpoultry.adminproduct.viewmodel.GetProductViewModel
+import com.example.unitedpoultry.NewSale.Adapter.RiderProductAdapter
+import com.example.unitedpoultry.NewSale.model.Product
+import com.example.unitedpoultry.NewSale.model.RiderProductData
+import com.example.unitedpoultry.NewSale.model.SaleItem
+import com.example.unitedpoultry.NewSale.model.SaleRequest
+import com.example.unitedpoultry.NewSale.viewmodel.GetRiderProductViewModel
+import com.example.unitedpoultry.NewSale.viewmodel.RiderNewSaleViewModel
 import com.example.unitedpoultry.databinding.ActivitySaleFormBinding
-import com.example.unitedpoultry.databinding.ActivitySelectShopBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse
 import com.example.unitedpoultry.util.AppUtil
@@ -23,11 +21,18 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SaleFormActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySaleFormBinding
-    private val productViewModel: GetProductViewModel by viewModel()
+    private val viewModel: GetRiderProductViewModel by viewModel()
+   // private val saleViewModel: RiderNewSaleViewModel by viewModel()
 
     private val quantityMap = mutableMapOf<Int, Int>()
     private var productList = listOf<Product>()
+    private var discountPercent: Double = 0.0
 
+    private var shopId: Int = 0
+    private var areaId: Int = 0
+
+    private var name: String = ""
+    private var address: String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,66 +40,151 @@ class SaleFormActivity : BaseActivity() {
         binding = ActivitySaleFormBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        configureStatusBar(
-            isLightBackground = true,
-            colorResId = android.R.color.white
-        )
+        configureStatusBar(isLightBackground = true, colorResId = android.R.color.white)
+
+        discountPercent = intent.getStringExtra("DISCOUNT")?.toDoubleOrNull() ?: 0.0
+
+        shopId = intent.getIntExtra("SHOP_ID", 0)
+        areaId = intent.getIntExtra("AREA_ID", 0)
+
+        name = intent.getStringExtra("NAME") ?: "N/A"
+        address = intent.getStringExtra("ADDRESS") ?: "N/A"
+
 
         setupRecycler()
-
         setupClicks()
-
+        showData()
     }
 
-    private fun setupClicks(){
+    private fun showData() {
 
-        binding.backArrow.setOnClickListener {
-            finish()
-        }
-
-        val name = intent.getStringExtra("NAME") ?: "N/A"
-        val address = intent.getStringExtra("ADDRESS")?: "N/A"
-        val discount = intent.getStringExtra("DISCOUNT")?: "N/A"
-
-        // 🔹 Set data to TextViews
         binding.tvShopName.text = name
         binding.tvShopAddress.text = address
         binding.tvInitials.text = getInitials(name)
+        binding.tvDiscount.text = "$discountPercent%"
+    }
+
+    private fun setupClicks() {
+        binding.backArrow.setOnClickListener { finish() }
+
+        binding.btnCancel.setOnClickListener { finish() }
 
 
         binding.btnConfirmSale.setOnClickListener {
-            val intent = Intent(this, SaleConfirmationActivity::class.java)
-            intent.putExtra("name", name)
-            intent.putExtra("address", address)
-            intent.putExtra("initials",  getInitials(name))
-            startActivity(intent)
 
+            val selectedItems = quantityMap.filter { it.value > 0 }
+            if (selectedItems.isEmpty()) {
+                Toast.makeText(this, "Please pick at least one item", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val subTotal = calculateSubtotal(selectedItems)
+            val discountAmount = subTotal * (discountPercent / 100.0)
+            val totalAmount = (subTotal - discountAmount).coerceAtLeast(0.0)
+
+            val intent = Intent(this, SaleConfirmationActivity::class.java)
+
+            val totalQuantity = selectedItems.values.sum()
+
+
+            intent.putExtra("SHOP_NAME", name)
+            intent.putExtra("ADDRESS", address)
+            intent.putExtra("INITIALS", getInitials(name))
+
+            intent.putExtra("SHOP_ID", shopId)
+            intent.putExtra("AREA_ID", areaId)
+            intent.putExtra("SUB_TOTAL", subTotal)
+            intent.putExtra("DISCOUNT", discountAmount)
+            intent.putExtra("TOTAL", totalAmount)
+            intent.putExtra("TOTAL_QUANTITY", totalQuantity)
+
+
+            // Pass product IDs & quantities
+            intent.putIntegerArrayListExtra(
+                "PRODUCT_IDS",
+                ArrayList(selectedItems.keys)
+            )
+
+            intent.putIntegerArrayListExtra(
+                "QUANTITIES",
+                ArrayList(selectedItems.values)
+            )
+
+            startActivity(intent)
         }
 
     }
 
+//    private fun submitSale(selectedItems: Map<Int, Int>) {
+//        val subTotal = calculateSubtotal(selectedItems)
+//        val discountAmount = subTotal * (discountPercent / 100.0)
+//        val totalAmount = (subTotal - discountAmount).coerceAtLeast(0.0)
+//
+//        val items = selectedItems.map { (productId, qty) ->
+//            SaleItem(product_id = productId, qty = qty)
+//        }
+//
+//        val request = SaleRequest(
+//            shop_id = shopId,
+//            area_id = areaId,
+//            sub_total = subTotal,
+//            discount = discountAmount,
+//            total = totalAmount,
+//            cash_received = totalAmount,
+//            items = items
+//        )
+//
+//        saleViewModel.createNewSale(request).observe(this) { response ->
+//            when (response.status) {
+//                Status.LOADING -> AppUtil.startLoader(this)
+//                Status.SUCCESS -> {
+//                    AppUtil.stopLoader()
+//                    val res = response.data
+//                    if (res != null && res.isSuccessful) {
+//                        val body = res.body()
+//                        if (body?.result == "success") {
+//                            Toast.makeText(this, "Sale created successfully", Toast.LENGTH_SHORT).show()
+//                            finish()
+//                        } else {
+//                            Toast.makeText(this, body?.message ?: "Failed to create sale", Toast.LENGTH_SHORT).show()
+//                        }
+//                    }
+//                }
+//                Status.ERROR -> {
+//                    AppUtil.stopLoader()
+//                    Toast.makeText(this, response.message ?: "Network Error", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        }
+//    }
+
     override fun onResume() {
         super.onResume()
-        loadProducts() // Reload products every time activity is resumed
+        loadProducts()
     }
 
     private fun setupRecycler() {
         binding.recyclerProducts.layoutManager = LinearLayoutManager(this)
-        binding.recyclerProducts.adapter = ProductAdapter(productList, quantityMap)
+        binding.recyclerProducts.adapter = RiderProductAdapter(productList, quantityMap) { subtotal ->
+            updateTotal(subtotal)
+        }
     }
 
     private fun loadProducts() {
-        productViewModel.getProducts().observe(this) { response ->
+        viewModel.getRiderProducts().observe(this) { response ->
             when (response.status) {
                 Status.LOADING -> AppUtil.startLoader(this)
                 Status.SUCCESS -> {
                     AppUtil.stopLoader()
                     val res = response.data
                     if (res != null && res.isSuccessful) {
-                        val baseResponse = res.body() as BaseResponse<ProductData>?
+                        val baseResponse = res.body() as BaseResponse<RiderProductData>?
                         if (baseResponse?.result == "success" && baseResponse.data != null) {
-                            productList = baseResponse.data.products
-                            binding.recyclerProducts.adapter = ProductAdapter(productList, quantityMap)
+                            productList = baseResponse.data.picked_items
+                            binding.recyclerProducts.adapter =
+                                RiderProductAdapter(productList, quantityMap) { subtotal ->
+                                    updateTotal(subtotal)
+                                }
                         } else {
                             Toast.makeText(this, baseResponse?.message ?: "Failed to fetch products", Toast.LENGTH_SHORT).show()
                         }
@@ -108,14 +198,27 @@ class SaleFormActivity : BaseActivity() {
         }
     }
 
+    private fun updateTotal(subtotal: Double) {
+        val discountAmount = subtotal * (discountPercent / 100.0)
+        val totalAfterDiscount = (subtotal - discountAmount).coerceAtLeast(0.0)
+        binding.tvSubtotal.text = "Rs. %.2f".format(subtotal)
+        binding.tvDiscount.text = "Rs. %.2f (%.0f%%)".format(discountAmount, discountPercent)
+        binding.tvTotal.text = "Rs. %.2f".format(totalAfterDiscount)
+    }
+
+    private fun calculateSubtotal(selectedItems: Map<Int, Int>): Double {
+        var subtotal = 0.0
+        selectedItems.forEach { (productId, qty) ->
+            val product = productList.find { it.product_id == productId }
+            subtotal += (product?.price?.toDoubleOrNull() ?: 0.0) * qty
+        }
+        return subtotal
+    }
 
     private fun getInitials(name: String): String {
         if (name.isBlank()) return ""
-
         val parts = name.trim().split(" ")
-        return when {
-            parts.size >= 2 -> "${parts[0][0]}${parts[1][0]}".uppercase()
-            else -> parts[0][0].uppercase()
-        }
+        return if (parts.size >= 2) "${parts[0][0]}${parts[1][0]}".uppercase()
+        else parts[0][0].uppercase()
     }
 }

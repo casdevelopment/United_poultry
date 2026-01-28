@@ -2,21 +2,16 @@
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
     >
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/white"
-        android:paddingBottom="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
-
+        android:layout_margin="5dp">
 
     <!-- Top Image -->
     <ImageView
@@ -49,20 +44,6 @@
         android:gravity="center"
         />
 
-    <!-- Description Text -->
-    <TextView
-        android:id="@+id/tvDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Invoive #INV-2025-1234 has been created"
-        android:textSize="14sp"
-        android:textColor="@color/black60"
-        android:fontFamily="@font/poppins"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="5dp"
-        android:gravity="center"/>
 
 
     <androidx.cardview.widget.CardView
@@ -75,7 +56,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/tvDescription"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp">
@@ -102,7 +83,7 @@
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/square_white"
                     android:gravity="center"
-                    android:text="BA"
+                    android:text="-"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     android:textSize="20sp"
@@ -124,7 +105,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="Jalal Sons"
+                        android:text="-"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -136,7 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="Lahore, Punjab"
+                        android:text="-"
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         android:layout_marginLeft="5dp"/>
@@ -182,11 +163,12 @@
                     android:layout_marginRight="10dp"/>
 
                 <TextView
+                    android:id="@+id/tvQuantity"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="5 Boxes"
+                    android:text="-"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -252,11 +234,12 @@
                     android:layout_marginRight="10dp"/>
 
                 <TextView
+                    android:id="@+id/tvDate"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="3 Dec 2025, 10:45 AM"
+                    android:text="-"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -294,11 +277,12 @@
                     android:layout_marginRight="10dp"/>
 
                 <TextView
+                    android:id="@+id/tvTotal"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="Rs. 11,162"
+                    android:text="-"
                     android:textColor="@color/primary"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -321,8 +305,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="50dp">
 
 
@@ -357,8 +341,6 @@
             app:icon="@drawable/addcirclevector"
             app:backgroundTint="@null"
             app:iconTint="@color/primary"
-            app:iconGravity="textStart"
-            app:iconPadding="12dp"
             android:fontFamily="@font/poppins"
             />
 
@@ -375,13 +357,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
-            app:cardElevation="2dp"
-            app:cardUseCompatPadding="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            app:cardElevation="6dp"
+            android:padding="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="30dp"
-            android:backgroundTint="@color/white"
+            android:layout_marginBottom="10dp"
             app:layout_constraintTop_toBottomOf="@id/buttonCard"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

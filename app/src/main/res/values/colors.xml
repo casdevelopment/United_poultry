@@ -24,6 +24,10 @@
     <color name="primary">#1D7A84</color>
     <color name="primary20">#331D7A84</color>
     <color name="primaryLight">#261D7A84</color>
+    <color name="primary9">#EBF3F4</color>
+    <color name="primary40">#661D7A84</color>
+
+
 
 
 
@@ -54,7 +58,7 @@
     <color name="red">#F0171A</color>
     <color name="red20">#26F0171A</color>
 
-    <color name="primary9">#EBF3F4</color>
+
 
 
     <color name="sub_primary">#FEAE55</color>

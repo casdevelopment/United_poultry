@@ -100,6 +100,8 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginTop="40dp"
                 android:layout_gravity="bottom"
                 app:cardUseCompatPadding="true">
@@ -172,6 +174,8 @@
 
 
 
+
+
     </FrameLayout>
 
     <LinearLayout
@@ -183,6 +187,72 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topPortion">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            android:layout_gravity="bottom"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="12dp">
+
+                <!-- Icon -->
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/circle_white"
+                    android:src="@drawable/resource_return" />
+
+                <!-- Text -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Return Eggs"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Damaged, extra or rejected stock"
+                        android:textSize="11sp"
+                        android:textColor="@color/gray"
+                        android:fontFamily="@font/poppins" />
+                </LinearLayout>
+
+                <!-- CTA -->
+                <TextView
+                    android:id="@+id/openReturnDialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OPEN"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/sub_primary"
+                    android:fontFamily="@font/poppins" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/todayTargetCard"
@@ -399,14 +469,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="12dp"
+        >
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            >
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -426,11 +498,11 @@
                     android:contentDescription="icon" />
 
                 <TextView
-                    android:id="@+id/tvTotalSales"
+                    android:id="@+id/tvTotalAmount"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Rs 123456"
+                    android:text="-"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
                     android:textSize="16sp"
@@ -442,8 +514,9 @@
                     android:text="Total Amount"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="14sp"
-                    android:textColor="@color/blackLight" />
+                    android:textSize="13sp"
+                    android:textColor="@color/blackLight"
+                    android:gravity="center"/>
 
             </LinearLayout>
 
@@ -464,11 +537,11 @@
                     android:contentDescription="icon" />
 
                 <TextView
-                    android:id="@+id/tvCollectedSales"
+                    android:id="@+id/tvTotalSales"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Rs 123456"
+                    android:text="-"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
                     android:textSize="16sp"
@@ -480,8 +553,9 @@
                     android:text="Total Sales"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="14sp"
-                    android:textColor="@color/blackLight" />
+                    android:textSize="13sp"
+                    android:textColor="@color/blackLight"
+                    android:gravity="center"/>
 
             </LinearLayout>
 
@@ -512,11 +586,11 @@
                     android:contentDescription="icon" />
 
                 <TextView
-                    android:id="@+id/tvBoxSales"
+                    android:id="@+id/tvRecieved"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Rs. 150000"
+                    android:text="-"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
                     android:textSize="16sp"
@@ -528,8 +602,9 @@
                     android:text="Payment received"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="14sp"
-                    android:textColor="@color/blackLight" />
+                    android:textSize="13sp"
+                    android:textColor="@color/blackLight"
+                    android:gravity="center"/>
 
             </LinearLayout>
 
@@ -566,8 +641,9 @@
                     android:text="Due payment"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="14sp"
-                    android:textColor="@color/blackLight" />
+                    android:textSize="13sp"
+                    android:textColor="@color/blackLight"
+                    android:gravity="center"/>
 
             </LinearLayout>
 

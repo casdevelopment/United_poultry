@@ -3,7 +3,7 @@ package com.example.unitedpoultry.network.api
 import com.example.unitedpoultry.AdminArea.model.AddAreaRequestModel
 import com.example.unitedpoultry.AdminArea.model.AreaDataResponseModel
 import com.example.unitedpoultry.AdminArea.model.AreaModel
-import com.example.unitedpoultry.AdminArea.model.EditAreaRequestModel
+import com.example.unitedpoultry.rider_home.model.ReturnWasteRequestModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderDataResponceModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderEditRequestModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderModel
@@ -17,8 +17,12 @@ import com.example.unitedpoultry.Authentications.login.model.LoginRequestModel
 import com.example.unitedpoultry.Authentications.login.model.LoginResponseModel
 import com.example.unitedpoultry.Authentications.resetpassword.ResetPasswordRequestModel
 import com.example.unitedpoultry.Authentications.verifyotp.VerifyOtpRequestModel
+import com.example.unitedpoultry.NewSale.model.RiderProductData
+import com.example.unitedpoultry.NewSale.model.SaleRequest
 import com.example.unitedpoultry.adminproduct.model.ProductData
+import com.example.unitedpoultry.exchange_return.model.ReturnOrExchangeRequest
 import com.example.unitedpoultry.network.retrofit.BaseResponse
+import com.example.unitedpoultry.rider_home.model.DailyPaymentStatsData
 import com.example.unitedpoultry.rider_home.model.EggPickupData
 import com.example.unitedpoultry.rider_home.model.EggPickupRequest
 import okhttp3.MultipartBody
@@ -167,10 +171,12 @@ interface ApiInterface {
     @GET("seller/shops")
     suspend fun getRiderShops(@Query("area_id") areaId: Int, @Query("page") page: Int): Response<BaseResponse<ShopsData>>
 
+
     @GET("seller/shops/{id}")
     suspend fun getRiderShopDetails(
         @Path("id") shopId: Int
     ): Response<BaseResponse<ShopDetailsResponseModel>>
+
 
     @DELETE("admin/areas/{id}")
     suspend fun deleteArea(@Path("id") AreaId: Int):Response<BaseResponse<Any>>
@@ -184,5 +190,23 @@ interface ApiInterface {
     @POST("admin/logout")
     suspend fun adminLogout():Response<BaseResponse<Any>>
 
+    @GET("seller/egg-pickup/picked-today")
+    suspend fun getRiderProducts(): Response<BaseResponse<RiderProductData>>
 
+    @POST("seller/sales") // Replace with your actual endpoint
+    suspend fun createNewSale(@Body request: SaleRequest): Response<BaseResponse<Any>>
+
+    @POST("seller/sale-returns") // Replace with your actual endpoint
+    suspend fun ReturnOrExchangeSale(@Body request: ReturnOrExchangeRequest): Response<BaseResponse<Any>>
+
+
+    @GET("seller/dashboard/stats")
+    suspend fun getDailyPaymentStats(): Response<BaseResponse<DailyPaymentStatsData>>
+
+    @GET("admin/dashboard/stats")
+    suspend fun getDailyPerformanceStats(): Response<BaseResponse<DailyPaymentStatsData>>
+
+
+    @POST("seller/egg-pickup/save-record")  // your login API endpoint
+    suspend fun submitReturnWaste(@Body request: ReturnWasteRequestModel): Response<BaseResponse<Any>>
 }

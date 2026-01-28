@@ -21,8 +21,15 @@
         android:theme="@style/Theme.UnitedPoultry"
         tools:targetApi="31">
         <activity
-            android:name=".rider_home.EggPickupActivity"
+            android:name=".exchange_return.ReturnSucessActivity"
             android:exported="false" />
+        <activity
+            android:name=".exchange_return.ExchangeOrReturnActivity"
+            android:exported="false" />
+        <activity
+            android:name=".rider_home.EggPickupActivity"
+            android:exported="false"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -69,11 +76,7 @@
             android:exported="false" />
         <activity
             android:name=".AdminSettingModule.SettingHomeActivity"
-            android:exported="true" /> <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.MAIN" /> -->
-        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
+            android:exported="true" />
         <activity
             android:name=".AdminRiderModule.AdminEditRiderActivity"
             android:exported="false" />
@@ -108,12 +111,7 @@
         <activity
             android:name=".AdminDashBoard.AdminDashBoardActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" /> <!-- <intent-filter> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.MAIN" /> -->
-        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".Profile.MyPerformanceActivity"
             android:exported="false" />
@@ -140,11 +138,7 @@
             android:exported="false" />
         <activity
             android:name=".Collection.SelectShopCollectionActivity"
-            android:exported="true" /> <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.MAIN" /> -->
-        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
+            android:exported="true" />
         <activity
             android:name=".NewSale.SaleSuccessActivity"
             android:exported="false" />
@@ -162,32 +156,18 @@
             android:exported="false" />
         <activity
             android:name=".ShopModule.ShopListActivity"
-            android:exported="true" /> <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.MAIN" /> -->
-        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
+            android:exported="true" />
         <activity
             android:name=".Notification.NotificationActivity"
             android:exported="false" />
         <activity
             android:name=".RiderDashBoard.RiderDashBoardActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/> <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.MAIN" /> -->
-        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".Authentications.AuthenticationActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" /> <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.MAIN" /> -->
-        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".Welcome.WelcomeActivity"
             android:exported="false" />

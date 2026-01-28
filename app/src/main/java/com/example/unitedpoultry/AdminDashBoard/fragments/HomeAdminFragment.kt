@@ -8,11 +8,13 @@ import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.unitedpoultry.AdminHome.Adapter.ShopVisitedAdapter
 import com.example.unitedpoultry.AdminHome.model.ShopvisitedModel
+import com.example.unitedpoultry.AdminHome.viewmodel.DailyPerformanceStatsViewModel
 import com.example.unitedpoultry.AdminRiderModule.Adapter.AdminRidersAdapter
 import com.example.unitedpoultry.AdminRiderModule.model.RiderDataResponceModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderModel
@@ -23,6 +25,8 @@ import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.FragmentHomeAdminBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse
+import com.example.unitedpoultry.rider_home.model.DailyPaymentStatsData
+import com.example.unitedpoultry.rider_home.viewmodel.DailyStatsViewModel
 import com.example.unitedpoultry.util.AppUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import retrofit2.Response
@@ -42,6 +46,8 @@ class HomeAdminFragment : Fragment() {
     private var currentPage = 1
     private var lastPage = 1
 
+    private val ViewModel1: DailyPerformanceStatsViewModel by viewModel()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,6 +58,8 @@ class HomeAdminFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        onclick()
 
         val historyList = listOf(
             ShopvisitedModel("Jalal Sons", "Last visit: 3 days ago. Rs. 12500. 12 orders", R.drawable.visitedshopimage1),
@@ -77,10 +85,7 @@ class HomeAdminFragment : Fragment() {
         binding.tvRemainingShops.text = "$remainingShops%"
         binding.pRemainingShops.progress = remainingShops
 
-        binding.profile.setOnClickListener {
-            val intent = Intent(requireContext(), SettingHomeActivity::class.java)
-            startActivity(intent)
-        }
+
 
         setupRecyclerView()
         fetchRidersFromApi(currentPage)
@@ -90,6 +95,21 @@ class HomeAdminFragment : Fragment() {
         }
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        loadDailyPaymentStats()
+    }
+
+    private fun onclick(){
+
+        binding.profile.setOnClickListener {
+            val intent = Intent(requireContext(), SettingHomeActivity::class.java)
+            startActivity(intent)
+        }
+
+    }
+
     private fun fetchRidersFromApi(page: Int) {
         viewModel.getRiders(page).observe(viewLifecycleOwner) { apiResponse ->
             when (apiResponse.status) {
@@ -149,5 +169,37 @@ class HomeAdminFragment : Fragment() {
         binding.rvRiders.layoutManager = layoutManager
         binding.rvRiders.adapter = adapter
         binding.rvRiders.isNestedScrollingEnabled = true // important inside NestedScrollView
+    }
+
+    private fun loadDailyPaymentStats() {
+
+        ViewModel1.getDailyPerformanceStats().observe(viewLifecycleOwner) { response ->
+            when (response.status) {
+                Status.LOADING -> AppUtil.startLoader(requireActivity())
+
+                Status.SUCCESS -> {
+                    AppUtil.stopLoader()
+                    val res = response.data
+                    if (res != null && res.isSuccessful) {
+                        val baseResponse = res.body() as BaseResponse<DailyPaymentStatsData>?
+                        baseResponse?.data?.let { data ->
+                            binding.tvCashRecieved.text = data.today_total_cash_received.toString()
+                            binding.tvUnitSold.text = data.today_total_eggs_sold.toString()
+                            binding.tvUnitDelieved.text = data.today_total_eggs_sold.toString()
+                            binding.tvEggReturned.text = data.today_total_eggs_returned.toString()
+                        }
+                    }
+                }
+
+                Status.ERROR -> {
+                    AppUtil.stopLoader()
+                    Toast.makeText(
+                        requireContext(),
+                        response.message ?: "Network error",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 }

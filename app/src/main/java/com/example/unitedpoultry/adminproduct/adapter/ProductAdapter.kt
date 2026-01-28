@@ -24,7 +24,7 @@ class ProductAdapter(
         holder.binding.tvProductName.text = product.name
         holder.binding.tvPacking.text = "${product.packing} / ${product.eggs_count} eggs"
 
-        holder.binding.etQuantity.setText(quantityMap[product.id]?.toString() ?: "0")
+        holder.binding.etQuantity.setText(quantityMap[product.id]?.toString())
 
         holder.binding.etQuantity.addTextChangedListener {
             val qty = it.toString().toIntOrNull() ?: 0

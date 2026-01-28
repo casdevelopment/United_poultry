@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:paddingBottom="20dp">
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/tLayout"
@@ -29,51 +29,54 @@
                 android:id="@+id/titleBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
                 android:elevation="4dp"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp">
+                android:padding="16dp">
 
-                <!-- Back Arrow -->
-                <ImageView
+
+
+
+                <androidx.cardview.widget.CardView
                     android:id="@+id/backArrow"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    app:cardCornerRadius="12dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:contentDescription="Back"
-                    android:src="@drawable/backarrownvector" />
+                    app:cardElevation="0dp"
+                    android:background="@drawable/square_white"
+                    android:backgroundTint="@color/primary20"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/singlearrow"
+                        app:tint="@color/black"
+                        android:layout_gravity="center"/>
+                </androidx.cardview.widget.CardView>
+
+
 
                 <!-- Title -->
                 <TextView
+                    android:id="@+id/tvTitle"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
                     android:text="Rate Management"
                     android:textColor="@color/black"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
+
 
 
 
             </LinearLayout>
 
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/brown"
-                android:elevation="6dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                app:layout_constraintTop_toBottomOf="@id/titleBar"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -97,8 +100,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingLeft="20dp">
+                        android:orientation="horizontal">
 
 
                         <TextView
@@ -129,7 +131,7 @@
                                 android:id="@+id/rateDate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                tools:text="27 Nov 2025"
+                                android:text="27 Nov 2025"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 android:textColor="@color/green"
@@ -142,15 +144,26 @@
 
                     </LinearLayout>
 
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_marginTop="10dp"
-                        android:id="@+id/todatRateRv"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"/>
+                        android:layout_height="200dp">
 
 
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/todatRateRv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clipToPadding="false"
+                            android:paddingBottom="24dp"
+                            android:overScrollMode="never"/>
 
+                        <!-- Fade overlay -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="64dp"
+                            android:layout_gravity="bottom"
+                            android:background="@drawable/bottom_fade"/>
+                    </FrameLayout>
 
 
                     <androidx.cardview.widget.CardView
@@ -177,12 +190,13 @@
 
 
                             <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:layout_marginEnd="10dp"
+                                android:layout_marginTop="8dp"
                                 android:gravity="center"
                                 android:contentDescription="Status"
-                                android:src="@drawable/questionmarkvector" />
+                                android:src="@drawable/roundquestionsvg" />
 
 
                             <TextView
@@ -193,7 +207,6 @@
                                 android:textColor="@color/primary"
                                 android:textSize="13sp"
                                 android:textStyle="bold"
-                                android:layout_marginLeft="5dp"
                                 android:layout_marginTop="5dp"/>
 
 
@@ -241,11 +254,34 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_marginTop="5dp"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginTop="10dp"
-                android:id="@+id/historyRv"
+
+
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"/>
+                android:layout_height="200dp">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/historyRv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingBottom="24dp"
+                    android:overScrollMode="never"/>
+
+                <!-- Fade overlay -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/bottom_fade"/>
+            </FrameLayout>
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:id="@+id/historyRv"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="200dp"/>-->
 
 
 
@@ -286,7 +322,6 @@
                     app:iconTint="@null"
                     app:iconGravity="textStart"
                     app:iconPadding="12dp"
-                    android:fontFamily="@font/poppins"
                     android:layout_marginRight="10dp"/>
 
                 <com.google.android.material.button.MaterialButton
@@ -301,7 +336,6 @@
                     android:textColor="@color/white"
                     android:background="@drawable/btn_continue_bg"
                     app:backgroundTint="@null"
-                    android:fontFamily="@font/poppins"
                     />
 
             </LinearLayout>

@@ -15,6 +15,7 @@ import com.example.unitedpoultry.Collection.CollectionformActivity
 import com.example.unitedpoultry.NewSale.SaleFormActivity
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.ShopModule.ShopDetailsActivity
+import com.example.unitedpoultry.exchange_return.ExchangeOrReturnActivity
 import com.google.android.material.button.MaterialButton
 
 class RiderShopListAdapter(
@@ -109,7 +110,19 @@ class RiderShopListAdapter(
         holder.btnNewSale.setOnClickListener {
             val context = holder.itemView.context
             val intent = Intent(context, SaleFormActivity::class.java)
-            intent.putExtra("ID", item.id)
+            intent.putExtra("SHOP_ID", item.id)
+            intent.putExtra("AREA_ID", areaId)
+            intent.putExtra("NAME", item.name)
+            intent.putExtra("ADDRESS", item.address)
+            intent.putExtra("DISCOUNT", item.discount_per_petti)
+            context.startActivity(intent)
+        }
+
+        holder.btnExchange.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, ExchangeOrReturnActivity::class.java)
+            intent.putExtra("SHOP_ID", item.id)
+            intent.putExtra("AREA_ID", areaId)
             intent.putExtra("NAME", item.name)
             intent.putExtra("ADDRESS", item.address)
             intent.putExtra("DISCOUNT", item.discount_per_petti)
@@ -157,6 +170,7 @@ class RiderShopListAdapter(
         val statusLayout: LinearLayout = v.findViewById(R.id.statusLayout)
         val btnNewSale: MaterialButton = v.findViewById(R.id.btnNewSale)
         val btnCollect: MaterialButton = v.findViewById(R.id.btnCollect)
+        val btnExchange: MaterialButton = v.findViewById(R.id.btnExchange)
 
     }
 

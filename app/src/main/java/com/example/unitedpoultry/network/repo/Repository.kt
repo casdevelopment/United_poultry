@@ -4,7 +4,7 @@ package com.example.unitedpoultry.network.repo
 import com.example.unitedpoultry.AdminArea.model.AddAreaRequestModel
 import com.example.unitedpoultry.AdminArea.model.AreaDataResponseModel
 import com.example.unitedpoultry.AdminArea.model.AreaModel
-import com.example.unitedpoultry.AdminArea.model.EditAreaRequestModel
+import com.example.unitedpoultry.rider_home.model.ReturnWasteRequestModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderDataResponceModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderEditRequestModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderModel
@@ -18,6 +18,8 @@ import com.example.unitedpoultry.Authentications.login.model.LoginRequestModel
 import com.example.unitedpoultry.Authentications.login.model.LoginResponseModel
 import com.example.unitedpoultry.Authentications.resetpassword.ResetPasswordRequestModel
 import com.example.unitedpoultry.Authentications.verifyotp.VerifyOtpRequestModel
+import com.example.unitedpoultry.NewSale.model.SaleRequest
+import com.example.unitedpoultry.exchange_return.model.ReturnOrExchangeRequest
 import com.example.unitedpoultry.network.api.ApiInterface
 import com.example.unitedpoultry.network.retrofit.BaseResponse
 import com.example.unitedpoultry.rider_home.model.EggPickupData
@@ -184,6 +186,24 @@ class Repository(private val api: ApiInterface) {
 
     suspend fun adminLogout(): Response<BaseResponse<Any>> {
         return api.adminLogout()
+    }
+
+    suspend fun getRiderProducts() = api.getRiderProducts()
+
+    suspend fun createNewSale(request: SaleRequest): Response<BaseResponse<Any>> {
+        return api.createNewSale(request)
+    }
+
+    suspend fun ReturnOrExchangeSale(request: ReturnOrExchangeRequest): Response<BaseResponse<Any>> {
+        return api.ReturnOrExchangeSale(request)
+    }
+
+    suspend fun getDailyPaymentStats() = api.getDailyPaymentStats()
+
+    suspend fun getDailyPerformanceStats() = api.getDailyPerformanceStats()
+
+    suspend fun submitReturnWaste(request: ReturnWasteRequestModel): Response<BaseResponse<Any>> {
+        return api.submitReturnWaste(request)
     }
 
 }

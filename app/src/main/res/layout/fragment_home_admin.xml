@@ -37,8 +37,8 @@
                app:layout_constraintTop_toTopOf="@id/ivCurve"
                app:layout_constraintStart_toStartOf="parent"
                app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+               android:layout_marginStart="10dp"
+               android:layout_marginEnd="10dp"
                 >
 
                 <LinearLayout
@@ -71,7 +71,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginStart="20dp">
 
                         <TextView
                             android:id="@+id/tvTitle"
@@ -100,16 +101,16 @@
 
                     <ImageButton
                         android:id="@+id/profile"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/settingmainsvg"
+                        android:contentDescription="icon"
                         android:layout_gravity="center_vertical"
                         android:background="?attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:contentDescription="icon"
-                        android:focusable="true"
                         android:scaleType="centerInside"
-                        android:src="@drawable/settingmainsvg"
-                        app:tint="@null" />
+                        app:tint="@null"
+                        android:clickable="true"
+                        android:focusable="true"/>
 
                 </LinearLayout>
 
@@ -767,10 +768,11 @@
                             android:paddingBottom="20dp">
 
                             <TextView
+                                android:id="@+id/tvUnitDelieved"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="42"
+                                android:text="-"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
                                 android:textStyle="bold"
@@ -880,10 +882,11 @@
                             android:paddingBottom="20dp">
 
                             <TextView
+                                android:id="@+id/tvEggReturned"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="890"
+                                android:text="-"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"
                                 android:textStyle="bold"
@@ -942,10 +945,11 @@
                             android:paddingBottom="20dp">
 
                             <TextView
+                                android:id="@+id/tvCashRecieved"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="210,000"
+                                android:text="-"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
                                 android:textStyle="bold"
@@ -1002,10 +1006,11 @@
                             android:paddingBottom="20dp">
 
                             <TextView
+                                android:id="@+id/tvUnitSold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="1080"
+                                android:text="-"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"
                                 android:textStyle="bold"
