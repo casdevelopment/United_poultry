@@ -7,115 +7,170 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.unitedpoultry.History.Adapter.HistoryAdapter
-import com.example.unitedpoultry.History.model.HistoryModel
+import com.example.unitedpoultry.History.model.SaleItem
+import com.example.unitedpoultry.History.viewmodel.RiderSaleHistoryViewModel
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.FragmentHistoryBinding
+import com.example.unitedpoultry.network.Status
+import com.example.unitedpoultry.util.AppUtil
+import com.example.unitedpoultry.util.showToast
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class HistoryFragment : Fragment() {
 
-    private lateinit var binding: FragmentHistoryBinding
-    private lateinit var historyAdapter: HistoryAdapter
+    private var _binding: FragmentHistoryBinding? = null
+    private val binding get() = _binding!!
 
-    private var selectedType = "All"
-    private var selectedTime = "Today"
+    private val viewModel: RiderSaleHistoryViewModel by viewModel()
+
+    private var currentPage = 1
+    private var lastPage = 1
+    private var currentDuration = "month" // default
+
+    private val salesList = mutableListOf<SaleItem>()
+    private lateinit var adapter: HistoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHistoryBinding.inflate(inflater, container, false)
+        _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val historyList = listOf(
-            HistoryModel("Jalal Sons", "Sale . 5 Boxes . Credit", "Sale", 17000, 0, "10:45 AM"),
-            HistoryModel("Al-Fatah Store", "Collection . Cash", "Collection", 12000, 2, "11:10 AM"),
-            HistoryModel("Green Valley Mart", "Collection . Cash", "Collection", 20000, 5, "12:30 PM"),
-            HistoryModel("Mini Mart Central", "Sale . 9 Boxes . Credit", "Sale", 15000, 10, "09:20 AM")
-        )
+        setupRecyclerView()
+        setupFilters()
+        highlightFilter(binding.filterMonth)
+    }
 
-        historyAdapter = HistoryAdapter(historyList.toMutableList())
-        binding.rvHistory.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvHistory.adapter = historyAdapter
+    override fun onResume() {
+        super.onResume()
 
-        // Default selection
-        selectTopFilter(binding.filterAll)
-        selectBottomFilter(binding.filterMonth)
+        loadSaleHistory()
+    }
 
-        // TOP FILTERS
-        binding.filterAll.setOnClickListener {
-            selectedType = "All"
-            historyAdapter.applyFilter(selectedType, selectedTime)
-            selectTopFilter(binding.filterAll)
+    private fun setupRecyclerView() {
+        adapter = HistoryAdapter(salesList)
+        binding.historyRv.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = this@HistoryFragment.adapter
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(rv, dx, dy)
+                    val layoutManager = rv.layoutManager as LinearLayoutManager
+                    val totalItemCount = layoutManager.itemCount
+                    val lastVisible = layoutManager.findLastVisibleItemPosition()
+                    if (lastVisible >= totalItemCount - 1 && currentPage < lastPage) {
+                        currentPage++
+                        loadSaleHistory()
+                    }
+                }
+            })
         }
+    }
 
-        binding.filterVisited.setOnClickListener {
-            selectedType = "Sale"
-            historyAdapter.applyFilter(selectedType, selectedTime)
-            selectTopFilter(binding.filterVisited)
-        }
-
-        binding.filterPending.setOnClickListener {
-            selectedType = "Collection"
-            historyAdapter.applyFilter(selectedType, selectedTime)
-            selectTopFilter(binding.filterPending)
-        }
-
-        // BOTTOM FILTERS
+    private fun setupFilters() {
         binding.filterDay.setOnClickListener {
-            selectedTime = "Today"
-            historyAdapter.applyFilter(selectedType, selectedTime)
-            selectBottomFilter(binding.filterDay)
+            currentDuration = "today"
+            highlightFilter(binding.filterDay)
+            refreshSales()
         }
-
         binding.filterWeek.setOnClickListener {
-            selectedTime = "Week"
-            historyAdapter.applyFilter(selectedType, selectedTime)
-            selectBottomFilter(binding.filterWeek)
+            currentDuration = "week"
+            highlightFilter(binding.filterWeek)
+            refreshSales()
         }
-
         binding.filterMonth.setOnClickListener {
-            selectedTime = "Month"
-            historyAdapter.applyFilter(selectedType, selectedTime)
-            selectBottomFilter(binding.filterMonth)
+            currentDuration = "month"
+            highlightFilter(binding.filterMonth)
+            refreshSales()
         }
     }
 
-    // 🔹 TOP FILTER UI
-    private fun selectTopFilter(selected: TextView) {
-        val all = listOf(
-            binding.filterAll,
-            binding.filterVisited,
-            binding.filterPending
-        )
-
-        all.forEach {
-            it.setBackgroundResource(R.drawable.filter_bg)
-            it.setTextColor(resources.getColor(R.color.black60))
+    private fun highlightFilter(selected: TextView) {
+        val filters = listOf(binding.filterDay, binding.filterWeek, binding.filterMonth)
+        for (filter in filters) {
+            if (filter == selected) {
+                filter.setTextColor(resources.getColor(android.R.color.white))
+                filter.setBackgroundResource(R.drawable.filter_bg_round_selected)
+            } else {
+                filter.setTextColor(resources.getColor(R.color.black60))
+                filter.setBackgroundResource(R.drawable.filter_bg_round)
+            }
         }
-
-        selected.setBackgroundResource(R.drawable.filter_bg_selected)
-        selected.setTextColor(resources.getColor(R.color.white))
     }
 
-    // 🔹 BOTTOM FILTER UI
-    private fun selectBottomFilter(selected: TextView) {
-        val all = listOf(
-            binding.filterDay,
-            binding.filterWeek,
-            binding.filterMonth
-        )
+    private fun refreshSales() {
+        currentPage = 1
+        lastPage = 1
+        salesList.clear()
+        adapter.notifyDataSetChanged()
+        loadSaleHistory()
+    }
 
-        all.forEach {
-            it.setBackgroundResource(R.drawable.filter_bg_round)
-            it.setTextColor(resources.getColor(R.color.black60))
+    private fun loadSaleHistory() {
+        viewModel.getSaleHistory(currentPage, currentDuration).observe(viewLifecycleOwner) { response ->
+            when (response.status) {
+                Status.SUCCESS -> {
+                    AppUtil.stopLoader()
+
+                    val body = response.data?.body()?.data
+                    lastPage = body?.pagination?.last_page ?: 1
+
+                    body?.sales?.let {
+                        salesList.addAll(it)
+                        adapter.notifyDataSetChanged()
+                        updateSummary() // 🔥 HERE
+                    }
+                }
+
+                Status.ERROR -> {
+                    AppUtil.stopLoader()
+                    showToast(response.message ?: "Failed to load sales")
+                }
+                Status.LOADING -> AppUtil.startLoader(requireContext())
+            }
+        }
+    }
+
+    private fun updateSummary() {
+        val totalAmount = salesList.sumOf {
+            it.total.toDoubleOrNull() ?: 0.0
         }
 
-        selected.setBackgroundResource(R.drawable.filter_bg_round_selected)
-        selected.setTextColor(resources.getColor(R.color.white))
+        val totalAmountCollected = salesList.sumOf {
+            it.cash_received.toDoubleOrNull() ?: 0.0
+        }
+
+        binding.tvTotalSales.text = "Rs. ${formatAmount(totalAmount)}"
+        binding.tvTotalCollected.text = "Rs. ${formatAmount(totalAmountCollected)}"
+        binding.tvTotalTransactions.text = salesList.size.toString()
+    }
+
+
+    private fun formatAmount(value: Double): String {
+        return when {
+            value >= 1_000_000 -> {
+                val v = value / 1_000_000
+                String.format("%.1f", v).removeSuffix(".0") + "M"
+            }
+            value >= 1_000 -> {
+                val v = value / 1_000
+                String.format("%.1f", v).removeSuffix(".0") + "K"
+            }
+            else -> value.toInt().toString()
+        }
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

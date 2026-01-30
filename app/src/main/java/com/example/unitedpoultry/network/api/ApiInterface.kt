@@ -17,6 +17,8 @@ import com.example.unitedpoultry.Authentications.login.model.LoginRequestModel
 import com.example.unitedpoultry.Authentications.login.model.LoginResponseModel
 import com.example.unitedpoultry.Authentications.resetpassword.ResetPasswordRequestModel
 import com.example.unitedpoultry.Authentications.verifyotp.VerifyOtpRequestModel
+import com.example.unitedpoultry.History.model.SaleHistoryData
+import com.example.unitedpoultry.History.model.SaleItem
 import com.example.unitedpoultry.NewSale.model.RiderProductData
 import com.example.unitedpoultry.NewSale.model.SaleRequest
 import com.example.unitedpoultry.adminproduct.model.ProductData
@@ -209,4 +211,15 @@ interface ApiInterface {
 
     @POST("seller/egg-pickup/save-record")  // your login API endpoint
     suspend fun submitReturnWaste(@Body request: ReturnWasteRequestModel): Response<BaseResponse<Any>>
+
+    @GET("seller/sales")
+    suspend fun getSaleHistory(
+        @Query("page") page: Int,
+        @Query("duration") duration: String
+    ): Response<BaseResponse<SaleHistoryData>>
+
+    @GET("seller/sales/{id}")
+    suspend fun getSaleDetail(@Path("id") id: Int): Response<BaseResponse<SaleItem>>
+
+
 }

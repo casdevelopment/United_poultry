@@ -28,6 +28,8 @@ import com.example.unitedpoultry.Authentications.forgetpassword.ForgetPasswordVi
 import com.example.unitedpoultry.Authentications.login.viewmodel.LoginViewModel
 import com.example.unitedpoultry.Authentications.resetpassword.ResetPasswordViewModel
 import com.example.unitedpoultry.Authentications.verifyotp.OtpVerificationViewModel
+import com.example.unitedpoultry.History.viewmodel.RiderSaleHistoryViewModel
+import com.example.unitedpoultry.History.viewmodel.SaleHistoryDetailViewModel
 import com.example.unitedpoultry.NewSale.viewmodel.GetRiderProductViewModel
 import com.example.unitedpoultry.NewSale.viewmodel.RiderNewSaleViewModel
 import com.example.unitedpoultry.RiderArea.viewmodel.RiderAreaViewModel
@@ -101,6 +103,9 @@ val viewModelModule= module{
     viewModel { GetRiderProductViewModel(get()) }
     viewModel { RiderNewSaleViewModel(get()) }
     viewModel { RiderReturnOrExchangeSaleViewModel(get()) }
+
+    viewModel { RiderSaleHistoryViewModel(get()) }
+    viewModel { SaleHistoryDetailViewModel(get()) }
 
 }
 

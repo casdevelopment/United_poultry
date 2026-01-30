@@ -1,19 +1,11 @@
 package com.example.unitedpoultry.AdminSettingModule.adapter
 
-import android.content.Intent
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.unitedpoultry.AdminSettingModule.DataModel.RatesData
-import com.example.unitedpoultry.AdminShopModule.AdminShopDetailsActivity
-
-import com.example.unitedpoultry.AdminShopModule.model.ShopModel
 import com.example.unitedpoultry.R
 
 class RateHistoryAdapter(

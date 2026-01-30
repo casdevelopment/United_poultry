@@ -30,6 +30,11 @@ import com.example.unitedpoultry.rider_home.viewmodel.DailyStatsViewModel
 import com.example.unitedpoultry.util.AppUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Date
+import java.util.Locale
 import kotlin.getValue
 
 
@@ -61,33 +66,9 @@ class HomeAdminFragment : Fragment() {
 
         onclick()
 
-        val historyList = listOf(
-            ShopvisitedModel("Jalal Sons", "Last visit: 3 days ago. Rs. 12500. 12 orders", R.drawable.visitedshopimage1),
-            ShopvisitedModel("Al-Fatah Store", "Last visit: 5 days ago. Cash collection", R.drawable.visitedshopimage2),
-            ShopvisitedModel("Green Valley Mart", "Last visit: 2 days ago. Cash collection", R.drawable.visitedshopimage1),
-            ShopvisitedModel("Mini Mart Central", "Last visit: 1 day ago. 9 Boxes. Credit", R.drawable.visitedshopimage2)
-        )
-
-        shopAdapter = ShopVisitedAdapter(historyList.toMutableList())
-        binding.rvVisitedShops.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvVisitedShops.adapter = shopAdapter
-
-        val assignedShops = 40
-        val visitedShops = 30
-        val remainingShops = 10
-
-        binding.tvAssignedShops.text = "$assignedShops%"
-        binding.pAssignedshops.progress = assignedShops
-
-        binding.tVisitedShops.text = "$visitedShops%"
-        binding.pVisitedShops.progress = visitedShops
-
-        binding.tvRemainingShops.text = "$remainingShops%"
-        binding.pRemainingShops.progress = remainingShops
-
-
 
         setupRecyclerView()
+
         fetchRidersFromApi(currentPage)
         binding.etSearch.addTextChangedListener {
             adapter.filter(it.toString(), "Active")
@@ -99,6 +80,7 @@ class HomeAdminFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         loadDailyPaymentStats()
+        showDate()
     }
 
     private fun onclick(){
@@ -108,6 +90,13 @@ class HomeAdminFragment : Fragment() {
             startActivity(intent)
         }
 
+    }
+
+    private fun showDate(){
+
+        binding.tvDate.text = getTodayDate()
+
+        binding.tvDay.text = getTodayDay()
     }
 
     private fun fetchRidersFromApi(page: Int) {
@@ -144,9 +133,9 @@ class HomeAdminFragment : Fragment() {
                         if(currentPage<lastPage){
                             fetchRidersFromApi(currentPage + 1)
                         }else{
-                            binding.activeSuppliersTv.text=activeRiderList.size.toString()
-                            binding.pendingApprovalTv.text=inActiveRiderList.size.toString()
-                            binding.totalProductsTv.text=riderList.size.toString()
+                            binding.activeSuppliersTv.text = formatNumber(activeRiderList.size)
+                            binding.pendingApprovalTv.text = formatNumber(inActiveRiderList.size)
+                            binding.totalProductsTv.text = formatNumber(riderList.size)
                         }
                     }
                     else{
@@ -160,6 +149,34 @@ class HomeAdminFragment : Fragment() {
 
                 }
             }
+        }
+    }
+
+    private fun formatNumber(value: Int): String {
+        return when {
+            value >= 1_000_000 -> {
+                val v = value / 1_000_000.0
+                String.format("%.1f", v).removeSuffix(".0") + "M"
+            }
+            value >= 1_000 -> {
+                val v = value / 1_000.0
+                String.format("%.1f", v).removeSuffix(".0") + "K"
+            }
+            else -> value.toString()
+        }
+    }
+
+    private fun formatNumber(value: Double): String {
+        return when {
+            value >= 1_000_000 -> {
+                val v = value / 1_000_000
+                String.format("%.1f", v).removeSuffix(".0") + "M"
+            }
+            value >= 1_000 -> {
+                val v = value / 1_000
+                String.format("%.1f", v).removeSuffix(".0") + "K"
+            }
+            else -> value.toInt().toString()
         }
     }
 
@@ -183,10 +200,28 @@ class HomeAdminFragment : Fragment() {
                     if (res != null && res.isSuccessful) {
                         val baseResponse = res.body() as BaseResponse<DailyPaymentStatsData>?
                         baseResponse?.data?.let { data ->
-                            binding.tvCashRecieved.text = data.today_total_cash_received.toString()
-                            binding.tvUnitSold.text = data.today_total_eggs_sold.toString()
-                            binding.tvUnitDelieved.text = data.today_total_eggs_sold.toString()
-                            binding.tvEggReturned.text = data.today_total_eggs_returned.toString()
+
+                            binding.tvCashRecieved.text = formatNumber(data.today_total_cash_received.toDouble())
+                            binding.tvUnitSold.text = formatNumber(data.today_total_eggs_sold)
+                            binding.tvUnitDelieved.text = formatNumber(data.today_total_eggs_sold)
+                            binding.tvEggReturned.text = formatNumber(data.today_total_eggs_returned)
+                            binding.tvTotalShops.text = formatNumber(data.total_shops)
+
+
+
+
+                            val totalShops = data.total_shops
+                            val visitedShops = data.today_total_visited_shops
+
+                            val visitedPercentage = if (totalShops > 0) {
+                                (visitedShops * 100) / totalShops
+                            } else {
+                                0
+                            }
+
+                            binding.tVisitedShops.text = "$visitedPercentage%"
+                            binding.pVisitedShops.progress = visitedPercentage
+
                         }
                     }
                 }
@@ -202,4 +237,17 @@ class HomeAdminFragment : Fragment() {
             }
         }
     }
+
+    private fun getTodayDate(): String {
+        val sdf = SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault())
+        return sdf.format(Date())
+    }
+
+    private fun getTodayDay(): String {
+        val sdf = SimpleDateFormat("EEEE", Locale.getDefault())
+        return sdf.format(Date())
+    }
+
+
+
 }

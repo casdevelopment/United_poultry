@@ -29,8 +29,15 @@ import com.example.unitedpoultry.util.AppConstants.userData
 import com.example.unitedpoultry.util.AppUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.core.widget.addTextChangedListener
+import com.example.unitedpoultry.NewSale.Adapter.RiderProductHorizontalAdapter
+import com.example.unitedpoultry.NewSale.model.Product
+import com.example.unitedpoultry.NewSale.model.RiderProductData
+import com.example.unitedpoultry.NewSale.viewmodel.GetRiderProductViewModel
 import com.example.unitedpoultry.rider_home.model.ReturnWasteRequestModel
 import com.example.unitedpoultry.rider_home.viewmodel.ReturnWasteViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 class HomeFragment : Fragment() {
@@ -41,6 +48,12 @@ class HomeFragment : Fragment() {
     private val ViewModel: DailyStatsViewModel by viewModel()
     private val ViewModel1: DailyPaymentStatsViewModel by viewModel()
     private val ViewModel2: ReturnWasteViewModel by viewModel()
+    private val ViewModel3: GetRiderProductViewModel by viewModel()
+
+    private var productList = listOf<Product>()
+
+    private lateinit var productAdapter: RiderProductHorizontalAdapter
+
 
 
     override fun onCreateView(
@@ -63,25 +76,17 @@ class HomeFragment : Fragment() {
 
         showData()
         onclick()
+       setupRecycler()
 
-
-
-        val historyList = listOf(
-            ShopvisitedModel("Jalal Sons", "Last visit: 3 days ago. Rs. 12500. 12 orders", R.drawable.visitedshopimage1),
-            ShopvisitedModel("Al-Fatah Store", "Last visit: 5 days ago. Cash collection", R.drawable.visitedshopimage2),
-            ShopvisitedModel("Green Valley Mart", "Last visit: 2 days ago. Cash collection", R.drawable.visitedshopimage1),
-            ShopvisitedModel("Mini Mart Central", "Last visit: 1 day ago. 9 Boxes. Credit", R.drawable.visitedshopimage2)
-        )
-
-        shopAdapter = RiderHomeAdapter(historyList.toMutableList())
-        binding.rvVisitedShops.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvVisitedShops.adapter = shopAdapter
 
     }
 
     private fun showData(){
 
         binding.tvTitle.text = "Hello, ${userData?.name ?: "User Name"}"
+
+
+        binding.tvDescription.text = "${getTodayDay()}, ${getTodayDate()}"
 
     }
 
@@ -103,7 +108,14 @@ class HomeFragment : Fragment() {
         binding.openReturnDialog.setOnClickListener {
 
             showReturnWasteDialog()
+        }
 
+        binding.areaShortCut.setOnClickListener {
+            // Navigate to AreaFragment
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, AddressFragment()) // Replace with your AreaFragment
+                .addToBackStack("AreaFragment") // Add to back stack so back button works
+                .commit()
         }
 
     }
@@ -112,6 +124,7 @@ class HomeFragment : Fragment() {
         super.onResume()
         loadDailyStats()
         loadDailyPaymentStats()
+        loadProducts()
     }
 
     private fun loadDailyStats() {
@@ -126,7 +139,7 @@ class HomeFragment : Fragment() {
                     if (res != null && res.isSuccessful) {
                         val baseResponse = res.body() as BaseResponse<EggPickupData>?
                         baseResponse?.data?.let { data ->
-                            binding.totalPicked.text = data.total_picked.toString()
+                           // binding.totalPicked.text = data.total_picked.toString()
                             binding.totalSold.text = data.total_sold.toString()
                             binding.totalReturned.text = data.total_returned.toString()
                             binding.totalWaste.text = data.total_waste.toString()
@@ -159,7 +172,7 @@ class HomeFragment : Fragment() {
                     if (res != null && res.isSuccessful) {
                         val baseResponse = res.body() as BaseResponse<DailyPaymentStatsData>?
                         baseResponse?.data?.let { data ->
-                            binding.tvRecieved.text = "Rs ${data.today_total_cash_received}"
+                           // binding.tvRecieved.text = "Rs ${data.today_total_cash_received}"
                             binding.tvTotalAmount.text = "Rs ${data.today_total_cash_received}"
                             binding.tvTotalSales.text = data.today_total_eggs_sold.toString()
                            // binding.totalWaste.text = data.todayTotalEggsWaste.toString()
@@ -279,8 +292,10 @@ class HomeFragment : Fragment() {
                     AppUtil.stopLoader()
                     Toast.makeText(requireContext(), "Submitted successfully", Toast.LENGTH_SHORT).show()
                     // Optionally, refresh your daily stats
+
                     loadDailyStats()
                     loadDailyPaymentStats()
+                    loadProducts()
                 }
                 Status.ERROR -> {
                     AppUtil.stopLoader()
@@ -289,4 +304,56 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
+    private fun setupRecycler() {
+        productAdapter = RiderProductHorizontalAdapter()
+        binding.recyclerProducts.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerProducts.adapter = productAdapter
+    }
+
+
+    private fun loadProducts() {
+        ViewModel3.getRiderProducts().observe(viewLifecycleOwner) { response ->
+            when (response.status) {
+                Status.LOADING -> { /* show loader if needed */ }
+                Status.SUCCESS -> {
+                    val res = response.data
+                    if (res != null && res.isSuccessful) {
+                        val baseResponse = res.body() as BaseResponse<RiderProductData>?
+                        if (baseResponse?.result == "success" && baseResponse.data != null) {
+                            // ✅ Just submit list to adapter, no new adapter creation
+                            productAdapter.submitList(baseResponse.data.picked_items)
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                baseResponse?.message ?: "Failed to fetch products",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+                Status.ERROR -> {
+                    Toast.makeText(
+                        requireContext(),
+                        response.message ?: "Network Error",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+
+    private fun getTodayDate(): String {
+        val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        return sdf.format(Date())
+    }
+
+    private fun getTodayDay(): String {
+        val sdf = SimpleDateFormat("EEEE", Locale.getDefault())
+        return sdf.format(Date())
+    }
+
+
 }

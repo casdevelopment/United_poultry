@@ -129,15 +129,15 @@ class RiderShopListAdapter(
             context.startActivity(intent)
         }
 
-        holder.btnCollect.setOnClickListener {
-            val context = holder.itemView.context
-            val intent = Intent(context, CollectionformActivity::class.java)
-            intent.putExtra("ID", item.id)
-            intent.putExtra("NAME", item.name)
-            intent.putExtra("ADDRESS", item.address)
-            intent.putExtra("DISCOUNT", item.discount_per_petti)
-            context.startActivity(intent)
-        }
+//        holder.btnCollect.setOnClickListener {
+//            val context = holder.itemView.context
+//            val intent = Intent(context, CollectionformActivity::class.java)
+//            intent.putExtra("ID", item.id)
+//            intent.putExtra("NAME", item.name)
+//            intent.putExtra("ADDRESS", item.address)
+//            intent.putExtra("DISCOUNT", item.discount_per_petti)
+//            context.startActivity(intent)
+//        }
 
     }
 
@@ -169,7 +169,7 @@ class RiderShopListAdapter(
         val tvInitials: TextView = v.findViewById(R.id.tvInitials)
         val statusLayout: LinearLayout = v.findViewById(R.id.statusLayout)
         val btnNewSale: MaterialButton = v.findViewById(R.id.btnNewSale)
-        val btnCollect: MaterialButton = v.findViewById(R.id.btnCollect)
+//        val btnCollect: MaterialButton = v.findViewById(R.id.btnCollect)
         val btnExchange: MaterialButton = v.findViewById(R.id.btnExchange)
 
     }

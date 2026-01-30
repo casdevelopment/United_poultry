@@ -18,6 +18,8 @@ import com.example.unitedpoultry.Authentications.login.model.LoginRequestModel
 import com.example.unitedpoultry.Authentications.login.model.LoginResponseModel
 import com.example.unitedpoultry.Authentications.resetpassword.ResetPasswordRequestModel
 import com.example.unitedpoultry.Authentications.verifyotp.VerifyOtpRequestModel
+import com.example.unitedpoultry.History.model.SaleHistoryData
+import com.example.unitedpoultry.History.model.SaleItem
 import com.example.unitedpoultry.NewSale.model.SaleRequest
 import com.example.unitedpoultry.exchange_return.model.ReturnOrExchangeRequest
 import com.example.unitedpoultry.network.api.ApiInterface
@@ -205,6 +207,16 @@ class Repository(private val api: ApiInterface) {
     suspend fun submitReturnWaste(request: ReturnWasteRequestModel): Response<BaseResponse<Any>> {
         return api.submitReturnWaste(request)
     }
+
+
+    suspend fun getSaleHistory(page: Int, duration: String): Response<BaseResponse<SaleHistoryData>> {
+        return api.getSaleHistory(page, duration)
+    }
+
+    suspend fun getSaleDetail(id: Int,): Response<BaseResponse<SaleItem>> {
+        return api.getSaleDetail(id)
+    }
+
 
 }
 

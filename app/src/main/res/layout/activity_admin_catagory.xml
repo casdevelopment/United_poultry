@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:background="@color/white">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/tLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+
+            <!-- Custom Title Bar -->
+
+            <!-- Divider / Shadow under title bar -->
+            <LinearLayout
+                android:id="@+id/titleBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="4dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/backArrow"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="20dp"
+                    app:cardElevation="0dp"
+                    android:background="@drawable/square_white"
+                    android:backgroundTint="@color/primary20"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/singlearrow"
+                        app:tint="@color/black"
+                        android:layout_gravity="center"/>
+                </androidx.cardview.widget.CardView>
+
+
+
+                <!-- Title -->
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Categories"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+
+
+
+            </LinearLayout>
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Products"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"/>
+
+                        <LinearLayout
+                            android:id="@+id/statusLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:paddingStart="15dp"
+                            android:paddingEnd="15dp"
+                            android:layout_marginRight="5dp"
+                            android:backgroundTint="@color/mint"
+                            android:background="@drawable/capsule_bg_sales"
+                            android:layout_gravity="center">
+                            <TextView
+                                android:id="@+id/rateDate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="27 Nov 2025"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/green"
+                                android:layout_marginStart="6dp"
+                                android:layout_gravity="center_vertical"/>
+                        </LinearLayout>
+
+
+
+
+                    </LinearLayout>
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/todatRateRv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clipToPadding="false"
+                            android:paddingBottom="24dp"
+                            android:overScrollMode="never"/>
+
+
+
+
+
+
+
+                </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/fabAdd"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="@color/primary"
+        app:cardElevation="6dp"
+        android:layout_gravity="bottom|end">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/pplussvg"
+            android:scaleType="center"
+            android:padding="12dp"
+            app:tint="@color/white"/>
+    </com.google.android.material.card.MaterialCardView>
+
+</FrameLayout>

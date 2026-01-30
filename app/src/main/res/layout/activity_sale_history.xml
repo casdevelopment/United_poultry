@@ -100,7 +100,7 @@
                 android:id="@+id/tvAmount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Rs. 11,162"
+                android:text="-"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
@@ -108,16 +108,16 @@
                 android:layout_marginTop="10dp"/>
 
 
-            <TextView
-                android:id="@+id/tvInvoice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Invoice #INV-2025-1234"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:layout_marginBottom="10dp"/>
+<!--            <TextView-->
+<!--                android:id="@+id/tvInvoice"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Invoice #INV-2025-1234"-->
+<!--                android:textSize="12sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:gravity="center"-->
+<!--                android:layout_marginBottom="10dp"/>-->
 
 
             <LinearLayout
@@ -125,7 +125,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginBottom="10dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:visibility="gone">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardBoxes"
@@ -148,7 +149,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="5"
+                            android:text="-"
                             android:textColor="@color/black"
                             android:textSize="15sp"
                             android:textStyle="bold"
@@ -194,7 +195,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="Rs.2,350"
+                            android:text="-"
                             android:textColor="@color/black"
                             android:textSize="15sp"
                             android:textStyle="bold"
@@ -240,7 +241,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="Less than 5"
+                            android:text="-"
                             android:textColor="@color/black"
                             android:textSize="15sp"
                             android:textStyle="bold"
@@ -277,6 +278,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginTop="20dp"
                 android:backgroundTint="@color/white">
 
 
@@ -358,7 +360,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="Jalal Sons"
+                                android:text="-"
                                 android:textColor="@color/black"
                                 android:textSize="15sp"
                                 android:textStyle="bold"
@@ -370,7 +372,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="Lahore, Punjab"
+                                android:text="-"
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
                                 android:layout_marginLeft="5dp"/>
@@ -464,10 +466,11 @@
                             android:layout_marginRight="10dp"/>
 
                         <TextView
+                            android:id="@+id/tvDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="3 Dec 2025, 10:45 AM"
+                            android:text="-"
                             android:textColor="@color/black"
                             android:textSize="13sp"
                             android:textStyle="bold"
@@ -509,7 +512,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="Credit"
+                            android:text="Cash"
                             android:textColor="@color/black"
                             android:textSize="13sp"
                             android:textStyle="bold"
@@ -549,10 +552,11 @@
                             android:layout_marginRight="10dp"/>
 
                         <TextView
+                            android:id="@+id/tvSubTotal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="Rs. 11,750"
+                            android:text="-"
                             android:textColor="@color/black"
                             android:textSize="13sp"
                             android:textStyle="bold"
@@ -592,10 +596,11 @@
                             android:layout_marginRight="10dp"/>
 
                         <TextView
+                            android:id="@+id/tvDiscount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="-Rs. 587.50"
+                            android:text="-"
                             android:textColor="@color/mint"
                             android:textSize="13sp"
                             android:textStyle="bold"
@@ -635,10 +640,11 @@
                             android:layout_marginRight="10dp"/>
 
                         <TextView
+                            android:id="@+id/tvTotal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="Rs. 11,162"
+                            android:text="-"
                             android:textColor="@color/primary"
                             android:textSize="15sp"
                             android:textStyle="bold"

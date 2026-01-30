@@ -8,6 +8,7 @@ import com.example.unitedpoultry.AdminDashBoard.fragments.ReportsAdminFragment
 import com.example.unitedpoultry.AdminDashBoard.fragments.RiderAdminFragment
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.R
+import com.example.unitedpoultry.RiderDashBoard.fragments.HomeFragment
 import com.example.unitedpoultry.databinding.ActivityAdminDashBoardBinding
 
 class AdminDashBoardActivity : BaseActivity() {
@@ -60,5 +61,26 @@ class AdminDashBoardActivity : BaseActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("tab", selectedTabId)
+    }
+
+
+    override fun onBackPressed() {
+        val fragmentManager = supportFragmentManager
+
+        // 1️⃣ Pop any fragments in back stack first (e.g., if you navigate to a "detail" fragment)
+        if (fragmentManager.backStackEntryCount > 0) {
+            fragmentManager.popBackStack()
+            return
+        }
+
+        // 2️⃣ If bottom nav is not Home, go to Home
+        val selectedId = binding.bottomNavigation.selectedItemId
+        if (selectedId != R.id.nav_home) {
+            binding.bottomNavigation.selectedItemId = R.id.nav_home
+            loadFragment(HomeAdminFragment())
+        } else {
+            // 3️⃣ Already on HomeAdminFragment, exit app
+            super.onBackPressed()
+        }
     }
 }

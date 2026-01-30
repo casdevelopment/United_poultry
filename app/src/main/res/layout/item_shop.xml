@@ -298,41 +298,23 @@
 
 
             <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCollect"
+            android:id="@+id/btnNewSale"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:text="Collect"
+            android:text="New Sale"
             android:layout_weight="1"
             android:textAllCaps="false"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:icon="@drawable/colectprimarysvg"
-            android:textColor="@color/primary"
-            android:background="@drawable/btn_light_bg"
+            app:icon="@drawable/circleaddsvg"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_continue_bg"
             app:backgroundTint="@null"
             app:iconTint="@null"
-            app:iconGravity="textStart"
-            app:iconPadding="15dp"
             android:fontFamily="@font/poppins" />
 
 
     </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnNewSale"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="New Sale"
-            app:icon="@drawable/circleaddsvg"
-            app:iconGravity="textStart"
-            android:textColor="@color/white"
-            android:background="@drawable/btn_continue_bg"
-            app:backgroundTint="@null"
-            android:fontFamily="@font/poppins"
-            android:layout_marginTop="10dp"/>
-
-
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

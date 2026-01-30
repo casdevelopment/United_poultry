@@ -27,9 +27,9 @@
             <ImageView
                 android:id="@+id/bgImage"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="130dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/bgfull" />
+                android:src="@drawable/bgdotsclean" />
 
             <LinearLayout
                 android:id="@+id/tLayout"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:orientation="horizontal"
-                android:layout_marginTop="60dp">
+                android:layout_marginTop="30dp">
 
 
 
@@ -54,14 +54,14 @@
                     android:textStyle="bold"
                     android:layout_marginStart="40dp"/>
 
-                <ImageView
-                    android:id="@+id/backArrow"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/historybigvector"
-                    android:contentDescription="Back"
-                    android:layout_marginEnd="20dp"
-                    />
+<!--                <ImageView-->
+<!--                    android:id="@+id/backArrow"-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:src="@drawable/historybigvector"-->
+<!--                    android:contentDescription="Back"-->
+<!--                    android:layout_marginEnd="20dp"-->
+<!--                    />-->
 
             </LinearLayout>
 
@@ -75,67 +75,14 @@
             android:orientation="vertical"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/topPortion">
 
-            <LinearLayout
-                android:id="@+id/filterLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="4"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:id="@+id/filterAll"
-                    android:text="All"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:layout_marginEnd="4dp"
-                    android:textStyle="bold"
-                    android:textSize="10dp"
-                    android:textColor="@color/black60"
-                    android:background="@drawable/filter_bg"
-                    android:gravity="center"/>
 
-                <TextView
-                    android:id="@+id/filterVisited"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Sales"
-                    android:textSize="10dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:layout_marginEnd="4dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black60"
-                    android:gravity="center"
-                    android:background="@drawable/filter_bg"/>
-
-                <TextView
-                    android:id="@+id/filterPending"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Collections"
-                    android:textSize="10dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:layout_marginEnd="4dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black60"
-                    android:gravity="center"
-                    android:background="@drawable/filter_bg"/>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"/>
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="10dp"/>-->
 
             <!-- SECOND ROW FILTERS -->
             <LinearLayout
@@ -229,10 +176,11 @@
                             android:padding="10dp">
 
                             <TextView
+                                android:id="@+id/tvTotalSales"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="Rs.125000"
+                                android:text="-"
                                 android:textColor="@color/primary"
                                 android:textSize="15sp"
                                 android:textStyle="bold"
@@ -243,7 +191,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="Total Sales"
+                                android:text="Total Sale"
                                 android:textColor="@color/black75"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
@@ -274,10 +222,11 @@
                         android:padding="10dp">
 
                         <TextView
+                            android:id="@+id/tvTotalCollected"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="Rs.98000"
+                            android:text="-"
                             android:textColor="@color/sub_primary"
                             android:textSize="15sp"
                             android:textStyle="bold"
@@ -319,10 +268,11 @@
                         android:padding="10dp">
 
                         <TextView
+                            android:id="@+id/tvTotalTransactions"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="28"
+                            android:text="-"
                             android:textColor="@color/purple"
                             android:textSize="15sp"
                             android:textStyle="bold"
@@ -354,23 +304,45 @@
 
                 </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:text="TODAY, 3 DEC 2025"
-                android:textColor="@color/black60"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"/>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="@font/poppins"-->
+<!--                android:text="TODAY, 3 DEC 2025"-->
+<!--                android:textColor="@color/black60"-->
+<!--                android:textSize="14sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginBottom="10dp"/>-->
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvHistory"
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/rvHistory"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:nestedScrollingEnabled="true" />-->
+
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="true" />
+                android:layout_height="300dp"
+                android:layout_marginTop="20dp">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/historyRv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingBottom="24dp"
+                    android:overScrollMode="never"/>
+
+                <!-- Fade overlay -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/bottom_fade"/>
+            </FrameLayout>
 
 
 
