@@ -36,7 +36,7 @@ class LoginFragment : Fragment() {
     private val viewModel: LoginViewModel by viewModel()
     private val sessionManager: SessionManager by inject()
 
-    private var isRememberChecked = false
+   // private var isRememberChecked = false
     private var isPasswordVisible = false
 
     override fun onCreateView(
@@ -70,11 +70,11 @@ class LoginFragment : Fragment() {
                 }
             }
 
-            rememberLayout.setOnClickListener {
-                isRememberChecked = !isRememberChecked
-                imgCheckbox.isSelected = isRememberChecked
-                imgCheckbox.refreshDrawableState()
-            }
+//            rememberLayout.setOnClickListener {
+//                isRememberChecked = !isRememberChecked
+//                imgCheckbox.isSelected = isRememberChecked
+//                imgCheckbox.refreshDrawableState()
+//            }
 
             imgTogglePassword.setOnClickListener {
                 togglePasswordVisibility()

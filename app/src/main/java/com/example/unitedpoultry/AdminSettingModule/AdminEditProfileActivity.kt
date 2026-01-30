@@ -94,6 +94,8 @@ class AdminEditProfileActivity : BaseActivity() {
         // Back
         binding.backArrow.setOnClickListener { finish() }
 
+        binding.btnCancel.setOnClickListener { finish() }
+
         // Tick -> select image
         binding.ivTick.setOnClickListener { showImagePicker() }
 

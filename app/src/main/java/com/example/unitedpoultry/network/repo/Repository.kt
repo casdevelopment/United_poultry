@@ -26,6 +26,8 @@ import com.example.unitedpoultry.network.api.ApiInterface
 import com.example.unitedpoultry.network.retrofit.BaseResponse
 import com.example.unitedpoultry.rider_home.model.EggPickupData
 import com.example.unitedpoultry.rider_home.model.EggPickupRequest
+import com.example.unitedpoultry.waste_return.model.RiderReturnRequest
+import com.example.unitedpoultry.waste_return.model.RiderWasteRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -213,8 +215,19 @@ class Repository(private val api: ApiInterface) {
         return api.getSaleHistory(page, duration)
     }
 
-    suspend fun getSaleDetail(id: Int,): Response<BaseResponse<SaleItem>> {
+    suspend fun getSaleDetail(id: Int): Response<BaseResponse<SaleItem>> {
         return api.getSaleDetail(id)
+    }
+
+    suspend fun getRiderDailyStats(id: Int) = api.getRiderDailyStats(id)
+
+
+    suspend fun RiderReturnRequest(request: RiderReturnRequest): Response<BaseResponse<Any>> {
+        return api.RiderReturnRequest(request)
+    }
+
+    suspend fun RiderWasteProduct(request: RiderWasteRequest): Response<BaseResponse<Any>> {
+        return api.RiderWasteProduct(request)
     }
 
 

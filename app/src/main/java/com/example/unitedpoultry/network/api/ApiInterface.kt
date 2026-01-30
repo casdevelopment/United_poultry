@@ -27,6 +27,8 @@ import com.example.unitedpoultry.network.retrofit.BaseResponse
 import com.example.unitedpoultry.rider_home.model.DailyPaymentStatsData
 import com.example.unitedpoultry.rider_home.model.EggPickupData
 import com.example.unitedpoultry.rider_home.model.EggPickupRequest
+import com.example.unitedpoultry.waste_return.model.RiderReturnRequest
+import com.example.unitedpoultry.waste_return.model.RiderWasteRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -220,6 +222,20 @@ interface ApiInterface {
 
     @GET("seller/sales/{id}")
     suspend fun getSaleDetail(@Path("id") id: Int): Response<BaseResponse<SaleItem>>
+
+    @GET("admin/egg-pickup/daily-stats")
+    suspend fun getRiderDailyStats(
+        @Query("seller_id") sellerId: Int
+    ): Response<BaseResponse<EggPickupData>>
+
+
+
+    @POST("seller/egg-pickup/save-returned") // Replace with your actual endpoint
+    suspend fun RiderReturnRequest(@Body request: RiderReturnRequest): Response<BaseResponse<Any>>
+
+
+    @POST("seller/egg-pickup/save-waste")
+    suspend fun RiderWasteProduct(@Body request: RiderWasteRequest): Response<BaseResponse<Any>>
 
 
 }

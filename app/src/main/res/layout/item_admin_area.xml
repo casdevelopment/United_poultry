@@ -64,7 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="Gulberg"
+                        android:text="-"
                         android:textColor="@color/black"
                         android:textSize="15sp"
                         android:textStyle="bold"
@@ -76,7 +76,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="Lahore, Punjab"
+                        android:text="-"
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         android:layout_marginLeft="5dp"/>
@@ -96,6 +96,16 @@
             </LinearLayout>
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/black17"
+            android:elevation="2dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -107,35 +117,35 @@
                 android:id="@+id/totalShopsLayout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:padding="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_round_12"
-                android:gravity="center"
-                android:layout_marginEnd="10dp">
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/poppins"
+                    android:text="Shops"
+                    android:textColor="@color/blackLight"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="20dp"/>
 
                 <TextView
                     android:id="@+id/tvTotalShops"
-                    android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="17"
+                    android:text="-"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
                     android:textSize="16sp"
                     android:textColor="@color/black"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/poppins"
-                    android:gravity="center"
-                    android:text="Shops"
-                    android:textColor="@color/blackLight"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:layout_marginEnd="20dp"/>
+
+
 
             </LinearLayout>
 
@@ -148,7 +158,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_round_12"
                 android:gravity="center"
-                android:layout_marginEnd="10dp">
+                android:layout_marginEnd="10dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tvRiders"
@@ -183,7 +194,8 @@
                 android:padding="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_round_12"
-                android:gravity="center">
+                android:gravity="center"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tvRecieveable"

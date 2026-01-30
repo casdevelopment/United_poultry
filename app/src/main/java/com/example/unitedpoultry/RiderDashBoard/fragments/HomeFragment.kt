@@ -35,6 +35,8 @@ import com.example.unitedpoultry.NewSale.model.RiderProductData
 import com.example.unitedpoultry.NewSale.viewmodel.GetRiderProductViewModel
 import com.example.unitedpoultry.rider_home.model.ReturnWasteRequestModel
 import com.example.unitedpoultry.rider_home.viewmodel.ReturnWasteViewModel
+import com.example.unitedpoultry.waste_return.RiderProductReturnActivity
+import com.example.unitedpoultry.waste_return.RiderWasteProductActivity
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -173,9 +175,18 @@ class HomeFragment : Fragment() {
                         val baseResponse = res.body() as BaseResponse<DailyPaymentStatsData>?
                         baseResponse?.data?.let { data ->
                            // binding.tvRecieved.text = "Rs ${data.today_total_cash_received}"
-                            binding.tvTotalAmount.text = "Rs ${data.today_total_cash_received}"
-                            binding.tvTotalSales.text = data.today_total_eggs_sold.toString()
-                           // binding.totalWaste.text = data.todayTotalEggsWaste.toString()
+
+//                            binding.tvTotalAmount.text = "Rs ${data.today_total_cash_received}"
+//                            binding.tvTotalSales.text = data.today_total_eggs_sold.toString()
+
+                            // Cash received (String → Double → formatted)
+                            val totalAmount = data.today_total_cash_received.toDoubleOrNull() ?: 0.0
+                            binding.tvTotalAmount.text = "Rs ${formatNumber(totalAmount)}"
+
+                            binding.tvTotalSales.text = formatNumber(data.today_total_eggs_sold)
+
+
+                            // binding.totalWaste.text = data.todayTotalEggsWaste.toString()
                         }
                     }
                 }
@@ -193,82 +204,36 @@ class HomeFragment : Fragment() {
     }
 
     private fun showReturnWasteDialog() {
-        // Inflate dialog layout
+
         val dialogView = layoutInflater.inflate(R.layout.dialog_egg_return, null)
 
-        // Create AlertDialog
         val dialog = AlertDialog.Builder(requireContext())
             .setView(dialogView)
-            .setCancelable(false)
+            .setCancelable(true)
             .create()
 
-        // Transparent background for rounded corners
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-        // Find views
-        val etReturnEggs = dialogView.findViewById<EditText>(R.id.etReturnEggs)
-        val etWasteEggs = dialogView.findViewById<EditText>(R.id.etWasteEggs)
-        val btnCancel = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnCancel)
-        val btnSave = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnSave)
+        val btnReturn = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnReturn)
+        val btnWaste = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnWaste)
 
-        val etReturnEggsError = dialogView.findViewById<TextView>(R.id.etReturnEggsError)
-        val etWasteEggsError = dialogView.findViewById<TextView>(R.id.etWasteEggsError)
-
-        // Hide errors initially
-        etReturnEggsError.visibility = View.GONE
-        etWasteEggsError.visibility = View.GONE
-
-        // Cancel button
-        btnCancel.setOnClickListener { dialog.dismiss() }
-
-        // Save button
-        btnSave.setOnClickListener {
-            var valid = true
-
-            // Hide errors before validating
-            etReturnEggsError.visibility = View.GONE
-            etWasteEggsError.visibility = View.GONE
-
-            val returnEggs = etReturnEggs.text.toString().trim()
-            val wasteEggs = etWasteEggs.text.toString().trim()
-
-            // Validation for Return Eggs
-            if (returnEggs.isEmpty()) {
-                etReturnEggsError.visibility = View.VISIBLE
-                etReturnEggsError.text = "Enter returned eggs"
-                valid = false
-            } else if (!returnEggs.matches(Regex("\\d+"))) { // only digits allowed
-                etReturnEggsError.visibility = View.VISIBLE
-                etReturnEggsError.text = "Enter valid number"
-                valid = false
-            }
-
-            // Validation for Waste Eggs
-            if (wasteEggs.isEmpty()) {
-                etWasteEggsError.visibility = View.VISIBLE
-                etWasteEggsError.text = "Enter waste eggs"
-                valid = false
-            } else if (!wasteEggs.matches(Regex("\\d+"))) { // only digits allowed
-                etWasteEggsError.visibility = View.VISIBLE
-                etWasteEggsError.text = "Enter valid number"
-                valid = false
-            }
-
-            // Stop if any field is invalid
-            if (!valid) return@setOnClickListener
-
-            // All good, call your API here
-             hitReturnWasteApi(returnEggs.toInt(), wasteEggs.toInt())
-
+        // 👉 OPEN RETURN ACTIVITY
+        btnReturn.setOnClickListener {
+            val intent = Intent(requireContext(), RiderProductReturnActivity::class.java)
+            startActivity(intent)
             dialog.dismiss()
         }
 
-        // Clear error while typing
-        etReturnEggs.addTextChangedListener { etReturnEggsError.visibility = View.GONE }
-        etWasteEggs.addTextChangedListener { etWasteEggsError.visibility = View.GONE }
+
+        btnWaste.setOnClickListener {
+            val intent = Intent(requireContext(), RiderWasteProductActivity::class.java)
+            startActivity(intent)
+            dialog.dismiss()
+        }
 
         dialog.show()
     }
+
 
 
 
@@ -322,8 +287,19 @@ class HomeFragment : Fragment() {
                     if (res != null && res.isSuccessful) {
                         val baseResponse = res.body() as BaseResponse<RiderProductData>?
                         if (baseResponse?.result == "success" && baseResponse.data != null) {
-                            // ✅ Just submit list to adapter, no new adapter creation
-                            productAdapter.submitList(baseResponse.data.picked_items)
+
+
+                            val products = baseResponse.data.picked_items
+
+                            productAdapter.submitList(products)
+
+                            val totalEggsSum = products.sumOf { it.total_eggs }
+
+                            val total = formatNumber(totalEggsSum)
+
+                            binding.tvTotalEggs.text = "Eggs  ${total}"
+
+
                         } else {
                             Toast.makeText(
                                 requireContext(),
@@ -353,6 +329,34 @@ class HomeFragment : Fragment() {
     private fun getTodayDay(): String {
         val sdf = SimpleDateFormat("EEEE", Locale.getDefault())
         return sdf.format(Date())
+    }
+
+    private fun formatNumber(value: Int): String {
+        return when {
+            value >= 1_000_000 -> {
+                val v = value / 1_000_000.0
+                String.format("%.1f", v).removeSuffix(".0") + "M"
+            }
+            value >= 1_000 -> {
+                val v = value / 1_000.0
+                String.format("%.1f", v).removeSuffix(".0") + "K"
+            }
+            else -> value.toString()
+        }
+    }
+
+    private fun formatNumber(value: Double): String {
+        return when {
+            value >= 1_000_000 -> {
+                val v = value / 1_000_000
+                String.format("%.1f", v).removeSuffix(".0") + "M"
+            }
+            value >= 1_000 -> {
+                val v = value / 1_000
+                String.format("%.1f", v).removeSuffix(".0") + "K"
+            }
+            else -> value.toInt().toString()
+        }
     }
 
 

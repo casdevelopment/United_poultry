@@ -88,7 +88,7 @@
                 android:id="@+id/tvShopName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Jalal Sons"
+                android:text="-"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
@@ -100,7 +100,7 @@
                 android:id="@+id/tvShopAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Main Market, Gulberg |||"
+                android:text="-"
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:layout_marginStart="6dp"
@@ -117,6 +117,7 @@
                 android:paddingBottom="10dp"
                 android:paddingStart="25dp"
                 android:paddingEnd="25dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/capsule_bg_sales"
                 android:layout_gravity="center">
 
@@ -132,7 +133,7 @@
                     android:id="@+id/tvStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Active"
+                    android:text=""
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:textColor="@color/white"
@@ -147,7 +148,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardBoxes"
@@ -364,7 +366,6 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:id="@+id/tvTitle"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins"
@@ -379,7 +380,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins"
-                                    android:text="Muhammad Jalal"
+                                    android:text="-"
                                     android:textColor="@color/black"
                                     android:textSize="16sp"
                                     android:textStyle="bold"
@@ -449,7 +450,6 @@
                                     android:text="Phone  Number"
                                     android:textColor="@color/black75"
                                     android:textSize="12sp"
-
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginTop="10dp"/>
 
@@ -458,7 +458,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins"
-                                    android:text="+923217788143"
+                                    android:text="-"
                                     android:textColor="@color/black"
                                     android:textSize="16sp"
                                     android:textStyle="bold"
@@ -530,7 +530,6 @@
                                     android:text="Address"
                                     android:textColor="@color/black75"
                                     android:textSize="12sp"
-
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginTop="15dp"/>
 
@@ -539,7 +538,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins"
-                                    android:text="Shop # 45, Main Market, Gulberg |||"
+                                    android:text="-"
                                     android:textColor="@color/black"
                                     android:textSize="16sp"
                                     android:textStyle="bold"
@@ -563,7 +562,8 @@
                 android:padding="16dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp">
 
 
                 <LinearLayout
@@ -646,7 +646,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins"
-                                    android:text="5% on all orders"
+                                    android:text="-"
                                     android:textColor="@color/black"
                                     android:textSize="16sp"
                                     android:textStyle="bold"
@@ -657,21 +657,22 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="@color/black17"
-                        android:elevation="2dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"/>
+<!--                    <View-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="2dp"-->
+<!--                        android:background="@color/black17"-->
+<!--                        android:elevation="2dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginBottom="5dp"-->
+<!--                        android:layout_marginLeft="10dp"-->
+<!--                        android:layout_marginRight="10dp"/>-->
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <!-- Status Icon -->
                         <androidx.cardview.widget.CardView
@@ -740,25 +741,25 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnViewShops"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="View Full Ledger"
-                android:textAllCaps="false"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:background="@drawable/btn_continue_bg"
-                app:backgroundTint="@null"
-                android:fontFamily="@font/poppins"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="30dp"
-                app:layout_constraintTop_toBottomOf="@id/rememberForgotLayout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:id="@+id/btnViewShops"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:text="View Full Ledger"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:background="@drawable/btn_continue_bg"-->
+<!--                app:backgroundTint="@null"-->
+<!--                android:fontFamily="@font/poppins"-->
+<!--                android:layout_marginStart="50dp"-->
+<!--                android:layout_marginEnd="50dp"-->
+<!--                android:layout_marginTop="50dp"-->
+<!--                android:layout_marginBottom="30dp"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/rememberForgotLayout"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"/>-->
 
         </LinearLayout>
 

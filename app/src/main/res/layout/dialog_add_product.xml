@@ -101,21 +101,21 @@
             android:layout_marginBottom="30dp">
 
 
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCancel"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
-                android:layout_weight="1"
                 android:text="Cancel"
+                android:layout_weight="1"
                 android:textAllCaps="false"
-                android:textSize="12sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/black"
-                android:background="@drawable/btn_subprimary_bg"
-                app:backgroundTint="@color/red20"
-                android:fontFamily="@font/poppins"
+                android:textColor="@color/primary"
+                android:background="@drawable/btn_light_bg"
+                app:backgroundTint="@null"
                 android:layout_marginRight="10dp"
-                />
+                android:layout_marginLeft="10dp"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSave"

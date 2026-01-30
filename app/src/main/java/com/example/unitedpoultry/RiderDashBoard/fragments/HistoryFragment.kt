@@ -18,7 +18,6 @@ import com.example.unitedpoultry.util.AppUtil
 import com.example.unitedpoultry.util.showToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class HistoryFragment : Fragment() {
 
     private var _binding: FragmentHistoryBinding? = null
@@ -28,7 +27,8 @@ class HistoryFragment : Fragment() {
 
     private var currentPage = 1
     private var lastPage = 1
-    private var currentDuration = "month" // default
+    private var isLoading = false
+    private var currentDuration = "month"
 
     private val salesList = mutableListOf<SaleItem>()
     private lateinit var adapter: HistoryAdapter
@@ -47,26 +47,28 @@ class HistoryFragment : Fragment() {
         setupRecyclerView()
         setupFilters()
         highlightFilter(binding.filterMonth)
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         loadSaleHistory()
     }
 
+    // -------------------- RecyclerView --------------------
+
     private fun setupRecyclerView() {
         adapter = HistoryAdapter(salesList)
+
         binding.historyRv.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@HistoryFragment.adapter
+            setHasFixedSize(true)
+
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(rv, dx, dy)
-                    val layoutManager = rv.layoutManager as LinearLayoutManager
-                    val totalItemCount = layoutManager.itemCount
-                    val lastVisible = layoutManager.findLastVisibleItemPosition()
-                    if (lastVisible >= totalItemCount - 1 && currentPage < lastPage) {
+
+                    val lm = rv.layoutManager as LinearLayoutManager
+                    val lastVisible = lm.findLastVisibleItemPosition()
+
+                    if (!isLoading && lastVisible >= lm.itemCount - 2 && currentPage < lastPage) {
                         currentPage++
                         loadSaleHistory()
                     }
@@ -75,36 +77,42 @@ class HistoryFragment : Fragment() {
         }
     }
 
+    // -------------------- Filters --------------------
+
     private fun setupFilters() {
         binding.filterDay.setOnClickListener {
-            currentDuration = "today"
-            highlightFilter(binding.filterDay)
-            refreshSales()
+            applyFilter("today", binding.filterDay)
         }
+
         binding.filterWeek.setOnClickListener {
-            currentDuration = "week"
-            highlightFilter(binding.filterWeek)
-            refreshSales()
+            applyFilter("week", binding.filterWeek)
         }
+
         binding.filterMonth.setOnClickListener {
-            currentDuration = "month"
-            highlightFilter(binding.filterMonth)
-            refreshSales()
+            applyFilter("month", binding.filterMonth)
         }
+    }
+
+    private fun applyFilter(duration: String, selected: TextView) {
+        currentDuration = duration
+        highlightFilter(selected)
+        refreshSales()
     }
 
     private fun highlightFilter(selected: TextView) {
         val filters = listOf(binding.filterDay, binding.filterWeek, binding.filterMonth)
-        for (filter in filters) {
-            if (filter == selected) {
-                filter.setTextColor(resources.getColor(android.R.color.white))
-                filter.setBackgroundResource(R.drawable.filter_bg_round_selected)
+        filters.forEach {
+            if (it == selected) {
+                it.setTextColor(resources.getColor(android.R.color.white))
+                it.setBackgroundResource(R.drawable.filter_bg_round_selected)
             } else {
-                filter.setTextColor(resources.getColor(R.color.black60))
-                filter.setBackgroundResource(R.drawable.filter_bg_round)
+                it.setTextColor(resources.getColor(R.color.black60))
+                it.setBackgroundResource(R.drawable.filter_bg_round)
             }
         }
     }
+
+    // -------------------- API --------------------
 
     private fun refreshSales() {
         currentPage = 1
@@ -115,59 +123,68 @@ class HistoryFragment : Fragment() {
     }
 
     private fun loadSaleHistory() {
-        viewModel.getSaleHistory(currentPage, currentDuration).observe(viewLifecycleOwner) { response ->
-            when (response.status) {
-                Status.SUCCESS -> {
-                    AppUtil.stopLoader()
+        isLoading = true
 
-                    val body = response.data?.body()?.data
-                    lastPage = body?.pagination?.last_page ?: 1
+        viewModel.getSaleHistory(currentPage, currentDuration)
+            .observe(viewLifecycleOwner) { response ->
+                when (response.status) {
 
-                    body?.sales?.let {
-                        salesList.addAll(it)
-                        adapter.notifyDataSetChanged()
-                        updateSummary() // 🔥 HERE
+                    Status.LOADING -> AppUtil.startLoader(requireContext())
+
+                    Status.SUCCESS -> {
+                        AppUtil.stopLoader()
+                        isLoading = false
+
+                        val body = response.data?.body()?.data
+                        lastPage = body?.pagination?.last_page ?: 1
+
+                        body?.sales?.let {
+                            salesList.addAll(it)
+                            adapter.notifyItemRangeInserted(
+                                salesList.size - it.size,
+                                it.size
+                            )
+                            updateSummary()
+                        }
+                    }
+
+                    Status.ERROR -> {
+                        AppUtil.stopLoader()
+                        isLoading = false
+                        showToast(response.message ?: "Failed to load sales")
                     }
                 }
-
-                Status.ERROR -> {
-                    AppUtil.stopLoader()
-                    showToast(response.message ?: "Failed to load sales")
-                }
-                Status.LOADING -> AppUtil.startLoader(requireContext())
             }
-        }
     }
 
+    // -------------------- Summary --------------------
+
     private fun updateSummary() {
-        val totalAmount = salesList.sumOf {
+        val totalSales = salesList.sumOf {
             it.total.toDoubleOrNull() ?: 0.0
         }
 
-        val totalAmountCollected = salesList.sumOf {
+        val totalCollected = salesList.sumOf {
             it.cash_received.toDoubleOrNull() ?: 0.0
         }
 
-        binding.tvTotalSales.text = "Rs. ${formatAmount(totalAmount)}"
-        binding.tvTotalCollected.text = "Rs. ${formatAmount(totalAmountCollected)}"
+        binding.tvTotalSales.text = "Rs ${formatAmount(totalSales)}"
+        binding.tvTotalCollected.text = "Rs ${formatAmount(totalCollected)}"
         binding.tvTotalTransactions.text = salesList.size.toString()
     }
 
-
     private fun formatAmount(value: Double): String {
         return when {
-            value >= 1_000_000 -> {
-                val v = value / 1_000_000
-                String.format("%.1f", v).removeSuffix(".0") + "M"
-            }
-            value >= 1_000 -> {
-                val v = value / 1_000
-                String.format("%.1f", v).removeSuffix(".0") + "K"
-            }
+            value >= 1_000_000 -> "${(value / 1_000_000).format()}M"
+            value >= 1_000 -> "${(value / 1_000).format()}K"
             else -> value.toInt().toString()
         }
     }
 
+    private fun Double.format(): String =
+        String.format("%.1f", this).removeSuffix(".0")
+
+    // --------------------
 
     override fun onDestroyView() {
         super.onDestroyView()

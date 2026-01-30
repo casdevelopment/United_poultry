@@ -84,7 +84,7 @@
                             android:text="Welcome Admin"
                             android:textStyle="bold"
                             android:textColor="@color/white"
-                            android:textSize="18sp" />
+                            android:textSize="20sp" />
 
                         <TextView
                             android:id="@+id/tvDescription"
@@ -94,15 +94,15 @@
                             android:fontFamily="@font/poppins"
                             android:text="Manage your suppliers"
                             android:textColor="@color/white"
-                            android:textSize="12sp" />
+                            android:textSize="14sp" />
 
 
                     </LinearLayout>
 
                     <ImageButton
                         android:id="@+id/profile"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:src="@drawable/settingmainsvg"
                         android:contentDescription="icon"
                         android:layout_gravity="center_vertical"
@@ -792,16 +792,6 @@
                                 android:textStyle="bold"
                                 android:layout_gravity="center_horizontal"/>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins"
-                                android:text="84% of target"
-                                android:textColor="@color/black60"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:layout_gravity="center_horizontal"
-                                android:visibility="gone"/>
 
                         </LinearLayout>
 
@@ -840,22 +830,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="Returned units of Eggs"
+                                android:text="Returned Eggs"
                                 android:textColor="@color/primary"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 android:layout_gravity="center_horizontal"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins"
-                                android:text="65% collected"
-                                android:textColor="@color/black60"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:layout_gravity="center_horizontal"
-                                android:visibility="gone"/>
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -872,60 +851,50 @@
 
                     </androidx.cardview.widget.CardView>
 
-<!--                    <androidx.cardview.widget.CardView-->
-<!--                        android:id="@+id/cardAreaReport"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_margin="5dp"-->
-<!--                        android:backgroundTint="@color/primary"-->
-<!--                        app:cardCornerRadius="12dp"-->
-<!--                        app:cardElevation="0dp">-->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardAreaReport"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:backgroundTint="@color/primary"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp">
 
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="match_parent"-->
-<!--                            android:orientation="vertical"-->
-<!--                            android:paddingTop="20dp"-->
-<!--                            android:paddingBottom="20dp">-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:paddingTop="20dp"
+                            android:paddingBottom="20dp">
 
-<!--                            <TextView-->
-<!--                                android:id="@+id/tvEggReturned"-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:fontFamily="@font/poppins"-->
-<!--                                android:text="-"-->
-<!--                                android:textColor="@color/white"-->
-<!--                                android:textSize="16sp"-->
-<!--                                android:textStyle="bold"-->
-<!--                                android:layout_gravity="center_horizontal"/>-->
+                            <TextView
+                                android:id="@+id/tvEggPicked"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="-"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:layout_gravity="center_horizontal"/>
 
-<!--                            <TextView-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:fontFamily="@font/poppins"-->
-<!--                                android:text="Returned units of Eggs"-->
-<!--                                android:textColor="@color/white"-->
-<!--                                android:textSize="12sp"-->
-<!--                                android:textStyle="bold"-->
-<!--                                android:gravity="center"-->
-<!--                                android:layout_gravity="center_horizontal"/>-->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Today’s Picked Eggs"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:layout_gravity="center_horizontal"/>
 
-<!--                            <TextView-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:fontFamily="@font/poppins"-->
-<!--                                android:text="30% returned"-->
-<!--                                android:textColor="@color/white60"-->
-<!--                                android:textSize="12sp"-->
-<!--                                android:textStyle="bold"-->
-<!--                                android:layout_gravity="center_horizontal"-->
-<!--                                android:visibility="gone"/>-->
 
-<!--                        </LinearLayout>-->
+                        </LinearLayout>
 
 
 
-<!--                    </androidx.cardview.widget.CardView>-->
+                    </androidx.cardview.widget.CardView>
 
 
                 </LinearLayout>
@@ -973,16 +942,6 @@
                                 android:textStyle="bold"
                                 android:layout_gravity="center_horizontal"/>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins"
-                                android:text="65% collected"
-                                android:textColor="@color/black60"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:layout_gravity="center_horizontal"
-                                android:visibility="gone"/>
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -1035,16 +994,6 @@
                                 android:textStyle="bold"
                                 android:layout_gravity="center_horizontal"/>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins"
-                                android:text="84% of target"
-                                android:textColor="@color/white60"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:layout_gravity="center_horizontal"
-                                android:visibility="gone"/>
 
                         </LinearLayout>
 
@@ -1058,8 +1007,7 @@
                         android:layout_margin="5dp"
                         android:backgroundTint="@color/sub_primary18"
                         app:cardCornerRadius="12dp"
-                        app:cardElevation="0dp"
-                        android:visibility="gone">
+                        app:cardElevation="0dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -1069,6 +1017,7 @@
                             android:paddingBottom="20dp">
 
                             <TextView
+                                android:id="@+id/tvWastedEggs"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
@@ -1082,22 +1031,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text=" Sales on Credit"
+                                android:text="Today’s Wasted Eggs"
                                 android:textColor="@color/primary"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 android:layout_gravity="center_horizontal"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins"
-                                android:text="25% pending"
-                                android:textColor="@color/black60"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:layout_gravity="center_horizontal"
-                                android:visibility="gone"/>
 
                         </LinearLayout>
 

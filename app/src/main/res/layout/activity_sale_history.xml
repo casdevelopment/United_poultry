@@ -42,14 +42,14 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <ImageView
-                android:id="@+id/sales"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/salesdotsvector"
-                android:contentDescription="Back"
-                android:layout_marginEnd="20dp"
-                />
+<!--            <ImageView-->
+<!--                android:id="@+id/sales"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:src="@drawable/salesdotsvector"-->
+<!--                android:contentDescription="Back"-->
+<!--                android:layout_marginEnd="20dp"-->
+<!--                />-->
 
         </LinearLayout>
 

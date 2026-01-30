@@ -11,6 +11,7 @@ import com.example.unitedpoultry.AdminHome.viewmodel.DailyPerformanceStatsViewMo
 import com.example.unitedpoultry.rider_home.viewmodel.ReturnWasteViewModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.AddRiderViewModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.EditRiderViewModel
+import com.example.unitedpoultry.AdminRiderModule.viewmodel.RiderDailyStatsViewModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.RiderDetailsViewModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.RiderViewModel
 import com.example.unitedpoultry.AdminSettingModule.viewmodel.AdminLogoutViewModel
@@ -46,6 +47,8 @@ import com.example.unitedpoultry.rider_home.viewmodel.DailyPaymentStatsViewModel
 import com.example.unitedpoultry.rider_home.viewmodel.DailyStatsViewModel
 import com.example.unitedpoultry.rider_home.viewmodel.EggPickupViewModel
 import com.example.unitedpoultry.util.AppConstants.SHARED_PREF_NAME
+import com.example.unitedpoultry.waste_return.viewmodel.RiderReturnProductViewModel
+import com.example.unitedpoultry.waste_return.viewmodel.RiderWasteProductViewModel
 
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -83,6 +86,7 @@ val viewModelModule= module{
     viewModel { AddRiderViewModel(get()) }
     viewModel { RiderDetailsViewModel(get()) }
     viewModel { EditRiderViewModel(get()) }
+    viewModel { RiderDailyStatsViewModel(get()) }
 
     viewModel { DeleteRiderViewModel(get()) }
     viewModel { AdminSettingViewModel(get()) }
@@ -106,6 +110,9 @@ val viewModelModule= module{
 
     viewModel { RiderSaleHistoryViewModel(get()) }
     viewModel { SaleHistoryDetailViewModel(get()) }
+
+    viewModel { RiderReturnProductViewModel(get()) }
+    viewModel { RiderWasteProductViewModel(get()) }
 
 }
 

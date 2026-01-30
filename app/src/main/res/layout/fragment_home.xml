@@ -11,8 +11,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
 
     <FrameLayout
@@ -216,6 +215,7 @@
 
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/openReturnDialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
@@ -237,42 +237,69 @@
                     android:background="@drawable/circle_white"
                     android:src="@drawable/resource_return" />
 
-                <!-- Text -->
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:orientation="vertical"
-                    android:layout_marginStart="12dp">
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <!-- FIRST ROW -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Return Eggs"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/poppins" />
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Return Eggs"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins" />
+
+                        <TextView
+                            android:id="@+id/tvTotalEggs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black60"
+                            android:fontFamily="@font/poppins" />
+                    </LinearLayout>
+
+                    <!-- SECOND ROW -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Damaged, extra or rejected stock"
-                        android:textSize="11sp"
-                        android:textColor="@color/gray"
-                        android:fontFamily="@font/poppins" />
+                        android:orientation="horizontal"
+                        android:layout_marginTop="4dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Damaged, extra or rejected stock"
+                            android:textSize="11sp"
+                            android:textColor="@color/gray"
+                            android:fontFamily="@font/poppins" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="OPEN"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/sub_primary"
+                            android:fontFamily="@font/poppins" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
-                <!-- CTA -->
-                <TextView
-                    android:id="@+id/openReturnDialog"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="OPEN"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/sub_primary"
-                    android:fontFamily="@font/poppins" />
+
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

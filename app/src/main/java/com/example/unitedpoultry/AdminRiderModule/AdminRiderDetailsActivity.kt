@@ -7,13 +7,21 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.unitedpoultry.AdminRiderModule.model.RiderModel
+import com.example.unitedpoultry.AdminRiderModule.viewmodel.RiderDailyStatsViewModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.RiderDetailsViewModel
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.ActivityAdminRiderDetailsBinding
+import com.example.unitedpoultry.network.Status
+import com.example.unitedpoultry.network.retrofit.BaseResponse
+import com.example.unitedpoultry.rider_home.model.EggPickupData
+import com.example.unitedpoultry.rider_home.viewmodel.DailyPaymentStatsViewModel
+import com.example.unitedpoultry.rider_home.viewmodel.DailyStatsViewModel
 import com.example.unitedpoultry.util.AppUtil
 import com.google.gson.Gson
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 class AdminRiderDetailsActivity : BaseActivity() {
@@ -26,6 +34,7 @@ class AdminRiderDetailsActivity : BaseActivity() {
     private var RiderDetails: RiderModel? = null
     private var riderId: Int = 0
 
+    private val ViewModel1: RiderDailyStatsViewModel by viewModel()
 
     private val editLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -121,6 +130,7 @@ class AdminRiderDetailsActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         fetchShopDetails(riderId)
+        loadDailyStats()
     }
 
     private fun fetchShopDetails(riderId: Int) {
@@ -184,6 +194,12 @@ class AdminRiderDetailsActivity : BaseActivity() {
 // Optional: read-only
         binding.toggleStatus.isEnabled = false
 
+
+        binding.tvPerformance.text= "${rider.username} Today Progress"
+
+        binding.tvJoinedDate.text = formatDateOnly(rider.created_at)
+
+
     }
 
     private fun showError(response: retrofit2.Response<*>?) {
@@ -211,6 +227,71 @@ class AdminRiderDetailsActivity : BaseActivity() {
             .take(2) // first two words only
             .joinToString("") { it.first().uppercaseChar().toString() }
     }
+
+    private fun loadDailyStats() {
+
+        ViewModel1.getRiderDailyStats(riderId).observe(this) { response -> // use 'this' for Activity
+            when (response.status) {
+                Status.LOADING -> AppUtil.startLoader(this)
+
+                Status.SUCCESS -> {
+                    AppUtil.stopLoader()
+                    val res = response.data
+                    if (res != null && res.isSuccessful) {
+                        val baseResponse = res.body() as BaseResponse<EggPickupData>?
+                        baseResponse?.data?.let { data ->
+                            // Update your TextViews with formatted values if needed
+                            binding.tvTotalPicked.text = data.total_picked.toString()
+                            binding.tvSold.text = data.total_sold.toString()
+                            binding.tvReturned.text = data.total_returned.toString()
+
+                            val totalPicked = data.total_picked
+                            val totalSold = data.total_sold
+
+                            val percentage = if (totalPicked > 0) {
+                                (totalSold * 100) / totalPicked
+                            } else {
+                                0
+                            }
+
+                            binding.progressTodayTarget.progress = percentage
+
+                            binding.tvProgressPercentage.text = "$percentage%"
+
+                        }
+                    }
+                }
+
+                Status.ERROR -> {
+                    AppUtil.stopLoader()
+                    Toast.makeText(
+                        this,
+                        response.message ?: "Network error",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+
+    fun formatDateOnly(apiDate: String?): String {
+        if (apiDate.isNullOrEmpty()) return "-"  // fallback if null or empty
+
+        return try {
+            // Parse the API string
+            val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", Locale.getDefault())
+            val date = parser.parse(apiDate)
+
+            // Format as "20 Jan 2026"
+            val formatter = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            formatter.format(date!!)
+        } catch (e: Exception) {
+            "-"  // fallback if parsing fails
+        }
+    }
+
+
 
 
 

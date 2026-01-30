@@ -208,6 +208,10 @@ class HomeAdminFragment : Fragment() {
                             binding.tvTotalShops.text = formatNumber(data.total_shops)
 
 
+                            binding.tvEggPicked.text = formatNumber(data.today_total_eggs_picked)
+                            binding.tvWastedEggs.text = formatNumber(data.today_total_eggs_waste)
+
+
 
 
                             val totalShops = data.total_shops
