@@ -225,9 +225,19 @@ class LoginFragment : Fragment() {
     private fun navigateToDashboard(user: LoginResponseModel) {
         // Use role_id to check user type
         if (user.role_id == 1) {
-            startActivity(Intent(requireContext(), AdminDashBoardActivity::class.java))
+            //startActivity(Intent(requireContext(), AdminDashBoardActivity::class.java))
+
+            val intent = Intent(requireContext(), AdminDashBoardActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+
         } else {
-            startActivity(Intent(requireContext(), RiderDashBoardActivity::class.java))
+          //  startActivity(Intent(requireContext(), RiderDashBoardActivity::class.java))
+
+            val intent = Intent(requireContext(), RiderDashBoardActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+
         }
         requireActivity().finish() // prevent back to login
     }

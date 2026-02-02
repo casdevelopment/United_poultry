@@ -98,6 +98,7 @@ class AdminRiderDetailsActivity : BaseActivity() {
             intent.putExtra("ADDRESS", rider.address)
             intent.putExtra("USERNAME", rider.username)
             intent.putExtra("PASSWORD", rider.password)
+            intent.putExtra("AREA_Status", rider.is_active)
 
 
 

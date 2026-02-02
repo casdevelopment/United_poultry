@@ -84,10 +84,19 @@ class SplashActivity :  BaseActivity() {
                 Gson().fromJson( sessionManager.getUserInfo(), LoginResponseModel::class.java)
 
             if(AppConstants.userData!!.role_id == 1){
-                startActivity(Intent(this@SplashActivity, AdminDashBoardActivity::class.java))
+                //startActivity(Intent(this@SplashActivity, AdminDashBoardActivity::class.java))
+                val intent = Intent(this@SplashActivity, AdminDashBoardActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
                 finish()
+
+
             }else if (AppConstants.userData!!.role_id == 2){
-                startActivity(Intent(this@SplashActivity, RiderDashBoardActivity::class.java))
+                //startActivity(Intent(this@SplashActivity, RiderDashBoardActivity::class.java))
+
+                val intent = Intent(this@SplashActivity, RiderDashBoardActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
                 finish()
             }
         } else {

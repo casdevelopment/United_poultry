@@ -74,13 +74,13 @@ class AdminDashBoardActivity : BaseActivity() {
         }
 
         // 2️⃣ If bottom nav is not Home, go to Home
-        val selectedId = binding.bottomNavigation.selectedItemId
-        if (selectedId != R.id.nav_home) {
+        if (binding.bottomNavigation.selectedItemId != R.id.nav_home) {
             binding.bottomNavigation.selectedItemId = R.id.nav_home
             loadFragment(HomeAdminFragment())
         } else {
-            // 3️⃣ Already on HomeAdminFragment, exit app
             super.onBackPressed()
         }
+
+
     }
 }

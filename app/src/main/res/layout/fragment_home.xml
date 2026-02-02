@@ -85,7 +85,8 @@
                     android:scaleType="centerInside"
                     app:tint="@null"
                     android:clickable="true"
-                    android:focusable="true"/>
+                    android:focusable="true"
+                    android:visibility="gone"/>
 
 
 
@@ -211,6 +212,32 @@
                 android:clipToPadding="false"
                 android:paddingStart="4dp"
                 android:overScrollMode="never" />
+
+            <LinearLayout
+                android:id="@+id/layoutEmpty"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/emptybox"
+                    android:contentDescription="No products picked"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No products picked yet!"
+                    android:textSize="16sp"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="13dp"
+                    android:gravity="center"/>
+            </LinearLayout>
         </LinearLayout>
 
 
@@ -426,7 +453,7 @@
                         <TextView
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
-                            android:text="Sold"
+                            android:text="Eggs Sold"
                             android:textStyle="bold"
                             android:fontFamily="@font/poppins"
                             android:textSize="14sp"
@@ -643,7 +670,7 @@
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Total Sales"
+                    android:text="Total Eggs Sold"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
                     android:textSize="13sp"

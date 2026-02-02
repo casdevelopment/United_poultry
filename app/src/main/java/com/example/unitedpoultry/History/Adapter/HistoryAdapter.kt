@@ -25,7 +25,8 @@ class HistoryAdapter(
 
         holder.tvShopName.text = item.shop_name
         holder.tvDescription.text = "Area ${item.area_name}"
-        holder.tvAmount.text = "Rs ${item.total}"
+        val amount = item.total
+        holder.tvAmount.text = "Rs ${formatWithEllipsis(amount)}"
         holder.tvDate.text = item.sale_date
 
         holder.itemView.setOnClickListener {
@@ -45,4 +46,13 @@ class HistoryAdapter(
         val tvAmount: TextView = v.findViewById(R.id.tvAmount)
         val tvDate: TextView = v.findViewById(R.id.tvDate)
     }
+
+    private fun formatWithEllipsis(value: String, maxDigits: Int = 7): String {
+        return if (value.length > maxDigits) {
+            value.substring(0, maxDigits) + "..."
+        } else {
+            value
+        }
+    }
+
 }

@@ -589,7 +589,7 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="Discount (less than 5)"
+                            android:text="Discount"
                             android:textColor="@color/black60"
                             android:textSize="13sp"
                             android:textStyle="bold"
@@ -662,3 +662,4 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>
+

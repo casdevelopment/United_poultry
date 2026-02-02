@@ -153,7 +153,8 @@
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
             android:layout_marginLeft="10dp"
-            android:backgroundTint="@color/sub_primary18">
+            android:backgroundTint="@color/sub_primary18"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"

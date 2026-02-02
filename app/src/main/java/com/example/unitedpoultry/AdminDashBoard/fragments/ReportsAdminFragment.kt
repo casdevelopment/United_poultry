@@ -38,26 +38,26 @@ class ReportsAdminFragment : Fragment() {
             startActivity(intent)
         }
 
-        binding.cardRiderReport.setOnClickListener {
-            val intent = Intent(requireContext(), AdminRiderReportActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.cardRiderReport.setOnClickListener {
+//            val intent = Intent(requireContext(), AdminRiderReportActivity::class.java)
+//            startActivity(intent)
+//        }
 
         binding.cardReceivables.setOnClickListener {
             val intent = Intent(requireContext(), AdminReceivableReportActivity::class.java)
             startActivity(intent)
         }
 
-        binding.cardAreaReport.setOnClickListener {
-            val intent = Intent(requireContext(), AdminAreaReportActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.cardAreaReport.setOnClickListener {
+//            val intent = Intent(requireContext(), AdminAreaReportActivity::class.java)
+//            startActivity(intent)
+//        }
 
 
-        binding.cardDiscountReport.setOnClickListener {
-            val intent = Intent(requireContext(), AdminDiscountReportActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.cardDiscountReport.setOnClickListener {
+//            val intent = Intent(requireContext(), AdminDiscountReportActivity::class.java)
+//            startActivity(intent)
+//        }
 
         binding.cardSaleReport.setOnClickListener {
             val intent = Intent(requireContext(), AdminSalesReportActivity::class.java)

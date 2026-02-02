@@ -65,25 +65,43 @@ class RiderDashBoardActivity : BaseActivity() {
         outState.putInt("tab", selectedTabId)
     }
 
+//    override fun onBackPressed() {
+//        val fragmentManager = supportFragmentManager
+//
+//        // 1. If there are fragments in the back stack (like AreaFragment), pop them first
+//        if (fragmentManager.backStackEntryCount > 0) {
+//            fragmentManager.popBackStack()
+//            return
+//        }
+//
+//        // 2. Check current bottom navigation selected fragment
+//        val selectedId = binding.bottomNavigation.selectedItemId
+//        if (selectedId != R.id.nav_home) {
+//            // Go to HomeFragment instead of exiting
+//            binding.bottomNavigation.selectedItemId = R.id.nav_home
+//            loadFragment(HomeFragment())
+//        } else {
+//            // Already on HomeFragment, exit normally
+//            super.onBackPressed()
+//        }
+//    }
+
     override fun onBackPressed() {
         val fragmentManager = supportFragmentManager
 
-        // 1. If there are fragments in the back stack (like AreaFragment), pop them first
         if (fragmentManager.backStackEntryCount > 0) {
             fragmentManager.popBackStack()
             return
         }
 
-        // 2. Check current bottom navigation selected fragment
-        val selectedId = binding.bottomNavigation.selectedItemId
-        if (selectedId != R.id.nav_home) {
-            // Go to HomeFragment instead of exiting
+        if (binding.bottomNavigation.selectedItemId != R.id.nav_home) {
             binding.bottomNavigation.selectedItemId = R.id.nav_home
             loadFragment(HomeFragment())
         } else {
-            // Already on HomeFragment, exit normally
             super.onBackPressed()
         }
+
+
     }
 
 }

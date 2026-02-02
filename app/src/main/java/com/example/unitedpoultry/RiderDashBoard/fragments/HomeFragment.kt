@@ -6,14 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.unitedpoultry.AdminHome.model.ShopvisitedModel
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.Notification.NotificationActivity
 import com.example.unitedpoultry.rider_home.EggPickupActivity
@@ -28,7 +25,6 @@ import com.example.unitedpoultry.rider_home.viewmodel.DailyStatsViewModel
 import com.example.unitedpoultry.util.AppConstants.userData
 import com.example.unitedpoultry.util.AppUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import androidx.core.widget.addTextChangedListener
 import com.example.unitedpoultry.NewSale.Adapter.RiderProductHorizontalAdapter
 import com.example.unitedpoultry.NewSale.model.Product
 import com.example.unitedpoultry.NewSale.model.RiderProductData
@@ -37,6 +33,8 @@ import com.example.unitedpoultry.rider_home.model.ReturnWasteRequestModel
 import com.example.unitedpoultry.rider_home.viewmodel.ReturnWasteViewModel
 import com.example.unitedpoultry.waste_return.RiderProductReturnActivity
 import com.example.unitedpoultry.waste_return.RiderWasteProductActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.button.MaterialButton
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -113,12 +111,11 @@ class HomeFragment : Fragment() {
         }
 
         binding.areaShortCut.setOnClickListener {
-            // Navigate to AreaFragment
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, AddressFragment()) // Replace with your AreaFragment
-                .addToBackStack("AreaFragment") // Add to back stack so back button works
-                .commit()
+            val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
+            bottomNav.selectedItemId = R.id.nav_address
         }
+
+
 
     }
 
@@ -214,8 +211,8 @@ class HomeFragment : Fragment() {
 
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-        val btnReturn = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnReturn)
-        val btnWaste = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnWaste)
+        val btnReturn = dialogView.findViewById<MaterialButton>(R.id.btnReturn)
+        val btnWaste = dialogView.findViewById<MaterialButton>(R.id.btnWaste)
 
         // 👉 OPEN RETURN ACTIVITY
         btnReturn.setOnClickListener {
@@ -277,39 +274,45 @@ class HomeFragment : Fragment() {
         binding.recyclerProducts.adapter = productAdapter
     }
 
-
     private fun loadProducts() {
         ViewModel3.getRiderProducts().observe(viewLifecycleOwner) { response ->
             when (response.status) {
                 Status.LOADING -> { /* show loader if needed */ }
+
                 Status.SUCCESS -> {
                     val res = response.data
                     if (res != null && res.isSuccessful) {
                         val baseResponse = res.body() as BaseResponse<RiderProductData>?
                         if (baseResponse?.result == "success" && baseResponse.data != null) {
 
-
                             val products = baseResponse.data.picked_items
 
-                            productAdapter.submitList(products)
+                            if (products.isNullOrEmpty()) {
+                                showProductEmptyState(true)
+                            } else {
+                                showProductEmptyState(false)
+                                productAdapter.submitList(products)
 
-                            val totalEggsSum = products.sumOf { it.total_eggs }
-
-                            val total = formatNumber(totalEggsSum)
-
-                            binding.tvTotalEggs.text = "Eggs  ${total}"
-
+                                val totalEggsSum = products.sumOf { it.total_eggs }
+                                val total = formatNumber(totalEggsSum)
+                                binding.tvTotalEggs.text = "Eggs  ${total}"
+                            }
 
                         } else {
+                            showProductEmptyState(true)
                             Toast.makeText(
                                 requireContext(),
                                 baseResponse?.message ?: "Failed to fetch products",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
+                    } else {
+                        showProductEmptyState(true)
                     }
                 }
+
                 Status.ERROR -> {
+                    showProductEmptyState(true)
                     Toast.makeText(
                         requireContext(),
                         response.message ?: "Network Error",
@@ -320,6 +323,10 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun showProductEmptyState(show: Boolean) {
+        binding.layoutEmpty.visibility = if (show) View.VISIBLE else View.GONE
+        binding.recyclerProducts.visibility = if (show) View.GONE else View.VISIBLE
+    }
 
     private fun getTodayDate(): String {
         val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())

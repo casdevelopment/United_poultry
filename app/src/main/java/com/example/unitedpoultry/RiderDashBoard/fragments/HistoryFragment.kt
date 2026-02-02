@@ -162,16 +162,27 @@ class HistoryFragment : Fragment() {
     private fun updateSummary() {
         val totalSales = salesList.sumOf {
             it.total.toDoubleOrNull() ?: 0.0
-        }
+        }.toLong().toString()
 
         val totalCollected = salesList.sumOf {
             it.cash_received.toDoubleOrNull() ?: 0.0
-        }
+        }.toLong().toString()
 
-        binding.tvTotalSales.text = "Rs ${formatAmount(totalSales)}"
-        binding.tvTotalCollected.text = "Rs ${formatAmount(totalCollected)}"
-        binding.tvTotalTransactions.text = salesList.size.toString()
+        binding.tvTotalSales.text = "Rs ${formatWithEllipsis(totalSales)}"
+        binding.tvTotalCollected.text = "Rs ${formatWithEllipsis(totalCollected)}"
+        binding.tvTotalTransactions.text =
+            formatWithEllipsis(salesList.size.toString())
     }
+
+    private fun formatWithEllipsis(value: String, maxDigits: Int = 7): String {
+        return if (value.length > maxDigits) {
+            value.substring(0, maxDigits) + "..."
+        } else {
+            value
+        }
+    }
+
+
 
     private fun formatAmount(value: Double): String {
         return when {
