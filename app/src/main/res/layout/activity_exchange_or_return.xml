@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows = "true"
     android:fillViewport="true"
     >
 
@@ -328,7 +329,8 @@
                             android:background="@drawable/square_white"
                             android:contentDescription="Status"
                             android:src="@drawable/dollarcleansvg"
-                            android:layout_gravity="center_vertical"/>
+                            android:layout_gravity="center_vertical"
+                            android:visibility="gone"/>
 
                         <TextView
                             android:layout_width="0dp"

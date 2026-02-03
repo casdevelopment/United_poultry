@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
                 android:text="Flip/Half  (360 eggs)"
-                android:textColor="@color/black"
+                android:textColor="@color/black60"
                 android:textSize="13sp"
                 android:textStyle="bold"/>
         </LinearLayout>

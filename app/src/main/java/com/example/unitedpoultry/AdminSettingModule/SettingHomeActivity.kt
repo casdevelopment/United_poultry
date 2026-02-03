@@ -62,7 +62,9 @@ class SettingHomeActivity : BaseActivity() {
 
     private fun  onclick(){
 
-
+        binding.backArrow.setOnClickListener{
+            finish()
+        }
         binding.logoutCard.setOnClickListener {
 
             val dialogView = layoutInflater.inflate(R.layout.dialog_logout, null)

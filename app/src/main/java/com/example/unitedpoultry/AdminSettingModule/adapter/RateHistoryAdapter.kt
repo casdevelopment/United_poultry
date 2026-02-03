@@ -1,11 +1,14 @@
 package com.example.unitedpoultry.AdminSettingModule.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.unitedpoultry.AdminSettingModule.AdminRateHistoryActivity
 import com.example.unitedpoultry.AdminSettingModule.DataModel.RatesData
+import com.example.unitedpoultry.AdminShopModule.AdminShopDetailsActivity
 import com.example.unitedpoultry.R
 
 class RateHistoryAdapter(
@@ -25,6 +28,13 @@ class RateHistoryAdapter(
 
         holder.tVDate.text = item.date
         holder.tVPrice.text = item.price+"/"+item.product_name
+
+
+        holder.itemView.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, AdminRateHistoryActivity::class.java)
+            context.startActivity(intent)
+        }
 
 
     }

@@ -33,20 +33,20 @@ class ReportsAdminFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.cardCollection.setOnClickListener {
-            val intent = Intent(requireContext(), AdminCollectionReportActivity::class.java)
-            startActivity(intent)
-        }
-
-//        binding.cardRiderReport.setOnClickListener {
+//        binding.cardCollection.setOnClickListener {
+//            val intent = Intent(requireContext(), AdminCollectionReportActivity::class.java)
+//            startActivity(intent)
+//        }
+//
+//        binding.cardReceivables.setOnClickListener {
 //            val intent = Intent(requireContext(), AdminRiderReportActivity::class.java)
 //            startActivity(intent)
 //        }
 
-        binding.cardReceivables.setOnClickListener {
-            val intent = Intent(requireContext(), AdminReceivableReportActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.cardReceivables.setOnClickListener {
+//            val intent = Intent(requireContext(), AdminReceivableReportActivity::class.java)
+//            startActivity(intent)
+//        }
 
 //        binding.cardAreaReport.setOnClickListener {
 //            val intent = Intent(requireContext(), AdminAreaReportActivity::class.java)
@@ -59,10 +59,10 @@ class ReportsAdminFragment : Fragment() {
 //            startActivity(intent)
 //        }
 
-        binding.cardSaleReport.setOnClickListener {
-            val intent = Intent(requireContext(), AdminSalesReportActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.cardSaleReport.setOnClickListener {
+//            val intent = Intent(requireContext(), AdminSalesReportActivity::class.java)
+//            startActivity(intent)
+//        }
 
 //        val  = listOf(
 //            ShopvisitedModel("Jalal Sons", "Last visit: 3 days ago. Rs. 12500. 12 orders", R.drawable.visitedshopimage1),

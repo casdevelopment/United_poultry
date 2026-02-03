@@ -222,7 +222,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="8dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Receivables"
+                        android:text="Rider Report"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -232,7 +232,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:fontFamily="@font/poppins"
-                        android:text="Outstanding Balance"
+                        android:text="Performance by rider"
                         android:textColor="@color/white60"
                         android:textSize="12sp"
                         android:textStyle="bold" />

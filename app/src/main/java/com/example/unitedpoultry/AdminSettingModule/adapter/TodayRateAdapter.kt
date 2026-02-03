@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.unitedpoultry.AdminSettingModule.DataModel.TodayRateItem
@@ -30,8 +31,10 @@ class TodayRateAdapter(
         val item = filteredList[position]
 
 
-        holder.etRate.text = item.price.toString()
-        holder.itemName.text = item.product_name+"/"+item.packing
+        holder.etRate.setText(item.price.toString())
+        holder.tvProductName.text = item.product_name.toString()
+        holder.tvPacking.text = "${item.packing} / ${item.eggs_count} eggs"
+
 
         // Set text change listener
         holder.etRate.setOnFocusChangeListener { _, hasFocus ->
@@ -94,8 +97,9 @@ class TodayRateAdapter(
 
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val itemName: TextView = v.findViewById(R.id.itemName)
-        val etRate: TextView = v.findViewById(R.id.etRate)
+        val tvProductName: TextView = v.findViewById(R.id.tvProductName)
+        val tvPacking: TextView = v.findViewById(R.id.tvPacking)
+        val etRate: EditText = v.findViewById(R.id.etRate)
 
 
     }

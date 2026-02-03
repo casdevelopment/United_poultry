@@ -21,13 +21,16 @@
         android:theme="@style/Theme.UnitedPoultry"
         tools:targetApi="31">
         <activity
+            android:name=".AdminSettingModule.AdminRateHistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".waste_return.RiderWasteProductActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".waste_return.RiderProductReturnActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".AdminSettingModule.AdminCatagoryActivity"
             android:exported="false" />

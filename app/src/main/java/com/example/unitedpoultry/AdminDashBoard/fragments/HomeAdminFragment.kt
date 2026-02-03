@@ -203,7 +203,7 @@ class HomeAdminFragment : Fragment() {
 
                             binding.tvCashRecieved.text = formatNumber(data.today_total_cash_received.toDouble())
                             binding.tvUnitSold.text = formatNumber(data.today_total_eggs_sold)
-                            binding.tvUnitDelieved.text = formatNumber(data.today_total_eggs_sold)
+                           // binding.tvUnitDelieved.text = formatNumber(data.today_total_eggs_sold)
                             binding.tvEggReturned.text = formatNumber(data.today_total_eggs_returned)
                             binding.tvTotalShops.text = formatNumber(data.total_shops)
 

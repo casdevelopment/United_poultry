@@ -34,6 +34,13 @@ class SaleFormActivity : BaseActivity() {
     private var name: String = ""
     private var address: String = ""
 
+    private var currentSubtotal: Double = 0.0
+    private var currentTotalEggs: Int = 0
+    private var currentNumberOfPattis: Int = 0
+    private var currentDiscountAmount: Double = 0.0
+    private var currentTotalAfterDiscount: Double = 0.0
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +68,7 @@ class SaleFormActivity : BaseActivity() {
         binding.tvShopName.text = name
         binding.tvShopAddress.text = address
         binding.tvInitials.text = getInitials(name)
-        binding.tvDiscount.text = "$discountPercent%"
+        binding.tvDiscount.text = "-Rs $discountPercent"
     }
 
     private fun setupClicks() {
@@ -78,9 +85,9 @@ class SaleFormActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
-            val subTotal = calculateSubtotal(selectedItems)
-            val discountAmount = subTotal * (discountPercent / 100.0)
-            val totalAmount = (subTotal - discountAmount).coerceAtLeast(0.0)
+//            val subTotal = calculateSubtotal(selectedItems)
+//            val discountAmount = subTotal * (discountPercent / 100.0)
+//            val totalAmount = (subTotal - discountAmount).coerceAtLeast(0.0)
 
             val intent = Intent(this, SaleConfirmationActivity::class.java)
 
@@ -93,9 +100,9 @@ class SaleFormActivity : BaseActivity() {
 
             intent.putExtra("SHOP_ID", shopId)
             intent.putExtra("AREA_ID", areaId)
-            intent.putExtra("SUB_TOTAL", subTotal)
-            intent.putExtra("DISCOUNT", discountAmount)
-            intent.putExtra("TOTAL", totalAmount)
+            intent.putExtra("SUB_TOTAL", currentSubtotal)
+            intent.putExtra("DISCOUNT", currentDiscountAmount)
+            intent.putExtra("TOTAL", currentTotalAfterDiscount)
             intent.putExtra("TOTAL_QUANTITY", totalQuantity)
 
 
@@ -165,11 +172,10 @@ class SaleFormActivity : BaseActivity() {
 
     private fun setupRecycler() {
         binding.recyclerProducts.layoutManager = LinearLayoutManager(this)
-        binding.recyclerProducts.adapter = RiderProductAdapter(productList, quantityMap) { subtotal ->
-            updateTotal(subtotal)
+        binding.recyclerProducts.adapter = RiderProductAdapter(productList, quantityMap) { subtotal, totalEggs ->
+            updateTotal(subtotal, totalEggs)
         }
     }
-
     private fun loadProducts() {
         viewModel.getRiderProducts().observe(this) { response ->
             when (response.status) {
@@ -182,9 +188,10 @@ class SaleFormActivity : BaseActivity() {
                         if (baseResponse?.result == "success" && baseResponse.data != null) {
                             productList = baseResponse.data.picked_items
                             binding.recyclerProducts.adapter =
-                                RiderProductAdapter(productList, quantityMap) { subtotal ->
-                                    updateTotal(subtotal)
+                                RiderProductAdapter(productList, quantityMap) { subtotal, totalEggs ->
+                                    updateTotal(subtotal, totalEggs)
                                 }
+
                         } else {
                             Toast.makeText(this, baseResponse?.message ?: "Failed to fetch products", Toast.LENGTH_SHORT).show()
                         }
@@ -198,13 +205,25 @@ class SaleFormActivity : BaseActivity() {
         }
     }
 
-    private fun updateTotal(subtotal: Double) {
-        val discountAmount = subtotal * (discountPercent / 100.0)
+    private fun updateTotal(subtotal: Double, totalEggs: Int) {
+        val eggsPerPatti = 360
+        val numberOfPattis = totalEggs / eggsPerPatti   // integer division
+        val discountAmount = numberOfPattis * discountPercent   // discount per patti
         val totalAfterDiscount = (subtotal - discountAmount).coerceAtLeast(0.0)
+
+        // Update UI
         binding.tvSubtotal.text = "Rs. %.2f".format(subtotal)
-        binding.tvDiscount.text = "Rs. %.2f (%.0f%%)".format(discountAmount, discountPercent)
+        binding.tvDiscount.text = "Rs. %.2f".format(discountAmount)
         binding.tvTotal.text = "Rs. %.2f".format(totalAfterDiscount)
+
+        // Store for intent
+        currentSubtotal = subtotal
+        currentTotalEggs = totalEggs
+        currentNumberOfPattis = numberOfPattis
+        currentDiscountAmount = discountAmount
+        currentTotalAfterDiscount = totalAfterDiscount
     }
+
 
     private fun calculateSubtotal(selectedItems: Map<Int, Int>): Double {
         var subtotal = 0.0

@@ -21,14 +21,17 @@ class CatagoryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
 
-        holder.itemName.text = "${item.product_name}/${item.packing}"
+        holder.tvPacking.text = "${item.packing} / ${item.eggs_count} eggs"
+
+        holder.tvProductName.text = item.product_name.toString()
         holder.etRate.text = item.price.toString()
     }
 
     override fun getItemCount(): Int = list.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val itemName: TextView = view.findViewById(R.id.itemName)
+        val tvProductName: TextView = view.findViewById(R.id.tvProductName)
+        val tvPacking: TextView = view.findViewById(R.id.tvPacking)
         val etRate: TextView = view.findViewById(R.id.etRate)
     }
 }

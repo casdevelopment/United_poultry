@@ -2,6 +2,7 @@ package com.example.unitedpoultry.AdminSettingModule
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.unitedpoultry.AdminSettingModule.DataModel.HistoryData
@@ -16,8 +17,10 @@ import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.databinding.ActivityAdminRateManagmentBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.Status.*
+import com.example.unitedpoultry.network.retrofit.BaseResponse
 import com.example.unitedpoultry.util.AppUtil
 import com.example.unitedpoultry.util.showToast
+import com.google.gson.Gson
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -69,10 +72,16 @@ class AdminRateManagmentActivity : BaseActivity(),TodayRateAdapter.OnPriceChange
                 updateProductRate()
             }
         }
-        getTodayRate()
-        getRateHistory()
+
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        getTodayRate()
+        getRateHistory()
+    }
+
 
     private fun getTodayRate() {
         viewModel.todayRate().observe(this@AdminRateManagmentActivity) { serverResponse ->
@@ -258,14 +267,68 @@ class AdminRateManagmentActivity : BaseActivity(),TodayRateAdapter.OnPriceChange
         toDayRateListData[position].price=newPrice.toInt()
         Log.v("updateProductRate", "newPrice : ${toDayRateListData[position].price}")
     }
+//    private fun updateProductRateApi(updateRateModel: UpdateRateModel) {
+//        viewModel.updateRate(updateRateModel).observe(this@AdminRateManagmentActivity){serverResponse ->
+//            when (serverResponse.status) {
+//                SUCCESS -> AppUtil.stopLoader()
+//                ERROR -> AppUtil.stopLoader()
+//                LOADING -> AppUtil.startLoader(this@AdminRateManagmentActivity)
+//            }
+//        }
+//    }
+
+
     private fun updateProductRateApi(updateRateModel: UpdateRateModel) {
-        viewModel.updateRate(updateRateModel).observe(this@AdminRateManagmentActivity){serverResponse ->
+        viewModel.updateRate(updateRateModel).observe(this@AdminRateManagmentActivity) { serverResponse ->
+
             when (serverResponse.status) {
-                SUCCESS -> AppUtil.stopLoader()
-                ERROR -> AppUtil.stopLoader()
-                LOADING -> AppUtil.startLoader(this@AdminRateManagmentActivity)
+
+                LOADING -> {
+                    AppUtil.startLoader(this@AdminRateManagmentActivity)
+                }
+
+                SUCCESS -> {
+                    AppUtil.stopLoader()
+                    val retrofitResponse = serverResponse.data
+
+                    if (retrofitResponse != null) {
+                        if (retrofitResponse.isSuccessful) {
+                            // ✅ 2xx response
+                            val baseResponse = retrofitResponse.body()
+                            val message = baseResponse?.message ?: "Operation successful"
+                            Toast.makeText(this@AdminRateManagmentActivity, message, Toast.LENGTH_SHORT).show()
+                        } else {
+                            // ❗ HTTP error (401, 422, 500, etc.)
+                            val errorMessage = try {
+                                val errorBody = retrofitResponse.errorBody()?.string()
+                                if (!errorBody.isNullOrEmpty()) {
+                                    val baseResponse = Gson().fromJson(errorBody, BaseResponse::class.java)
+                                    baseResponse.message ?: "Update failed"
+                                } else {
+                                    "Update failed"
+                                }
+                            } catch (e: Exception) {
+                                "Update failed"
+                            }
+                            Toast.makeText(this@AdminRateManagmentActivity, errorMessage, Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(this@AdminRateManagmentActivity, "No response from server", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                ERROR -> {
+                    AppUtil.stopLoader()
+                    Toast.makeText(
+                        this@AdminRateManagmentActivity,
+                        serverResponse.message ?: "Network Error",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
+
+
 
 }

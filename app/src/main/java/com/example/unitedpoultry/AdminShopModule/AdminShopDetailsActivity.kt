@@ -4,14 +4,17 @@ import android.app.Activity
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.example.unitedpoultry.AdminShopModule.model.ShopDetailsResponseModel
 import com.example.unitedpoultry.AdminShopModule.viewmodel.ShopDetailsViewModel
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.ActivityAdminShopDetailsBinding
+import com.example.unitedpoultry.util.AppConstants
 import com.example.unitedpoultry.util.AppUtil
 import com.google.gson.Gson
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -146,14 +149,14 @@ class AdminShopDetailsActivity : BaseActivity() {
         binding.tvShopName.text = shop.name
         binding.tvShopAddress.text = shop.address
         binding.tvAddress.text = shop.address
-        binding.tvDiscount.text = shop.discount_per_petti
-        binding.tvDiscountPercent.text = "${shop.discount_per_petti}% on all orders"
+       // binding.tvDiscount.text = shop.discount_per_petti
+        binding.tvDiscountPercent.text = "${shop.discount_per_petti} per patti"
         binding.tvContactName.text = shop.contact_person
         binding.tvPhoneNumber.text = shop.phone_number
 
-        binding.totalOrders.text = "-"
-        binding.tvReceivable.text = "-"
-        binding.tvCreditLimit.text = "-"
+//        binding.totalOrders.text = "-"
+//        binding.tvReceivable.text = "-"
+//        binding.tvCreditLimit.text = "-"
 
         val statusText = if (shop.is_active) "Active" else "Inactive"
         binding.tvStatus.text = statusText
@@ -161,6 +164,21 @@ class AdminShopDetailsActivity : BaseActivity() {
         val color = if (shop.is_active) R.color.green else R.color.black17
         binding.statusDot.backgroundTintList =
             ColorStateList.valueOf(ContextCompat.getColor(this, color))
+
+
+        val imageUrl = shop.image
+        if (!imageUrl.isNullOrEmpty()) {
+            binding.imgShop.visibility = View.VISIBLE
+            //  binding.imgCamera.visibility = View.GONE
+
+            // Use full URL to show existing image
+            val fullImageUrl = AppConstants.ImageURL + imageUrl
+            Glide.with(this)
+                .load(fullImageUrl)
+                .centerCrop()
+                .placeholder(binding.imgShop.drawable)
+                .into(binding.imgShop)
+        }
     }
 
     private fun showError(response: retrofit2.Response<*>?) {

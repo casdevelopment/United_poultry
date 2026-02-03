@@ -5,10 +5,12 @@ import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 import com.example.unitedpoultry.AdminShopModule.model.ShopModel
 import com.example.unitedpoultry.Collection.CollectionformActivity
@@ -16,6 +18,7 @@ import com.example.unitedpoultry.NewSale.SaleFormActivity
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.ShopModule.ShopDetailsActivity
 import com.example.unitedpoultry.exchange_return.ExchangeOrReturnActivity
+import com.example.unitedpoultry.util.AppConstants
 import com.google.android.material.button.MaterialButton
 
 class RiderShopListAdapter(
@@ -43,10 +46,25 @@ class RiderShopListAdapter(
 
         holder.tvName.text = item.name
         holder.tvAddress.text = item.address
-        holder.tvDiscount.text = item.discount_per_petti + "%"
+        holder.tvDiscount.text = "Rs ${item.discount_per_petti}"
         holder.statusText.text = if (item.is_active == true) "Active" else "Inactive"
 
-        holder.tvInitials.text = getInitials(item.name)
+      //  holder.tvInitials.text = getInitials(item.name)
+
+        val imageUrl = item.image
+
+        if (!imageUrl.isNullOrEmpty()) {
+            val fullImageUrl = AppConstants.ImageURL + imageUrl
+
+            Glide.with(holder.itemView.context)
+                .load(fullImageUrl)
+                .centerCrop()
+                .placeholder(R.drawable.homeingreen)
+                .error(R.drawable.homeingreen)
+                .into(holder.imgShop)
+        } else {
+            holder.imgShop.setImageResource(R.drawable.homeingreen)
+        }
 
         val iconColor = iconColors[position % iconColors.size]
 //
@@ -63,8 +81,8 @@ class RiderShopListAdapter(
                     ContextCompat.getColor(holder.itemView.context, R.color.primary)
                 )
 
-                holder.tvInitials.backgroundTintList =
-                    ContextCompat.getColorStateList(holder.itemView.context, iconColor)
+//                holder.tvInitials.backgroundTintList =
+//                    ContextCompat.getColorStateList(holder.itemView.context, iconColor)
 
                 holder.statusText.setTextColor(
                     ContextCompat.getColor(holder.itemView.context, R.color.mint)
@@ -80,8 +98,8 @@ class RiderShopListAdapter(
                     ContextCompat.getColor(holder.itemView.context, R.color.black60)
                 )
 
-                holder.tvInitials.backgroundTintList =
-                    ContextCompat.getColorStateList(holder.itemView.context, R.color.black17)
+//                holder.tvInitials.backgroundTintList =
+//                    ContextCompat.getColorStateList(holder.itemView.context, R.color.black17)
 
                 holder.statusText.setTextColor(
                     ContextCompat.getColor(holder.itemView.context, R.color.black44)
@@ -166,11 +184,13 @@ class RiderShopListAdapter(
         val tvAddress: TextView = v.findViewById(R.id.tvAddress)
         val tvDiscount: TextView = v.findViewById(R.id.tvDiscount)
         val statusText: TextView = v.findViewById(R.id.statusText)
-        val tvInitials: TextView = v.findViewById(R.id.tvInitials)
+       // val tvInitials: TextView = v.findViewById(R.id.tvInitials)
         val statusLayout: LinearLayout = v.findViewById(R.id.statusLayout)
         val btnNewSale: MaterialButton = v.findViewById(R.id.btnNewSale)
 //        val btnCollect: MaterialButton = v.findViewById(R.id.btnCollect)
         val btnExchange: MaterialButton = v.findViewById(R.id.btnExchange)
+
+        val imgShop: ImageView = v.findViewById(R.id.imgShop)
 
     }
 

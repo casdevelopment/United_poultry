@@ -73,6 +73,8 @@ class ExchangeOrReturnActivity : BaseActivity() {
     private fun setupClicks() {
         binding.btnCancel.setOnClickListener { finish() }
 
+        binding.backArrow.setOnClickListener { finish() }
+
         binding.btnConfirm.setOnClickListener {
             val selectedItems = quantityMap.filter { it.value > 0 }
 
@@ -162,17 +164,17 @@ class ExchangeOrReturnActivity : BaseActivity() {
 
                         Toast.makeText(this, "return sale successfully", Toast.LENGTH_SHORT).show()
 
-                        val intent = Intent(this, ReturnSucessActivity::class.java)
-                        intent.putExtra("TOTAL_QUANTITY", totalQuantity)
-                        intent.putExtra("TOTAL_AMOUNT", totalAmount)
-                        intent.putExtra("SHOP_NAME", name)
-                        intent.putExtra("ADDRESS", address)
-                        intent.putExtra("INITIALS", getInitials(name))
-
-                        intent.putExtra("SHOP_ID", shopId)
-                        intent.putExtra("AREA_ID", areaId)
-
-                        startActivity(intent)
+//                        val intent = Intent(this, ReturnSucessActivity::class.java)
+//                        intent.putExtra("TOTAL_QUANTITY", totalQuantity)
+//                        intent.putExtra("TOTAL_AMOUNT", totalAmount)
+//                        intent.putExtra("SHOP_NAME", name)
+//                        intent.putExtra("ADDRESS", address)
+//                        intent.putExtra("INITIALS", getInitials(name))
+//
+//                        intent.putExtra("SHOP_ID", shopId)
+//                        intent.putExtra("AREA_ID", areaId)
+//
+//                        startActivity(intent)
                         finish()
                     } else {
                         Toast.makeText(this, "Failed to create sale", Toast.LENGTH_SHORT).show()

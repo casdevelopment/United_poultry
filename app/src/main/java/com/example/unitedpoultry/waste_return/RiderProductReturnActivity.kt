@@ -68,6 +68,8 @@ class RiderProductReturnActivity : BaseActivity() {
     private fun setupClicks() {
         binding.btnCancel.setOnClickListener { finish() }
 
+        binding.backArrow.setOnClickListener { finish() }
+
         binding.btnConfirm.setOnClickListener {
             val selectedItems = quantityMap.filter { it.value > 0 }
 

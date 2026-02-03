@@ -5,14 +5,17 @@ import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.unitedpoultry.AdminShopModule.AdminShopDetailsActivity
 
 import com.example.unitedpoultry.AdminShopModule.model.ShopModel
 import com.example.unitedpoultry.R
+import com.example.unitedpoultry.util.AppConstants
 
 class AdminShopListAdapter(
     private var originalList: MutableList<ShopModel>,
@@ -32,11 +35,27 @@ class AdminShopListAdapter(
 
         holder.tvName.text = item.name
         holder.tvAddress.text = item.address
-        holder.tvDiscount.text = item.discount_per_petti + "%"
+        holder.tvDiscount.text = "Rs ${item.discount_per_petti}"
         holder.statusText.text = if (item.is_active == true) "Active" else "Inactive"
 
         holder.tvTotalShops.text = "-"
         holder.tvReceivable.text = "-"
+
+        val imageUrl = item.image
+
+        if (!imageUrl.isNullOrEmpty()) {
+            val fullImageUrl = AppConstants.ImageURL + imageUrl
+
+            Glide.with(holder.itemView.context)
+                .load(fullImageUrl)
+                .centerCrop()
+                .placeholder(R.drawable.homeingreen)
+                .error(R.drawable.homeingreen)
+                .into(holder.imgShop)
+        } else {
+            holder.imgShop.setImageResource(R.drawable.homeingreen)
+        }
+
 
         when (item.is_active) {
             true -> {
@@ -114,5 +133,6 @@ class AdminShopListAdapter(
         val tvReceivable: TextView = v.findViewById(R.id.tvReceivable)
         val statusLayout: LinearLayout = v.findViewById(R.id.statusLayout)
 
+        val imgShop: ImageView = v.findViewById(R.id.imgShop)
     }
 }

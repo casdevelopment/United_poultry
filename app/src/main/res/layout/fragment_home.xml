@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="25dp"
                 >
 
                 <LinearLayout
@@ -456,7 +456,8 @@
                             android:text="Eggs Sold"
                             android:textStyle="bold"
                             android:fontFamily="@font/poppins"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
+                            android:gravity="end"
                             android:textColor="@color/white74" />
 
                     </LinearLayout>
@@ -488,7 +489,8 @@
                             android:text="Returned"
                             android:textStyle="bold"
                             android:fontFamily="@font/poppins"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
+                            android:gravity="end"
                             android:textColor="@color/white74" />
 
                     </LinearLayout>
@@ -519,7 +521,8 @@
                             android:text="Waste"
                             android:textStyle="bold"
                             android:fontFamily="@font/poppins"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
+                            android:gravity="center"
                             android:textColor="@color/white74" />
 
                     </LinearLayout>

@@ -43,36 +43,81 @@
 <!--                android:backgroundTint="@color/white"-->
 <!--                android:layout_gravity="center"/>-->
 
-            <FrameLayout
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:layout_marginStart="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="@id/ivCurve"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="32dp">
 
-                <!-- Initials Circle -->
-                <TextView
-                    android:id="@+id/tvInitials"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/backArrow"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:cardElevation="0dp"
                     android:background="@drawable/square_white"
-                    android:gravity="center"
-                    android:text="BA"
-                    android:textColor="@color/primary"
-                    android:textStyle="bold"
-                    android:textSize="24sp"
-                    android:fontFamily="@font/poppins" />
+                    android:backgroundTint="@color/ice_blue15"
+                    android:layout_gravity="center">
 
-                <!-- Small Tick -->
-                <ImageView
-                    android:id="@+id/ivTick"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_gravity="bottom|end"
-                    android:layout_marginEnd="0dp"
-                    android:layout_marginBottom="0dp"
-                    android:src="@drawable/yellowcamerasvg"
-                    android:padding="2dp"
-                    />
-            </FrameLayout>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/singlearrow"
+                        app:tint="@color/white"
+                        android:layout_gravity="center"/>
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="70dp">
+
+                    <!-- Initials Circle -->
+                    <TextView
+                        android:id="@+id/tvInitials"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/square_white"
+                        android:gravity="center"
+                        android:text="BA"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold"
+                        android:textSize="24sp"
+                        android:fontFamily="@font/poppins" />
+
+                    <!-- Small Tick -->
+                    <ImageView
+                        android:id="@+id/ivTick"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="bottom|end"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginBottom="0dp"
+                        android:src="@drawable/yellowcamerasvg"
+                        android:padding="2dp"
+                        />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+
 
             <TextView
                 android:id="@+id/tvName"

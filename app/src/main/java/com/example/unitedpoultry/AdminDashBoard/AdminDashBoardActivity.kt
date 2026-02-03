@@ -22,6 +22,8 @@ class AdminDashBoardActivity : BaseActivity() {
         binding = ActivityAdminDashBoardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        configureStatusBar(isLightBackground = false, colorResId = R.color.primary)
+
         configureStatusBar(false, R.color.primary)
 
         selectedTabId = savedInstanceState?.getInt("tab") ?: R.id.nav_home

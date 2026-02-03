@@ -2,8 +2,10 @@ package com.example.unitedpoultry.ShopModule
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.unitedpoultry.AdminShopModule.model.ShopDetailsResponseModel
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.Collection.CollectionformActivity
@@ -13,6 +15,7 @@ import com.example.unitedpoultry.ShopModule.Adapter.RecentActivityAdapter
 import com.example.unitedpoultry.ShopModule.model.RecentActivityModel
 import com.example.unitedpoultry.ShopModule.viewmodel.RiderShopDetailsViewModel
 import com.example.unitedpoultry.databinding.ActivityShopDetailsBinding
+import com.example.unitedpoultry.util.AppConstants
 import com.example.unitedpoultry.util.AppConstants.userData
 import com.example.unitedpoultry.util.AppUtil
 import com.google.gson.Gson
@@ -151,18 +154,32 @@ class ShopDetailsActivity : BaseActivity() {
 
         binding.tvShopName.text = shop.name
         binding.tvAddress.text = shop.address
-        binding.tvDiscount.text = "${shop.discount_per_petti} %"
+        binding.tvDiscountPerPatti.text = "Rs ${shop.discount_per_petti} per patti"
 
         binding.tvContactName.text = shop.contact_person
         binding.tvPhoneNumber.text = shop.phone_number
 
-        binding.boxRate.text = "-"
-        binding.tvReceivable.text = "-"
-        binding.tvLastVisit.text = "-"
+//        binding.boxRate.text = "-"
+//        binding.tvReceivable.text = "-"
+//        binding.tvLastVisit.text = "-"
+//
+//        binding.tvCreditLimit.text = "-"
 
-        binding.tvCreditLimit.text = "-"
+     //   binding.tvInitials.text = getInitials(shop.contact_person)
 
-        binding.tvInitials.text = getInitials(shop.contact_person)
+        val imageUrl = shop.image
+        if (!imageUrl.isNullOrEmpty()) {
+            binding.imgShop.visibility = View.VISIBLE
+          //  binding.imgCamera.visibility = View.GONE
+
+            // Use full URL to show existing image
+            val fullImageUrl = AppConstants.ImageURL + imageUrl
+            Glide.with(this)
+                .load(fullImageUrl)
+                .centerCrop()
+                .placeholder(binding.imgShop.drawable)
+                .into(binding.imgShop)
+        }
 
 
     }
