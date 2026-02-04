@@ -68,7 +68,7 @@ class SaleFormActivity : BaseActivity() {
         binding.tvShopName.text = name
         binding.tvShopAddress.text = address
         binding.tvInitials.text = getInitials(name)
-        binding.tvDiscount.text = "-Rs $discountPercent"
+        binding.tvDiscount.text = "Rs 0"
     }
 
     private fun setupClicks() {

@@ -63,29 +63,37 @@
         </LinearLayout>
 
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_gravity="center"
-            app:cardCornerRadius="50dp"
-            app:cardElevation="6dp"
-            app:cardUseCompatPadding="true"
-            app:cardBackgroundColor="@color/white">
 
-        <TextView
-            android:id="@+id/tvInitials"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="-"
-            android:textColor="@color/primary"
-            android:textStyle="bold"
-            android:textSize="24sp"
-            android:fontFamily="@font/poppins"
-            android:background="@drawable/circle_white"/>
-    </androidx.cardview.widget.CardView>
+        <FrameLayout
+            android:id="@+id/imageContainer"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/edit_text_bg_black"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:padding="6dp">
+
+            <!-- Selected Image -->
+            <ImageView
+                android:id="@+id/imgShop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                />
+
+            <!-- Camera Icon -->
+            <ImageView
+                android:id="@+id/imgCamera"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/adminshopdetailvector"
+                android:visibility="gone"
+                />
+
+        </FrameLayout>
 
 
 

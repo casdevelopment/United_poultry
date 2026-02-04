@@ -1,13 +1,21 @@
 package com.example.unitedpoultry.AdminRiderModule
 
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.example.unitedpoultry.AdminRiderModule.model.RiderEditRequestModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.EditRiderViewModel
 import com.example.unitedpoultry.AdminShopModule.viewmodel.DeleteRiderViewModel
@@ -15,14 +23,36 @@ import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.databinding.ActivityAdminEditRiderBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse
+import com.example.unitedpoultry.util.AppConstants
 import com.example.unitedpoultry.util.AppUtil
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
+import java.io.FileOutputStream
 
 class AdminEditRiderActivity : BaseActivity() {
 
     private lateinit var binding: ActivityAdminEditRiderBinding
     private val viewModel: EditRiderViewModel by viewModel()
     private val viewModel1: DeleteRiderViewModel by viewModel()
+
+    private var selectedImageFile: File? = null
+
+    // ================= CAMERA =================
+    private val cameraLauncher =
+        registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
+            bitmap?.let { handleCameraImage(it) }
+        }
+
+    // ================= GALLERY =================
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.let { handleGalleryImage(it) }
+        }
 
 
 
@@ -70,6 +100,20 @@ class AdminEditRiderActivity : BaseActivity() {
         binding.etPassword.setText(password)
         binding.toggleStatus.isChecked = isActive
 
+        val imageUrl = intent.getStringExtra("IMAGE")
+        if (!imageUrl.isNullOrEmpty()) {
+            binding.imgShop.visibility = View.VISIBLE
+            binding.imgCamera.visibility = View.GONE
+
+            // Use full URL to show existing image
+            val fullImageUrl = AppConstants.ImageURL + imageUrl
+            Glide.with(this)
+                .load(fullImageUrl)
+                .centerCrop()
+                .placeholder(binding.imgShop.drawable)
+                .into(binding.imgShop)
+        }
+
     }
 
     private fun setupClicks() {
@@ -80,6 +124,8 @@ class AdminEditRiderActivity : BaseActivity() {
         binding.btnCancel.setOnClickListener {
             finish()
         }
+
+        binding.imageContainer.setOnClickListener { showImagePicker() }
 
         binding.btnSave.setOnClickListener {
             if (validateInputs()) {
@@ -92,6 +138,64 @@ class AdminEditRiderActivity : BaseActivity() {
         }
     }
 
+    private fun showImagePicker() {
+        AlertDialog.Builder(this)
+            .setItems(arrayOf("Camera", "Gallery")) { _, which ->
+                if (which == 0) openCamera() else openGallery()
+            }.show()
+    }
+
+    private fun openCamera() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            cameraLauncher.launch(null)
+        } else {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 101)
+        }
+    }
+
+    private fun openGallery() {
+        galleryLauncher.launch("image/*")
+    }
+
+    private fun handleCameraImage(bitmap: Bitmap) {
+        // Save bitmap to file
+        selectedImageFile = File(cacheDir, "shop_${System.currentTimeMillis()}.jpg")
+        FileOutputStream(selectedImageFile!!).use {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+        }
+
+        // Display using Glide for proper scaling
+        Glide.with(this)
+            .load(selectedImageFile)
+            .centerCrop()
+            .into(binding.imgShop)
+
+        binding.imgShop.visibility = View.VISIBLE
+        binding.imgCamera.visibility = View.GONE
+    }
+
+    private fun handleGalleryImage(uri: Uri) {
+        // Save URI to temp file for upload
+        selectedImageFile = File(cacheDir, "shop_${System.currentTimeMillis()}.jpg")
+        contentResolver.openInputStream(uri)?.use { input ->
+            selectedImageFile!!.outputStream().use { output ->
+                input.copyTo(output)
+            }
+        }
+
+        // Display selected image
+        Glide.with(this)
+            .load(selectedImageFile)
+            .centerCrop()
+            .into(binding.imgShop)
+
+        binding.imgShop.visibility = View.VISIBLE
+        binding.imgCamera.visibility = View.GONE
+    }
+
+
 
     private fun validateInputs(): Boolean {
         var valid = true
@@ -102,6 +206,7 @@ class AdminEditRiderActivity : BaseActivity() {
         binding.etPhoneNumberError.visibility = View.GONE
         binding.etAddressError.visibility = View.GONE
         binding.etUserNameError.visibility = View.GONE
+        binding.etImageError.visibility = View.GONE
 
 
 
@@ -185,6 +290,13 @@ class AdminEditRiderActivity : BaseActivity() {
             valid = false
         }
 
+        val hasImage = selectedImageFile != null || binding.imgShop.drawable != null
+        if (!hasImage) {
+            binding.etImageError.visibility = View.VISIBLE
+            binding.etImageError.text = "Shop image required"
+            valid = false
+        }
+
 
         return valid
     }
@@ -192,23 +304,52 @@ class AdminEditRiderActivity : BaseActivity() {
 
     private fun callEditAreaApi() {
 
-        val isActive = binding.toggleStatus.isChecked
+//        val isActive = binding.toggleStatus.isChecked
 
         val id = intent.getIntExtra("ID", 0)
 
-        val password = binding.etPassword.text.toString().trim()
-        val request = RiderEditRequestModel(
-            name = binding.etName.text.toString().trim(),
-            email = binding.etEmail.text.toString().trim(),
-            username = binding.etUserName.text.toString().trim(),
-            phone_number = binding.etPhoneNumber.text.toString().trim(),
-            cnic = binding.etCnic.text.toString().trim(),
-            address = binding.etAddress.text.toString().trim(),
-            password = if (password.isNotEmpty() && password.length >= 8) password else null,
-            is_active = isActive
-        )
+        val passwordd = binding.etPassword.text.toString().trim()
+//        val request = RiderEditRequestModel(
+//            name = binding.etName.text.toString().trim(),
+//            email = binding.etEmail.text.toString().trim(),
+//            username = binding.etUserName.text.toString().trim(),
+//            phone_number = binding.etPhoneNumber.text.toString().trim(),
+//            cnic = binding.etCnic.text.toString().trim(),
+//            address = binding.etAddress.text.toString().trim(),
+//            password = if (password.isNotEmpty() && password.length >= 8) password else null,
+//            is_active = isActive
+//        )
 
-        viewModel.editRider(id, request).observe(this) { apiResponse ->
+       // val isActive = if (binding.toggleStatus.isChecked) "1" else "0"
+
+        val isActive = if (binding.toggleStatus.isChecked) "1" else "0"
+        val isActiveBody = isActive.toRequestBody("text/plain".toMediaTypeOrNull())
+
+
+        val name = binding.etName.text.toString().toRequestBody()
+        val email = binding.etEmail.text.toString().toRequestBody()
+        val username = binding.etUserName.text.toString().toRequestBody()
+        val phone_number = binding.etPhoneNumber.text.toString().toRequestBody()
+        val cnic = binding.etCnic.text.toString().toRequestBody()
+        val address = binding.etAddress.text.toString().toRequestBody()
+
+        val passwordBody: RequestBody? =
+            if (passwordd.isNotEmpty() && passwordd.length >= 8) {
+                passwordd.toRequestBody("text/plain".toMediaTypeOrNull())
+            } else {
+                null
+            }
+
+
+        val imagePart = selectedImageFile?.let {
+            MultipartBody.Part.createFormData(
+                "image", it.name, it.asRequestBody("image/*".toMediaTypeOrNull())
+            )
+        }
+
+
+
+        viewModel.editRider(id, name,email,username,phone_number,cnic,address,passwordBody,isActiveBody,imagePart).observe(this) { apiResponse ->
 
             when (apiResponse.status) {
 
@@ -289,6 +430,16 @@ class AdminEditRiderActivity : BaseActivity() {
         }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 101 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            openCamera()
+        } else {
+            Toast.makeText(this, "Camera permission required", Toast.LENGTH_SHORT).show()
+        }
+    }
 
 
     private fun showDeleteConfirmation() {

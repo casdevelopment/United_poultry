@@ -27,6 +27,7 @@ import com.example.unitedpoultry.network.retrofit.BaseResponse
 import com.example.unitedpoultry.rider_home.model.DailyPaymentStatsData
 import com.example.unitedpoultry.rider_home.model.EggPickupData
 import com.example.unitedpoultry.rider_home.model.EggPickupRequest
+import com.example.unitedpoultry.status_check.model.UserStatusResponse
 import com.example.unitedpoultry.waste_return.model.RiderReturnRequest
 import com.example.unitedpoultry.waste_return.model.RiderWasteRequest
 import okhttp3.MultipartBody
@@ -116,9 +117,22 @@ interface ApiInterface {
     suspend fun getRiders(@Query("page") page: Int): Response<BaseResponse<RiderDataResponceModel>>
 
 
-    @POST("admin/sellers")  // your login API endpoint
-    suspend fun addRider(@Body request: RiderRequestModel): Response<BaseResponse<RiderModel>>
+//    @POST("admin/sellers")  // your login API endpoint
+//    suspend fun addRider(@Body request: RiderRequestModel): Response<BaseResponse<RiderModel>>
 
+    @Multipart
+    @POST("admin/sellers")
+    suspend fun addRider(
+        @Part("name") name: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("username") username: RequestBody,
+        @Part("phone_number") phoneNumber: RequestBody,
+        @Part("cnic") cnic: RequestBody,
+        @Part("address") address: RequestBody,
+        @Part("password") password: RequestBody,
+        @Part("is_active") isActive: RequestBody,
+        @Part image: MultipartBody.Part? = null // optional file upload
+    ): Response<BaseResponse<Any>>
 
     @GET("admin/sellers/{id}")
     suspend fun getRiderDetails(
@@ -126,8 +140,21 @@ interface ApiInterface {
     ): Response<BaseResponse<RiderModel>>
 
 
-    @PUT("admin/sellers/{id}")
-    suspend fun editRider(@Path("id") id: Int, @Body request: RiderEditRequestModel): Response<BaseResponse<RiderModel>>
+    @Multipart
+    @POST("admin/sellers/{id}")  // update endpoint
+    suspend fun editRider(
+        @Path("id") riderId: Int,
+        @Part("name") name: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("username") username: RequestBody,
+        @Part("phone_number") phoneNumber: RequestBody,
+        @Part("cnic") cnic: RequestBody,
+        @Part("address") address: RequestBody,
+        @Part("password") password: RequestBody?,
+        @Part("is_active") isActive: RequestBody,
+        @Part image: MultipartBody.Part?
+    ): Response<BaseResponse<RiderModel>>
+
 
     @DELETE("admin/sellers/{id}")
     suspend fun deleteRider(@Path("id") shopId: Int):Response<BaseResponse<Any>>
@@ -236,6 +263,10 @@ interface ApiInterface {
 
     @POST("seller/egg-pickup/save-waste")
     suspend fun RiderWasteProduct(@Body request: RiderWasteRequest): Response<BaseResponse<Any>>
+
+    @GET("seller/account/status")
+    suspend fun checkUserStatus(): Response<BaseResponse<UserStatusResponse>>
+
 
 
 }

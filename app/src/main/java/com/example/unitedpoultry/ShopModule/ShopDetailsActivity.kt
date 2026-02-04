@@ -15,6 +15,8 @@ import com.example.unitedpoultry.ShopModule.Adapter.RecentActivityAdapter
 import com.example.unitedpoultry.ShopModule.model.RecentActivityModel
 import com.example.unitedpoultry.ShopModule.viewmodel.RiderShopDetailsViewModel
 import com.example.unitedpoultry.databinding.ActivityShopDetailsBinding
+import com.example.unitedpoultry.status_check.UserStatusChecker
+import com.example.unitedpoultry.status_check.viewmodel.UserStatusViewModel
 import com.example.unitedpoultry.util.AppConstants
 import com.example.unitedpoultry.util.AppConstants.userData
 import com.example.unitedpoultry.util.AppUtil
@@ -25,6 +27,7 @@ class ShopDetailsActivity : BaseActivity() {
 
     private lateinit var binding: ActivityShopDetailsBinding
     private val viewModel: RiderShopDetailsViewModel by viewModel()
+    private val viewModel1: UserStatusViewModel by viewModel()
 
     private var shopDetails: ShopDetailsResponseModel? = null
     private var shopId: Int = 0
@@ -55,19 +58,39 @@ class ShopDetailsActivity : BaseActivity() {
         binding.backArrow.setOnClickListener { finish() }
 
         binding.btnNewSale.setOnClickListener {
-            shopDetails?.let { shop ->
+            // First check if the user is active
+            UserStatusChecker.check(
+                lifecycleOwner = this,
+                viewModel = viewModel1,  // your UserStatusViewModel instance
 
-                val intent = Intent(this, SaleFormActivity::class.java)
-                intent.putExtra("ID", shop.id)
-                intent.putExtra("NAME", shop.name)
-                intent.putExtra("ADDRESS", shop.address)
-                intent.putExtra("DISCOUNT", shop.discount_per_petti)
-                startActivity(intent)
+                onActive = {
+                    // ✅ User is active, proceed with navigation
+                    shopDetails?.let { shop ->
+                        val intent = Intent(this, SaleFormActivity::class.java)
+                        intent.putExtra("ID", shop.id)
+                        intent.putExtra("NAME", shop.name)
+                        intent.putExtra("ADDRESS", shop.address)
+                        intent.putExtra("DISCOUNT", shop.discount_per_petti)
+                        startActivity(intent)
+                    } ?: run {
+                        Toast.makeText(this, "Shop details not loaded yet", Toast.LENGTH_SHORT).show()
+                    }
+                },
 
-            } ?: run {
-                Toast.makeText(this, "Shop details not loaded yet", Toast.LENGTH_SHORT).show()
-            }
+                onInactive = {
+                    Toast.makeText(
+                        this,
+                        "Your account is inactive. Contact admin.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                },
+
+                onError = { message ->
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                }
+            )
         }
+
 
         binding.btnCollectPayment.setOnClickListener {
             shopDetails?.let { shop ->

@@ -242,16 +242,25 @@ class AdminEditShopActivity : BaseActivity() {
             valid = false
         }
 
+//        val discountText = binding.etDiscount.text.toString().trim()
+//
+//        if (discountText.isNotEmpty()) {
+//            val discount = discountText.toFloatOrNull()  // parse as float for validation
+//            if (discount == null || discount !in 0f..100f) {
+//                binding.etDiscountError.visibility = View.VISIBLE
+//                binding.etDiscountError.text = "Enter valid discount percentage"
+//                valid = false
+//            }
+//        }
+
         val discountText = binding.etDiscount.text.toString().trim()
 
-        if (discountText.isNotEmpty()) {
-            val discount = discountText.toFloatOrNull()  // parse as float for validation
-            if (discount == null || discount !in 0f..100f) {
-                binding.etDiscountError.visibility = View.VISIBLE
-                binding.etDiscountError.text = "Enter valid discount percentage"
-                valid = false
-            }
+        if (discountText.isNotEmpty() && !discountText.matches(Regex("^\\d+$"))) {
+            binding.etDiscountError.visibility = View.VISIBLE
+            binding.etDiscountError.text = "Enter valid discount (numbers only)"
+            valid = false
         }
+
 
 
 

@@ -63,6 +63,7 @@ class AdminAddNewShopActivity : BaseActivity() {
         binding.btnCancel.setOnClickListener { finish() }
 
         binding.imageContainer.setOnClickListener { showImagePickerDialog() }
+
         binding.btnSave.setOnClickListener {
             if (validateInputs()) callAddShopApi()
         }

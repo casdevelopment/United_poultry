@@ -61,17 +61,34 @@
                         android:layout_weight="1" />
 
                     <!-- Initials -->
-                    <TextView
-                        android:id="@+id/tvInitials"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/square_white"
-                        android:gravity="center"
-                        android:text="-"
-                        android:textColor="@color/primary"
-                        android:textStyle="bold"
-                        android:textSize="20sp"
-                        android:fontFamily="@font/poppins" />
+                    <FrameLayout
+                        android:id="@+id/imageContainer"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/edit_text_bg_black"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="6dp">
+
+                        <!-- Selected Image -->
+                        <ImageView
+                            android:id="@+id/imgShop"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            />
+
+                        <!-- Camera Icon -->
+                        <ImageView
+                            android:id="@+id/imgCamera"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/adminshopdetailvector"
+                            android:visibility="gone"
+                            />
+
+                    </FrameLayout>
 
                     <!-- Empty space to push initials to center -->
                     <View
@@ -183,7 +200,7 @@
                             android:layout_height="wrap_content"
                             android:text="-"
                             android:textStyle="bold"
-                            android:textSize="18sp"
+                            android:textSize="15sp"
                             android:fontFamily="@font/quicksand"
                             android:textColor="@color/white"
                             android:layout_weight="1"/>
@@ -437,7 +454,8 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:padding="10dp"
-                        android:layout_marginLeft="15dp">
+                        android:layout_marginLeft="15dp"
+                        android:visibility="gone">
 
 
                         <TextView

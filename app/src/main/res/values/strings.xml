@@ -64,9 +64,9 @@
     <string name="fifth_b3">Back</string>
     <string name="rs">Rs</string>
     <string name="notification_title">Notifications</string>
-    <string name="active_suppliers">Active Suppliers</string>
-    <string name="pending_approval">Pending Approval</string>
-    <string name="total_products">Total Suppliers</string>
+    <string name="active_suppliers">Active\nSuppliers</string>
+    <string name="pending_approval">Pending\nApproval</string>
+    <string name="total_products">Total\nSuppliers</string>
 
 
 </resources>

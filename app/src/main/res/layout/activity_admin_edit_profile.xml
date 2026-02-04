@@ -68,7 +68,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="Edit Shop"
+                    android:text="Edit Profile"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -142,7 +142,7 @@
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:gravity="center"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp" />
 
                 <TextView
                     android:id="@+id/etImageError"
@@ -270,7 +270,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="Username"
+                    android:text="User name"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold"

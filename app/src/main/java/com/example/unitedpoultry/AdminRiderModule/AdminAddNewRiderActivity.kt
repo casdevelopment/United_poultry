@@ -1,10 +1,19 @@
 package com.example.unitedpoultry.AdminRiderModule
 
+import android.Manifest
 import android.app.Activity
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.example.unitedpoultry.AdminArea.model.AddAreaRequestModel
 import com.example.unitedpoultry.AdminArea.viewmodel.AddAreaViewModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderRequestModel
@@ -15,12 +24,30 @@ import com.example.unitedpoultry.databinding.ActivityAdminAddNewRiderBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse
 import com.example.unitedpoultry.util.AppUtil
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
+import java.io.FileOutputStream
 
 class AdminAddNewRiderActivity : BaseActivity() {
 
     private lateinit var binding: ActivityAdminAddNewRiderBinding
     private val viewModel: AddRiderViewModel by viewModel()
+
+    private var selectedImageFile: File? = null
+
+    // ------------------ GALLERY ------------------
+    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        uri?.let { handleGalleryImage(it) }
+    }
+
+    // ------------------ CAMERA ------------------
+    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
+        bitmap?.let { handleCameraImage(it) } ?: Toast.makeText(this, "Failed to capture image", Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +61,7 @@ class AdminAddNewRiderActivity : BaseActivity() {
         )
 
         setupClicks()
+        resetImageViews()
     }
 
     private fun setupClicks() {
@@ -43,12 +71,89 @@ class AdminAddNewRiderActivity : BaseActivity() {
         binding.btnCancel.setOnClickListener {
             finish() }
 
+        binding.imageContainer.setOnClickListener { showImagePickerDialog() }
+
         binding.btnSave.setOnClickListener {
             if (validateInputs()) {
                 callAddRiderApi()
             }
         }
     }
+
+    private fun showImagePickerDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Select Image")
+            .setItems(arrayOf("Camera", "Gallery")) { _, which ->
+                when (which) {
+                    0 -> checkCameraPermissionAndOpenCamera()
+                    1 -> openGallery()
+                }
+            }
+            .show()
+    }
+
+    private fun checkCameraPermissionAndOpenCamera() {
+        when {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED -> openCamera()
+            ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA) -> {
+                AlertDialog.Builder(this)
+                    .setTitle("Camera Permission Required")
+                    .setMessage("Camera access is required to take shop images.")
+                    .setPositiveButton("Grant") { _, _ ->
+                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 101)
+                    }
+                    .setNegativeButton("Cancel", null)
+                    .show()
+            }
+            else -> ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 101)
+        }
+    }
+
+    private fun openCamera() {
+        cameraLauncher.launch(null) // TakePicturePreview automatically opens camera and returns bitmap
+    }
+
+    private fun openGallery() {
+        galleryLauncher.launch("image/*")
+    }
+
+    private fun handleCameraImage(bitmap: Bitmap) {
+        // Show immediately
+        binding.imgShop.visibility = View.VISIBLE
+        binding.imgCamera.visibility = View.GONE
+        binding.imgShop.setImageBitmap(bitmap)
+
+        // Save bitmap to file for API upload
+        selectedImageFile = File(getExternalFilesDir(null), "shop_${System.currentTimeMillis()}.jpg")
+        FileOutputStream(selectedImageFile!!).use { out ->
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+        }
+    }
+
+    private fun handleGalleryImage(uri: Uri) {
+        selectedImageFile = getFileFromUri(uri)
+        binding.imgShop.visibility = View.VISIBLE
+        binding.imgCamera.visibility = View.GONE
+
+        Glide.with(this)
+            .load(selectedImageFile)
+            .centerCrop()
+            .into(binding.imgShop)
+    }
+
+    private fun getFileFromUri(uri: Uri): File {
+        val inputStream = contentResolver.openInputStream(uri)!!
+        val tempFile = File(cacheDir, "upload_${System.currentTimeMillis()}.jpg")
+        inputStream.use { input -> tempFile.outputStream().use { output -> input.copyTo(output) } }
+        return tempFile
+    }
+
+    private fun resetImageViews() {
+        selectedImageFile = null
+        binding.imgShop.visibility = View.GONE
+        binding.imgCamera.visibility = View.VISIBLE
+    }
+
 
     private fun validateInputs(): Boolean {
         var valid = true
@@ -60,7 +165,13 @@ class AdminAddNewRiderActivity : BaseActivity() {
         binding.etAddressError.visibility = View.GONE
         binding.etUserNameError.visibility = View.GONE
         binding.etPasswordError.visibility = View.GONE
+        binding.etImageError.visibility = View.GONE
 
+        if (selectedImageFile == null) {
+            binding.etImageError.visibility = View.VISIBLE
+            binding.etImageError.text = "Shop image required"
+            valid = false
+        }
 
 
         val Name = binding.etName.text.toString().trim()
@@ -153,20 +264,38 @@ class AdminAddNewRiderActivity : BaseActivity() {
 
     private fun callAddRiderApi() {
 
-        val isActive = binding.toggleStatus.isChecked
+       // val isActive = binding.toggleStatus.isChecked
+        val isActive = if (binding.toggleStatus.isChecked) "1" else "0"
 
-        val request = RiderRequestModel(
-            name = binding.etName.text.toString().trim(),
-            email = binding.etEmail.text.toString().trim(),
-            username = binding.etUserName.text.toString().trim(),
-            phone_number = binding.etPhoneNumber.text.toString().trim(),
-            cnic = binding.etCnic.text.toString().trim(),
-            address = binding.etAddress.text.toString().trim(),
-            password = binding.etPassword.text.toString().trim(),
-            is_active = isActive // ✅ backend expects Int
-        )
+        val name = binding.etName.text.toString().trim().toRequestBody()
+        val email = binding.etEmail.text.toString().trim().toRequestBody()
+        val username = binding.etUserName.text.toString().trim().toRequestBody()
+        val phone_number = binding.etPhoneNumber.text.toString().trim().toRequestBody()
+        val cnic = binding.etCnic.text.toString().trim().toRequestBody()
+        val address = binding.etAddress.text.toString().trim().toRequestBody()
+        val password = binding.etPassword.text.toString().trim().toRequestBody()
+        val active = isActive.toRequestBody()
 
-        viewModel.addRider(request).observe(this) { apiResponse ->
+
+        val imagePart = selectedImageFile?.let {
+            MultipartBody.Part.createFormData("image", it.name, it.asRequestBody("image/*".toMediaTypeOrNull()))
+        } ?: run {
+            Toast.makeText(this, "Image file not selected", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+//        val request = RiderRequestModel(
+//            name = binding.etName.text.toString().trim(),
+//            email = binding.etEmail.text.toString().trim(),
+//            username = binding.etUserName.text.toString().trim(),
+//            phone_number = binding.etPhoneNumber.text.toString().trim(),
+//            cnic = binding.etCnic.text.toString().trim(),
+//            address = binding.etAddress.text.toString().trim(),
+//            password = binding.etPassword.text.toString().trim(),
+//            is_active = isActive // ✅ backend expects Int
+//        )
+
+        viewModel.addRider(name,email,username,phone_number,cnic,address,password,active,imagePart).observe(this) { apiResponse ->
 
             when (apiResponse.status) {
 

@@ -3,9 +3,11 @@ package com.example.unitedpoultry.AdminRiderModule
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import com.bumptech.glide.Glide
 import com.example.unitedpoultry.AdminRiderModule.model.RiderModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.RiderDailyStatsViewModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.RiderDetailsViewModel
@@ -17,6 +19,7 @@ import com.example.unitedpoultry.network.retrofit.BaseResponse
 import com.example.unitedpoultry.rider_home.model.EggPickupData
 import com.example.unitedpoultry.rider_home.viewmodel.DailyPaymentStatsViewModel
 import com.example.unitedpoultry.rider_home.viewmodel.DailyStatsViewModel
+import com.example.unitedpoultry.util.AppConstants
 import com.example.unitedpoultry.util.AppUtil
 import com.google.gson.Gson
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -99,6 +102,7 @@ class AdminRiderDetailsActivity : BaseActivity() {
             intent.putExtra("USERNAME", rider.username)
             intent.putExtra("PASSWORD", rider.password)
             intent.putExtra("AREA_Status", rider.is_active)
+            intent.putExtra("IMAGE", rider.image)
 
 
 
@@ -152,7 +156,7 @@ class AdminRiderDetailsActivity : BaseActivity() {
                     if (retrofitResponse != null && retrofitResponse.isSuccessful) {
 
                         val baseResponse = retrofitResponse.body()
-                        Toast.makeText(this, baseResponse?.message, Toast.LENGTH_SHORT).show()
+                      //  Toast.makeText(this, baseResponse?.message, Toast.LENGTH_SHORT).show()
 
                         if (baseResponse?.result == "success") {
                             if (baseResponse?.result == "success") {
@@ -180,7 +184,7 @@ class AdminRiderDetailsActivity : BaseActivity() {
     private fun bindData(rider: RiderModel) {
 
         val initials = getInitials(rider.name)
-        binding.tvInitials.text = initials
+       // binding.tvInitials.text = initials
         binding.tvRiderName.text= rider.name
         binding.tvAddress.text = rider.address
         binding.tvPhoneNumber.text = rider.phone_number
@@ -200,6 +204,20 @@ class AdminRiderDetailsActivity : BaseActivity() {
 
         binding.tvJoinedDate.text = formatDateOnly(rider.created_at)
 
+
+        val imageUrl = rider.image
+        if (!imageUrl.isNullOrEmpty()) {
+            binding.imgShop.visibility = View.VISIBLE
+            //  binding.imgCamera.visibility = View.GONE
+
+            // Use full URL to show existing image
+            val fullImageUrl = AppConstants.ImageURL + imageUrl
+            Glide.with(this)
+                .load(fullImageUrl)
+                .centerCrop()
+                .placeholder(binding.imgShop.drawable)
+                .into(binding.imgShop)
+        }
 
     }
 

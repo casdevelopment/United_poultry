@@ -196,14 +196,32 @@
             android:layout_height="match_parent"
             android:padding="12dp">
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Picked Products"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/primary"
                 android:layout_marginBottom="12dp"/>
+
+            <TextView
+                android:id="@+id/tvTotalEggs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/black60"
+                android:fontFamily="@font/poppins" />
+
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerProducts"
@@ -265,7 +283,8 @@
                     android:src="@drawable/resource_return" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginStart="12dp"
@@ -287,15 +306,7 @@
                             android:textColor="@color/black"
                             android:fontFamily="@font/poppins" />
 
-                        <TextView
-                            android:id="@+id/tvTotalEggs"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="-"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/black60"
-                            android:fontFamily="@font/poppins" />
+
                     </LinearLayout>
 
                     <!-- SECOND ROW -->
@@ -314,17 +325,20 @@
                             android:textColor="@color/gray"
                             android:fontFamily="@font/poppins" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="OPEN"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/sub_primary"
-                            android:fontFamily="@font/poppins" />
+
                     </LinearLayout>
 
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OPEN"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/sub_primary"
+                    android:fontFamily="@font/poppins"
+                    android:layout_gravity="center_vertical"/>
 
 
 

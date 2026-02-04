@@ -26,11 +26,15 @@ import com.example.unitedpoultry.network.api.ApiInterface
 import com.example.unitedpoultry.network.retrofit.BaseResponse
 import com.example.unitedpoultry.rider_home.model.EggPickupData
 import com.example.unitedpoultry.rider_home.model.EggPickupRequest
+import com.example.unitedpoultry.status_check.model.UserStatusResponse
 import com.example.unitedpoultry.waste_return.model.RiderReturnRequest
 import com.example.unitedpoultry.waste_return.model.RiderWasteRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
 
 class Repository(private val api: ApiInterface) {
 
@@ -113,9 +117,24 @@ class Repository(private val api: ApiInterface) {
         return api.getRiders(page = page)
     }
 
-    suspend fun addRider(request: RiderRequestModel): Response<BaseResponse<RiderModel>> {
-        return api.addRider(request)
+//    suspend fun addRider(request: RiderRequestModel): Response<BaseResponse<RiderModel>> {
+//        return api.addRider(request)
+//    }
+
+    suspend fun addRider(
+        name: RequestBody,
+        email: RequestBody,
+        username: RequestBody,
+        phoneNumber: RequestBody,
+        cnic: RequestBody,
+        address: RequestBody,
+        password: RequestBody,
+        isActive: RequestBody,
+        image: MultipartBody.Part
+    ): Response<BaseResponse<Any>> {
+        return api.addRider(name, email, username, phoneNumber, cnic, address, password,isActive, image)
     }
+
 
 
     suspend fun getRiderDetails(
@@ -124,8 +143,24 @@ class Repository(private val api: ApiInterface) {
         return api.getRiderDetails(riderId)
     }
 
-    suspend fun editRider(id: Int, request: RiderEditRequestModel): Response<BaseResponse<RiderModel>> {
-        return api.editRider(id, request)
+//    suspend fun editRider(id: Int, request: RiderEditRequestModel): Response<BaseResponse<RiderModel>> {
+//        return api.editRider(id, request)
+//    }
+
+
+    suspend fun editRider(
+        id: Int,
+        name: RequestBody,
+        email: RequestBody,
+        username: RequestBody,
+        phoneNumber: RequestBody,
+        cnic: RequestBody,
+        address: RequestBody,
+        password: RequestBody?,
+        isActive: RequestBody,
+        image: MultipartBody.Part?
+    ): Response<BaseResponse<RiderModel>> {
+        return api.editRider(id,name, email, username, phoneNumber, cnic, address, password,isActive, image)
     }
 
     suspend fun deleteRider(ShopId: Int): Response<BaseResponse<Any>> {
@@ -229,6 +264,11 @@ class Repository(private val api: ApiInterface) {
     suspend fun RiderWasteProduct(request: RiderWasteRequest): Response<BaseResponse<Any>> {
         return api.RiderWasteProduct(request)
     }
+
+    suspend fun checkUserStatus(): Response<BaseResponse<UserStatusResponse>> {
+        return api.checkUserStatus()
+    }
+
 
 
 }

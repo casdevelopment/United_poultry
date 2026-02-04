@@ -10,6 +10,7 @@ import com.example.unitedpoultry.ShopModule.Adapter.RiderShopListAdapter
 import com.example.unitedpoultry.ShopModule.viewmodel.RiderShopListViewModel
 import com.example.unitedpoultry.databinding.ActivityShopListBinding
 import com.example.unitedpoultry.network.Status
+import com.example.unitedpoultry.status_check.viewmodel.UserStatusViewModel
 import com.example.unitedpoultry.util.AppUtil
 import com.example.unitedpoultry.util.showToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -19,6 +20,7 @@ class ShopListActivity : BaseActivity() {
     private lateinit var binding: ActivityShopListBinding
     private lateinit var adapter: RiderShopListAdapter
     private val viewModel: RiderShopListViewModel by viewModel()
+    private val viewModel1: UserStatusViewModel by viewModel()
 
     private val shopList = mutableListOf<ShopModel>()
     private var isLoading = false
@@ -61,8 +63,12 @@ class ShopListActivity : BaseActivity() {
     private fun setupRecyclerView() {
         adapter = RiderShopListAdapter(
             originalList = mutableListOf(),
-            areaId = areaId
+            areaId = areaId,
+            lifecycleOwner = this,
+            viewModel = viewModel1
+
         )
+
 
         binding.rvShopList.layoutManager = LinearLayoutManager(this)
         binding.rvShopList.adapter = adapter

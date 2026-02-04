@@ -11,6 +11,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.unitedpoultry.AdminRiderModule.model.RiderModel
+import com.example.unitedpoultry.AdminRiderModule.viewmodel.RiderDetailsViewModel
+import com.example.unitedpoultry.Authentications.login.model.LoginResponseModel
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.Notification.NotificationActivity
 import com.example.unitedpoultry.rider_home.EggPickupActivity
@@ -29,12 +32,18 @@ import com.example.unitedpoultry.NewSale.Adapter.RiderProductHorizontalAdapter
 import com.example.unitedpoultry.NewSale.model.Product
 import com.example.unitedpoultry.NewSale.model.RiderProductData
 import com.example.unitedpoultry.NewSale.viewmodel.GetRiderProductViewModel
+import com.example.unitedpoultry.SessionManager
 import com.example.unitedpoultry.rider_home.model.ReturnWasteRequestModel
 import com.example.unitedpoultry.rider_home.viewmodel.ReturnWasteViewModel
+import com.example.unitedpoultry.status_check.UserStatusChecker
+import com.example.unitedpoultry.status_check.viewmodel.UserStatusViewModel
+import com.example.unitedpoultry.util.AppConstants
 import com.example.unitedpoultry.waste_return.RiderProductReturnActivity
 import com.example.unitedpoultry.waste_return.RiderWasteProductActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
+import com.google.gson.Gson
+import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -49,10 +58,14 @@ class HomeFragment : Fragment() {
     private val ViewModel1: DailyPaymentStatsViewModel by viewModel()
     private val ViewModel2: ReturnWasteViewModel by viewModel()
     private val ViewModel3: GetRiderProductViewModel by viewModel()
+    private val ViewModel4: UserStatusViewModel by viewModel()
 
     private var productList = listOf<Product>()
 
     private lateinit var productAdapter: RiderProductHorizontalAdapter
+
+    private val riderViewModel: RiderDetailsViewModel by viewModel()
+    private val sessionManager: SessionManager by inject()
 
 
 
@@ -81,6 +94,7 @@ class HomeFragment : Fragment() {
 
     }
 
+
     private fun showData(){
 
         binding.tvTitle.text = "Hello, ${userData?.name ?: "User Name"}"
@@ -90,15 +104,101 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun refreshUserSession() {
+
+        val riderId = AppConstants.userData?.id ?: return
+
+        riderViewModel.getRiderDetails(riderId).observe(viewLifecycleOwner) { apiResponse ->
+
+            when (apiResponse.status) {
+
+                Status.LOADING -> AppUtil.startLoader(requireContext())
+
+                Status.SUCCESS -> {
+                    AppUtil.stopLoader()
+
+                    val response = apiResponse.data
+                    if (response != null && response.isSuccessful) {
+
+                        response.body()?.data?.let { riderModel ->
+                            // ✅ Map RiderModel to LoginResponseModel manually
+                            val updatedUser = mapRiderToLoginResponse(riderModel)
+
+                            // Update runtime session
+                            AppConstants.userData = updatedUser
+
+                            // Update local storage
+                            sessionManager.userInfo(Gson().toJson(updatedUser))
+
+                            // Update UI
+                            showData()
+                        }
+                    }
+                }
+
+                Status.ERROR -> {
+                    AppUtil.stopLoader()
+                    Toast.makeText(
+                        requireContext(),
+                        apiResponse.message ?: "Failed to refresh profile",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    private fun mapRiderToLoginResponse(rider: RiderModel): LoginResponseModel {
+        return LoginResponseModel(
+            id = rider.id,
+            name = rider.name,
+            email = rider.email ?: "",
+            email_verified_at = rider.email_verified_at,
+            phone_number = rider.phone_number ?: "",
+            username = rider.username ?: "",
+            address = rider.address ?: "",
+            cnic = rider.cnic,
+            image = rider.image,
+            is_active = rider.is_active,
+            role_id = rider.role_id,
+            created_at = rider.created_at ?: "",
+            updated_at = rider.updated_at ?: ""
+        )
+    }
+
+
 
 
     private fun onclick(){
 
-        binding.addEggsLayout.setOnClickListener{
+        binding.addEggsLayout.setOnClickListener {
 
-            val intent = Intent(requireContext(), EggPickupActivity::class.java)
-            startActivity(intent)
+            // Call your reusable UserStatusChecker
+            UserStatusChecker.check(
+                lifecycleOwner = viewLifecycleOwner,
+                viewModel = ViewModel4,
+
+                onActive = {
+                    val intent = Intent(requireContext(), EggPickupActivity::class.java)
+                    startActivity(intent)
+                },
+
+                onInactive = {
+                    Toast.makeText(requireContext(), "Your account is inactive. Contact admin.", Toast.LENGTH_LONG).show()
+                },
+
+                onError = { message ->
+                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                }
+            )
         }
+
+
+//        binding.addEggsLayout.setOnClickListener{
+//
+//            val intent = Intent(requireContext(), EggPickupActivity::class.java)
+//            startActivity(intent)
+//        }
 
         binding.notifications.setOnClickListener {
             val intent = Intent(requireContext(), NotificationActivity::class.java)
@@ -107,7 +207,26 @@ class HomeFragment : Fragment() {
 
         binding.openReturnDialog.setOnClickListener {
 
-            showReturnWasteDialog()
+
+            UserStatusChecker.check(
+                lifecycleOwner = viewLifecycleOwner,
+                viewModel = ViewModel4,
+
+                onActive = {
+
+                    showReturnWasteDialog()
+                },
+
+                onInactive = {
+                    Toast.makeText(requireContext(), "Your account is inactive. Contact admin.", Toast.LENGTH_LONG).show()
+                },
+
+                onError = { message ->
+                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                }
+            )
+
+
         }
 
         binding.areaShortCut.setOnClickListener {
@@ -124,6 +243,7 @@ class HomeFragment : Fragment() {
         loadDailyStats()
         loadDailyPaymentStats()
         loadProducts()
+        refreshUserSession()
     }
 
     private fun loadDailyStats() {
@@ -294,8 +414,8 @@ class HomeFragment : Fragment() {
                                 productAdapter.submitList(products)
 
                                 val totalEggsSum = products.sumOf { it.total_eggs }
-                                val total = formatNumber(totalEggsSum)
-                                binding.tvTotalEggs.text = "Eggs  ${total}"
+                               // val total = formatNumber(totalEggsSum)
+                                binding.tvTotalEggs.text = "Eggs  ${totalEggsSum}"
                             }
 
                         } else {

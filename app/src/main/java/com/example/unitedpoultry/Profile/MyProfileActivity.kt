@@ -1,13 +1,13 @@
 package com.example.unitedpoultry.Profile
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
+import com.bumptech.glide.Glide
 import com.example.unitedpoultry.BaseActivity
-import com.example.unitedpoultry.NewSale.Adapter.SelectShopAdapter
-import com.example.unitedpoultry.SessionManager
 import com.example.unitedpoultry.databinding.ActivityMyProfileBinding
+import com.example.unitedpoultry.util.AppConstants
 import com.example.unitedpoultry.util.AppConstants.userData
-import org.koin.android.ext.android.inject
+
 
 class MyProfileActivity : BaseActivity() {
 
@@ -23,15 +23,17 @@ class MyProfileActivity : BaseActivity() {
             colorResId = android.R.color.white
         )
 
-
-        showData()
-
         binding.backArrow.setOnClickListener {
             finish()
         }
 
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showData()
     }
 
     private fun showData(){
@@ -44,7 +46,7 @@ class MyProfileActivity : BaseActivity() {
         }
 
 
-        binding.tvInitials.text = getInitials(userData?.username ?: "User Name")
+        //  binding.tvInitials.text = getInitials(userData?.username ?: "User Name")
 
         binding.tvFullName.text = userData?.name ?: "User Name"
 
@@ -56,9 +58,26 @@ class MyProfileActivity : BaseActivity() {
 
         binding.tvContact.text = userData?.phone_number?: "0"
 
-         binding.tvEmergencyContact.text = "-"
+        binding.tvEmergencyContact.text = "-"
 
         binding.tvAddress.text = userData?.address?: "0"
+
+
+
+        val imageUrl = userData?.image
+        if (!imageUrl.isNullOrEmpty()) {
+            binding.imgShop.visibility = View.VISIBLE
+            //  binding.imgCamera.visibility = View.GONE
+
+            // Use full URL to show existing image
+            val fullImageUrl = AppConstants.ImageURL + imageUrl
+            Glide.with(this)
+                .load(fullImageUrl)
+                .centerCrop()
+                .placeholder(binding.imgShop.drawable)
+                .into(binding.imgShop)
+        }
+
 
     }
 

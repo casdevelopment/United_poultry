@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -19,14 +20,18 @@ import com.example.unitedpoultry.Splash.SplashActivity
 import com.example.unitedpoultry.Welcome.WelcomeActivity
 import com.example.unitedpoultry.databinding.FragmentHomeBinding
 import com.example.unitedpoultry.databinding.FragmentProfileBinding
+import com.example.unitedpoultry.status_check.UserStatusChecker
+import com.example.unitedpoultry.status_check.viewmodel.UserStatusViewModel
 import com.example.unitedpoultry.util.AppConstants.userData
 import com.google.android.material.button.MaterialButton
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
     private val sessionManager: SessionManager by inject()
+    private val ViewModel4: UserStatusViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,25 +44,48 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        showData()
+
         onclick()
 
+    }
 
-
+    override fun onResume() {
+        super.onResume()
+        checkStatus()
+        showData()
     }
 
     private fun showData(){
 
         binding.tvName.text = userData?.username ?: "User Name"
-        binding.capsuleText.text = if (userData?.is_active == true) {
-            "Active"
-        } else {
-            "Inactive"
-        }
+
+
 
 
         binding.tvInitials.text = getInitials(userData?.username ?: "User Name")
 
+    }
+
+    private fun checkStatus(){
+
+        UserStatusChecker.check(
+            lifecycleOwner = viewLifecycleOwner,
+            viewModel = ViewModel4,
+
+            onActive = {
+
+                binding.capsuleText.text = "Active"
+            },
+
+            onInactive = {
+
+                binding.capsuleText.text = "Inactive"
+            },
+
+            onError = { message ->
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            }
+        )
     }
 
     private fun  onclick(){

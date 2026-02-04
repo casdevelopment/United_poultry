@@ -46,6 +46,7 @@ import com.example.unitedpoultry.network.retrofit.provideRetrofitInterface
 import com.example.unitedpoultry.rider_home.viewmodel.DailyPaymentStatsViewModel
 import com.example.unitedpoultry.rider_home.viewmodel.DailyStatsViewModel
 import com.example.unitedpoultry.rider_home.viewmodel.EggPickupViewModel
+import com.example.unitedpoultry.status_check.viewmodel.UserStatusViewModel
 import com.example.unitedpoultry.util.AppConstants.SHARED_PREF_NAME
 import com.example.unitedpoultry.waste_return.viewmodel.RiderReturnProductViewModel
 import com.example.unitedpoultry.waste_return.viewmodel.RiderWasteProductViewModel
@@ -113,6 +114,8 @@ val viewModelModule= module{
 
     viewModel { RiderReturnProductViewModel(get()) }
     viewModel { RiderWasteProductViewModel(get()) }
+
+    viewModel { UserStatusViewModel(get()) }
 
 }
 

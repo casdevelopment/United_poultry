@@ -110,7 +110,7 @@ class EggPickupActivity : BaseActivity() {
                     val res = response.data
                     if (res != null && res.isSuccessful) {
                         val baseResponse = res.body() as BaseResponse<EggPickupData>?
-                        Toast.makeText(this, baseResponse?.message ?: "Saved successfully", Toast.LENGTH_LONG).show()
+                      //  Toast.makeText(this, baseResponse?.message ?: "Saved successfully", Toast.LENGTH_LONG).show()
                         if (baseResponse?.result == "success") finish()
                     }
                 }
