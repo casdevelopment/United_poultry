@@ -230,7 +230,7 @@ class AdminRateManagmentActivity : BaseActivity(),TodayRateAdapter.OnPriceChange
     private fun updateProductRate() {
        var updateRateModel=UpdateRateModel()
         var updateRateItem=mutableListOf<UpdateRateItem>()
-        updateRateModel.date=binding.rateDate.text.toString()
+       // updateRateModel.date=binding.rateDate.text.toString()
         if (toDayRateListData.isNotEmpty()) {
             for (ratesListItem in toDayRateListData) {
                 if(ratesListItem.price!=0){
@@ -242,6 +242,7 @@ class AdminRateManagmentActivity : BaseActivity(),TodayRateAdapter.OnPriceChange
 
             val tomorrowDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Calendar.getInstance().apply { add(Calendar.DATE, 1) }.time)
             Log.v("tomorrowDate","tomorrow "+tomorrowDate)
+            updateRateModel.date=tomorrowDate
           //  updateRateModel.date=tomorrowDate
             updateRateModel.rates=updateRateItem
             updateProductRateApi(updateRateModel)

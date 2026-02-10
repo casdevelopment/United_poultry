@@ -663,7 +663,7 @@
                                 android:id="@+id/tVisitedShops"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="30"
+                                tools:text="30"
                                 android:textStyle="bold"
                                 android:textSize="12sp"
                                 android:textColor="@color/black"/>
