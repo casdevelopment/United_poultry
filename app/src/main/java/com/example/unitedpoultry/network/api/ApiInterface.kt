@@ -76,14 +76,14 @@ interface ApiInterface {
     @Multipart
     @POST("admin/shops")
     suspend fun addShop(
-        @Part("name") name: RequestBody,
-        @Part("contact_person") contactPerson: RequestBody,
-        @Part("phone_number") phoneNumber: RequestBody,
-        @Part("area_id") areaId: RequestBody,
-        @Part("address") address: RequestBody,
-        @Part("discount_per_petti") discount: RequestBody,
-        @Part("is_active") isActive: RequestBody,
-        @Part image: MultipartBody.Part
+        @Part("name") name: RequestBody? = null,
+        @Part("contact_person") contactPerson: RequestBody? = null,
+        @Part("phone_number") phoneNumber: RequestBody? = null,
+        @Part("area_id") areaId: RequestBody? = null,
+        @Part("address") address: RequestBody? = null,
+        @Part("discount_per_petti") discount: RequestBody? = null,
+        @Part("is_active") isActive: RequestBody? = null,
+        @Part image: MultipartBody.Part? = null
     ): Response<BaseResponse<Any>>
 
 
@@ -96,14 +96,14 @@ interface ApiInterface {
     @Multipart
     @POST("admin/shops/{id}")
     suspend fun updateShop(
-        @Path("id") shopId: Int,
-        @Part("name") name: RequestBody,
-        @Part("contact_person") contactPerson: RequestBody,
-        @Part("phone_number") phoneNumber: RequestBody,
-        @Part("address") address: RequestBody,
-        @Part("discount_per_petti") discount: RequestBody,
-        @Part("is_active") isActive: RequestBody,
-        @Part image: MultipartBody.Part?,
+        @Path("id") shopId: Int? = null,
+        @Part("name") name: RequestBody? = null,
+        @Part("contact_person") contactPerson: RequestBody? = null,
+        @Part("phone_number") phoneNumber: RequestBody? = null,
+        @Part("address") address: RequestBody? = null,
+        @Part("discount_per_petti") discount: RequestBody? = null,
+        @Part("is_active") isActive: RequestBody? = null,
+        @Part image: MultipartBody.Part? = null,
         @Part("_method") method: RequestBody
     ): Response<BaseResponse<Any>>
 
@@ -123,14 +123,14 @@ interface ApiInterface {
     @Multipart
     @POST("admin/sellers")
     suspend fun addRider(
-        @Part("name") name: RequestBody,
-        @Part("email") email: RequestBody,
-        @Part("username") username: RequestBody,
-        @Part("phone_number") phoneNumber: RequestBody,
-        @Part("cnic") cnic: RequestBody,
-        @Part("address") address: RequestBody,
-        @Part("password") password: RequestBody,
-        @Part("is_active") isActive: RequestBody,
+        @Part("name") name: RequestBody? = null,
+        @Part("email") email: RequestBody? = null,
+//        @Part("username") username: RequestBody? = null,
+        @Part("phone_number") phoneNumber: RequestBody? = null,
+        @Part("cnic") cnic: RequestBody? = null,
+        @Part("address") address: RequestBody? = null,
+        @Part("password") password: RequestBody? = null,
+        @Part("is_active") isActive: RequestBody?,
         @Part image: MultipartBody.Part? = null // optional file upload
     ): Response<BaseResponse<Any>>
 
@@ -144,15 +144,15 @@ interface ApiInterface {
     @POST("admin/sellers/{id}")  // update endpoint
     suspend fun editRider(
         @Path("id") riderId: Int,
-        @Part("name") name: RequestBody,
-        @Part("email") email: RequestBody,
-        @Part("username") username: RequestBody,
-        @Part("phone_number") phoneNumber: RequestBody,
-        @Part("cnic") cnic: RequestBody,
-        @Part("address") address: RequestBody,
-        @Part("password") password: RequestBody?,
-        @Part("is_active") isActive: RequestBody,
-        @Part image: MultipartBody.Part?
+        @Part("name") name: RequestBody? = null,
+        @Part("email") email: RequestBody? = null,
+//        @Part("username") username: RequestBody? = null,
+        @Part("phone_number") phoneNumber: RequestBody? = null,
+        @Part("cnic") cnic: RequestBody? = null,
+        @Part("address") address: RequestBody? = null,
+        @Part("password") password: RequestBody? = null,
+        @Part("is_active") isActive: RequestBody? = null,
+        @Part image: MultipartBody.Part? = null
     ): Response<BaseResponse<RiderModel>>
 
 
@@ -164,15 +164,15 @@ interface ApiInterface {
     @Multipart
     @POST("admin/profile/update")
     suspend fun updateProfile(
-        @Part("name") name: RequestBody,
-        @Part("email") email: RequestBody,
-        @Part("phone") phone: RequestBody,
-        @Part("username") username: RequestBody,
-        @Part("business_name") business_name: RequestBody,
-        @Part("address") address: RequestBody,
-        @Part image: MultipartBody.Part?
+        @Part("name") name: RequestBody? = null,
+        @Part("email") email: RequestBody? = null,
+        @Part("phone") phone: RequestBody? = null,
+        @Part("username") username: RequestBody? = null,
+        @Part("business_name") business_name: RequestBody? = null,
+        @Part("address") address: RequestBody? = null,
+        @Part image: MultipartBody.Part? = null
 
-    ): Response<BaseResponse<Any>>
+    ): Response<BaseResponse<LoginResponseModel>>
 
     @POST("admin/products")
     suspend fun createProduct(@Body  fields: HashMap<Any, Any>):Response<BaseResponse<Any>>

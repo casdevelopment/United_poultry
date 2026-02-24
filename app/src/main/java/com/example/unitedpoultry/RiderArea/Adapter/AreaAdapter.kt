@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -32,6 +33,12 @@ class AreaAdapter(
         val iconContainer: CardView = itemView.findViewById(R.id.iconContainer)
         val ivNext: ImageView = itemView.findViewById(R.id.ivNext)
 //        val btnViewShops: MaterialButton = itemView.findViewById(R.id.btnViewShops)
+
+
+
+        val totalShopsLayout: LinearLayout = itemView.findViewById(R.id.totalShopsLayout)
+        val visitedTodayLayout: LinearLayout = itemView.findViewById(R.id.visitedTodayLayout)
+        val pendingLayout: LinearLayout = itemView.findViewById(R.id.pendingLayout)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AreaViewHolder {
@@ -51,8 +58,20 @@ class AreaAdapter(
         val cardColor = cardColors[position % cardColors.size]
         val iconColor = iconColors[position % iconColors.size]
 
-        holder.iconContainer.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, cardColor))
-        holder.ivIcon.setColorFilter(ContextCompat.getColor(holder.itemView.context, iconColor))
+        holder.iconContainer.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, iconColor))
+       // holder.ivIcon.setColorFilter(ContextCompat.getColor(holder.itemView.context, iconColor))
+
+
+
+        holder.totalShopsLayout.background.setTint(
+            ContextCompat.getColor(holder.itemView.context, cardColor)
+        )
+        holder.visitedTodayLayout.background.setTint(
+            ContextCompat.getColor(holder.itemView.context, cardColor)
+        )
+        holder.pendingLayout.background.setTint(
+            ContextCompat.getColor(holder.itemView.context, cardColor)
+        )
 
 //        // Start EditAreaActivity normally
 //        holder.ivEdit.setOnClickListener {

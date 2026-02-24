@@ -96,14 +96,24 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center">
 
-                    <ImageView
-                        android:id="@+id/ivImage"
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
-                        android:background="@drawable/square_white"
-                        android:padding="2dp"
-                        android:visibility="gone"
-                        />
+                    <FrameLayout
+                        android:id="@+id/imageContainer"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/edit_text_bg_black"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="6dp">
+
+                        <!-- Selected Image -->
+                        <ImageView
+                            android:id="@+id/ivImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            />
+
+                    </FrameLayout>
 
                     <!-- Initials Circle -->
                     <TextView
@@ -118,7 +128,9 @@
                         android:textStyle="bold"
                         android:textSize="24sp"
                         android:fontFamily="@font/poppins"
+                        android:visibility="gone"
                         />
+
 
                     <!-- Small Tick -->
                     <ImageView

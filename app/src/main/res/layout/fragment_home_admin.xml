@@ -468,8 +468,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
                 android:layout_margin="5dp"
-
                 />
+
+            <LinearLayout
+                android:id="@+id/layoutEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:visibility="gone"
+                android:padding="40dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/nodata"
+                    app:tint="@color/black44"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No Active Supplier Found"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Try adding new supplier"
+                    android:textSize="12sp"
+                    android:textColor="@color/black60"
+                    android:layout_marginTop="6dp"/>
+            </LinearLayout>
 
 
 

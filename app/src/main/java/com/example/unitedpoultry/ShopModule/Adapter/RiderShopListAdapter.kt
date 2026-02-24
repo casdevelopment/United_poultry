@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 import com.example.unitedpoultry.AdminShopModule.model.ShopModel
+import com.example.unitedpoultry.Collection.CollectionformActivity
 import com.example.unitedpoultry.NewSale.SaleFormActivity
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.ShopModule.ShopDetailsActivity
@@ -51,8 +52,8 @@ class RiderShopListAdapter(
 
         holder.tvName.text = item.name
         holder.tvAddress.text = item.address
-        holder.tvDiscount.text = "Rs ${item.discount_per_petti}"
-        holder.statusText.text = if (item.is_active == true) "Active" else "Inactive"
+       // holder.tvDiscount.text = "Rs ${item.discount_per_petti}"
+      //  holder.statusText.text = if (item.is_active == true) "Active" else "Inactive"
 
       //  holder.tvInitials.text = getInitials(item.name)
 
@@ -76,57 +77,58 @@ class RiderShopListAdapter(
 //        holder.tvTotalShops.text = "-"
 //        holder.tvReceivable.text = "-"
 
-        when (item.is_active) {
-            true -> {
-                holder.statusLayout.backgroundTintList =
-                    ColorStateList.valueOf(
-                        ContextCompat.getColor(holder.itemView.context, R.color.green)
-                    )
-                holder.statusText.setTextColor(
-                    ContextCompat.getColor(holder.itemView.context, R.color.primary)
-                )
+//        when (item.is_active) {
+//            true -> {
+////                holder.statusLayout.backgroundTintList =
+////                    ColorStateList.valueOf(
+////                        ContextCompat.getColor(holder.itemView.context, R.color.green)
+////                    )
+////                holder.statusText.setTextColor(
+////                    ContextCompat.getColor(holder.itemView.context, R.color.primary)
+////                )
+//
+////                holder.tvInitials.backgroundTintList =
+////                    ContextCompat.getColorStateList(holder.itemView.context, iconColor)
+//
+//                holder.statusText.setTextColor(
+//                    ContextCompat.getColor(holder.itemView.context, R.color.mint)
+//                )
+//            }
+//
+//            false -> {
+////                holder.statusLayout.backgroundTintList =
+////                    ColorStateList.valueOf(
+////                        ContextCompat.getColor(holder.itemView.context, R.color.black)
+////                    )
+//                holder.statusText.setTextColor(
+//                    ContextCompat.getColor(holder.itemView.context, R.color.black60)
+//                )
+//
+////                holder.tvInitials.backgroundTintList =
+////                    ContextCompat.getColorStateList(holder.itemView.context, R.color.black17)
+//
+//                holder.statusText.setTextColor(
+//                    ContextCompat.getColor(holder.itemView.context, R.color.black44)
+//                )
+//            }
+//
+//            else -> {
+////                holder.statusLayout.backgroundTintList =
+////                    ColorStateList.valueOf(
+////                        ContextCompat.getColor(holder.itemView.context, R.color.gray)
+////                    )
+//                holder.statusText.setTextColor(
+//                    ContextCompat.getColor(holder.itemView.context, R.color.gray)
+//                )
+//            }
+//        }
 
-//                holder.tvInitials.backgroundTintList =
-//                    ContextCompat.getColorStateList(holder.itemView.context, iconColor)
 
-                holder.statusText.setTextColor(
-                    ContextCompat.getColor(holder.itemView.context, R.color.mint)
-                )
-            }
-
-            false -> {
-                holder.statusLayout.backgroundTintList =
-                    ColorStateList.valueOf(
-                        ContextCompat.getColor(holder.itemView.context, R.color.black)
-                    )
-                holder.statusText.setTextColor(
-                    ContextCompat.getColor(holder.itemView.context, R.color.black60)
-                )
-
-//                holder.tvInitials.backgroundTintList =
-//                    ContextCompat.getColorStateList(holder.itemView.context, R.color.black17)
-
-                holder.statusText.setTextColor(
-                    ContextCompat.getColor(holder.itemView.context, R.color.black44)
-                )
-            }
-
-            else -> {
-                holder.statusLayout.backgroundTintList =
-                    ColorStateList.valueOf(
-                        ContextCompat.getColor(holder.itemView.context, R.color.gray)
-                    )
-                holder.statusText.setTextColor(
-                    ContextCompat.getColor(holder.itemView.context, R.color.gray)
-                )
-            }
-        }
-
-
-        holder.itemView.setOnClickListener {
+        holder.statusText.setOnClickListener {
             val context = holder.itemView.context
             val intent = Intent(context, ShopDetailsActivity::class.java)
-            intent.putExtra("ID", item.id)
+            intent.putExtra("SHOP_ID", item.id)
+            intent.putExtra("AREA_ID", areaId)
             context.startActivity(intent)
         }
 
@@ -161,14 +163,14 @@ class RiderShopListAdapter(
         }
 
 
-        holder.btnExchange.setOnClickListener {
+        holder.btnCollect.setOnClickListener {
             UserStatusChecker.check(
                 lifecycleOwner = lifecycleOwner,
                 viewModel = viewModel,
 
                 onActive = {
                     val context = holder.itemView.context
-                    val intent = Intent(context, ExchangeOrReturnActivity::class.java)
+                    val intent = Intent(context, CollectionformActivity::class.java)
                     intent.putExtra("SHOP_ID", item.id)
                     intent.putExtra("AREA_ID", areaId)
                     intent.putExtra("NAME", item.name)
@@ -250,13 +252,13 @@ class RiderShopListAdapter(
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val tvName: TextView = v.findViewById(R.id.tvName)
         val tvAddress: TextView = v.findViewById(R.id.tvAddress)
-        val tvDiscount: TextView = v.findViewById(R.id.tvDiscount)
+       // val tvDiscount: TextView = v.findViewById(R.id.tvDiscount)
         val statusText: TextView = v.findViewById(R.id.statusText)
        // val tvInitials: TextView = v.findViewById(R.id.tvInitials)
-        val statusLayout: LinearLayout = v.findViewById(R.id.statusLayout)
+        //val statusLayout: LinearLayout = v.findViewById(R.id.statusLayout)
         val btnNewSale: MaterialButton = v.findViewById(R.id.btnNewSale)
 //        val btnCollect: MaterialButton = v.findViewById(R.id.btnCollect)
-        val btnExchange: MaterialButton = v.findViewById(R.id.btnExchange)
+        val btnCollect: MaterialButton = v.findViewById(R.id.btnCollect)
 
         val imgShop: ImageView = v.findViewById(R.id.imgShop)
 

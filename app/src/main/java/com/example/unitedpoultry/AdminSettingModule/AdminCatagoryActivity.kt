@@ -169,10 +169,11 @@ class AdminCatagoryActivity : BaseActivity() {
         eggsCount: Int,
         price: Int
     ): Boolean {
-        return name.isNotEmpty() &&
-                packing.isNotEmpty() &&
-                eggsCount > 0 &&
-                price > 0
+        return name.isNotEmpty()
+                //&&
+//                packing.isNotEmpty() &&
+//                eggsCount > 0 &&
+//                price > 0
     }
 
 

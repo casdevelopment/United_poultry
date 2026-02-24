@@ -1,6 +1,5 @@
 package com.example.unitedpoultry.AdminArea
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -60,35 +59,36 @@ class AddNewAreaActivity : BaseActivity() {
             binding.etAreaNameError.visibility = View.VISIBLE
             binding.etAreaNameError.text = "Name required"
             valid = false
-        } else if (!Name.matches(Regex(".*[a-zA-Z].*"))) {
-            binding.etAreaNameError.visibility = View.VISIBLE
-            binding.etAreaNameError.text = "Enter valid area name"
-            valid = false
         }
-
-        val description = binding.etDescription.text.toString().trim()
-        if (description.isEmpty()) {
-            binding.etDescriptionError.visibility = View.VISIBLE
-            binding.etDescriptionError.text = "Description required"
-            valid = false
-        } else if (!description.matches(Regex(".*[a-zA-Z].*"))) {
-            binding.etDescriptionError.visibility = View.VISIBLE
-            binding.etDescriptionError.text = "Enter valid Description"
-            valid = false
-        }
-
-
-
-        val city = binding.etCity.text.toString().trim()
-        if (city.isEmpty()) {
-            binding.etCityError.visibility = View.VISIBLE
-            binding.etCityError.text = "City required"
-            valid = false
-        } else if (!city.matches(Regex(".*[a-zA-Z].*"))) {
-            binding.etCityError.visibility = View.VISIBLE
-            binding.etCityError.text = "Enter valid city name"
-            valid = false
-        }
+//        else if (!Name.matches(Regex(".*[a-zA-Z].*"))) {
+//            binding.etAreaNameError.visibility = View.VISIBLE
+//            binding.etAreaNameError.text = "Enter valid area name"
+//            valid = false
+//        }
+//
+//        val description = binding.etDescription.text.toString().trim()
+//        if (description.isEmpty()) {
+//            binding.etDescriptionError.visibility = View.VISIBLE
+//            binding.etDescriptionError.text = "Description required"
+//            valid = false
+//        } else if (!description.matches(Regex(".*[a-zA-Z].*"))) {
+//            binding.etDescriptionError.visibility = View.VISIBLE
+//            binding.etDescriptionError.text = "Enter valid Description"
+//            valid = false
+//        }
+//
+//
+//
+//        val city = binding.etCity.text.toString().trim()
+//        if (city.isEmpty()) {
+//            binding.etCityError.visibility = View.VISIBLE
+//            binding.etCityError.text = "City required"
+//            valid = false
+//        } else if (!city.matches(Regex(".*[a-zA-Z].*"))) {
+//            binding.etCityError.visibility = View.VISIBLE
+//            binding.etCityError.text = "Enter valid city name"
+//            valid = false
+//        }
 
         return valid
     }
@@ -101,7 +101,7 @@ class AddNewAreaActivity : BaseActivity() {
             name = binding.etAreaName.text.toString().trim(),
             city = binding.etCity.text.toString().trim(),
             description = binding.etDescription.text.toString().trim(),
-            is_active = isActive // ✅ backend expects Int
+            is_active = isActive
         )
 
         viewModel.addArea(request).observe(this) { apiResponse ->
@@ -120,29 +120,21 @@ class AddNewAreaActivity : BaseActivity() {
 
                         val baseResponse = response.body()
 
-                        // ✅ Always show backend message
-                        Toast.makeText(
-                            this,
-                            baseResponse?.message ?: "Success",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        Toast.makeText(this, baseResponse?.message ?: "Success", Toast.LENGTH_LONG).show()
 
-                        // ✅ Close screen only on success
                         if (baseResponse?.result == "success") {
                             finish()
                         }
 
                     } else {
-                        // Show backend message even for non-successful HTTP
+
                         try {
                             val errorJson = response?.errorBody()?.string()
                             val gson = com.google.gson.Gson()
                             val errorResponse = gson.fromJson(errorJson, BaseResponse::class.java)
-                            Toast.makeText(
-                                this,
-                                errorResponse?.message ?: "Something went wrong",
-                                Toast.LENGTH_SHORT
-                            ).show()
+
+                            Toast.makeText(this, errorResponse?.message ?: "Something went wrong", Toast.LENGTH_SHORT).show()
+
                         } catch (e: Exception) {
                             Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
                         }
@@ -159,11 +151,9 @@ class AddNewAreaActivity : BaseActivity() {
                             val errorJson = response.errorBody()!!.string()
                             val gson = com.google.gson.Gson()
                             val errorResponse = gson.fromJson(errorJson, BaseResponse::class.java)
-                            Toast.makeText(
-                                this,
-                                errorResponse?.message ?: apiResponse.message ?: "Something went wrong",
-                                Toast.LENGTH_SHORT
-                            ).show()
+
+                            Toast.makeText(this, errorResponse?.message ?: apiResponse.message ?: "Something went wrong", Toast.LENGTH_SHORT).show()
+
                         } catch (e: Exception) {
                             Toast.makeText(
                                 this,
@@ -172,11 +162,7 @@ class AddNewAreaActivity : BaseActivity() {
                             ).show()
                         }
                     } else {
-                        Toast.makeText(
-                            this,
-                            apiResponse.message ?: "Network Error",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(this, apiResponse.message ?: "Network Error", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

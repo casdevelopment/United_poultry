@@ -15,7 +15,6 @@
         android:paddingBottom="20dp">
 
 
-    <!-- Custom Title Bar -->
     <LinearLayout
         android:id="@+id/titleBar"
         android:layout_width="match_parent"

@@ -10,23 +10,26 @@ import okhttp3.RequestBody
 class UpdateAdminProfileViewModel(private val repository: Repository) : ViewModel() {
 
     fun updateProfile(
-        name: RequestBody,
-        email: RequestBody,
-        phone: RequestBody,
-        username: RequestBody,
-        business_name: RequestBody,
-        address: RequestBody,
-        image: MultipartBody.Part?,
+        name: RequestBody?,
+        email: RequestBody?,
+        phone: RequestBody?,
+        username: RequestBody?,
+        business_name: RequestBody?,
+        address: RequestBody?,
+        image: MultipartBody.Part?
     ) = liveData {
         emit(NetworkStates.loading(null))
         try {
-            emit(NetworkStates.success(
-                repository.updateProfile(
-                     name, email, phone,username,business_name,address,image
+            emit(
+                NetworkStates.success(
+                    repository.updateProfile(
+                        name, email, phone, username, business_name, address, image
+                    )
                 )
-            ))
+            )
         } catch (e: Exception) {
             emit(NetworkStates.error(null, e.message ?: "Something went wrong"))
         }
     }
+
 }

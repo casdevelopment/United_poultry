@@ -26,6 +26,7 @@
     <color name="primaryLight">#261D7A84</color>
     <color name="primary9">#EBF3F4</color>
     <color name="primary40">#661D7A84</color>
+    <color name="primaryBright">#3e8e96</color>
 
 
 
@@ -74,5 +75,20 @@
 
     <color name="brownn">#D98816</color>
     <color name="brown20">#33D98816</color>
+
+    <color name="transparent">#00000000</color>
+
+    <color name="pink_lite">#fdf3f2</color>
+    <color name="pink_lite_shade1">#fad7d4</color>
+
+    <color name="orange_lite">#fff3e7</color>
+    <color name="orange_lite_shade1">#FAEAD8</color>
+
+    <color name="blue_lite">#deecfd</color>
+    <color name="blue_lite_shade1">#CEE1F7</color>
+
+    <color name="pink_border">#ef8d86</color>
+    <color name="orange_border">#fece9a</color>
+    <color name="blue_border">#4193f1</color>
 
 </resources>

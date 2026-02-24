@@ -165,64 +165,63 @@ class AdminAddNewShopActivity : BaseActivity() {
             binding.etShopNameError.visibility = View.VISIBLE
             binding.etShopNameError.text = "Shop name required"
             valid = false
-        }else if (!shopName.matches(Regex(".*[a-zA-Z].*"))) {
-            binding.etShopNameError.visibility = View.VISIBLE
-            binding.etShopNameError.text = "Enter valid Shop name"
-            valid = false
         }
-
-        // Contact person name (alphabets only)
-        val contactName = binding.etContactName.text.toString().trim()
-        if (contactName.isEmpty()) {
-            binding.etContactNameError.visibility = View.VISIBLE
-            binding.etContactNameError.text = "Contact person required"
-            valid = false
-        } else if (!contactName.matches(Regex("^[a-zA-Z ]+$"))) {
-            binding.etContactNameError.visibility = View.VISIBLE
-            binding.etContactNameError.text = "Enter valid name"
-            valid = false
-        }
-
-
-        val phone = binding.etPhoneNumber.text.toString().trim()
-
-        if (phone.isEmpty()) {
-            binding.etPhoneNumberError.visibility = View.VISIBLE
-            binding.etPhoneNumberError.text = "Phone number required"
-            valid = false
-        } else if (!phone.matches(Regex("^\\d{11}$"))){
-            binding.etPhoneNumberError.visibility = View.VISIBLE
-            binding.etPhoneNumberError.text = "Enter valid phone number"
-            valid = false
-        }
-
-
-        if (selectedImageFile == null) {
-            binding.etImageError.visibility = View.VISIBLE
-            binding.etImageError.text = "Shop image required"
-            valid = false
-        }
-
-        val address = binding.etAddress.text.toString().trim()
-        if (address.isEmpty()) {
-            binding.etAddressError.visibility = View.VISIBLE
-            binding.etAddressError.text = "Address required"
-            valid = false
-        }else if (!address.matches(Regex(".*[a-zA-Z].*"))) {
-            binding.etAddressError.visibility = View.VISIBLE
-            binding.etAddressError.text = "Enter valid address"
-            valid = false
-        }
+//        else if (!shopName.matches(Regex(".*[a-zA-Z].*"))) {
+//            binding.etShopNameError.visibility = View.VISIBLE
+//            binding.etShopNameError.text = "Enter valid Shop name"
+//            valid = false
+//        }
+//
+//        // Contact person name (alphabets only)
+//        val contactName = binding.etContactName.text.toString().trim()
+//        if (contactName.isEmpty()) {
+//            binding.etContactNameError.visibility = View.VISIBLE
+//            binding.etContactNameError.text = "Contact person required"
+//            valid = false
+//        } else if (!contactName.matches(Regex("^[a-zA-Z ]+$"))) {
+//            binding.etContactNameError.visibility = View.VISIBLE
+//            binding.etContactNameError.text = "Enter valid name"
+//            valid = false
+//        }
+//
+//
+//        val phone = binding.etPhoneNumber.text.toString().trim()
+//
+//        if (phone.isEmpty()) {
+//            binding.etPhoneNumberError.visibility = View.VISIBLE
+//            binding.etPhoneNumberError.text = "Phone number required"
+//            valid = false
+//        } else if (!phone.matches(Regex("^\\d{11}$"))){
+//            binding.etPhoneNumberError.visibility = View.VISIBLE
+//            binding.etPhoneNumberError.text = "Enter valid phone number"
+//            valid = false
+//        }
+//
+//
+//        if (selectedImageFile == null) {
+//            binding.etImageError.visibility = View.VISIBLE
+//            binding.etImageError.text = "Shop image required"
+//            valid = false
+//        }
+//
+//        val address = binding.etAddress.text.toString().trim()
+//        if (address.isEmpty()) {
+//            binding.etAddressError.visibility = View.VISIBLE
+//            binding.etAddressError.text = "Address required"
+//            valid = false
+//        }else if (!address.matches(Regex(".*[a-zA-Z].*"))) {
+//            binding.etAddressError.visibility = View.VISIBLE
+//            binding.etAddressError.text = "Enter valid address"
+//            valid = false
+//        }
+//
 
         val discountText = binding.etDiscount.text.toString().trim()
 
-        if (discountText.isNotEmpty()) {
-            val discount = discountText.toFloatOrNull()  // parse as float for validation
-            if (discount == null || discount !in 0f..100f) {
-                binding.etDiscountError.visibility = View.VISIBLE
-                binding.etDiscountError.text = "Enter valid discount percentage"
-                valid = false
-            }
+        if (discountText.isNotEmpty() && !discountText.matches(Regex("^\\d+(\\.\\d+)?$"))) {
+            binding.etDiscountError.visibility = View.VISIBLE
+            binding.etDiscountError.text = "Enter valid discount"
+            valid = false
         }
 
 
@@ -255,11 +254,19 @@ class AdminAddNewShopActivity : BaseActivity() {
 
         val active = isActive.toRequestBody()
 
-        val imagePart = selectedImageFile?.let {
-            MultipartBody.Part.createFormData("image", it.name, it.asRequestBody("image/*".toMediaTypeOrNull()))
-        } ?: run {
-            Toast.makeText(this, "Image file not selected", Toast.LENGTH_SHORT).show()
-            return
+//        val imagePart = selectedImageFile?.let {
+//            MultipartBody.Part.createFormData("image", it.name, it.asRequestBody("image/*".toMediaTypeOrNull()))
+//        } ?: run {
+//            Toast.makeText(this, "Image file not selected", Toast.LENGTH_SHORT).show()
+//            return
+//        }
+
+        val imagePart: MultipartBody.Part? = selectedImageFile?.let {
+            MultipartBody.Part.createFormData(
+                "image",
+                it.name,
+                it.asRequestBody("image/*".toMediaTypeOrNull())
+            )
         }
 
         AppUtil.startLoader(this)

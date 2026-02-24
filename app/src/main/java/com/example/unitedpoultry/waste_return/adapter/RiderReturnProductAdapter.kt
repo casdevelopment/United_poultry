@@ -26,7 +26,7 @@ class RiderReturnProductAdapter(
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = products[position]
         holder.binding.tvProductName.text = product.product_name
-        holder.binding.tvPacking.text = "${product.remaining_quantity} remaining"
+        //holder.binding.tvPacking.text = "${product.remaining_quantity} remaining"
 
         // Quantity setup
         holder.binding.etQuantity.setText(quantityMap[product.product_id]?.toString() ?: "")

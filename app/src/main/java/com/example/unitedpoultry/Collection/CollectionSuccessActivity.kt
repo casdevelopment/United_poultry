@@ -28,20 +28,20 @@ class CollectionSuccessActivity : BaseActivity() {
         )
 
 
-        val name = intent.getStringExtra("name") ?: "Unknown"
-        val address = intent.getStringExtra("address") ?: "Unknown"
-        val initials = intent.getStringExtra("initials") ?: "Unknown"
+        val name = intent.getStringExtra("SHOP_NAME") ?: "Unknown"
+        val address = intent.getStringExtra("ADDRESS") ?: "Unknown"
+        val initials = intent.getStringExtra("INITIALS") ?: "Unknown"
 
         binding.tvShopName.text = name
         binding.tvShopAddress.text = address
         binding.tvInitials.text = initials
 
 
-        binding.btnNewCollection.setOnClickListener {
-            val intent = Intent(this, SelectShopCollectionActivity::class.java)
-            startActivity(intent)
-
-        }
+//        binding.btnNewCollection.setOnClickListener {
+//            val intent = Intent(this, SelectShopCollectionActivity::class.java)
+//            startActivity(intent)
+//
+//        }
 
         binding.moveToDashBoard.setOnClickListener {
             val intent = Intent(this, RiderDashBoardActivity::class.java)

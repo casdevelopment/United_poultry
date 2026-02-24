@@ -2,6 +2,7 @@ package com.example.unitedpoultry.AdminDashBoard
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.example.unitedpoultry.AdminDashBoard.fragments.AdminRateManagementFragment
 import com.example.unitedpoultry.AdminDashBoard.fragments.AreasAdminFragment
 import com.example.unitedpoultry.AdminDashBoard.fragments.HomeAdminFragment
 import com.example.unitedpoultry.AdminDashBoard.fragments.ReportsAdminFragment
@@ -53,6 +54,7 @@ class AdminDashBoardActivity : BaseActivity() {
     private fun getFragmentByMenuId(menuId: Int): Fragment {
         return when (menuId) {
             R.id.nav_home -> HomeAdminFragment()
+            R.id.nav_rate -> AdminRateManagementFragment()
             R.id.nav_rider -> RiderAdminFragment()
             R.id.nav_areas -> AreasAdminFragment()
             R.id.nav_report -> ReportsAdminFragment()

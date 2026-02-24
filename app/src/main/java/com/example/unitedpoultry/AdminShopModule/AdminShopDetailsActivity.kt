@@ -178,8 +178,13 @@ class AdminShopDetailsActivity : BaseActivity() {
                 .centerCrop()
                 .placeholder(binding.imgShop.drawable)
                 .into(binding.imgShop)
+        }else {
+            binding.imgShop.visibility = View.VISIBLE
+            binding.imgShop.setImageResource(R.drawable.homeingreen)
         }
     }
+
+
 
     private fun showError(response: retrofit2.Response<*>?) {
         val message = try {

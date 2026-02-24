@@ -10,14 +10,14 @@ import okhttp3.RequestBody
 class UpdateShopViewModel(private val repository: Repository) : ViewModel() {
 
     fun updateShop(
-        shopId: Int,
-        name: RequestBody,
-        contactPerson: RequestBody,
-        phoneNumber: RequestBody,
-        address: RequestBody,
-        discount: RequestBody,
-        isActive: RequestBody,
-        image: MultipartBody.Part?,
+        shopId: Int? = null,
+        name: RequestBody? = null,
+        contactPerson: RequestBody? = null,
+        phoneNumber: RequestBody? = null,
+        address: RequestBody? = null,
+        discount: RequestBody? = null,
+        isActive: RequestBody? = null,
+        image: MultipartBody.Part? = null,
         method: RequestBody
     ) = liveData {
         emit(NetworkStates.loading(null))

@@ -68,5 +68,7 @@
     <string name="pending_approval">Pending\nApproval</string>
     <string name="total_products">Total\nSuppliers</string>
 
+    <string name="view_shop"><u>View Shop</u></string>
+
 
 </resources>

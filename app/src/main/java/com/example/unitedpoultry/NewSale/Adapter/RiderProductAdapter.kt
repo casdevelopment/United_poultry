@@ -25,7 +25,7 @@ class RiderProductAdapter(
         val product = products[position]
 
         holder.binding.tvProductName.text = product.product_name
-        holder.binding.tvPacking.text = "${product.remaining_quantity} remaining"
+      //  holder.binding.tvPacking.text = "${product.remaining_quantity} remaining"
         holder.binding.etQuantity.setText(quantityMap[product.product_id]?.toString() ?: "")
 
         holder.binding.etQuantity.addTextChangedListener { editable ->

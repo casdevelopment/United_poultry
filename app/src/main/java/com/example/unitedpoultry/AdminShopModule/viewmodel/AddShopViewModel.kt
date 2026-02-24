@@ -14,14 +14,14 @@ import retrofit2.Response
 class AddShopViewModel(private val repository: Repository) : ViewModel() {
 
     fun addShop(
-        name: RequestBody,
-        contactPerson: RequestBody,
-        phoneNumber: RequestBody,
-        areaId: RequestBody,
-        address: RequestBody,
-        discount: RequestBody,
-        isActive: RequestBody,
-        image: MultipartBody.Part
+        name: RequestBody? = null,
+        contactPerson: RequestBody? = null,
+        phoneNumber: RequestBody? = null,
+        areaId: RequestBody? = null,
+        address: RequestBody? = null,
+        discount: RequestBody? = null,
+        isActive: RequestBody? = null,
+        image: MultipartBody.Part? = null
     ): LiveData<NetworkStates<Response<BaseResponse<Any>>>> = liveData(Dispatchers.IO) {
         emit(NetworkStates.loading(null))
         try {

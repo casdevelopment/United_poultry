@@ -99,20 +99,19 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/statusLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/capsule_bg_sales"
-                    android:backgroundTint="@color/mint"
-                    android:orientation="horizontal"
-                    android:paddingStart="15dp"
-                    android:paddingTop="5dp"
-                    android:paddingEnd="15dp"
-                    android:paddingBottom="5dp"
-                    android:visibility="gone">
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/statusLayout"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginRight="5dp"-->
+<!--                    android:background="@drawable/capsule_bg_sales"-->
+<!--                    android:backgroundTint="@color/mint"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:paddingStart="15dp"-->
+<!--                    android:paddingTop="5dp"-->
+<!--                    android:paddingEnd="15dp"-->
+<!--                    android:paddingBottom="5dp">-->
 
                     <TextView
                         android:id="@+id/statusText"
@@ -120,11 +119,12 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="6dp"
-                        android:text="Active"
-                        android:textColor="@color/primary"
+                        android:layout_marginEnd="5dp"
+                        android:text="@string/view_shop"
+                        android:textColor="@color/sub_primary"
                         android:textSize="12sp"
                         android:textStyle="bold" />
-                </LinearLayout>
+<!--                </LinearLayout>-->
             </LinearLayout>
 
 
@@ -140,156 +140,154 @@
             android:layout_margin="10dp"/>
 
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:gravity="center_vertical"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:layout_marginTop="10dp">-->
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:orientation="vertical"-->
-<!--                android:padding="10dp"-->
-<!--                android:layout_weight="1"-->
-<!--                android:background="@drawable/rounded_bg"-->
-<!--                android:gravity="center"-->
-<!--                android:layout_marginEnd="5dp">-->
-
-<!--                <TextView-->
-<!--                    android:layout_marginTop="5dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:text="Last Visit"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:fontFamily="@font/poppins"-->
-<!--                    android:textSize="10sp"-->
-<!--                    android:textColor="@color/black60"-->
-<!--                    android:layout_gravity="center"/>-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/tvLastVisit"-->
-<!--                    android:layout_marginTop="5dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:text="2 Days ago"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:fontFamily="@font/poppins"-->
-<!--                    android:textSize="13sp"-->
-<!--                    android:gravity="center"-->
-<!--                    android:textColor="@color/primary"-->
-<!--                    android:layout_gravity="center"/>-->
-
-<!--            </LinearLayout>-->
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:orientation="vertical"-->
-<!--                android:padding="10dp"-->
-<!--                android:layout_weight="1"-->
-<!--                android:background="@drawable/rounded_bg"-->
-<!--                android:gravity="center"-->
-<!--                android:layout_marginEnd="5dp">-->
-
-<!--                <TextView-->
-<!--                    android:layout_marginTop="5dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:text="Rate"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:fontFamily="@font/poppins"-->
-<!--                    android:textSize="10sp"-->
-<!--                    android:textColor="@color/black60"-->
-<!--                    android:layout_gravity="center"/>-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/tvRate"-->
-<!--                    android:layout_marginTop="5dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:text="Rs 1,200"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:fontFamily="@font/poppins"-->
-<!--                    android:textSize="13sp"-->
-<!--                    android:gravity="center"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:layout_gravity="center"/>-->
-
-<!--            </LinearLayout>-->
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:orientation="vertical"-->
-<!--                android:padding="10dp"-->
-<!--                android:layout_weight="1"-->
-<!--                android:background="@drawable/rounded_bg"-->
-<!--                android:gravity="center"-->
-<!--                android:layout_marginEnd="5dp">-->
-
-<!--                <TextView-->
-<!--                    android:layout_marginTop="5dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:text="Due Amount"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:fontFamily="@font/poppins"-->
-<!--                    android:textSize="10sp"-->
-<!--                    android:textColor="@color/black60"-->
-<!--                    android:layout_gravity="center"/>-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/tvDues"-->
-<!--                    android:layout_marginTop="5dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:text="Rs. 12,500"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:fontFamily="@font/poppins"-->
-<!--                    android:textSize="13sp"-->
-<!--                    android:gravity="center"-->
-<!--                    android:textColor="@color/primary"-->
-<!--                    android:layout_gravity="center"/>-->
-
-<!--            </LinearLayout>-->
-
-<!--        </LinearLayout>-->
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp">
 
-
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:text="Discount Per Patti"
-                android:textColor="@color/black60"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_margin="10dp"/>
+                android:gravity="center"
+                android:layout_marginEnd="5dp">
 
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Cash In"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="10sp"
+                    android:textColor="@color/black60"
+                    android:layout_gravity="center"/>
 
-            <TextView
-                android:id="@+id/tvDiscount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:text="Rs. 2320/box"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_margin="10dp"/>
+                <TextView
+                    android:id="@+id/tvLastVisit"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Rs. 12,350"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="13sp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"/>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginEnd="5dp">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Borrowed"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="10sp"
+                    android:textColor="@color/black60"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/tvRate"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Rs 1,200"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="13sp"
+                    android:gravity="center"
+                    android:textColor="@color/green"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginEnd="5dp">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Repaid"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="10sp"
+                    android:textColor="@color/black60"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/tvDues"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Rs. 12,500"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="13sp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
 
         </LinearLayout>
+
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:gravity="center_vertical">-->
+
+
+<!--            <TextView-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="@font/poppins"-->
+<!--                android:text="Discount Per Patti"-->
+<!--                android:textColor="@color/black60"-->
+<!--                android:textSize="14sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_margin="10dp"/>-->
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvDiscount"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="@font/poppins"-->
+<!--                android:text="Rs. 2320/box"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="14sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_margin="10dp"/>-->
+
+
+<!--        </LinearLayout>-->
 
         <LinearLayout
         android:layout_width="match_parent"
@@ -298,10 +296,10 @@
         android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnExchange"
+                android:id="@+id/btnCollect"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
-                android:text="Exchange"
+                android:text="Collect"
                 android:layout_weight="1"
                 android:textAllCaps="false"
                 android:textSize="14sp"
@@ -310,7 +308,9 @@
                 android:background="@drawable/btn_light_bg"
                 app:backgroundTint="@null"
                 app:iconGravity="textStart"
+                app:icon="@drawable/collect_vector_svg"
                 app:iconPadding="15dp"
+                app:iconTint="@color/primary"
                 android:fontFamily="@font/poppins"
                 android:layout_marginEnd="10dp"/>
 
@@ -332,6 +332,7 @@
             android:background="@drawable/btn_continue_bg"
             app:backgroundTint="@null"
             app:iconTint="@null"
+                app:iconGravity="textStart"
             android:fontFamily="@font/poppins" />
 
 

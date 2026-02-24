@@ -17,8 +17,8 @@
     <FrameLayout
         android:id="@+id/topPortion"
         android:layout_width="0dp"
-        android:layout_height="250dp"
-        android:background="@android:color/transparent"
+        android:layout_height="300dp"
+        android:background="@color/transparent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -26,7 +26,7 @@
         <ImageView
             android:id="@+id/bgImage"
             android:layout_width="match_parent"
-            android:layout_height="230dp"
+            android:layout_height="200dp"
             android:scaleType="centerCrop"
             android:src="@drawable/bgfull" />
 
@@ -85,8 +85,7 @@
                     android:scaleType="centerInside"
                     app:tint="@null"
                     android:clickable="true"
-                    android:focusable="true"
-                    android:visibility="gone"/>
+                    android:focusable="true" />
 
 
 
@@ -104,7 +103,8 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginTop="40dp"
                 android:layout_gravity="bottom"
-                app:cardUseCompatPadding="true">
+                app:cardUseCompatPadding="true"
+                android:backgroundTint="@color/primary">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -114,21 +114,29 @@
                     android:padding="10dp">
 
                     <!-- Status Icon -->
-                    <ImageView
-                        android:id="@+id/signalStatus"
+                    <androidx.cardview.widget.CardView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="@drawable/circle_white"
-                        android:contentDescription="Status"
-                        android:src="@drawable/smallboxesclean" />
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        android:layout_gravity="center"
+                        android:backgroundTint="#4a959d">
 
-                    <!-- Text Container -->
+                        <ImageView
+                            android:id="@+id/ivIcon"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/egg"
+                            app:tint="@color/white"
+                            android:layout_gravity="center"/>
+                    </androidx.cardview.widget.CardView>
+
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginLeft="10dp">
 
                         <TextView
                             android:id="@+id/tvStatusTitle"
@@ -136,7 +144,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/quicksand"
                             android:text="Egg pickup"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -146,7 +154,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="Daily Stock Collection"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white74"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -163,7 +171,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:contentDescription="Status"
-                            android:src="@drawable/plusfullclean" />
+                            android:src="@drawable/add_primary" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -190,11 +198,352 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topPortion">
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            android:layout_gravity="bottom"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Total Picked "
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins" />
+
+
+
+                    <!-- SECOND ROW -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="4dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Peti: 10"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/primary"
+                            android:fontFamily="@font/poppins" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tray:16"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:textColor="@color/primary"
+                            android:fontFamily="@font/poppins" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Remaining"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="12dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="20dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:backgroundTint="@color/primary20"
+                            android:background="@drawable/rounded_bg"
+                            android:layout_marginEnd="10dp">
+
+                            <TextView
+
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:textStyle="bold"
+                                android:text="3"
+                                android:fontFamily="@font/poppins"
+                                android:textSize="16sp"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:text="Total Peti"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/poppins"
+                                android:textSize="12sp"
+                                android:gravity="end"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:backgroundTint="@color/primary20"
+                            android:background="@drawable/rounded_bg">
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:textStyle="bold"
+                                android:text="5"
+                                android:fontFamily="@font/poppins"
+                                android:textSize="16sp"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:text="Total Trays"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/poppins"
+                                android:textSize="12sp"
+                                android:gravity="end"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="7dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:background="@drawable/rounded_bg_pink"
+                            android:layout_marginEnd="10dp">
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:textStyle="bold"
+                                android:text="Expire"
+                                android:fontFamily="@font/poppins"
+                                android:textSize="16sp"
+                                android:textColor="@color/black"/>
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:text="Total Peti"
+                                android:textStyle="bold"
+                                android:background="@drawable/edit_text_bg_pink"
+                                android:fontFamily="@font/poppins"
+                                android:textSize="10sp"
+                                android:gravity="center"
+                                android:layout_marginTop="8dp"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:text="Total Peti"
+                                android:textStyle="bold"
+                                android:background="@drawable/edit_text_bg_pink"
+                                android:fontFamily="@font/poppins"
+                                android:textSize="10sp"
+                                android:gravity="center"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="7dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:background="@drawable/rounded_bg_orange"
+                            android:layout_marginEnd="10dp">
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:textStyle="bold"
+                                android:text="Return"
+                                android:fontFamily="@font/poppins"
+                                android:textSize="16sp"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:text="Total Peti"
+                                android:textStyle="bold"
+                                android:background="@drawable/edit_text_bg_orange"
+                                android:fontFamily="@font/poppins"
+                                android:textSize="10sp"
+                                android:gravity="center"
+                                android:layout_marginTop="8dp"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:text="Total Peti"
+                                android:textStyle="bold"
+                                android:background="@drawable/edit_text_bg_orange"
+                                android:fontFamily="@font/poppins"
+                                android:textSize="10sp"
+                                android:gravity="center"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/black" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="7dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:background="@drawable/rounded_bg_blue">
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:textStyle="bold"
+                                android:text="Liquid"
+                                android:fontFamily="@font/poppins"
+                                android:textSize="16sp"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:text="Total Peti"
+                                android:textStyle="bold"
+                                android:background="@drawable/edit_text_bg_blue"
+                                android:fontFamily="@font/poppins"
+                                android:textSize="10sp"
+                                android:gravity="center"
+                                android:layout_marginTop="8dp"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:text="Total Peti"
+                                android:textStyle="bold"
+                                android:background="@drawable/edit_text_bg_blue"
+                                android:fontFamily="@font/poppins"
+                                android:textSize="10sp"
+                                android:gravity="center"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/black" />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="12dp">
+            android:padding="12dp"
+            android:visibility="gone">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -266,7 +615,8 @@
             app:cardCornerRadius="12dp"
             app:cardElevation="2dp"
             android:layout_gravity="bottom"
-            app:cardUseCompatPadding="true">
+            app:cardUseCompatPadding="true"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -356,7 +706,8 @@
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
             app:cardUseCompatPadding="true"
-            android:backgroundTint="@color/primary">
+            android:backgroundTint="@color/primary"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -599,7 +950,8 @@
             android:fontFamily="@font/poppins"
             android:text="Todays Payment Stats"
             android:textColor="@color/primary"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:visibility="gone"/>
 
 
     <LinearLayout
@@ -607,6 +959,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="12dp"
+        android:visibility="gone"
         >
 
 
@@ -799,8 +1152,7 @@
             android:fontFamily="@font/poppins"
             android:text="Quick Actions"
             android:textColor="@color/primary"
-            android:textSize="20sp"
-            android:visibility="gone"/>
+            android:textSize="20sp" />
 
 
         <LinearLayout
@@ -808,25 +1160,26 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="5dp"
-            android:layout_marginBottom="30dp"
-            android:visibility="gone">
+            android:layout_marginBottom="30dp">
 
             <LinearLayout
-                android:id="@+id/quickNewLayout"
+                android:id="@+id/newSaleLayout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="16dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/primary20"
                 android:background="@drawable/rounded_bg"
                 android:gravity="center"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="10dp"
                 >
 
                 <ImageView
                     android:id="@+id/quickNewImage"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/new_sale"
                     android:contentDescription="icon" />
 
 
@@ -837,28 +1190,29 @@
                     android:text="New Sale"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="8sp"
+                    android:textSize="11sp"
                     android:textColor="@color/blackLight"
                     android:layout_gravity="center"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/quickCollectLayout"
+                android:id="@+id/addExpenseLayout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="16dp"
                 android:layout_weight="1"
-
+                android:backgroundTint="@color/sub_primary18"
                 android:background="@drawable/rounded_bg"
                 android:gravity="center"
                 android:layout_marginEnd="5dp">
 
                 <ImageView
                     android:id="@+id/quickCollectImage"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/add_expence"
                     android:contentDescription="icon" />
 
 
@@ -866,75 +1220,15 @@
                     android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Waste"
+                    android:text="Add an Expense"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
-                    android:textSize="8sp"
+                    android:textSize="11sp"
                     android:textColor="@color/blackLight"
                     android:layout_gravity="center"/>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/quickShopLayout"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_bg"
-                android:gravity="center"
-                android:layout_marginEnd="5dp">
-
-                <ImageView
-                    android:id="@+id/quickShopImage"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:contentDescription="icon" />
-
-
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="Return"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppins"
-                    android:textSize="8sp"
-                    android:textColor="@color/blackLight"
-                    android:layout_gravity="center"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/quickHistoryLayout"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_bg"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/quickHistoryImage"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:contentDescription="icon" />
-
-
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="History"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppins"
-                    android:textSize="8sp"
-                    android:textColor="@color/blackLight"
-                    android:layout_gravity="center"/>
-
-            </LinearLayout>
 
         </LinearLayout>
 

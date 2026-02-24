@@ -69,7 +69,7 @@ class HomeAdminFragment : Fragment() {
 
         setupRecyclerView()
 
-        fetchRidersFromApi(currentPage)
+
         binding.etSearch.addTextChangedListener {
             adapter.filter(it.toString(), "Active")
 
@@ -79,6 +79,10 @@ class HomeAdminFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+//        riderList.clear()
+//        activeRiderList.clear()
+        currentPage = 1
+        fetchRidersFromApi(currentPage)
         loadDailyPaymentStats()
         showDate()
     }
@@ -100,6 +104,12 @@ class HomeAdminFragment : Fragment() {
     }
 
     private fun fetchRidersFromApi(page: Int) {
+
+        riderList.clear()
+        activeRiderList.clear()
+        inActiveRiderList.clear()
+
+
         viewModel.getRiders(page).observe(viewLifecycleOwner) { apiResponse ->
             when (apiResponse.status) {
                 Status.LOADING -> if (page == 1) AppUtil.startLoader(requireContext())
@@ -136,10 +146,20 @@ class HomeAdminFragment : Fragment() {
                             binding.activeSuppliersTv.text = formatNumber(activeRiderList.size)
                             binding.pendingApprovalTv.text = formatNumber(inActiveRiderList.size)
                             binding.totalProductsTv.text = formatNumber(riderList.size)
+
+                            if (activeRiderList.isEmpty()) {
+                                binding.rvRiders.visibility = View.GONE
+                                binding.layoutEmpty.visibility = View.VISIBLE
+                            } else {
+                                binding.rvRiders.visibility = View.VISIBLE
+                                binding.layoutEmpty.visibility = View.GONE
+                            }
                         }
                     }
                     else{
-                        binding.rvRiders.visibility=GONE
+                        AppUtil.stopLoader()
+                        binding.rvRiders.visibility = View.GONE
+                        binding.layoutEmpty.visibility = View.VISIBLE
                     }
                 }
 

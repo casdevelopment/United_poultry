@@ -4,10 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
+import com.bumptech.glide.Glide
 import com.example.unitedpoultry.AdminSettingModule.viewmodel.AdminLogoutViewModel
 import com.example.unitedpoultry.AdminShopModule.AdminEditShopActivity
 import com.example.unitedpoultry.AdminSettingModule.viewmodel.AdminSettingViewModel
@@ -18,6 +20,7 @@ import com.example.unitedpoultry.Splash.SplashActivity
 import com.example.unitedpoultry.databinding.ActivitySettingHomeBinding
 import com.example.unitedpoultry.util.AppConstants.userData
 import com.example.unitedpoultry.network.Status
+import com.example.unitedpoultry.util.AppConstants
 import com.example.unitedpoultry.util.AppUtil
 import com.example.unitedpoultry.util.showToast
 import com.google.android.material.button.MaterialButton
@@ -46,9 +49,12 @@ class SettingHomeActivity : BaseActivity() {
             colorResId = R.color.primary
         )
 
-        showData()
         onclick()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        showData()
     }
 
     private fun showData(){
@@ -56,7 +62,21 @@ class SettingHomeActivity : BaseActivity() {
         binding.tvName.text = userData?.name ?: "User Name"
         binding.tvEmail.text = userData?.email ?: "Email"
 
-        binding.tvInitials.text = getInitials(userData?.name)
+        //binding.tvInitials.text = getInitials(userData?.name)
+
+        val imageUrl = userData?.image
+        if (!imageUrl.isNullOrEmpty()) {
+            binding.imgShop.visibility = View.VISIBLE
+            //  binding.imgCamera.visibility = View.GONE
+
+            // Use full URL to show existing image
+            val fullImageUrl = AppConstants.ImageURL + imageUrl
+            Glide.with(this)
+                .load(fullImageUrl)
+                .centerCrop()
+                .placeholder(binding.imgShop.drawable)
+                .into(binding.imgShop)
+        }
 
     }
 
@@ -96,21 +116,21 @@ class SettingHomeActivity : BaseActivity() {
         binding.editProfile.setOnClickListener {
 
             val intent = Intent(this, AdminEditProfileActivity::class.java)
-            intent.putExtra("NAME",  userData?.name)
-            intent.putExtra("EMAIL", userData?.email)
-            intent.putExtra("PHONE_NUMBER", userData?.phone_number)
-            intent.putExtra("USERNAME", userData?.username)
-            intent.putExtra("ADDRESS", userData?.address)
-            intent.putExtra("INITIALS", getInitials(userData?.name))
+//            intent.putExtra("NAME",  userData?.name)
+//            intent.putExtra("EMAIL", userData?.email)
+//            intent.putExtra("PHONE_NUMBER", userData?.phone_number)
+//            intent.putExtra("USERNAME", userData?.username)
+//            intent.putExtra("ADDRESS", userData?.address)
+//            intent.putExtra("INITIALS", getInitials(userData?.name))
             startActivity(intent)
 
         }
 
-        binding.rateManagement.setOnClickListener {
-
-            val intent = Intent(this, AdminRateManagmentActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.rateManagement.setOnClickListener {
+//
+//            val intent = Intent(this, AdminRateManagmentActivity::class.java)
+//            startActivity(intent)
+//        }
 
         binding.productManagement.setOnClickListener {
 

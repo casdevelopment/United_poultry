@@ -8,13 +8,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="2"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <TextView
             android:id="@+id/tvProductName"
@@ -24,17 +26,18 @@
             android:text="-"
             android:textColor="@color/black"
             android:textSize="15sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"/>
 
-        <TextView
-            android:id="@+id/tvPacking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:text="-"
-            android:textColor="@color/black"
-            android:textSize="13sp"
-            android:textStyle="bold"/>
+<!--        <TextView-->
+<!--            android:id="@+id/tvPacking"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fontFamily="@font/poppins"-->
+<!--            android:text="-"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="13sp"-->
+<!--            android:textStyle="bold"/>-->
     </LinearLayout>
 
     <EditText
@@ -42,13 +45,12 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="40dp"
-        android:background="@drawable/edit_text_bg_black"
+        android:background="@drawable/edit_text_bg_noborder"
         android:textColor="@color/black60"
         android:textSize="14sp"
         android:inputType="number"
-        android:hint="0"
-        android:gravity="end"
-        android:layout_marginTop="10dp" />
+        android:backgroundTint="@color/primary20"
+        android:hint="Enter Amount" />
 
     </LinearLayout>
 

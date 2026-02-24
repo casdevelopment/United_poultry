@@ -31,15 +31,15 @@ class EditRiderViewModel(private val repository: Repository) : ViewModel() {
 
     fun editRider(
         id: Int,
-        name: RequestBody,
-        email: RequestBody,
-        username: RequestBody,
-        phoneNumber: RequestBody,
-        cnic: RequestBody,
-        address: RequestBody,
-        password: RequestBody?,
-        isActive: RequestBody,
-        image: MultipartBody.Part?
+        name: RequestBody? = null,
+        email: RequestBody? = null,
+//        username: RequestBody? = null,
+        phoneNumber: RequestBody? = null,
+        cnic: RequestBody? = null,
+        address: RequestBody? = null,
+        password: RequestBody? = null,
+        isActive: RequestBody? = null,
+        image: MultipartBody.Part? = null
     ): LiveData<NetworkStates<Response<BaseResponse<RiderModel>>>> = liveData(Dispatchers.IO) {
         emit(NetworkStates.loading(null))
         try {
@@ -47,7 +47,7 @@ class EditRiderViewModel(private val repository: Repository) : ViewModel() {
                 id,
                 name,
                 email,
-                username,
+//                username,
                 phoneNumber,
                 cnic,
                 address,

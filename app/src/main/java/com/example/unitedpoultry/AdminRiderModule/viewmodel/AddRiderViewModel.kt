@@ -14,22 +14,22 @@ import retrofit2.Response
 class AddRiderViewModel(private val repository: Repository) : ViewModel() {
 
     fun addRider(
-        name: RequestBody,
-        email: RequestBody,
-        username: RequestBody,
-        phoneNumber: RequestBody,
-        cnic: RequestBody,
-        address: RequestBody,
-        password: RequestBody,
-        isActive: RequestBody,
-        image: MultipartBody.Part
+        name: RequestBody? = null,
+        email: RequestBody? = null,
+//        username: RequestBody? = null,
+        phoneNumber: RequestBody? = null,
+        cnic: RequestBody? = null,
+        address: RequestBody? = null,
+        password: RequestBody? = null,
+        isActive: RequestBody? = null,
+        image: MultipartBody.Part? = null
     ): LiveData<NetworkStates<Response<BaseResponse<Any>>>> = liveData(Dispatchers.IO) {
         emit(NetworkStates.loading(null))
         try {
             val response = repository.addRider(
                 name,
                 email,
-                username,
+             //   username,
                 phoneNumber,
                 cnic,
                 address,

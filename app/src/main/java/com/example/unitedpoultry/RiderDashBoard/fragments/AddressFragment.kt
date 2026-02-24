@@ -42,7 +42,7 @@ class AddressFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
-        setupSearch()
+       // setupSearch()
         setupNestedScrollPagination()
     }
 
@@ -61,12 +61,12 @@ class AddressFragment : Fragment() {
         binding.rvAreas.isNestedScrollingEnabled = false
     }
 
-    private fun setupSearch() {
-        binding.etSearch.addTextChangedListener { editable ->
-            adapter.filter(editable.toString())
-            showEmptyState(adapter.itemCount == 0)
-        }
-    }
+//    private fun setupSearch() {
+//        binding.etSearch.addTextChangedListener { editable ->
+//            adapter.filter(editable.toString())
+//            showEmptyState(adapter.itemCount == 0)
+//        }
+//    }
 
     private fun setupNestedScrollPagination() {
         binding.nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->

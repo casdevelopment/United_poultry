@@ -99,7 +99,7 @@ class AdminRiderDetailsActivity : BaseActivity() {
             intent.putExtra("EMAIL", rider.email)
             intent.putExtra("PHONE", rider.phone_number)
             intent.putExtra("ADDRESS", rider.address)
-            intent.putExtra("USERNAME", rider.username)
+//            intent.putExtra("USERNAME", rider.username)
             intent.putExtra("PASSWORD", rider.password)
             intent.putExtra("AREA_Status", rider.is_active)
             intent.putExtra("IMAGE", rider.image)
@@ -200,7 +200,7 @@ class AdminRiderDetailsActivity : BaseActivity() {
         binding.toggleStatus.isEnabled = false
 
 
-        binding.tvPerformance.text= "${rider.username} Today Progress"
+        binding.tvPerformance.text= "${rider.name} Today Progress"
 
         binding.tvJoinedDate.text = formatDateOnly(rider.created_at)
 

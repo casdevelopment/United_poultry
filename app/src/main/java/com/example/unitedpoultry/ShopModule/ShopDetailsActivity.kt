@@ -18,7 +18,6 @@ import com.example.unitedpoultry.databinding.ActivityShopDetailsBinding
 import com.example.unitedpoultry.status_check.UserStatusChecker
 import com.example.unitedpoultry.status_check.viewmodel.UserStatusViewModel
 import com.example.unitedpoultry.util.AppConstants
-import com.example.unitedpoultry.util.AppConstants.userData
 import com.example.unitedpoultry.util.AppUtil
 import com.google.gson.Gson
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -31,6 +30,7 @@ class ShopDetailsActivity : BaseActivity() {
 
     private var shopDetails: ShopDetailsResponseModel? = null
     private var shopId: Int = 0
+    private var areaId: Int = 0
 
     private lateinit var adapter: RecentActivityAdapter
     private val activityList = mutableListOf<RecentActivityModel>()
@@ -46,7 +46,8 @@ class ShopDetailsActivity : BaseActivity() {
         configureStatusBar(false, R.color.primary)
 
         // areaId = intent.getIntExtra("AREA_ID", 0)
-        shopId = intent.getIntExtra("ID", 0)
+        shopId = intent.getIntExtra("SHOP_ID", 0)
+        areaId = intent.getIntExtra("AREA_ID", 0)
 
         if (shopId == 0) {
             Toast.makeText(this, "Invalid shop id", Toast.LENGTH_SHORT).show()
@@ -68,6 +69,7 @@ class ShopDetailsActivity : BaseActivity() {
                     shopDetails?.let { shop ->
                         val intent = Intent(this, SaleFormActivity::class.java)
                         intent.putExtra("ID", shop.id)
+                        intent.putExtra("AREA_ID", areaId)
                         intent.putExtra("NAME", shop.name)
                         intent.putExtra("ADDRESS", shop.address)
                         intent.putExtra("DISCOUNT", shop.discount_per_petti)
@@ -96,7 +98,9 @@ class ShopDetailsActivity : BaseActivity() {
             shopDetails?.let { shop ->
 
                 val intent = Intent(this, CollectionformActivity::class.java)
-                intent.putExtra("ID", shop.id)
+
+                intent.putExtra("SHOP_ID", shop.id)
+                intent.putExtra("AREA_ID", areaId)
                 intent.putExtra("NAME", shop.name)
                 intent.putExtra("ADDRESS", shop.address)
                 intent.putExtra("DISCOUNT", shop.discount_per_petti)
@@ -177,7 +181,7 @@ class ShopDetailsActivity : BaseActivity() {
 
         binding.tvShopName.text = shop.name
         binding.tvAddress.text = shop.address
-        binding.tvDiscountPerPatti.text = "Rs ${shop.discount_per_petti} per patti"
+       // binding.tvDiscountPerPatti.text = "Rs ${shop.discount_per_petti} per patti"
 
         binding.tvContactName.text = shop.contact_person
         binding.tvPhoneNumber.text = shop.phone_number

@@ -18,8 +18,10 @@ import com.example.unitedpoultry.AdminShopModule.viewmodel.DeleteShopViewModel
 import com.example.unitedpoultry.AdminShopModule.viewmodel.UpdateShopViewModel
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.databinding.ActivityAdminEditShopBinding
+import com.example.unitedpoultry.network.retrofit.BaseResponse
 import com.example.unitedpoultry.util.AppConstants
 import com.example.unitedpoultry.util.AppUtil
+import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -191,73 +193,65 @@ class AdminEditShopActivity : BaseActivity() {
             binding.etShopNameError.visibility = View.VISIBLE
             binding.etShopNameError.text = "Shop name required"
             valid = false
-        }else if (!shopName.matches(Regex(".*[a-zA-Z].*"))) {
-            binding.etShopNameError.visibility = View.VISIBLE
-            binding.etShopNameError.text = "Enter valid Shop name"
-            valid = false
         }
-
-        // Contact person name (alphabets only)
-        val contactName = binding.etContactName.text.toString().trim()
-        if (contactName.isEmpty()) {
-            binding.etContactNameError.visibility = View.VISIBLE
-            binding.etContactNameError.text = "Contact person required"
-            valid = false
-        } else if (!contactName.matches(Regex("^[a-zA-Z ]+$"))) {
-            binding.etContactNameError.visibility = View.VISIBLE
-            binding.etContactNameError.text = "Enter valid name"
-            valid = false
-        }
-
-
-        val phone = binding.etPhoneNumber.text.toString().trim()
-
-        if (phone.isEmpty()) {
-            binding.etPhoneNumberError.visibility = View.VISIBLE
-            binding.etPhoneNumberError.text = "Phone number required"
-            valid = false
-        } else if (!phone.matches(Regex("^\\d{11}$"))){
-            binding.etPhoneNumberError.visibility = View.VISIBLE
-            binding.etPhoneNumberError.text = "Enter valid phone number"
-            valid = false
-        }
-
-
-        val hasImage = selectedImageFile != null || binding.imgShop.drawable != null
-        if (!hasImage) {
-            binding.etImageError.visibility = View.VISIBLE
-            binding.etImageError.text = "Shop image required"
-            valid = false
-        }
-
-
-        val address = binding.etAddress.text.toString().trim()
-        if (address.isEmpty()) {
-            binding.etAddressError.visibility = View.VISIBLE
-            binding.etAddressError.text = "Address required"
-            valid = false
-        }else if (!address.matches(Regex(".*[a-zA-Z].*"))) {
-            binding.etAddressError.visibility = View.VISIBLE
-            binding.etAddressError.text = "Enter valid address"
-            valid = false
-        }
-
-//        val discountText = binding.etDiscount.text.toString().trim()
-//
-//        if (discountText.isNotEmpty()) {
-//            val discount = discountText.toFloatOrNull()  // parse as float for validation
-//            if (discount == null || discount !in 0f..100f) {
-//                binding.etDiscountError.visibility = View.VISIBLE
-//                binding.etDiscountError.text = "Enter valid discount percentage"
-//                valid = false
-//            }
+//        else if (!shopName.matches(Regex(".*[a-zA-Z].*"))) {
+//            binding.etShopNameError.visibility = View.VISIBLE
+//            binding.etShopNameError.text = "Enter valid Shop name"
+//            valid = false
 //        }
+//
+//        // Contact person name (alphabets only)
+//        val contactName = binding.etContactName.text.toString().trim()
+//        if (contactName.isEmpty()) {
+//            binding.etContactNameError.visibility = View.VISIBLE
+//            binding.etContactNameError.text = "Contact person required"
+//            valid = false
+//        } else if (!contactName.matches(Regex("^[a-zA-Z ]+$"))) {
+//            binding.etContactNameError.visibility = View.VISIBLE
+//            binding.etContactNameError.text = "Enter valid name"
+//            valid = false
+//        }
+//
+//
+//        val phone = binding.etPhoneNumber.text.toString().trim()
+//
+//        if (phone.isEmpty()) {
+//            binding.etPhoneNumberError.visibility = View.VISIBLE
+//            binding.etPhoneNumberError.text = "Phone number required"
+//            valid = false
+//        } else if (!phone.matches(Regex("^\\d{11}$"))){
+//            binding.etPhoneNumberError.visibility = View.VISIBLE
+//            binding.etPhoneNumberError.text = "Enter valid phone number"
+//            valid = false
+//        }
+//
+//
+//        val hasImage = selectedImageFile != null || binding.imgShop.drawable != null
+//        if (!hasImage) {
+//            binding.etImageError.visibility = View.VISIBLE
+//            binding.etImageError.text = "Shop image required"
+//            valid = false
+//        }
+//
+//
+//        val address = binding.etAddress.text.toString().trim()
+//        if (address.isEmpty()) {
+//            binding.etAddressError.visibility = View.VISIBLE
+//            binding.etAddressError.text = "Address required"
+//            valid = false
+//        }else if (!address.matches(Regex(".*[a-zA-Z].*"))) {
+//            binding.etAddressError.visibility = View.VISIBLE
+//            binding.etAddressError.text = "Enter valid address"
+//            valid = false
+//        }
+//
+
 
         val discountText = binding.etDiscount.text.toString().trim()
 
-        if (discountText.isNotEmpty() && !discountText.matches(Regex("^\\d+$"))) {
+        if (discountText.isNotEmpty() && !discountText.matches(Regex("^\\d+(\\.\\d+)?$"))) {
             binding.etDiscountError.visibility = View.VISIBLE
-            binding.etDiscountError.text = "Enter valid discount (numbers only)"
+            binding.etDiscountError.text = "Enter valid discount"
             valid = false
         }
 
@@ -291,24 +285,73 @@ class AdminEditShopActivity : BaseActivity() {
         val type = "PUT"
         val method = type.toRequestBody()
 
+//        AppUtil.startLoader(this)
+//        viewModel.updateShop(shopId, name, contact, phone, address, discount, active, imagePart,method).observe(this) { response ->
+//            AppUtil.stopLoader()
+//            val message = response.data?.body()?.message ?: "Updated successfully"
+//            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+//
+//            if (response.data?.body()?.result == "success") {
+//                // ✅ Return "UPDATED" to DetailsActivity
+//                val resultIntent = Intent()
+//                resultIntent.putExtra("ACTION", "UPDATED")
+//                setResult(Activity.RESULT_OK, resultIntent)
+//                finish()
+//            }
+//
+//
+//        }
+
         AppUtil.startLoader(this)
         viewModel.updateShop(
-            shopId, name, contact, phone, address, discount, active, imagePart,method
-        ).observe(this) { response ->
-            AppUtil.stopLoader()
-            val message = response.data?.body()?.message ?: "Updated successfully"
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            shopId, name, contact, phone, address, discount, active, imagePart,method).observe(this) { apiResponse ->
+                AppUtil.stopLoader()
+                when (apiResponse.status) {
+                    com.example.unitedpoultry.network.Status.SUCCESS -> {
+                        val retrofitResponse = apiResponse.data
+                        if (retrofitResponse != null) {
+                            if (retrofitResponse.isSuccessful) {
+                                val baseResponse = retrofitResponse.body()
+                                val message = baseResponse?.message ?: "Shop added"
+                                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
-            if (response.data?.body()?.result == "success") {
-                // ✅ Return "UPDATED" to DetailsActivity
-                val resultIntent = Intent()
-                resultIntent.putExtra("ACTION", "UPDATED")
-                setResult(Activity.RESULT_OK, resultIntent)
-                finish()
+                                // If API says success, finish activity
+                                if (baseResponse?.result == "success") {
+                                    val resultIntent = Intent()
+                                    resultIntent.putExtra("ACTION", "UPDATED")
+                                    setResult(Activity.RESULT_OK, resultIntent)
+                                    finish()
+                                }
+                            } else {
+                                // HTTP error (like 401, 422, 500)
+                                val errorMessage = try {
+                                    val errorBody = retrofitResponse.errorBody()?.string()
+                                    if (!errorBody.isNullOrEmpty()) {
+                                        val baseResponse =
+                                            Gson().fromJson(errorBody, BaseResponse::class.java)
+                                        baseResponse.message ?: "Something went wrong"
+                                    } else {
+                                        "Something went wrong"
+                                    }
+                                } catch (e: Exception) {
+                                    "Something went wrong"
+                                }
+                                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            Toast.makeText(this, "No response from server", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    com.example.unitedpoultry.network.Status.ERROR -> {
+                        Toast.makeText(this, apiResponse.message ?: "Network error", Toast.LENGTH_SHORT).show()
+                    }
+
+                    com.example.unitedpoultry.network.Status.LOADING -> {
+                        /* Loader already handled */
+                    }
+                }
             }
-
-
-        }
     }
 
     private fun String.toRequestBody() = toRequestBody("text/plain".toMediaTypeOrNull())
@@ -340,28 +383,24 @@ class AdminEditShopActivity : BaseActivity() {
 
         viewModel1.deleteShop(shopId).observe(this) { response ->
             AppUtil.stopLoader()
-            val message = response.data?.body()?.message ?: "Shop deleted"
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+            // Only show API message if available
+            val apiMessage = response.data?.body()?.message
+            if (!apiMessage.isNullOrEmpty()) {
+                Toast.makeText(this, apiMessage, Toast.LENGTH_SHORT).show()
+            }
 
             // Close activity if success
-            if (response.data?.body()?.result == "success")
-            {
-//                val intent = Intent(this, AdminShopListActivity::class.java)
-//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                startActivity(intent)
-
-                if (response.data?.body()?.result == "success") {
-                    // ✅ Return "DELETED" to DetailsActivity
-                    val resultIntent = Intent()
-                    resultIntent.putExtra("ACTION", "DELETED")
-                    setResult(Activity.RESULT_OK, resultIntent)
-                    finish()
-                }
-
-
+            if (response.data?.body()?.result == "success") {
+                // ✅ Return "DELETED" to DetailsActivity
+                val resultIntent = Intent()
+                resultIntent.putExtra("ACTION", "DELETED")
+                setResult(Activity.RESULT_OK, resultIntent)
+                finish()
             }
         }
     }
+
 
     override fun onBackPressed() {
         super.onBackPressed()

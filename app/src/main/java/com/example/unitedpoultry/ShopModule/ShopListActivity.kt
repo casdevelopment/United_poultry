@@ -37,7 +37,7 @@ class ShopListActivity : BaseActivity() {
         configureStatusBar(isLightBackground = false, colorResId = R.color.primary)
 
         val name = intent.getStringExtra("AREA_NAME")
-        binding.tvAreaName.text = "$name Shops"
+        binding.tvAreaName.text = "$name"
         areaId = intent.getIntExtra("AREA_Id", 0)
 
         setupRecyclerView()
@@ -130,7 +130,7 @@ class ShopListActivity : BaseActivity() {
                             shopList.addAll(body.data.shops)
                             adapter.updateList(shopList)
 
-                            binding.tvShopsCount.text = "${shopList.size} Shops"
+                         //   binding.tvShopsCount.text = "${shopList.size} Shops"
                             showEmptyState(false)
 
                         } else if (shopList.isEmpty()) {
@@ -162,7 +162,7 @@ class ShopListActivity : BaseActivity() {
         binding.rvShopList.visibility =
             if (show) android.view.View.GONE else android.view.View.VISIBLE
 
-        binding.tvShopsCount.visibility =
-            if (show) android.view.View.GONE else android.view.View.VISIBLE
+       // binding.tvShopsCount.visibility =
+          //  if (show) android.view.View.GONE else android.view.View.VISIBLE
     }
 }

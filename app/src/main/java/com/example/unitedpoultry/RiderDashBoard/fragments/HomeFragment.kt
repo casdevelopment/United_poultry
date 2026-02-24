@@ -33,6 +33,7 @@ import com.example.unitedpoultry.NewSale.model.Product
 import com.example.unitedpoultry.NewSale.model.RiderProductData
 import com.example.unitedpoultry.NewSale.viewmodel.GetRiderProductViewModel
 import com.example.unitedpoultry.SessionManager
+import com.example.unitedpoultry.rider_expense.AddExpenseActivity
 import com.example.unitedpoultry.rider_home.model.ReturnWasteRequestModel
 import com.example.unitedpoultry.rider_home.viewmodel.ReturnWasteViewModel
 import com.example.unitedpoultry.status_check.UserStatusChecker
@@ -194,11 +195,11 @@ class HomeFragment : Fragment() {
         }
 
 
-//        binding.addEggsLayout.setOnClickListener{
-//
-//            val intent = Intent(requireContext(), EggPickupActivity::class.java)
-//            startActivity(intent)
-//        }
+        binding.addExpenseLayout.setOnClickListener{
+
+            val intent = Intent(requireContext(), AddExpenseActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.notifications.setOnClickListener {
             val intent = Intent(requireContext(), NotificationActivity::class.java)
@@ -229,7 +230,7 @@ class HomeFragment : Fragment() {
 
         }
 
-        binding.areaShortCut.setOnClickListener {
+        binding.newSaleLayout.setOnClickListener {
             val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
             bottomNav.selectedItemId = R.id.nav_address
         }

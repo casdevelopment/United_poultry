@@ -1,7 +1,10 @@
 package com.example.unitedpoultry.network.retrofit
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
+import android.widget.Toast
+import com.example.unitedpoultry.Splash.SplashActivity
 import com.example.unitedpoultry.network.api.ApiInterface
 import com.example.unitedpoultry.util.AppConstants
 import kotlinx.coroutines.CoroutineScope
@@ -40,11 +43,11 @@ fun provideOkHttpClient(context: Context): OkHttpClient {
 
             if (response.code==401){
                 CoroutineScope(Dispatchers.Main).launch {
-                    /*Toast.makeText(context, "Your session has expired!, Please Login again", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Your session has expired!, Please Login again", Toast.LENGTH_LONG).show()
                     val i = Intent(context, SplashActivity::class.java)
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     i.putExtra("response",401)
-                    context.startActivity(i)*/
+                    context.startActivity(i)
                 }
             }
             response

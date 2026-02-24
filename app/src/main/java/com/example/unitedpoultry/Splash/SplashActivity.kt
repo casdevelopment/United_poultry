@@ -28,16 +28,20 @@ class SplashActivity :  BaseActivity() {
     private lateinit var dot3: TextView
     private val handler = Handler(Looper.getMainLooper())
     private var dotIndex = 0
-    private val delay: Long = 400 // milliseconds
+    private val delay: Long = 400
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
         configureStatusBar(
-            isLightBackground = false, // false = white icons
+            isLightBackground = false,
             colorResId = R.color.primary
         )
+
+        if(intent.getIntExtra("response",0)==401){
+            sessionManager.logout()
+        }
 
         dot1 = findViewById(R.id.dot1)
         dot2 = findViewById(R.id.dot2)

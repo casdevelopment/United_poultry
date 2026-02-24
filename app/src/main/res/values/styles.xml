@@ -13,4 +13,19 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item> <!-- Adjust for roundness -->
     </style>
+
+
+    <style name="CustomDropdownStyle"
+        parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+        <item name="boxCornerRadiusTopStart">20dp</item>
+        <item name="boxCornerRadiusTopEnd">20dp</item>
+        <item name="boxCornerRadiusBottomStart">20dp</item>
+        <item name="boxCornerRadiusBottomEnd">20dp</item>
+
+        <item name="boxStrokeColor">@color/gray</item>
+        <item name="boxBackgroundColor">@android:color/white</item>
+
+    </style>
+
 </resources>

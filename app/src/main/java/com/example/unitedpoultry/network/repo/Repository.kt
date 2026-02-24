@@ -71,14 +71,14 @@ class Repository(private val api: ApiInterface) {
     }
 
     suspend fun addShop(
-        name: RequestBody,
-        contactPerson: RequestBody,
-        phoneNumber: RequestBody,
-        areaId: RequestBody,
-        address: RequestBody,
-        discount: RequestBody,
-        isActive: RequestBody,
-        image: MultipartBody.Part
+        name: RequestBody? = null,
+        contactPerson: RequestBody? = null,
+        phoneNumber: RequestBody? = null,
+        areaId: RequestBody? = null,
+        address: RequestBody? = null,
+        discount: RequestBody? = null,
+        isActive: RequestBody? = null,
+        image: MultipartBody.Part? = null
     ): Response<BaseResponse<Any>> {
         return api.addShop(name, contactPerson, phoneNumber, areaId, address, discount, isActive, image)
     }
@@ -92,14 +92,14 @@ class Repository(private val api: ApiInterface) {
 
 
     suspend fun updateShop(
-        shopId: Int,
-        name: RequestBody,
-        contactPerson: RequestBody,
-        phoneNumber: RequestBody,
-        address: RequestBody,
-        discount: RequestBody,
-        isActive: RequestBody,
-        image: MultipartBody.Part?,
+        shopId: Int? = null,
+        name: RequestBody? = null,
+        contactPerson: RequestBody? = null,
+        phoneNumber: RequestBody? = null,
+        address: RequestBody? = null,
+        discount: RequestBody? = null,
+        isActive: RequestBody? = null,
+        image: MultipartBody.Part? = null,
         method: RequestBody
     ): Response<BaseResponse<Any>> {
         return api.updateShop(
@@ -122,17 +122,17 @@ class Repository(private val api: ApiInterface) {
 //    }
 
     suspend fun addRider(
-        name: RequestBody,
-        email: RequestBody,
-        username: RequestBody,
-        phoneNumber: RequestBody,
-        cnic: RequestBody,
-        address: RequestBody,
-        password: RequestBody,
-        isActive: RequestBody,
-        image: MultipartBody.Part
+        name: RequestBody? = null,
+        email: RequestBody? = null,
+//        username: RequestBody? = null,
+        phoneNumber: RequestBody? = null,
+        cnic: RequestBody? = null,
+        address: RequestBody? = null,
+        password: RequestBody? = null,
+        isActive: RequestBody? = null,
+        image: MultipartBody.Part? = null
     ): Response<BaseResponse<Any>> {
-        return api.addRider(name, email, username, phoneNumber, cnic, address, password,isActive, image)
+        return api.addRider(name, email,  phoneNumber, cnic, address, password,isActive, image)
     }
 
 
@@ -150,17 +150,17 @@ class Repository(private val api: ApiInterface) {
 
     suspend fun editRider(
         id: Int,
-        name: RequestBody,
-        email: RequestBody,
-        username: RequestBody,
-        phoneNumber: RequestBody,
-        cnic: RequestBody,
-        address: RequestBody,
-        password: RequestBody?,
-        isActive: RequestBody,
-        image: MultipartBody.Part?
+        name: RequestBody? = null,
+        email: RequestBody? = null,
+//        username: RequestBody? = null,
+        phoneNumber: RequestBody? = null,
+        cnic: RequestBody? = null,
+        address: RequestBody? = null,
+        password: RequestBody? = null,
+        isActive: RequestBody? = null,
+        image: MultipartBody.Part? = null
     ): Response<BaseResponse<RiderModel>> {
-        return api.editRider(id,name, email, username, phoneNumber, cnic, address, password,isActive, image)
+        return api.editRider(id,name, email, phoneNumber, cnic, address, password,isActive, image)
     }
 
     suspend fun deleteRider(ShopId: Int): Response<BaseResponse<Any>> {
@@ -168,15 +168,15 @@ class Repository(private val api: ApiInterface) {
     }
 
     suspend fun updateProfile(
-        name: RequestBody,
-        email: RequestBody,
-        phone: RequestBody,
-        username: RequestBody,
-        business_name: RequestBody,
-        address: RequestBody,
-        image: MultipartBody.Part?,
+        name: RequestBody? = null,
+        email: RequestBody? = null,
+        phone: RequestBody? = null,
+        username: RequestBody? = null,
+        business_name: RequestBody? = null,
+        address: RequestBody? = null,
+        image: MultipartBody.Part? = null,
 
-    ): Response<BaseResponse<Any>> {
+    ): Response<BaseResponse<LoginResponseModel>> {
         return api.updateProfile(
             name, email, phone, username, business_name, address, image
         )

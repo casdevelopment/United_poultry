@@ -22,7 +22,7 @@ class ProductAdapter(
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = products[position]
         holder.binding.tvProductName.text = product.name
-        holder.binding.tvPacking.text = "${product.packing} / ${product.eggs_count} eggs"
+        //holder.binding.tvPacking.text = "${product.packing} / ${product.eggs_count} eggs"
 
         holder.binding.etQuantity.setText(quantityMap[product.id]?.toString())
 

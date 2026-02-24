@@ -84,7 +84,7 @@ class AdminEditRiderActivity : BaseActivity() {
         val email = intent.getStringExtra("EMAIL") ?: ""
         val phone = intent.getStringExtra("PHONE") ?: ""
         val address = intent.getStringExtra("ADDRESS") ?: ""
-        val username = intent.getStringExtra("USERNAME") ?: ""
+//        val username = intent.getStringExtra("USERNAME") ?: ""
         val password = intent.getStringExtra("PASSWORD") ?: ""
         val isActive = intent.getBooleanExtra("AREA_Status", true)
 
@@ -96,7 +96,7 @@ class AdminEditRiderActivity : BaseActivity() {
         binding.etEmail.setText(email)
         binding.etPhoneNumber.setText(phone)
         binding.etAddress.setText(address)
-        binding.etUserName.setText(username)
+        //binding.etUserName.setText(username)
         binding.etPassword.setText(password)
         binding.toggleStatus.isChecked = isActive
 
@@ -205,7 +205,7 @@ class AdminEditRiderActivity : BaseActivity() {
         binding.etEmailError.visibility = View.GONE
         binding.etPhoneNumberError.visibility = View.GONE
         binding.etAddressError.visibility = View.GONE
-        binding.etUserNameError.visibility = View.GONE
+       // binding.etUserNameError.visibility = View.GONE
         binding.etImageError.visibility = View.GONE
 
 
@@ -216,12 +216,13 @@ class AdminEditRiderActivity : BaseActivity() {
             binding.etNameError.visibility = View.VISIBLE
             binding.etNameError.text = "Name required"
             valid = false
-        } else if (!Name.matches(Regex("^[a-zA-Z ]+$"))) {
-            binding.etNameError.visibility = View.VISIBLE
-            binding.etNameError.text = "Enter valid name"
-            valid = false
         }
-
+//        else if (!Name.matches(Regex("^[a-zA-Z ]+$"))) {
+//            binding.etNameError.visibility = View.VISIBLE
+//            binding.etNameError.text = "Enter valid name"
+//            valid = false
+//        }
+//
         val cnic = binding.etCnic.text.toString().trim()
 
         if (cnic.isEmpty()) {
@@ -233,70 +234,70 @@ class AdminEditRiderActivity : BaseActivity() {
             binding.etCnicError.text = "Enter valid Cnic"
             valid = false
         }
-
-        val email = binding.etEmail.text.toString().trim()
-
-        if (email.isEmpty()) {
-            binding.etEmailError.visibility = View.VISIBLE
-            binding.etEmailError.text = "Email required"
-            valid = false
-        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.etEmailError.visibility = View.VISIBLE
-            binding.etEmailError.text = "Enter valid email address"
-            valid = false
-        }
-
-        val phone = binding.etPhoneNumber.text.toString().trim()
-
-        if (phone.isEmpty()) {
-            binding.etPhoneNumberError.visibility = View.VISIBLE
-            binding.etPhoneNumberError.text = "Phone number required"
-            valid = false
-        } else if (!phone.matches(Regex("^\\d{11}$"))){
-            binding.etPhoneNumberError.visibility = View.VISIBLE
-            binding.etPhoneNumberError.text = "Enter valid phone number"
-            valid = false
-        }
-
-        val address = binding.etAddress.text.toString().trim()
-
-        if (address.isEmpty()) {
-            binding.etAddressError.visibility = View.VISIBLE
-            binding.etAddressError.text = "Address required"
-            valid = false
-        }else if (!address.matches(Regex(".*[a-zA-Z].*"))) {
-            binding.etAddressError.visibility = View.VISIBLE
-            binding.etAddressError.text = "Enter valid address"
-            valid = false
-        }
-
-        val username = binding.etUserName.text.toString().trim()
-
-        if (username.isEmpty()) {
-            binding.etUserNameError.visibility = View.VISIBLE
-            binding.etUserNameError.text = "User Name required"
-            valid = false
-        } else if (!username.matches(Regex(".*[a-zA-Z].*"))) {
-            binding.etUserNameError.visibility = View.VISIBLE
-            binding.etUserNameError.text = "Enter valid username"
-            valid = false
-        }
-
-
+//
+//        val email = binding.etEmail.text.toString().trim()
+//
+//        if (email.isEmpty()) {
+//            binding.etEmailError.visibility = View.VISIBLE
+//            binding.etEmailError.text = "Email required"
+//            valid = false
+//        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+//            binding.etEmailError.visibility = View.VISIBLE
+//            binding.etEmailError.text = "Enter valid email address"
+//            valid = false
+//        }
+//
+//        val phone = binding.etPhoneNumber.text.toString().trim()
+//
+//        if (phone.isEmpty()) {
+//            binding.etPhoneNumberError.visibility = View.VISIBLE
+//            binding.etPhoneNumberError.text = "Phone number required"
+//            valid = false
+//        } else if (!phone.matches(Regex("^\\d{11}$"))){
+//            binding.etPhoneNumberError.visibility = View.VISIBLE
+//            binding.etPhoneNumberError.text = "Enter valid phone number"
+//            valid = false
+//        }
+//
+//        val address = binding.etAddress.text.toString().trim()
+//
+//        if (address.isEmpty()) {
+//            binding.etAddressError.visibility = View.VISIBLE
+//            binding.etAddressError.text = "Address required"
+//            valid = false
+//        }else if (!address.matches(Regex(".*[a-zA-Z].*"))) {
+//            binding.etAddressError.visibility = View.VISIBLE
+//            binding.etAddressError.text = "Enter valid address"
+//            valid = false
+//        }
+//
+//        val username = binding.etUserName.text.toString().trim()
+//
+//        if (username.isEmpty()) {
+//            binding.etUserNameError.visibility = View.VISIBLE
+//            binding.etUserNameError.text = "User Name required"
+//            valid = false
+//        } else if (!username.matches(Regex(".*[a-zA-Z].*"))) {
+//            binding.etUserNameError.visibility = View.VISIBLE
+//            binding.etUserNameError.text = "Enter valid username"
+//            valid = false
+//        }
+//
+//
         val password = binding.etPassword.text.toString().trim()
         if (password.isNotEmpty() && password.length < 8) {
             binding.etPasswordError.visibility = View.VISIBLE
             binding.etPasswordError.text = "Password must be at least 8 characters"
             valid = false
         }
-
-        val hasImage = selectedImageFile != null || binding.imgShop.drawable != null
-        if (!hasImage) {
-            binding.etImageError.visibility = View.VISIBLE
-            binding.etImageError.text = "Shop image required"
-            valid = false
-        }
-
+//
+//        val hasImage = selectedImageFile != null || binding.imgShop.drawable != null
+//        if (!hasImage) {
+//            binding.etImageError.visibility = View.VISIBLE
+//            binding.etImageError.text = "Shop image required"
+//            valid = false
+//        }
+//
 
         return valid
     }
@@ -328,7 +329,7 @@ class AdminEditRiderActivity : BaseActivity() {
 
         val name = binding.etName.text.toString().toRequestBody()
         val email = binding.etEmail.text.toString().toRequestBody()
-        val username = binding.etUserName.text.toString().toRequestBody()
+        //val username = binding.etUserName.text.toString().toRequestBody()
         val phone_number = binding.etPhoneNumber.text.toString().toRequestBody()
         val cnic = binding.etCnic.text.toString().toRequestBody()
         val address = binding.etAddress.text.toString().toRequestBody()
@@ -349,7 +350,7 @@ class AdminEditRiderActivity : BaseActivity() {
 
 
 
-        viewModel.editRider(id, name,email,username,phone_number,cnic,address,passwordBody,isActiveBody,imagePart).observe(this) { apiResponse ->
+        viewModel.editRider(id, name,email,phone_number,cnic,address,passwordBody,isActiveBody,imagePart).observe(this) { apiResponse ->
 
             when (apiResponse.status) {
 
@@ -446,37 +447,62 @@ class AdminEditRiderActivity : BaseActivity() {
         AlertDialog.Builder(this)
             .setTitle("Delete Shop")
             .setMessage("Are you sure you want to delete this Rider?")
-            .setPositiveButton("Yes") { _, _ -> callDeleteShopApi() }
+            .setPositiveButton("Yes") { _, _ -> callDeleteRiderApi() }
             .setNegativeButton("No", null)
             .show()
     }
 
-    private fun callDeleteShopApi() {
+//    private fun callDeleteShopApi() {
+//        AppUtil.startLoader(this)
+//
+//        val id = intent.getIntExtra("ID", 0)
+//
+//        viewModel1.deleteRider(id).observe(this) { response ->
+//            AppUtil.stopLoader()
+//            val message = response.data?.body()?.message ?: "Shop deleted"
+//            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+//
+//            // Close activity if success
+//            if (response.data?.body()?.result == "success")
+//            {
+//
+//
+//                if (response.data.body()?.result == "success") {
+//                    val resultIntent = Intent()
+//                    resultIntent.putExtra("ACTION", "DELETED")
+//                    setResult(Activity.RESULT_OK, resultIntent)
+//                    finish()
+//                }
+//
+//
+//            }
+//        }
+//    }
+
+    private fun callDeleteRiderApi() {
         AppUtil.startLoader(this)
 
         val id = intent.getIntExtra("ID", 0)
 
         viewModel1.deleteRider(id).observe(this) { response ->
             AppUtil.stopLoader()
-            val message = response.data?.body()?.message ?: "Shop deleted"
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+            // Only show API message if available
+            val apiMessage = response.data?.body()?.message
+            if (!apiMessage.isNullOrEmpty()) {
+                Toast.makeText(this, apiMessage, Toast.LENGTH_SHORT).show()
+            }
 
             // Close activity if success
-            if (response.data?.body()?.result == "success")
-            {
-
-
-                if (response.data.body()?.result == "success") {
-                    val resultIntent = Intent()
-                    resultIntent.putExtra("ACTION", "DELETED")
-                    setResult(Activity.RESULT_OK, resultIntent)
-                    finish()
-                }
-
-
+            if (response.data?.body()?.result == "success") {
+                val resultIntent = Intent()
+                resultIntent.putExtra("ACTION", "DELETED")
+                setResult(Activity.RESULT_OK, resultIntent)
+                finish()
             }
         }
     }
+
 
     override fun onResume() {
         super.onResume()
