@@ -29,6 +29,7 @@ class HistoryFragment : Fragment() {
     private var lastPage = 1
     private var isLoading = false
     private var currentDuration = "month"
+    private var currentType = "all"
 
     private val salesList = mutableListOf<SaleItem>()
     private lateinit var adapter: HistoryAdapter
@@ -48,10 +49,12 @@ class HistoryFragment : Fragment() {
         setupFilters()
         highlightFilter(binding.filterMonth)
 
+        highlightTypeFilter(binding.filterAll)
+
         loadSaleHistory()
     }
 
-    // -------------------- RecyclerView --------------------
+
 
     private fun setupRecyclerView() {
         adapter = HistoryAdapter(salesList)
@@ -77,7 +80,6 @@ class HistoryFragment : Fragment() {
         }
     }
 
-    // -------------------- Filters --------------------
 
     private fun setupFilters() {
         binding.filterDay.setOnClickListener {
@@ -108,6 +110,20 @@ class HistoryFragment : Fragment() {
             } else {
                 it.setTextColor(resources.getColor(R.color.black60))
                 it.setBackgroundResource(R.drawable.filter_bg_round)
+            }
+        }
+    }
+
+
+    private fun highlightTypeFilter(selected: TextView) {
+        val filters = listOf(binding.filterAll, binding.filterSale, binding.filterCollection)
+        filters.forEach {
+            if (it == selected) {
+                it.setTextColor(resources.getColor(android.R.color.white))
+                it.setBackgroundResource(R.drawable.filter_bg_selected)
+            } else {
+                it.setTextColor(resources.getColor(R.color.black60))
+                it.setBackgroundResource(R.drawable.filter_bg)
             }
         }
     }
@@ -169,7 +185,7 @@ class HistoryFragment : Fragment() {
         }.toLong().toString()
 
         binding.tvTotalSales.text = "Rs ${formatWithEllipsis(totalSales)}"
-        binding.tvTotalCollected.text = "Rs ${formatWithEllipsis(totalCollected)}"
+       // binding.tvTotalCollected.text = "Rs ${formatWithEllipsis(totalCollected)}"
         binding.tvTotalTransactions.text =
             formatWithEllipsis(salesList.size.toString())
     }
