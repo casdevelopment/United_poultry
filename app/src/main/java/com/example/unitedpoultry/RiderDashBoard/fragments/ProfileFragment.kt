@@ -132,10 +132,10 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
 
-//        binding.cardChangePassword.setOnClickListener {
-//            val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
-//            startActivity(intent)
-//        }
+        binding.changePasswordCard.setOnClickListener {
+            val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
+            startActivity(intent)
+        }
 
 //        binding.cardMyPerformance.setOnClickListener {
 //            val intent = Intent(requireContext(), MyPerformanceActivity::class.java)

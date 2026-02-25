@@ -23,7 +23,7 @@
             <ImageView
                 android:id="@+id/bgImage"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="350dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/profilebg" />
 
@@ -87,7 +87,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Supplier"
+                android:text="Delivery Rider"
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:layout_marginStart="6dp"
@@ -117,19 +117,42 @@
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:layout_marginStart="6dp"
                     android:layout_gravity="center_vertical"/>
             </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingStart="25dp"
+                    android:paddingEnd="25dp"
+                    android:backgroundTint="@color/sub_primary"
+                    android:background="@drawable/capsule_bg_sales"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp">
+
+
+                    <TextView
+                        android:id="@+id/tvStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:visibility="gone">
+                android:layout_marginEnd="5dp">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardBoxes"
@@ -152,7 +175,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="3"
+                            android:text="0"
                             android:textColor="@color/primary"
                             android:textSize="18sp"
                             android:textStyle="bold"
@@ -163,12 +186,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="Areas"
+                            android:text="Assigned Area"
                             android:textColor="@color/black75"
                             android:textSize="12sp"
                             android:textStyle="bold"
-                            android:layout_marginTop="5dp"
                             android:layout_marginBottom="10dp"
+                            android:gravity="center"
                             android:layout_gravity="center_horizontal"/>
 
                     </LinearLayout>
@@ -198,7 +221,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="40"
+                            android:text="0"
                             android:textColor="@color/primary"
                             android:textSize="18sp"
                             android:textStyle="bold"
@@ -213,8 +236,8 @@
                             android:textColor="@color/black75"
                             android:textSize="12sp"
                             android:textStyle="bold"
-                            android:layout_marginTop="5dp"
                             android:layout_marginBottom="10dp"
+                            android:gravity="center"
                             android:layout_gravity="center_horizontal"/>
 
                     </LinearLayout>
@@ -244,7 +267,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="92%"
+                            android:text="0%"
                             android:textColor="@color/primary"
                             android:textSize="18sp"
                             android:textStyle="bold"
@@ -259,8 +282,8 @@
                             android:textColor="@color/black75"
                             android:textSize="12sp"
                             android:textStyle="bold"
-                            android:layout_marginTop="5dp"
                             android:layout_marginBottom="10dp"
+                            android:gravity="center"
                             android:layout_gravity="center_horizontal"/>
 
                     </LinearLayout>
@@ -419,6 +442,90 @@
                         </LinearLayout>
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/black17"
+                        android:elevation="2dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <!-- Status Icon -->
+                        <androidx.cardview.widget.CardView
+
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            android:layout_gravity="center">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/areasvg"
+                                app:tint="@color/sub_primary"
+                                android:layout_gravity="center"/>
+                        </androidx.cardview.widget.CardView>
+
+
+
+
+
+                        <!-- Text Container -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="10dp">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="My Assignment"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="15dp"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="Gulberg . 40 shops assigned"
+                                    android:textColor="@color/black75"
+                                    android:textSize="12sp"
+                                    android:layout_marginLeft="5dp"/>
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/circle_white"
+                                android:contentDescription="Status"
+                                android:src="@drawable/greaterthenvector"
+                                android:layout_gravity="center_vertical"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
 <!--                    <View-->
 <!--                        android:layout_width="match_parent"-->
 <!--                        android:layout_height="2dp"-->
@@ -429,534 +536,457 @@
 <!--                        android:layout_marginLeft="10dp"-->
 <!--                        android:layout_marginRight="10dp"/>-->
 
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:orientation="horizontal">-->
 
-<!--                        &lt;!&ndash; Status Icon &ndash;&gt;-->
-<!--                        <androidx.cardview.widget.CardView-->
+                    <LinearLayout
+                        android:id="@+id/cardMyPerformance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
-<!--                            android:layout_width="50dp"-->
-<!--                            android:layout_height="50dp"-->
-<!--                            app:cardCornerRadius="12dp"-->
-<!--                            app:cardElevation="0dp"-->
-<!--                            android:layout_gravity="center">-->
+                        <!-- Status Icon -->
+                        <androidx.cardview.widget.CardView
 
-<!--                            <ImageView-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="match_parent"-->
-<!--                                android:src="@drawable/areasvg"-->
-<!--                                app:tint="@color/sub_primary"-->
-<!--                                android:layout_gravity="center"/>-->
-<!--                        </androidx.cardview.widget.CardView>-->
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            android:layout_gravity="center">
 
-
-
-
-
-<!--                        &lt;!&ndash; Text Container &ndash;&gt;-->
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:orientation="horizontal"-->
-<!--                            android:layout_marginLeft="10dp">-->
-
-<!--                            <LinearLayout-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_weight="1"-->
-<!--                                android:orientation="vertical">-->
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:fontFamily="@font/poppins"-->
-<!--                                    android:text="My Areas"-->
-<!--                                    android:textColor="@color/black"-->
-<!--                                    android:textSize="16sp"-->
-<!--                                    android:textStyle="bold"-->
-<!--                                    android:layout_marginLeft="5dp"-->
-<!--                                    android:layout_marginTop="15dp"/>-->
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:fontFamily="@font/poppins"-->
-<!--                                    android:text="View assigned areas and shops"-->
-<!--                                    android:textColor="@color/black75"-->
-<!--                                    android:textSize="12sp"-->
-<!--                                    android:layout_marginLeft="5dp"/>-->
-
-<!--                            </LinearLayout>-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="12dp"-->
-<!--                                android:layout_height="12dp"-->
-<!--                                android:layout_marginEnd="10dp"-->
-<!--                                android:background="@drawable/circle_white"-->
-<!--                                android:contentDescription="Status"-->
-<!--                                android:src="@drawable/greaterthenvector"-->
-<!--                                android:layout_gravity="center_vertical"/>-->
-<!--                        </LinearLayout>-->
-<!--                    </LinearLayout>-->
-
-<!--                    <View-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="2dp"-->
-<!--                        android:background="@color/black17"-->
-<!--                        android:elevation="2dp"-->
-<!--                        android:layout_marginTop="10dp"-->
-<!--                        android:layout_marginBottom="5dp"-->
-<!--                        android:layout_marginLeft="10dp"-->
-<!--                        android:layout_marginRight="10dp"/>-->
-
-
-<!--                    <LinearLayout-->
-<!--                        android:id="@+id/cardMyPerformance"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:orientation="horizontal">-->
-
-<!--                        &lt;!&ndash; Status Icon &ndash;&gt;-->
-<!--                        <androidx.cardview.widget.CardView-->
-
-<!--                            android:layout_width="50dp"-->
-<!--                            android:layout_height="50dp"-->
-<!--                            app:cardCornerRadius="12dp"-->
-<!--                            app:cardElevation="0dp"-->
-<!--                            android:layout_gravity="center">-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="match_parent"-->
-<!--                                android:src="@drawable/performancesvg"-->
-<!--                                app:tint="@color/mint"-->
-<!--                                android:layout_gravity="center"/>-->
-<!--                        </androidx.cardview.widget.CardView>-->
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/performancesvg"
+                                app:tint="@color/mint"
+                                android:layout_gravity="center"/>
+                        </androidx.cardview.widget.CardView>
 
 
 
 
 
-<!--                        &lt;!&ndash; Text Container &ndash;&gt;-->
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:orientation="horizontal"-->
-<!--                            android:layout_marginLeft="10dp">-->
+                        <!-- Text Container -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="10dp">
 
-<!--                            <LinearLayout-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_weight="1"-->
-<!--                                android:orientation="vertical">-->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:fontFamily="@font/poppins"-->
-<!--                                    android:text="My Performance"-->
-<!--                                    android:textColor="@color/black"-->
-<!--                                    android:textSize="16sp"-->
-<!--                                    android:textStyle="bold"-->
-<!--                                    android:layout_marginLeft="5dp"-->
-<!--                                    android:layout_marginTop="15dp"/>-->
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="My Performance"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="15dp"/>
 
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:fontFamily="@font/poppins"-->
-<!--                                    android:text="View stats and achievements"-->
-<!--                                    android:textColor="@color/black75"-->
-<!--                                    android:textSize="12sp"-->
-<!--                                    android:layout_marginLeft="5dp"/>-->
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="View stats and achievements"
+                                    android:textColor="@color/black75"
+                                    android:textSize="12sp"
+                                    android:layout_marginLeft="5dp"/>
 
-<!--                            </LinearLayout>-->
+                            </LinearLayout>
 
-<!--                            <ImageView-->
-<!--                                android:layout_width="12dp"-->
-<!--                                android:layout_height="12dp"-->
-<!--                                android:layout_marginEnd="10dp"-->
-<!--                                android:background="@drawable/circle_white"-->
-<!--                                android:contentDescription="Status"-->
-<!--                                android:src="@drawable/greaterthenvector"-->
-<!--                                android:layout_gravity="center_vertical"/>-->
-<!--                        </LinearLayout>-->
-<!--                    </LinearLayout>-->
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/circle_white"
+                                android:contentDescription="Status"
+                                android:src="@drawable/greaterthenvector"
+                                android:layout_gravity="center_vertical"/>
+                        </LinearLayout>
+                    </LinearLayout>
 
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-<!--            <androidx.cardview.widget.CardView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                app:cardCornerRadius="12dp"-->
-<!--                app:cardElevation="6dp"-->
-<!--                android:layout_marginTop="20dp"-->
-<!--                android:layout_marginStart="8dp"-->
-<!--                android:layout_marginEnd="8dp">-->
-
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="vertical"-->
-<!--                    android:padding="12dp"-->
-<!--                    android:gravity="center_vertical">-->
-
-
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:fontFamily="@font/poppins"-->
-<!--                        android:text="Settings"-->
-<!--                        android:textColor="@color/black"-->
-<!--                        android:textSize="18sp"-->
-<!--                        android:textStyle="bold"-->
-<!--                        android:layout_marginLeft="5dp"-->
-<!--                        android:layout_marginTop="5dp"/>-->
-
-
-
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:orientation="horizontal">-->
-
-<!--                        &lt;!&ndash; Status Icon &ndash;&gt;-->
-<!--                        <androidx.cardview.widget.CardView-->
-<!--                            android:layout_width="50dp"-->
-<!--                            android:layout_height="50dp"-->
-<!--                            app:cardCornerRadius="12dp"-->
-<!--                            app:cardElevation="0dp"-->
-<!--                            android:layout_gravity="center">-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="match_parent"-->
-<!--                                android:src="@drawable/appsettingsvg"-->
-<!--                                app:tint="@color/primary"-->
-<!--                                android:layout_gravity="center"/>-->
-<!--                        </androidx.cardview.widget.CardView>-->
-
-
-
-
-
-<!--                        &lt;!&ndash; Text Container &ndash;&gt;-->
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:orientation="horizontal"-->
-<!--                            android:layout_marginLeft="10dp">-->
-
-<!--                            <LinearLayout-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_weight="1"-->
-<!--                                android:orientation="vertical">-->
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:fontFamily="@font/poppins"-->
-<!--                                    android:text="App Settings"-->
-<!--                                    android:textColor="@color/black"-->
-<!--                                    android:textSize="16sp"-->
-<!--                                    android:textStyle="bold"-->
-<!--                                    android:layout_marginLeft="5dp"-->
-<!--                                    android:layout_marginTop="15dp"/>-->
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:fontFamily="@font/poppins"-->
-<!--                                    android:text="Theme, language and preferences"-->
-<!--                                    android:textColor="@color/black75"-->
-<!--                                    android:textSize="12sp"-->
-<!--                                    android:layout_marginLeft="5dp"/>-->
-
-<!--                            </LinearLayout>-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="12dp"-->
-<!--                                android:layout_height="12dp"-->
-<!--                                android:layout_marginEnd="10dp"-->
-<!--                                android:background="@drawable/circle_white"-->
-<!--                                android:contentDescription="Status"-->
-<!--                                android:src="@drawable/greaterthenvector"-->
-<!--                                android:layout_gravity="center_vertical"/>-->
-<!--                        </LinearLayout>-->
-<!--                    </LinearLayout>-->
-
-<!--                    <View-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="2dp"-->
-<!--                        android:background="@color/black17"-->
-<!--                        android:elevation="2dp"-->
-<!--                        android:layout_marginTop="10dp"-->
-<!--                        android:layout_marginBottom="5dp"-->
-<!--                        android:layout_marginLeft="10dp"-->
-<!--                        android:layout_marginRight="10dp"/>-->
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:orientation="horizontal">-->
-
-<!--                        &lt;!&ndash; Status Icon &ndash;&gt;-->
-<!--                        <androidx.cardview.widget.CardView-->
-
-<!--                            android:layout_width="50dp"-->
-<!--                            android:layout_height="50dp"-->
-<!--                            app:cardCornerRadius="12dp"-->
-<!--                            app:cardElevation="0dp"-->
-<!--                            android:layout_gravity="center">-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="match_parent"-->
-<!--                                android:src="@drawable/notificationsvg"-->
-<!--                                app:tint="@color/sub_primary"-->
-<!--                                android:layout_gravity="center"/>-->
-<!--                        </androidx.cardview.widget.CardView>-->
-
-
-
-
-
-<!--                        &lt;!&ndash; Text Container &ndash;&gt;-->
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:orientation="horizontal"-->
-<!--                            android:layout_marginLeft="10dp">-->
-
-<!--                            <LinearLayout-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_weight="1"-->
-<!--                                android:orientation="vertical">-->
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:fontFamily="@font/poppins"-->
-<!--                                    android:text="Notification Preferences"-->
-<!--                                    android:textColor="@color/black"-->
-<!--                                    android:textSize="16sp"-->
-<!--                                    android:textStyle="bold"-->
-<!--                                    android:layout_marginLeft="5dp"-->
-<!--                                    android:layout_marginTop="15dp"/>-->
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:fontFamily="@font/poppins"-->
-<!--                                    android:text="Manage alerts and updates"-->
-<!--                                    android:textColor="@color/black75"-->
-<!--                                    android:textSize="12sp"-->
-<!--                                    android:layout_marginLeft="5dp"/>-->
-
-<!--                            </LinearLayout>-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="12dp"-->
-<!--                                android:layout_height="12dp"-->
-<!--                                android:layout_marginEnd="10dp"-->
-<!--                                android:background="@drawable/circle_white"-->
-<!--                                android:contentDescription="Status"-->
-<!--                                android:src="@drawable/greaterthenvector"-->
-<!--                                android:layout_gravity="center_vertical"/>-->
-<!--                        </LinearLayout>-->
-<!--                    </LinearLayout>-->
-
-<!--                    <View-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="2dp"-->
-<!--                        android:background="@color/black17"-->
-<!--                        android:elevation="2dp"-->
-<!--                        android:layout_marginTop="10dp"-->
-<!--                        android:layout_marginBottom="5dp"-->
-<!--                        android:layout_marginLeft="10dp"-->
-<!--                        android:layout_marginRight="10dp"/>-->
-
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:orientation="horizontal">-->
-
-<!--                        &lt;!&ndash; Status Icon &ndash;&gt;-->
-<!--                        <androidx.cardview.widget.CardView-->
-
-<!--                            android:layout_width="50dp"-->
-<!--                            android:layout_height="50dp"-->
-<!--                            app:cardCornerRadius="12dp"-->
-<!--                            app:cardElevation="0dp"-->
-<!--                            android:layout_gravity="center">-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="match_parent"-->
-<!--                                android:src="@drawable/privacysvg"-->
-<!--                                app:tint="@color/mint"-->
-<!--                                android:layout_gravity="center"/>-->
-<!--                        </androidx.cardview.widget.CardView>-->
-
-
-
-
-
-<!--                        &lt;!&ndash; Text Container &ndash;&gt;-->
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:orientation="horizontal"-->
-<!--                            android:layout_marginLeft="10dp">-->
-
-<!--                            <LinearLayout-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_weight="1"-->
-<!--                                android:orientation="vertical">-->
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:fontFamily="@font/poppins"-->
-<!--                                    android:text="Privacy and Security"-->
-<!--                                    android:textColor="@color/black"-->
-<!--                                    android:textSize="16sp"-->
-<!--                                    android:textStyle="bold"-->
-<!--                                    android:layout_marginLeft="5dp"-->
-<!--                                    android:layout_marginTop="15dp"/>-->
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:fontFamily="@font/poppins"-->
-<!--                                    android:text="Password and biometric options"-->
-<!--                                    android:textColor="@color/black75"-->
-<!--                                    android:textSize="12sp"-->
-<!--                                    android:layout_marginLeft="5dp"/>-->
-
-<!--                            </LinearLayout>-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="12dp"-->
-<!--                                android:layout_height="12dp"-->
-<!--                                android:layout_marginEnd="10dp"-->
-<!--                                android:background="@drawable/circle_white"-->
-<!--                                android:contentDescription="Status"-->
-<!--                                android:src="@drawable/greaterthenvector"-->
-<!--                                android:layout_gravity="center_vertical"/>-->
-<!--                        </LinearLayout>-->
-<!--                    </LinearLayout>-->
-
-
-<!--                    <View-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="2dp"-->
-<!--                        android:background="@color/black17"-->
-<!--                        android:elevation="2dp"-->
-<!--                        android:layout_marginTop="10dp"-->
-<!--                        android:layout_marginBottom="5dp"-->
-<!--                        android:layout_marginLeft="10dp"-->
-<!--                        android:layout_marginRight="10dp"/>-->
-
-
-<!--                    <LinearLayout-->
-<!--                        android:id="@+id/cardChangePassword"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:orientation="horizontal">-->
-
-<!--                        &lt;!&ndash; Status Icon &ndash;&gt;-->
-<!--                        <androidx.cardview.widget.CardView-->
-
-<!--                            android:layout_width="50dp"-->
-<!--                            android:layout_height="50dp"-->
-<!--                            app:cardCornerRadius="12dp"-->
-<!--                            app:cardElevation="0dp"-->
-<!--                            android:layout_gravity="center">-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="match_parent"-->
-<!--                                android:src="@drawable/chnagepasswordsvg"-->
-<!--                                app:tint="@color/pink"-->
-<!--                                android:layout_gravity="center"/>-->
-<!--                        </androidx.cardview.widget.CardView>-->
-
-
-
-
-
-<!--                        &lt;!&ndash; Text Container &ndash;&gt;-->
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:orientation="horizontal"-->
-<!--                            android:layout_marginLeft="10dp">-->
-
-<!--                            <LinearLayout-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_weight="1"-->
-<!--                                android:orientation="vertical">-->
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:fontFamily="@font/poppins"-->
-<!--                                    android:text="Change Password"-->
-<!--                                    android:textColor="@color/black"-->
-<!--                                    android:textSize="16sp"-->
-<!--                                    android:textStyle="bold"-->
-<!--                                    android:layout_marginLeft="5dp"-->
-<!--                                    android:layout_marginTop="15dp"/>-->
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:fontFamily="@font/poppins"-->
-<!--                                    android:text="Update your login password"-->
-<!--                                    android:textColor="@color/black75"-->
-<!--                                    android:textSize="12sp"-->
-<!--                                    android:layout_marginLeft="5dp"/>-->
-
-<!--                            </LinearLayout>-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="12dp"-->
-<!--                                android:layout_height="12dp"-->
-<!--                                android:layout_marginEnd="10dp"-->
-<!--                                android:background="@drawable/circle_white"-->
-<!--                                android:contentDescription="Status"-->
-<!--                                android:src="@drawable/greaterthenvector"-->
-<!--                                android:layout_gravity="center_vertical"/>-->
-<!--                        </LinearLayout>-->
-<!--                    </LinearLayout>-->
-
-
-<!--                </LinearLayout>-->
-<!--            </androidx.cardview.widget.CardView>-->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:gravity="center_vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Settings"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"/>
+
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <!-- Status Icon -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            android:layout_gravity="center">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/appsettingsvg"
+                                app:tint="@color/primary"
+                                android:layout_gravity="center"/>
+                        </androidx.cardview.widget.CardView>
+
+
+
+
+
+                        <!-- Text Container -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="10dp">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="App Settings"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="15dp"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="Theme, language and preferences"
+                                    android:textColor="@color/black75"
+                                    android:textSize="12sp"
+                                    android:layout_marginLeft="5dp"/>
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/circle_white"
+                                android:contentDescription="Status"
+                                android:src="@drawable/greaterthenvector"
+                                android:layout_gravity="center_vertical"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/black17"
+                        android:elevation="2dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:visibility="gone"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <!-- Status Icon -->
+                        <androidx.cardview.widget.CardView
+
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            android:layout_gravity="center">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/notificationsvg"
+                                app:tint="@color/sub_primary"
+                                android:layout_gravity="center"/>
+                        </androidx.cardview.widget.CardView>
+
+
+
+
+
+                        <!-- Text Container -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="10dp">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="Notification Preferences"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="15dp"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="Manage alerts and updates"
+                                    android:textColor="@color/black75"
+                                    android:textSize="12sp"
+                                    android:layout_marginLeft="5dp"/>
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/circle_white"
+                                android:contentDescription="Status"
+                                android:src="@drawable/greaterthenvector"
+                                android:layout_gravity="center_vertical"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/black17"
+                        android:elevation="2dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:visibility="gone"/>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <!-- Status Icon -->
+                        <androidx.cardview.widget.CardView
+
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            android:layout_gravity="center">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/privacysvg"
+                                app:tint="@color/mint"
+                                android:layout_gravity="center"/>
+                        </androidx.cardview.widget.CardView>
+
+
+
+
+
+                        <!-- Text Container -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="10dp">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="Privacy and Security"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="15dp"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="Password and biometric options"
+                                    android:textColor="@color/black75"
+                                    android:textSize="12sp"
+                                    android:layout_marginLeft="5dp"/>
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/circle_white"
+                                android:contentDescription="Status"
+                                android:src="@drawable/greaterthenvector"
+                                android:layout_gravity="center_vertical"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/black17"
+                        android:elevation="2dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:visibility="gone"/>
+
+
+                    <LinearLayout
+                        android:id="@+id/changePasswordCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <!-- Status Icon -->
+                        <androidx.cardview.widget.CardView
+
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            android:layout_gravity="center">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/chnagepasswordsvg"
+                                app:tint="@color/pink"
+                                android:layout_gravity="center"/>
+                        </androidx.cardview.widget.CardView>
+
+
+
+
+
+                        <!-- Text Container -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="10dp">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="Change Password"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="15dp"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="Update your login password"
+                                    android:textColor="@color/black75"
+                                    android:textSize="12sp"
+                                    android:layout_marginLeft="5dp"/>
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/circle_white"
+                                android:contentDescription="Status"
+                                android:src="@drawable/greaterthenvector"
+                                android:layout_gravity="center_vertical"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
 
             <androidx.cardview.widget.CardView

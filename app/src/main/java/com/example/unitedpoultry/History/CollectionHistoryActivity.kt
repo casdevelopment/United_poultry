@@ -1,8 +1,10 @@
 package com.example.unitedpoultry.History
 
+import android.content.Intent
 import android.os.Bundle
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.R
+import com.example.unitedpoultry.RiderDashBoard.RiderDashBoardActivity
 import com.example.unitedpoultry.databinding.ActivityCollectionHistoryBinding
 
 
@@ -22,16 +24,22 @@ class CollectionHistoryActivity : BaseActivity() {
         )
 
 
+        onclick()
+
+
+
+    }
+
+    private fun onclick(){
         binding.backArrow.setOnClickListener {
             finish()
         }
 
-        val name = intent.getStringExtra("name")
-        val amount = intent.getIntExtra("amount", 0)
-
-        // 🔹 Set data to TextViews
-        binding.tvShopName.text = name
-        binding.tvAmount.text = "Rs. $amount"
+        binding.moveToDashBoard.setOnClickListener {
+            val intent = Intent(this, RiderDashBoardActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
 
     }
 }

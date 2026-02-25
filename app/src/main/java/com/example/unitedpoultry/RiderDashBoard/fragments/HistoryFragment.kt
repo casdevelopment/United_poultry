@@ -47,8 +47,9 @@ class HistoryFragment : Fragment() {
 
         setupRecyclerView()
         setupFilters()
-        highlightFilter(binding.filterMonth)
+        setupTypeFilters()
 
+        highlightFilter(binding.filterMonth)
         highlightTypeFilter(binding.filterAll)
 
         loadSaleHistory()
@@ -126,6 +127,26 @@ class HistoryFragment : Fragment() {
                 it.setBackgroundResource(R.drawable.filter_bg)
             }
         }
+    }
+
+    private fun setupTypeFilters() {
+        binding.filterAll.setOnClickListener {
+            applyTypeFilter("all", binding.filterAll)
+        }
+
+        binding.filterSale.setOnClickListener {
+            applyTypeFilter("sale", binding.filterSale)
+        }
+
+        binding.filterCollection.setOnClickListener {
+            applyTypeFilter("collection", binding.filterCollection)
+        }
+    }
+
+    private fun applyTypeFilter(type: String, selected: TextView) {
+        currentType = type
+        highlightTypeFilter(selected)
+        refreshSales()
     }
 
     // -------------------- API --------------------
