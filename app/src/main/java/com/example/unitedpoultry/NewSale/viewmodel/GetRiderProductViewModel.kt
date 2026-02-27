@@ -3,6 +3,7 @@ package com.example.unitedpoultry.NewSale.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import com.example.unitedpoultry.NewSale.model.PickedItemsResponse
 import com.example.unitedpoultry.NewSale.model.RiderProductData
 import com.example.unitedpoultry.network.NetworkStates
 import com.example.unitedpoultry.network.repo.Repository
@@ -12,7 +13,7 @@ import retrofit2.Response
 
 class GetRiderProductViewModel(private val repository: Repository) : ViewModel() {
 
-    fun getRiderProducts(): LiveData<NetworkStates<Response<BaseResponse<RiderProductData>>>> =
+    fun getRiderProducts(): LiveData<NetworkStates<Response<BaseResponse<PickedItemsResponse>>>> =
         liveData(Dispatchers.IO) {
             emit(NetworkStates.loading(null))
             try {

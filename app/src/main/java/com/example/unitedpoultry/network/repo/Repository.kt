@@ -11,6 +11,7 @@ import com.example.unitedpoultry.AdminRiderModule.model.RiderModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderRequestModel
 import com.example.unitedpoultry.AdminSettingModule.DataModel.RateData
 import com.example.unitedpoultry.AdminSettingModule.DataModel.UpdateRateModel
+import com.example.unitedpoultry.AdminShopModule.model.ShopDetailsResponse
 import com.example.unitedpoultry.AdminShopModule.model.ShopDetailsResponseModel
 import com.example.unitedpoultry.AdminShopModule.model.ShopsData
 import com.example.unitedpoultry.Authentications.forgetpassword.ForgotPasswordRequestModel
@@ -20,6 +21,7 @@ import com.example.unitedpoultry.Authentications.resetpassword.ResetPasswordRequ
 import com.example.unitedpoultry.Authentications.verifyotp.VerifyOtpRequestModel
 import com.example.unitedpoultry.History.model.SaleHistoryData
 import com.example.unitedpoultry.History.model.SaleItem
+import com.example.unitedpoultry.NewSale.model.PickedItemsResponse
 import com.example.unitedpoultry.NewSale.model.SaleRequest
 import com.example.unitedpoultry.exchange_return.model.ReturnOrExchangeRequest
 import com.example.unitedpoultry.network.api.ApiInterface
@@ -197,8 +199,8 @@ class Repository(private val api: ApiInterface) {
         return api.updateRate(updateRateModel)
     }
 
-    suspend fun savePickedEggs(request: EggPickupRequest, token: String): Response<BaseResponse<EggPickupData>> {
-        return api.savePickedEggs(token, request)
+    suspend fun savePickedEggs(request: EggPickupRequest): Response<BaseResponse<Any>> {
+        return api.savePickedEggs(request)
     }
 
     suspend fun getProducts() = api.getProducts()
@@ -209,13 +211,13 @@ class Repository(private val api: ApiInterface) {
         return api.getRiderAreas(page = page)
     }
 
-    suspend fun getRiderShops(areaId: Int,page: Int = 1): Response<BaseResponse<ShopsData>> {
-        return api.getRiderShops(areaId,page = page)
+    suspend fun getRiderShops(areaId: Int,page: Int = 1,currentFilter: String): Response<BaseResponse<ShopsData>> {
+        return api.getRiderShops(areaId,page = page,currentFilter)
     }
 
     suspend fun getRiderShopDetails(
         shopId: Int
-    ): Response<BaseResponse<ShopDetailsResponseModel>> {
+    ): Response<BaseResponse<ShopDetailsResponse>> {
         return api.getRiderShopDetails(shopId)
     }
 
@@ -227,10 +229,49 @@ class Repository(private val api: ApiInterface) {
         return api.adminLogout()
     }
 
-    suspend fun getRiderProducts() = api.getRiderProducts()
+    suspend fun getRiderProducts(): Response<BaseResponse<PickedItemsResponse>> {
+        return api.getRiderProducts()
+    }
 
-    suspend fun createNewSale(request: SaleRequest): Response<BaseResponse<Any>> {
-        return api.createNewSale(request)
+//    suspend fun createNewSale(request: SaleRequest): Response<BaseResponse<Any>> {
+//        return api.createNewSale(request)
+//    }
+
+    suspend fun createNewSale(
+        shopId: RequestBody,
+        areaId: RequestBody,
+        paymentType: RequestBody,
+        collectionAmount: RequestBody,
+        borrowedAmount: RequestBody,
+        items: RequestBody,
+        damageEggs: RequestBody
+    ): Response<BaseResponse<Any>> {
+        return api.createNewSale(shopId, areaId, paymentType, collectionAmount, borrowedAmount, items, damageEggs)
+    }
+
+
+    suspend fun createNewSaleCheque(
+        shop_id: RequestBody,
+        area_id: RequestBody,
+        itemsBody: RequestBody,
+        damageEggsBody: RequestBody,
+        payment_type: RequestBody,
+        collection_amount: RequestBody,
+        borrowed_amount: RequestBody,
+        payment_record: MultipartBody.Part,
+        note: RequestBody
+    ): Response<BaseResponse<Any>> {
+        return api.createNewSaleCheque(
+            shop_id,
+            area_id,
+            itemsBody,
+            damageEggsBody,
+            payment_type,
+            collection_amount,
+            borrowed_amount,
+            payment_record,
+            note
+        )
     }
 
     suspend fun ReturnOrExchangeSale(request: ReturnOrExchangeRequest): Response<BaseResponse<Any>> {

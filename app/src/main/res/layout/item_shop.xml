@@ -169,11 +169,10 @@
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/tvLastVisit"
+                    android:id="@+id/tvCashIn"
                     android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Rs. 12,350"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
                     android:textSize="13sp"
@@ -204,11 +203,10 @@
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/tvRate"
+                    android:id="@+id/tvBorrowed"
                     android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Rs 1,200"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
                     android:textSize="13sp"
@@ -239,11 +237,10 @@
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/tvDues"
+                    android:id="@+id/tvRepaid"
                     android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Rs. 12,500"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"
                     android:textSize="13sp"

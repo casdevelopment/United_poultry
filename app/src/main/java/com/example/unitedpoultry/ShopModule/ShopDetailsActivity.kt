@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.unitedpoultry.AdminShopModule.model.ShopDetailsResponse
 import com.example.unitedpoultry.AdminShopModule.model.ShopDetailsResponseModel
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.Collection.CollectionformActivity
@@ -28,12 +29,10 @@ class ShopDetailsActivity : BaseActivity() {
     private val viewModel: RiderShopDetailsViewModel by viewModel()
     private val viewModel1: UserStatusViewModel by viewModel()
 
-    private var shopDetails: ShopDetailsResponseModel? = null
+    private var shopDetails: ShopDetailsResponse? = null
     private var shopId: Int = 0
     private var areaId: Int = 0
 
-    private lateinit var adapter: RecentActivityAdapter
-    private val activityList = mutableListOf<RecentActivityModel>()
 
 
 
@@ -62,17 +61,16 @@ class ShopDetailsActivity : BaseActivity() {
             // First check if the user is active
             UserStatusChecker.check(
                 lifecycleOwner = this,
-                viewModel = viewModel1,  // your UserStatusViewModel instance
+                viewModel = viewModel1,
 
                 onActive = {
-                    // ✅ User is active, proceed with navigation
                     shopDetails?.let { shop ->
                         val intent = Intent(this, SaleFormActivity::class.java)
                         intent.putExtra("ID", shop.id)
                         intent.putExtra("AREA_ID", areaId)
                         intent.putExtra("NAME", shop.name)
                         intent.putExtra("ADDRESS", shop.address)
-                        intent.putExtra("DISCOUNT", shop.discount_per_petti)
+                        intent.putExtra("DISCOUNT", shop.discount_per_petti.toString())
                         startActivity(intent)
                     } ?: run {
                         Toast.makeText(this, "Shop details not loaded yet", Toast.LENGTH_SHORT).show()
@@ -113,21 +111,6 @@ class ShopDetailsActivity : BaseActivity() {
 
         binding.recyclerRecentActivities.layoutManager =
             LinearLayoutManager(this)
-
-        // ✅ Sample Data
-        activityList.add(
-            RecentActivityModel("Purchase", "3 days ago, 10:35 PM", "cash", 1000)
-        )
-        activityList.add(
-            RecentActivityModel("Payment Received", "2 days ago, 02:15 PM", "credit", 5000)
-        )
-        activityList.add(
-            RecentActivityModel("Purchase", "1 day ago, 11:20 AM", "cash", 2000)
-        )
-
-        adapter = RecentActivityAdapter(this, activityList)
-        binding.recyclerRecentActivities.adapter = adapter
-
 
 
     }
@@ -177,29 +160,82 @@ class ShopDetailsActivity : BaseActivity() {
         }
     }
 
-    private fun bindData(shop: ShopDetailsResponseModel) {
+//    private fun bindData(shop: ShopDetailsResponseModel) {
+//
+//        binding.tvShopName.text = shop.name
+//        binding.tvAddress.text = shop.address
+//       // binding.tvDiscountPerPatti.text = "Rs ${shop.discount_per_petti} per patti"
+//
+//        binding.tvContactName.text = shop.contact_person
+//        binding.tvPhoneNumber.text = shop.phone_number
+//
+////        binding.boxRate.text = "-"
+////        binding.tvReceivable.text = "-"
+////        binding.tvLastVisit.text = "-"
+////
+////        binding.tvCreditLimit.text = "-"
+//
+//     //   binding.tvInitials.text = getInitials(shop.contact_person)
+//
+//        val imageUrl = shop.image
+//        if (!imageUrl.isNullOrEmpty()) {
+//            binding.imgShop.visibility = View.VISIBLE
+//          //  binding.imgCamera.visibility = View.GONE
+//
+//            // Use full URL to show existing image
+//            val fullImageUrl = AppConstants.ImageURL + imageUrl
+//            Glide.with(this)
+//                .load(fullImageUrl)
+//                .centerCrop()
+//                .placeholder(binding.imgShop.drawable)
+//                .into(binding.imgShop)
+//        }
+//
+//
+//    }
 
+
+    private fun bindData(shop: ShopDetailsResponse) {
+
+        // BASIC INFO
         binding.tvShopName.text = shop.name
         binding.tvAddress.text = shop.address
-       // binding.tvDiscountPerPatti.text = "Rs ${shop.discount_per_petti} per patti"
-
-        binding.tvContactName.text = shop.contact_person
+        binding.tvContactName.text = shop.owner_name
         binding.tvPhoneNumber.text = shop.phone_number
 
-//        binding.boxRate.text = "-"
-//        binding.tvReceivable.text = "-"
-//        binding.tvLastVisit.text = "-"
-//
-//        binding.tvCreditLimit.text = "-"
+        // AREA + LAST VISIT
+       // binding.tvAreaName.text = shop.area_name
+        binding.tvLastVisit.text = shop.last_visit
 
-     //   binding.tvInitials.text = getInitials(shop.contact_person)
+        // FINANCIAL INFO
+        binding.tvCashIn.text = "${shop.cash_in}"
+        binding.tvBorrowed.text = "${shop.borrowed}"
+        binding.tvRepaid.text = "${shop.repaid}"
+        binding.tvDiscountPerPatti.text = "${shop.discount_per_petti}"
 
+        // DAMAGE / RETURN / LIQUID
+        val damage = shop.damage_return
+
+        // EXPIRE
+        binding.etExpirePeti.text = damage.expire.peti.toString()
+        binding.tvExpireTray.text = damage.expire.tray.toString()
+        binding.tvExpireSingle.text = damage.expire.single.toString()
+
+        // RETURN
+        binding.tvReturnPeti.text = damage.`return`.peti.toString()
+        binding.tvReturnTray.text = damage.`return`.tray.toString()
+        binding.tvReturnSingle.text = damage.`return`.single.toString()
+
+        // LIQUID
+        binding.tvLiquidPeti.text = damage.liquid.peti.toString()
+        binding.tvLiquidTray.text = damage.liquid.tray.toString()
+        binding.tvLiquidSingle.text = damage.liquid.single.toString()
+
+        // SHOP IMAGE
         val imageUrl = shop.image
         if (!imageUrl.isNullOrEmpty()) {
             binding.imgShop.visibility = View.VISIBLE
-          //  binding.imgCamera.visibility = View.GONE
 
-            // Use full URL to show existing image
             val fullImageUrl = AppConstants.ImageURL + imageUrl
             Glide.with(this)
                 .load(fullImageUrl)
@@ -207,8 +243,6 @@ class ShopDetailsActivity : BaseActivity() {
                 .placeholder(binding.imgShop.drawable)
                 .into(binding.imgShop)
         }
-
-
     }
 
     private fun showError(response: retrofit2.Response<*>?) {

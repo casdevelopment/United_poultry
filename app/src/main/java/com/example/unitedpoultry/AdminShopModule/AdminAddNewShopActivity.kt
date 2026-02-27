@@ -235,7 +235,6 @@ class AdminAddNewShopActivity : BaseActivity() {
         text = msg
     }
 
-    // ================= API CALL =================
     private fun callAddShopApi() {
         val isActive = if (binding.toggleStatus.isChecked) "1" else "0"
         val areaIdString = intent.getStringExtra("AREA_ID") ?: "0"

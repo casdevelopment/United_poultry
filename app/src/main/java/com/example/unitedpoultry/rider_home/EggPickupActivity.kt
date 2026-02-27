@@ -96,21 +96,21 @@ class EggPickupActivity : BaseActivity() {
                 items = items
             )
 
-            val token = "Bearer " + getTokenFromPrefs()
-            savePickedEggs(request, token)
+           // val token = "Bearer " + getTokenFromPrefs()
+            savePickedEggs(request)
         }
     }
 
-    private fun savePickedEggs(request: EggPickupRequest, token: String) {
-        eggPickupViewModel.savePickedEggs(request, token).observe(this) { response ->
+    private fun savePickedEggs(request: EggPickupRequest) {
+        eggPickupViewModel.savePickedEggs(request).observe(this) { response ->
             when (response.status) {
                 Status.LOADING -> AppUtil.startLoader(this)
                 Status.SUCCESS -> {
                     AppUtil.stopLoader()
                     val res = response.data
                     if (res != null && res.isSuccessful) {
-                        val baseResponse = res.body() as BaseResponse<EggPickupData>?
-                      //  Toast.makeText(this, baseResponse?.message ?: "Saved successfully", Toast.LENGTH_LONG).show()
+                        val baseResponse = res.body() as BaseResponse<Any>?
+                        Toast.makeText(this, baseResponse?.message ?: "Saved successfully", Toast.LENGTH_LONG).show()
                         if (baseResponse?.result == "success") finish()
                     }
                 }

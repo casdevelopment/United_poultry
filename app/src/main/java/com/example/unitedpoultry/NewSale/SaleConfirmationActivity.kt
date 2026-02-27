@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.NewSale.model.SaleItem
-import com.example.unitedpoultry.NewSale.model.SaleRequest
 import com.example.unitedpoultry.NewSale.viewmodel.RiderNewSaleViewModel
 import com.example.unitedpoultry.databinding.ActivitySaleConfirmationBinding
 import com.example.unitedpoultry.network.Status
@@ -90,7 +89,7 @@ class SaleConfirmationActivity : BaseActivity() {
     // ---------------------------
     private fun setupClicks() {
         binding.btnSubmitSale.setOnClickListener {
-            callCreateSaleApi()
+          //  callCreateSaleApi()
         }
 
         binding.btnEdit.setOnClickListener {
@@ -101,53 +100,53 @@ class SaleConfirmationActivity : BaseActivity() {
     // ---------------------------
     // API Call function
     // ---------------------------
-    private fun callCreateSaleApi() {
-
-        val request = SaleRequest(
-            shop_id = shopId,
-            area_id = areaId,
-            sub_total = subTotal,
-            discount = discount,
-            total = total,
-            cash_received = total,
-            items = items
-        )
-
-        saleViewModel.createNewSale(request).observe(this) { response ->
-            when (response.status) {
-                Status.LOADING -> AppUtil.startLoader(this)
-
-                Status.SUCCESS -> {
-                    AppUtil.stopLoader()
-                    val res = response.data
-                    if (res != null && res.isSuccessful && res.body()?.result == "success") {
-
-                        Toast.makeText(this, "Sale created successfully", Toast.LENGTH_SHORT).show()
-
-                        val intent = Intent(this, SaleSuccessActivity::class.java)
-                        intent.putExtra("TOTAL_QUANTITY", totalQuantity)
-                        intent.putExtra("TOTAL_AMOUNT", total)
-                        intent.putExtra("SHOP_NAME", name)
-                        intent.putExtra("ADDRESS", address)
-                        intent.putExtra("INITIALS", initials)
-
-                        intent.putExtra("SHOP_ID", shopId)
-                        intent.putExtra("AREA_ID", areaId)
-                        intent.putExtra("DISCOUNT", discount)
-
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        Toast.makeText(this, "Failed to create sale", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-
-                Status.ERROR -> {
-                    AppUtil.stopLoader()
-                    Toast.makeText(this, response.message ?: "Network Error", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
+//    private fun callCreateSaleApi() {
+//
+//        val request = SaleRequest(
+//            shop_id = shopId,
+//            area_id = areaId,
+//            sub_total = subTotal,
+//            discount = discount,
+//            total = total,
+//            cash_received = total,
+//            items = items
+//        )
+//
+//        saleViewModel.createNewSale(request).observe(this) { response ->
+//            when (response.status) {
+//                Status.LOADING -> AppUtil.startLoader(this)
+//
+//                Status.SUCCESS -> {
+//                    AppUtil.stopLoader()
+//                    val res = response.data
+//                    if (res != null && res.isSuccessful && res.body()?.result == "success") {
+//
+//                        Toast.makeText(this, "Sale created successfully", Toast.LENGTH_SHORT).show()
+//
+//                        val intent = Intent(this, SaleSuccessActivity::class.java)
+//                        intent.putExtra("TOTAL_QUANTITY", totalQuantity)
+//                        intent.putExtra("TOTAL_AMOUNT", total)
+//                        intent.putExtra("SHOP_NAME", name)
+//                        intent.putExtra("ADDRESS", address)
+//                        intent.putExtra("INITIALS", initials)
+//
+//                        intent.putExtra("SHOP_ID", shopId)
+//                        intent.putExtra("AREA_ID", areaId)
+//                        intent.putExtra("DISCOUNT", discount)
+//
+//                        startActivity(intent)
+//                        finish()
+//                    } else {
+//                        Toast.makeText(this, "Failed to create sale", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//
+//
+//                Status.ERROR -> {
+//                    AppUtil.stopLoader()
+//                    Toast.makeText(this, response.message ?: "Network Error", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        }
+//    }
 }

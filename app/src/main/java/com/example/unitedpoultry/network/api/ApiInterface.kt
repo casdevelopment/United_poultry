@@ -10,6 +10,7 @@ import com.example.unitedpoultry.AdminRiderModule.model.RiderModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderRequestModel
 import com.example.unitedpoultry.AdminSettingModule.DataModel.RateData
 import com.example.unitedpoultry.AdminSettingModule.DataModel.UpdateRateModel
+import com.example.unitedpoultry.AdminShopModule.model.ShopDetailsResponse
 import com.example.unitedpoultry.AdminShopModule.model.ShopDetailsResponseModel
 import com.example.unitedpoultry.AdminShopModule.model.ShopsData
 import com.example.unitedpoultry.Authentications.forgetpassword.ForgotPasswordRequestModel
@@ -19,6 +20,7 @@ import com.example.unitedpoultry.Authentications.resetpassword.ResetPasswordRequ
 import com.example.unitedpoultry.Authentications.verifyotp.VerifyOtpRequestModel
 import com.example.unitedpoultry.History.model.SaleHistoryData
 import com.example.unitedpoultry.History.model.SaleItem
+import com.example.unitedpoultry.NewSale.model.PickedItemsResponse
 import com.example.unitedpoultry.NewSale.model.RiderProductData
 import com.example.unitedpoultry.NewSale.model.SaleRequest
 import com.example.unitedpoultry.adminproduct.model.ProductData
@@ -185,9 +187,8 @@ interface ApiInterface {
 
     @POST("seller/egg-pickup/save-picked")
     suspend fun savePickedEggs(
-        @Header("Authorization") token: String,
         @Body request: EggPickupRequest
-    ): Response<BaseResponse<EggPickupData>>
+    ): Response<BaseResponse<Any>>
 
 
     @GET("admin/products")
@@ -200,13 +201,13 @@ interface ApiInterface {
     suspend fun getRiderAreas(@Query("page") page: Int): Response<BaseResponse<AreaDataResponseModel>>
 
     @GET("seller/shops")
-    suspend fun getRiderShops(@Query("area_id") areaId: Int, @Query("page") page: Int): Response<BaseResponse<ShopsData>>
+    suspend fun getRiderShops(@Query("area_id") areaId: Int, @Query("page") page: Int,@Query("status") currentFilter: String): Response<BaseResponse<ShopsData>>
 
 
     @GET("seller/shops/{id}")
     suspend fun getRiderShopDetails(
         @Path("id") shopId: Int
-    ): Response<BaseResponse<ShopDetailsResponseModel>>
+    ): Response<BaseResponse<ShopDetailsResponse>>
 
 
     @DELETE("admin/areas/{id}")
@@ -222,10 +223,38 @@ interface ApiInterface {
     suspend fun adminLogout():Response<BaseResponse<Any>>
 
     @GET("seller/egg-pickup/picked-today")
-    suspend fun getRiderProducts(): Response<BaseResponse<RiderProductData>>
+    suspend fun getRiderProducts(): Response<BaseResponse<PickedItemsResponse>>
 
-    @POST("seller/sales") // Replace with your actual endpoint
-    suspend fun createNewSale(@Body request: SaleRequest): Response<BaseResponse<Any>>
+//    @POST("seller/sales") // Replace with your actual endpoint
+//    suspend fun createNewSale(@Body request: SaleRequest): Response<BaseResponse<Any>>
+
+    @Multipart
+    @POST("seller/sales")
+    suspend fun createNewSale(
+        @Part("shop_id") shopId: RequestBody,
+        @Part("area_id") areaId: RequestBody,
+        @Part("payment_type") paymentType: RequestBody,
+        @Part("collection_amount") collectionAmount: RequestBody,
+        @Part("borrowed_amount") borrowedAmount: RequestBody,
+        @Part("items") items: RequestBody,
+        @Part("damage_eggs") damageEggs: RequestBody
+    ): Response<BaseResponse<Any>>
+
+
+    @Multipart
+    @POST("seller/sales")
+    suspend fun createNewSaleCheque(
+        @Part("shop_id") shop_id: RequestBody,
+        @Part("area_id") area_id: RequestBody,
+        @Part("items") itemsBody: RequestBody,
+        @Part("damage_eggs") damageEggsBody: RequestBody,
+        @Part("payment_type") payment_type: RequestBody,
+        @Part("collection_amount") collection_amount: RequestBody,
+        @Part("borrowed_amount") borrowed_amount: RequestBody,
+        @Part payment_record: MultipartBody.Part,
+        @Part("payment_note") note: RequestBody,
+        ): Response<BaseResponse<Any>>
+
 
     @POST("seller/sale-returns") // Replace with your actual endpoint
     suspend fun ReturnOrExchangeSale(@Body request: ReturnOrExchangeRequest): Response<BaseResponse<Any>>

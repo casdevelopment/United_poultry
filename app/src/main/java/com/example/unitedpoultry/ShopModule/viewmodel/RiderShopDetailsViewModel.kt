@@ -3,6 +3,7 @@ package com.example.unitedpoultry.ShopModule.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import com.example.unitedpoultry.AdminShopModule.model.ShopDetailsResponse
 import com.example.unitedpoultry.AdminShopModule.model.ShopDetailsResponseModel
 import com.example.unitedpoultry.network.NetworkStates
 import com.example.unitedpoultry.network.repo.Repository
@@ -15,7 +16,7 @@ class RiderShopDetailsViewModel(
 
     fun getRiderShopDetails(
         shopId: Int
-    ): LiveData<NetworkStates<Response<BaseResponse<ShopDetailsResponseModel>>>> =
+    ): LiveData<NetworkStates<Response<BaseResponse<ShopDetailsResponse>>>> =
         liveData(Dispatchers.IO) {
 
             emit(NetworkStates.loading(null))

@@ -52,7 +52,9 @@ class RiderShopListAdapter(
 
         holder.tvName.text = item.name
         holder.tvAddress.text = item.address
-       // holder.tvDiscount.text = "Rs ${item.discount_per_petti}"
+        holder.tvCashIn.text = "Rs ${item.cash_in}"
+        holder.tvBorrowed.text = "Rs ${item.borrowed}"
+        holder.tvRepaid.text = "Rs ${item.repaid}"
       //  holder.statusText.text = if (item.is_active == true) "Active" else "Inactive"
 
       //  holder.tvInitials.text = getInitials(item.name)
@@ -252,7 +254,7 @@ class RiderShopListAdapter(
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val tvName: TextView = v.findViewById(R.id.tvName)
         val tvAddress: TextView = v.findViewById(R.id.tvAddress)
-       // val tvDiscount: TextView = v.findViewById(R.id.tvDiscount)
+
         val statusText: TextView = v.findViewById(R.id.statusText)
        // val tvInitials: TextView = v.findViewById(R.id.tvInitials)
         //val statusLayout: LinearLayout = v.findViewById(R.id.statusLayout)
@@ -261,6 +263,10 @@ class RiderShopListAdapter(
         val btnCollect: MaterialButton = v.findViewById(R.id.btnCollect)
 
         val imgShop: ImageView = v.findViewById(R.id.imgShop)
+
+         val tvCashIn: TextView = v.findViewById(R.id.tvCashIn)
+        val tvBorrowed: TextView = v.findViewById(R.id.tvBorrowed)
+        val tvRepaid: TextView = v.findViewById(R.id.tvRepaid)
 
     }
 

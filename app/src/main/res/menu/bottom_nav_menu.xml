@@ -8,19 +8,19 @@
 
     <item
         android:id="@+id/nav_history"
-        android:icon="@drawable/historyvectorsvg"
+        android:icon="@drawable/historyiconnavsvg"
         android:title="History"/>
 
     <item
         android:id="@+id/nav_address"
-        android:icon="@drawable/areavectorsvg"
+        android:icon="@drawable/areaiconnavsvg"
         android:title="Areas"/>
 
 
 
     <item
         android:id="@+id/nav_profile"
-        android:icon="@drawable/profilevectorsvg"
+        android:icon="@drawable/profileiconnavsvg"
         android:title="Profile"/>
 
 </menu>

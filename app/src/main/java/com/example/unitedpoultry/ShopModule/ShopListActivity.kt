@@ -1,9 +1,11 @@
 package com.example.unitedpoultry.ShopModule
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.unitedpoultry.AdminShopModule.model.ShopModel
+import com.example.unitedpoultry.AdminShopModule.model.ShopsData
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.ShopModule.Adapter.RiderShopListAdapter
@@ -27,6 +29,8 @@ class ShopListActivity : BaseActivity() {
     private var currentPage = 1
     private var lastPage = 1
     private var areaId: Int = 0
+    private var currentFilter = "all"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +62,43 @@ class ShopListActivity : BaseActivity() {
             finish()
         }
 
+        binding.filterAll.setOnClickListener {
+            applyFilter("all")
+        }
+
+        binding.filterVisited.setOnClickListener {
+            applyFilter("visited")
+        }
+
+        binding.filterPending.setOnClickListener {
+            applyFilter("pending")
+        }
+
+    }
+
+    private fun applyFilter(filter: String) {
+        if (currentFilter == filter) return
+
+        currentFilter = filter
+        highlightSelectedFilter(filter)
+        resetAndFetch()
+    }
+
+    private fun highlightSelectedFilter(filter: String) {
+
+        styleFilter(binding.filterAll, filter == "all")
+        styleFilter(binding.filterVisited, filter == "visited")
+        styleFilter(binding.filterPending, filter == "pending")
+    }
+
+    private fun styleFilter(view: TextView, isSelected: Boolean) {
+        if (isSelected) {
+            view.setTextColor(resources.getColor(android.R.color.white))
+            view.setBackgroundResource(R.drawable.filter_bg_selected)
+        } else {
+            view.setTextColor(resources.getColor(R.color.black60))
+            view.setBackgroundResource(R.drawable.filter_bg)
+        }
     }
 
     private fun setupRecyclerView() {
@@ -106,7 +147,7 @@ class ShopListActivity : BaseActivity() {
     private fun fetchShops(page: Int) {
         isLoading = true
 
-        viewModel.getRiderShops(areaId, page).observe(this) { apiResponse ->
+        viewModel.getRiderShops(areaId, page,currentFilter).observe(this) { apiResponse ->
 
             when (apiResponse.status) {
 
@@ -121,6 +162,14 @@ class ShopListActivity : BaseActivity() {
                     val body = apiResponse.data?.body()
 
                     if (body?.result == "success" && body.data != null) {
+
+                        val counts = body.data.filter_counts
+
+                        binding.filterAll.text = "All(${counts.all})"
+                        binding.filterVisited.text = "Visited(${counts.visited})"
+                        binding.filterPending.text = "Pending(${counts.pending})"
+
+                        binding.capsuleText.text = "${body.data.total_shops_assigned} Shops Assigned"
 
                         lastPage = body.data.pagination.last_page
 

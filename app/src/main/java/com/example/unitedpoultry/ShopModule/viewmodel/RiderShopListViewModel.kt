@@ -13,11 +13,11 @@ import retrofit2.Response
 
 class RiderShopListViewModel(private val repository: Repository) : ViewModel() {
 
-    fun getRiderShops(areaId: Int,page: Int): LiveData<NetworkStates<Response<BaseResponse<ShopsData>>>> {
+    fun getRiderShops(areaId: Int,page: Int,currentFilter: String): LiveData<NetworkStates<Response<BaseResponse<ShopsData>>>> {
         return liveData(Dispatchers.IO) {
             emit(NetworkStates.loading(null))
             try {
-                val response = repository.getRiderShops(areaId,page)
+                val response = repository.getRiderShops(areaId,page,currentFilter)
                 emit(NetworkStates.success(response))
             } catch (e: Exception) {
                 emit(NetworkStates.error(null, e.message ?: "Something went wrong"))
