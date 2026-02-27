@@ -142,7 +142,7 @@
 
 
                 <EditText
-                    android:id="@+id/etCity"
+                    android:id="@+id/etAmount"
                     android:hint="Enter amount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -156,10 +156,11 @@
                     android:ellipsize="end"
                     android:scrollHorizontally="true"
                     android:imeOptions="actionDone"
+                    android:inputType="number"
                     />
 
                 <TextView
-                    android:id="@+id/etCityError"
+                    android:id="@+id/etAmountError"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/holo_red_dark"
@@ -219,7 +220,7 @@
                         </LinearLayout>
 
                         <EditText
-                            android:id="@+id/etDescription"
+                            android:id="@+id/etNote1"
                             android:hint="Any payment details or notes..."
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -486,6 +487,7 @@
 
 
                         <TextView
+                            android:id="@+id/imageError"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@android:color/holo_red_dark"
@@ -543,7 +545,7 @@
                                 </LinearLayout>
 
                                 <EditText
-
+                                    android:id="@+id/etNote2"
                                     android:hint="Any payment reference or notes..."
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -618,7 +620,7 @@
                         android:layout_marginRight="10dp"/>
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnSaveArea"
+                        android:id="@+id/btnSave"
                         android:layout_width="0dp"
                         android:layout_height="48dp"
                         android:layout_weight="1"

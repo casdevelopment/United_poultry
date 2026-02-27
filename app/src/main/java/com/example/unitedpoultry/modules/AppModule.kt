@@ -43,6 +43,7 @@ import com.example.unitedpoultry.network.repo.Repository
 import com.example.unitedpoultry.network.retrofit.provideOkHttpClient
 import com.example.unitedpoultry.network.retrofit.provideRetrofit
 import com.example.unitedpoultry.network.retrofit.provideRetrofitInterface
+import com.example.unitedpoultry.rider_expense.ExpenseViewModel
 import com.example.unitedpoultry.rider_home.viewmodel.DailyPaymentStatsViewModel
 import com.example.unitedpoultry.rider_home.viewmodel.DailyStatsViewModel
 import com.example.unitedpoultry.rider_home.viewmodel.EggPickupViewModel
@@ -116,6 +117,8 @@ val viewModelModule= module{
     viewModel { RiderWasteProductViewModel(get()) }
 
     viewModel { UserStatusViewModel(get()) }
+
+    viewModel { ExpenseViewModel(get()) }
 
 }
 

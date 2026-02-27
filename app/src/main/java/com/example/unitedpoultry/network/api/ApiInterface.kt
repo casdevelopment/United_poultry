@@ -298,4 +298,28 @@ interface ApiInterface {
 
 
 
+    @Multipart
+    @POST("seller/expenses")
+    suspend fun addExpenseByCash(
+        @Part("title") title: RequestBody,
+        @Part("amount") amount: RequestBody,
+        @Part("note") note: RequestBody? = null,
+        @Part("payment_type") payment_type: RequestBody,
+        @Part("expense_date") expense_date: RequestBody
+    ): Response<BaseResponse<Any>>
+
+
+    @Multipart
+    @POST("seller/expenses")
+    suspend fun addExpenseByCheque(
+        @Part("title") title: RequestBody,
+        @Part("amount") amount: RequestBody,
+        @Part("note") note: RequestBody? = null,
+        @Part("payment_type") payment_type: RequestBody,
+        @Part("expense_date") expense_date: RequestBody,
+        @Part image: MultipartBody.Part,
+        @Part("payment_note") payment_note: RequestBody? = null,
+
+    ): Response<BaseResponse<Any>>
+
 }

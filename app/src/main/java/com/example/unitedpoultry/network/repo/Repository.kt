@@ -311,6 +311,30 @@ class Repository(private val api: ApiInterface) {
     }
 
 
+    suspend fun addExpenseByCash(
+        title: RequestBody,
+        amount: RequestBody,
+        note: RequestBody? = null,
+        payment_type: RequestBody,
+        expense_date: RequestBody
+    ): Response<BaseResponse<Any>> {
+        return api.addExpenseByCash(title, amount, note, payment_type,expense_date)
+    }
+
+
+    suspend fun addExpenseByCheque(
+        title: RequestBody,
+        amount: RequestBody,
+        note: RequestBody? = null,
+        payment_type: RequestBody,
+        expense_date: RequestBody,
+        payment_record: MultipartBody.Part,
+        payment_note: RequestBody? = null
+    ): Response<BaseResponse<Any>> {
+        return api.addExpenseByCheque(title, amount, note, payment_type,expense_date,payment_record,payment_note)
+    }
+
+
 
 }
 
