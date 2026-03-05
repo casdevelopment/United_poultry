@@ -14,20 +14,20 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SaleConfirmationActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySaleConfirmationBinding
-    private val saleViewModel: RiderNewSaleViewModel by viewModel()
-
-    // Store intent data
-    private var shopId = 0
-    private var areaId = 0
-    private var subTotal = 0.0
-    private var discount = 0.0
-    private var total = 0.0
-    private var totalQuantity: Int = 0
-    private var name: String = ""
-    private var address: String = ""
-    private var initials: String = ""
-
-    private val items = mutableListOf<SaleItem>()
+//    private val saleViewModel: RiderNewSaleViewModel by viewModel()
+//
+//    // Store intent data
+//    private var shopId = 0
+//    private var areaId = 0
+//    private var subTotal = 0.0
+//    private var discount = 0.0
+//    private var total = 0.0
+//    private var totalQuantity: Int = 0
+//    private var name: String = ""
+//    private var address: String = ""
+//    private var initials: String = ""
+//
+//    private val items = mutableListOf<SaleItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,67 +35,67 @@ class SaleConfirmationActivity : BaseActivity() {
         setContentView(binding.root)
         configureStatusBar(isLightBackground = true, colorResId = android.R.color.white)
 
-        getIntentData()
-        setUiData()
-        setupClicks()
+//        getIntentData()
+//        setUiData()
+//        setupClicks()
     }
 
-    // ---------------------------
-    // Get data from previous activity
-    // ---------------------------
-    private fun getIntentData() {
-        shopId = intent.getIntExtra("SHOP_ID", 0)
-        areaId = intent.getIntExtra("AREA_ID", 0)
-        subTotal = intent.getDoubleExtra("SUB_TOTAL", 0.0)
-        discount = intent.getDoubleExtra("DISCOUNT", 0.0)
-        total = intent.getDoubleExtra("TOTAL", 0.0)
-        totalQuantity = intent.getIntExtra("TOTAL_QUANTITY", 0)
-
-
-        name = intent.getStringExtra("SHOP_NAME") ?: ""
-        address = intent.getStringExtra("ADDRESS") ?: ""
-        initials = intent.getStringExtra("INITIALS") ?: ""
-
-        val productIds = intent.getIntegerArrayListExtra("PRODUCT_IDS") ?: arrayListOf()
-        val quantities = intent.getIntegerArrayListExtra("QUANTITIES") ?: arrayListOf()
-
-        for (i in productIds.indices) {
-            items.add(
-                SaleItem(
-                    product_id = productIds[i],
-                    qty = quantities[i]
-                )
-            )
-        }
-    }
-
-    // ---------------------------
-    // Set UI values
-    // ---------------------------
-    private fun setUiData() {
-        binding.tvShopName.text = name
-        binding.tvShopAddress.text = address
-        binding.tvSubtotal.text = "Rs. %.2f".format(subTotal)
-        binding.tvDiscount.text = "-Rs. %.2f".format(discount)
-        binding.tvTotal.text = "Rs. %.2f".format(total)
-        binding.tvTotalQuantity.text = totalQuantity.toString()
-
-        binding.tvInitials.text = initials
-
-    }
-
-    // ---------------------------
-    // Button clicks
-    // ---------------------------
-    private fun setupClicks() {
-        binding.btnSubmitSale.setOnClickListener {
-          //  callCreateSaleApi()
-        }
-
-        binding.btnEdit.setOnClickListener {
-            finish()
-        }
-    }
+//    // ---------------------------
+//    // Get data from previous activity
+//    // ---------------------------
+//    private fun getIntentData() {
+//        shopId = intent.getIntExtra("SHOP_ID", 0)
+//        areaId = intent.getIntExtra("AREA_ID", 0)
+//        subTotal = intent.getDoubleExtra("SUB_TOTAL", 0.0)
+//        discount = intent.getDoubleExtra("DISCOUNT", 0.0)
+//        total = intent.getDoubleExtra("TOTAL", 0.0)
+//        totalQuantity = intent.getIntExtra("TOTAL_QUANTITY", 0)
+//
+//
+//        name = intent.getStringExtra("SHOP_NAME") ?: ""
+//        address = intent.getStringExtra("ADDRESS") ?: ""
+//        initials = intent.getStringExtra("INITIALS") ?: ""
+//
+//        val productIds = intent.getIntegerArrayListExtra("PRODUCT_IDS") ?: arrayListOf()
+//        val quantities = intent.getIntegerArrayListExtra("QUANTITIES") ?: arrayListOf()
+//
+//        for (i in productIds.indices) {
+//            items.add(
+//                SaleItem(
+//                    product_id = productIds[i],
+//                    qty = quantities[i]
+//                )
+//            )
+//        }
+//    }
+//
+//    // ---------------------------
+//    // Set UI values
+//    // ---------------------------
+//    private fun setUiData() {
+//        binding.tvShopName.text = name
+//        binding.tvShopAddress.text = address
+//        binding.tvSubtotal.text = "Rs. %.2f".format(subTotal)
+//        binding.tvDiscount.text = "-Rs. %.2f".format(discount)
+//        binding.tvTotal.text = "Rs. %.2f".format(total)
+//        binding.tvTotalQuantity.text = totalQuantity.toString()
+//
+//        binding.tvInitials.text = initials
+//
+//    }
+//
+//    // ---------------------------
+//    // Button clicks
+//    // ---------------------------
+//    private fun setupClicks() {
+//        binding.btnSubmitSale.setOnClickListener {
+//          //  callCreateSaleApi()
+//        }
+//
+//        binding.btnEdit.setOnClickListener {
+//            finish()
+//        }
+//    }
 
     // ---------------------------
     // API Call function

@@ -174,10 +174,10 @@ class RiderShopListAdapter(
                     val context = holder.itemView.context
                     val intent = Intent(context, CollectionformActivity::class.java)
                     intent.putExtra("SHOP_ID", item.id)
-                    intent.putExtra("AREA_ID", areaId)
+                   // intent.putExtra("AREA_ID", areaId)
                     intent.putExtra("NAME", item.name)
                     intent.putExtra("ADDRESS", item.address)
-                    intent.putExtra("DISCOUNT", item.discount_per_petti)
+                    intent.putExtra("BORROWED", item.borrowed)
                     context.startActivity(intent)
                 },
 

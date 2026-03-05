@@ -15,6 +15,7 @@ import com.example.unitedpoultry.databinding.FragmentAddressBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse
 import com.example.unitedpoultry.util.AppUtil
+import com.example.unitedpoultry.util.showToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import retrofit2.Response
 
@@ -124,6 +125,7 @@ class AddressFragment : Fragment() {
                     if (page == 1) AppUtil.stopLoader()
                     isLoading = false
                     if (areaList.isEmpty()) showEmptyState(true)
+                    showToast("Network problem")
                 }
             }
         }

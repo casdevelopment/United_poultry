@@ -35,12 +35,27 @@
             android:textSize="22sp"
             android:textColor="@color/black"
             android:fontFamily="@font/poppins"
+            android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/imgTop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/tvSubTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Receipt has been generated"
+            android:textSize="13sp"
+            android:textColor="@color/black60"
+            android:fontFamily="@font/poppins"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center"
             />
 
@@ -56,7 +71,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:backgroundTint="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvSubTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="20dp">
@@ -118,7 +133,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="-"
-                            android:textColor="@color/black"
+                            android:textColor="@color/black60"
                             android:textSize="12sp"
                             android:layout_marginLeft="5dp"/>
 
@@ -180,10 +195,10 @@
                         android:layout_marginRight="10dp"/>
 
                     <TextView
+                        android:id="@+id/tvPreviousBalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="-"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         android:textStyle="bold"
@@ -212,10 +227,10 @@
                         android:layout_marginRight="10dp"/>
 
                     <TextView
+                        android:id="@+id/tvAmountCollected"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="-"
                         android:textColor="@color/green"
                         android:textSize="14sp"
                         android:textStyle="bold"
@@ -244,10 +259,10 @@
                         android:layout_marginRight="10dp"/>
 
                     <TextView
+                        android:id="@+id/tvPaymentType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="-"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         android:textStyle="bold"
@@ -261,7 +276,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:padding="10dp"
-                    android:layout_marginLeft="15dp">
+                    android:layout_marginLeft="15dp"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -308,12 +324,10 @@
                         android:layout_marginRight="10dp"/>
 
                     <TextView
-                        android:id="@+id/tvDate"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:id="@+id/tvCollectedAt"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="-"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         android:textStyle="bold"
@@ -351,11 +365,10 @@
                         android:layout_marginRight="10dp"/>
 
                     <TextView
-                        android:id="@+id/tvTotal"
+                        android:id="@+id/tvRemainingBalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="-"
                         android:textColor="@color/red"
                         android:textSize="20sp"
                         android:textStyle="bold"

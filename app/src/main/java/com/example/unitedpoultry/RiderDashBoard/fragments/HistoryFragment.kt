@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.unitedpoultry.History.Adapter.HistoryAdapter
-import com.example.unitedpoultry.History.model.SaleItem
-import com.example.unitedpoultry.History.viewmodel.RiderSaleHistoryViewModel
+import com.example.unitedpoultry.History.model.TransactionItem
+import com.example.unitedpoultry.History.viewmodel.HistoryViewModel
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.FragmentHistoryBinding
 import com.example.unitedpoultry.network.Status
@@ -23,7 +23,7 @@ class HistoryFragment : Fragment() {
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: RiderSaleHistoryViewModel by viewModel()
+    private val viewModel: HistoryViewModel by viewModel()
 
     private var currentPage = 1
     private var lastPage = 1
@@ -31,7 +31,7 @@ class HistoryFragment : Fragment() {
     private var currentDuration = "month"
     private var currentType = "all"
 
-    private val salesList = mutableListOf<SaleItem>()
+    private val transactionsList = mutableListOf<TransactionItem>()
     private lateinit var adapter: HistoryAdapter
 
     override fun onCreateView(
@@ -52,54 +52,40 @@ class HistoryFragment : Fragment() {
         highlightFilter(binding.filterMonth)
         highlightTypeFilter(binding.filterAll)
 
-        loadSaleHistory()
+        hitHistoryApi()
     }
 
-
-
     private fun setupRecyclerView() {
-        adapter = HistoryAdapter(salesList)
-
+        adapter = HistoryAdapter(transactionsList)
         binding.historyRv.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@HistoryFragment.adapter
             setHasFixedSize(true)
-
+            // Pagination
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(rv, dx, dy)
-
                     val lm = rv.layoutManager as LinearLayoutManager
                     val lastVisible = lm.findLastVisibleItemPosition()
-
-                    if (!isLoading && lastVisible >= lm.itemCount - 2 && currentPage < lastPage) {
+                    if (!isLoading && lastVisible >= transactionsList.size - 2 && currentPage < lastPage) {
                         currentPage++
-                        loadSaleHistory()
+                        hitHistoryApi()
                     }
                 }
             })
         }
     }
 
-
     private fun setupFilters() {
-        binding.filterDay.setOnClickListener {
-            applyFilter("today", binding.filterDay)
-        }
-
-        binding.filterWeek.setOnClickListener {
-            applyFilter("week", binding.filterWeek)
-        }
-
-        binding.filterMonth.setOnClickListener {
-            applyFilter("month", binding.filterMonth)
-        }
+        binding.filterDay.setOnClickListener { applyFilter("today", binding.filterDay) }
+        binding.filterWeek.setOnClickListener { applyFilter("week", binding.filterWeek) }
+        binding.filterMonth.setOnClickListener { applyFilter("month", binding.filterMonth) }
     }
 
     private fun applyFilter(duration: String, selected: TextView) {
         currentDuration = duration
         highlightFilter(selected)
-        refreshSales()
+        resetAndLoad()
     }
 
     private fun highlightFilter(selected: TextView) {
@@ -115,9 +101,21 @@ class HistoryFragment : Fragment() {
         }
     }
 
+    private fun setupTypeFilters() {
+        binding.filterAll.setOnClickListener { applyTypeFilter("all", binding.filterAll) }
+        binding.filterSale.setOnClickListener { applyTypeFilter("sales", binding.filterSale) }
+        binding.filterCollection.setOnClickListener { applyTypeFilter("collections", binding.filterCollection) }
+        binding.filterExpense.setOnClickListener { applyTypeFilter("expenses", binding.filterExpense) }
+    }
+
+    private fun applyTypeFilter(type: String, selected: TextView) {
+        currentType = type
+        highlightTypeFilter(selected)
+        resetAndLoad()
+    }
 
     private fun highlightTypeFilter(selected: TextView) {
-        val filters = listOf(binding.filterAll, binding.filterSale, binding.filterCollection)
+        val filters = listOf(binding.filterAll, binding.filterSale, binding.filterCollection,binding.filterExpense)
         filters.forEach {
             if (it == selected) {
                 it.setTextColor(resources.getColor(android.R.color.white))
@@ -129,110 +127,84 @@ class HistoryFragment : Fragment() {
         }
     }
 
-    private fun setupTypeFilters() {
-        binding.filterAll.setOnClickListener {
-            applyTypeFilter("all", binding.filterAll)
-        }
-
-        binding.filterSale.setOnClickListener {
-            applyTypeFilter("sale", binding.filterSale)
-        }
-
-        binding.filterCollection.setOnClickListener {
-            applyTypeFilter("collection", binding.filterCollection)
-        }
-    }
-
-    private fun applyTypeFilter(type: String, selected: TextView) {
-        currentType = type
-        highlightTypeFilter(selected)
-        refreshSales()
-    }
-
-    // -------------------- API --------------------
-
-    private fun refreshSales() {
+    private fun resetAndLoad() {
         currentPage = 1
         lastPage = 1
-        salesList.clear()
+        transactionsList.clear()
         adapter.notifyDataSetChanged()
-        loadSaleHistory()
+        hitHistoryApi()
     }
 
-    private fun loadSaleHistory() {
+    private fun hitHistoryApi() {
         isLoading = true
+        AppUtil.startLoader(requireContext())
 
-        viewModel.getSaleHistory(currentPage, currentDuration)
+        viewModel.getHistory(currentPage, currentDuration, currentType)
             .observe(viewLifecycleOwner) { response ->
                 when (response.status) {
-
-                    Status.LOADING -> AppUtil.startLoader(requireContext())
+                    Status.LOADING -> { /* Loader already shown */ }
 
                     Status.SUCCESS -> {
                         AppUtil.stopLoader()
                         isLoading = false
 
-                        val body = response.data?.body()?.data
+                        // response.data is Response<BaseResponse<HistoryResponse>>
+                        val historyResponse = response.data?.body()  // BaseResponse<HistoryResponse>
+                        val body = historyResponse?.data           // HistoryResponse.data (HistoryData)
+                        val productStatus = historyResponse?.data?.product_status
+
+                        // Pagination
                         lastPage = body?.pagination?.last_page ?: 1
 
-                        body?.sales?.let {
-                            salesList.addAll(it)
+                        // Transactions
+                        body?.transactions?.let { transactions ->
+                            transactionsList.addAll(transactions)
                             adapter.notifyItemRangeInserted(
-                                salesList.size - it.size,
-                                it.size
+                                transactionsList.size - transactions.size,
+                                transactions.size
                             )
-                            updateSummary()
+                        }
+
+                        // Summary
+                        body?.summary?.let { summary ->
+
+
+                            binding.tvCashIn.text = "Rs ${summary.total_cash_in}"
+                          //  binding.tvTotalTransactions.text = summary.transactions_count.toString()
+                            binding.tvTotalRepaid.text = "Rs ${summary.total_repaid}"
+                            binding.tvTotalBorrowed.text = "Rs ${summary.borrowed}"
+
+                            binding.tvTotalExpense.text = "Rs ${summary.total_expenses}"
+
+
+                        }
+
+                        productStatus?.let { status ->
+
+                            // EXPIRE
+                            binding.tvExpirePeti.text = "Peti: ${status.expire.peti}"
+                            binding.tvExpireTray.text = "Tray: ${status.expire.tray}"
+                            binding.tvExpireSingle.text = "Eggs: ${status.expire.single}"
+
+                            binding.tvReturnPeti.text = "Peti: ${status.return_.peti}"
+                            binding.tvReturnTray.text = "Tray: ${status.return_.tray}"
+                            binding.tvReturnSingle.text = "Eggs: ${status.return_.single}"
+
+                            binding.tvLiquidPeti.text = "Peti: ${status.liquid.peti}"
+                            binding.tvLiquidTray.text = "Tray: ${status.liquid.tray}"
+                            binding.tvLiquidSingle.text = "Eggs: ${status.liquid.single}"
+
                         }
                     }
 
                     Status.ERROR -> {
                         AppUtil.stopLoader()
                         isLoading = false
-                        showToast(response.message ?: "Failed to load sales")
+                        showToast(response.message ?: "Failed to load history")
                     }
                 }
             }
     }
-
-    // -------------------- Summary --------------------
-
-    private fun updateSummary() {
-        val totalSales = salesList.sumOf {
-            it.total.toDoubleOrNull() ?: 0.0
-        }.toLong().toString()
-
-        val totalCollected = salesList.sumOf {
-            it.cash_received.toDoubleOrNull() ?: 0.0
-        }.toLong().toString()
-
-        binding.tvTotalSales.text = "Rs ${formatWithEllipsis(totalSales)}"
-       // binding.tvTotalCollected.text = "Rs ${formatWithEllipsis(totalCollected)}"
-        binding.tvTotalTransactions.text =
-            formatWithEllipsis(salesList.size.toString())
-    }
-
-    private fun formatWithEllipsis(value: String, maxDigits: Int = 7): String {
-        return if (value.length > maxDigits) {
-            value.substring(0, maxDigits) + "..."
-        } else {
-            value
-        }
-    }
-
-
-
-    private fun formatAmount(value: Double): String {
-        return when {
-            value >= 1_000_000 -> "${(value / 1_000_000).format()}M"
-            value >= 1_000 -> "${(value / 1_000).format()}K"
-            else -> value.toInt().toString()
-        }
-    }
-
-    private fun Double.format(): String =
-        String.format("%.1f", this).removeSuffix(".0")
-
-    // --------------------
 
     override fun onDestroyView() {
         super.onDestroyView()

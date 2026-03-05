@@ -19,11 +19,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.unitedpoultry.BaseActivity
-import com.example.unitedpoultry.NewSale.Adapter.RiderProductAdapter
 import com.example.unitedpoultry.NewSale.Adapter.ShowPickedProductSaleAdapter
 import com.example.unitedpoultry.NewSale.model.PickedItemsResponse
 import com.example.unitedpoultry.NewSale.model.Product
-import com.example.unitedpoultry.NewSale.model.RiderProductData
 import com.example.unitedpoultry.NewSale.model.SaleProduct
 import com.example.unitedpoultry.NewSale.viewmodel.GetRiderProductViewModel
 import com.example.unitedpoultry.NewSale.viewmodel.RiderNewSaleViewModel
@@ -61,11 +59,11 @@ class SaleFormActivity : BaseActivity() {
     private var discountPerPeti: Double = 0.0
 
 
-    private var currentSubtotal: Double = 0.0
-    private var currentTotalEggs: Int = 0
-    private var currentNumberOfPattis: Int = 0
-    private var currentDiscountAmount: Double = 0.0
-    private var currentTotalAfterDiscount: Double = 0.0
+//    private var currentSubtotal: Double = 0.0
+//    private var currentTotalEggs: Int = 0
+//    private var currentNumberOfPattis: Int = 0
+//    private var currentDiscountAmount: Double = 0.0
+//    private var currentTotalAfterDiscount: Double = 0.0
 
 
     private val quantityMap = mutableMapOf<Int, Int>()
@@ -118,6 +116,8 @@ class SaleFormActivity : BaseActivity() {
         binding.tvShopAddress.text = address
         binding.tvInitials.text = getInitials(name)
         binding.tvDiscount.text = "Rs 0"
+        binding.tvSubtotal.text = "Rs 0"
+        binding.tvTotal.text = "Rs 0"
     }
 
     private fun setupClicks() {
@@ -193,7 +193,6 @@ class SaleFormActivity : BaseActivity() {
     }
 
 
-
     override fun onResume() {
         super.onResume()
         loadProducts()
@@ -229,22 +228,35 @@ class SaleFormActivity : BaseActivity() {
     }
 
 
+    fun formatAmount(amount: Double): String {
+        return if (amount % 1.0 == 0.0) {
+            "%.0f".format(amount)   // whole number → no decimal
+        } else {
+            "%.2f".format(amount)   // decimal → 2 places
+        }
+    }
+
     private fun setupRecycler() {
         adapter = ShowPickedProductSaleAdapter(
             saleProducts,
             discountPerPeti,
             quantityMap
         ) { subtotal, discount, total, _productQuantities ->
-            binding.tvSubtotal.text = "Rs. %.2f".format(subtotal)
-            binding.tvDiscount.text = "Rs. %.2f".format(discount)
-            binding.tvTotal.text = "Rs. %.2f".format(total)
+            binding.tvSubtotal.text = "Rs. ${formatAmount(subtotal)}"
+            binding.tvDiscount.text = "Rs. ${formatAmount(discount)}"
+            binding.tvTotal.text = "Rs. ${formatAmount(total)}"
 
-            val enteredCollection = binding.etCollectionAmount.text.toString().toDoubleOrNull() ?: 0.0
-            val collection = enteredCollection.coerceAtMost(total)
-            binding.etCollectionAmount.setText("%.2f".format(collection))
+//            val enteredCollection = binding.etCollectionAmount.text.toString().toDoubleOrNull() ?: 0.0
+//            val collection = enteredCollection.coerceAtMost(total)
+//            binding.etCollectionAmount.setText("%.2f".format(collection))
 
+            // Only read entered value, don’t overwrite text
+            val collection = binding.etCollectionAmount.text.toString().toDoubleOrNull() ?: 0.0
             val remaining = (total - collection).coerceAtLeast(0.0)
-            binding.etBorrowedAmount.setText("%.2f".format(remaining))
+
+            val remainingText = formatAmount(remaining)
+
+            binding.etBorrowedAmount.setText(remainingText)
         }
 
         binding.recyclerProducts.layoutManager = LinearLayoutManager(this)
@@ -309,7 +321,7 @@ class SaleFormActivity : BaseActivity() {
         damageFields.forEach { (_, map) ->
             map.forEach { (_, editText) ->
                 // Initialize with "0"
-                if (editText.text.isEmpty()) editText.setText("0")
+                if (editText.text.isEmpty()) editText.hint = "Amount"
 
                 editText.addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -373,15 +385,14 @@ class SaleFormActivity : BaseActivity() {
                     .trim()
                     .toDoubleOrNull() ?: 0.0
 
+                // Treat empty EditText as 0
                 var collection = s.toString().toDoubleOrNull() ?: 0.0
-                if (collection > total) {
-                    collection = total
-                    binding.etCollectionAmount.setText("%.2f".format(collection))
-                    binding.etCollectionAmount.setSelection(binding.etCollectionAmount.text.length)
-                }
 
                 val remaining = (total - collection).coerceAtLeast(0.0)
-                binding.etBorrowedAmount.setText("%.2f".format(remaining))
+
+                val remainingText = formatAmount(remaining)
+
+                binding.etBorrowedAmount.setText(remainingText)
             }
         })
     }
@@ -522,7 +533,8 @@ class SaleFormActivity : BaseActivity() {
         val shop_id = shopId.toString().toPart()
         val area_id = areaId.toString().toPart()
         val payment_type = paymentType.toPart()
-        val collection_amount = binding.etCollectionAmount.text.toString().trim().toPart()
+        val collectionAmountValue = binding.etCollectionAmount.text.toString().trim().toDoubleOrNull() ?: 0
+        val collection_amount = collectionAmountValue.toString().toPart()
         val borrowed_amount = binding.etBorrowedAmount.text.toString().trim().toPart()
 
         // ---------------- API CALL ----------------
@@ -543,8 +555,15 @@ class SaleFormActivity : BaseActivity() {
                 Status.SUCCESS -> {
                     val response = apiResponse.data
                     if (response?.isSuccessful == true && response.body()?.result == "success") {
-                        Toast.makeText(this, response.body()?.message ?: "Sale created", Toast.LENGTH_SHORT).show()
-                        finish()
+
+                        // Convert API response 'data' to JSON
+                        val jsonData = Gson().toJson(response.body()?.data)
+
+                        // Pass JSON to next activity
+                        val intent = Intent(this, SaleSuccessActivity::class.java)
+                        intent.putExtra("sale_data_json", jsonData)
+                        startActivity(intent)
+
                     } else {
                         val msg = response?.body()?.message ?: "Failed to create sale"
                         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
@@ -603,7 +622,12 @@ class SaleFormActivity : BaseActivity() {
         val shop_id = shopId.toString().toPart()
         val area_id = areaId.toString().toPart()
         val payment_type = paymentType.toPart()
-        val collection_amount = binding.etCollectionAmount.text.toString().trim().toPart()
+
+
+
+        val collectionAmountValue = binding.etCollectionAmount.text.toString().trim().toDoubleOrNull() ?: 0
+        val collection_amount = collectionAmountValue.toString().toPart()
+
         val borrowed_amount = binding.etBorrowedAmount.text.toString().trim().toPart()
 
 //        val image: MultipartBody.Part? = selectedImageFile?.let {
@@ -621,9 +645,9 @@ class SaleFormActivity : BaseActivity() {
         )
 
 
-        val note = binding.etCollectionAmount.text.toString().trim().toPart()
+        val note = binding.etNote.text.toString().trim().toPart()
 
-        // ---------------- API CALL ----------------
+
         AppUtil.startLoader(this)
 
         saleViewModel.createNewSaleCheque(
@@ -643,8 +667,15 @@ class SaleFormActivity : BaseActivity() {
                 Status.SUCCESS -> {
                     val response = apiResponse.data
                     if (response?.isSuccessful == true && response.body()?.result == "success") {
-                        Toast.makeText(this, response.body()?.message ?: "Sale created", Toast.LENGTH_SHORT).show()
-                        finish()
+
+                        // Convert API response 'data' to JSON
+                        val jsonData = Gson().toJson(response.body()?.data)
+
+                        // Pass JSON to next activity
+                        val intent = Intent(this, SaleSuccessActivity::class.java)
+                        intent.putExtra("sale_data_json", jsonData)
+                        startActivity(intent)
+
                     } else {
                         val msg = response?.body()?.message ?: "Failed to create sale"
                         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()

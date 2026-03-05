@@ -18,14 +18,20 @@ import com.example.unitedpoultry.Authentications.login.model.LoginRequestModel
 import com.example.unitedpoultry.Authentications.login.model.LoginResponseModel
 import com.example.unitedpoultry.Authentications.resetpassword.ResetPasswordRequestModel
 import com.example.unitedpoultry.Authentications.verifyotp.VerifyOtpRequestModel
-import com.example.unitedpoultry.History.model.SaleHistoryData
-import com.example.unitedpoultry.History.model.SaleItem
+import com.example.unitedpoultry.Collection.model.CollectionResponse
+import com.example.unitedpoultry.History.model.CollectionHistory
+import com.example.unitedpoultry.History.model.ExpenseItem
+import com.example.unitedpoultry.History.model.HistoryData
+import com.example.unitedpoultry.History.model.SaleHistory
 import com.example.unitedpoultry.NewSale.model.PickedItemsResponse
 import com.example.unitedpoultry.NewSale.model.RiderProductData
 import com.example.unitedpoultry.NewSale.model.SaleRequest
+import com.example.unitedpoultry.NewSale.model.SaleResponseData
+import com.example.unitedpoultry.Profile.model.ChangePasswordRequestModel
 import com.example.unitedpoultry.adminproduct.model.ProductData
 import com.example.unitedpoultry.exchange_return.model.ReturnOrExchangeRequest
 import com.example.unitedpoultry.network.retrofit.BaseResponse
+import com.example.unitedpoultry.rider_expense.ExpenseModel
 import com.example.unitedpoultry.rider_home.model.DailyPaymentStatsData
 import com.example.unitedpoultry.rider_home.model.EggPickupData
 import com.example.unitedpoultry.rider_home.model.EggPickupRequest
@@ -238,7 +244,7 @@ interface ApiInterface {
         @Part("borrowed_amount") borrowedAmount: RequestBody,
         @Part("items") items: RequestBody,
         @Part("damage_eggs") damageEggs: RequestBody
-    ): Response<BaseResponse<Any>>
+    ): Response<BaseResponse<SaleResponseData>>
 
 
     @Multipart
@@ -253,7 +259,7 @@ interface ApiInterface {
         @Part("borrowed_amount") borrowed_amount: RequestBody,
         @Part payment_record: MultipartBody.Part,
         @Part("payment_note") note: RequestBody,
-        ): Response<BaseResponse<Any>>
+        ): Response<BaseResponse<SaleResponseData>>
 
 
     @POST("seller/sale-returns") // Replace with your actual endpoint
@@ -270,14 +276,13 @@ interface ApiInterface {
     @POST("seller/egg-pickup/save-record")  // your login API endpoint
     suspend fun submitReturnWaste(@Body request: ReturnWasteRequestModel): Response<BaseResponse<Any>>
 
-    @GET("seller/sales")
-    suspend fun getSaleHistory(
-        @Query("page") page: Int,
-        @Query("duration") duration: String
-    ): Response<BaseResponse<SaleHistoryData>>
+//    @GET("seller/sales")
+//    suspend fun getSaleHistory(
+//        @Query("page") page: Int,
+//        @Query("duration") duration: String
+//    ): Response<BaseResponse<SaleHistoryData>>
+//
 
-    @GET("seller/sales/{id}")
-    suspend fun getSaleDetail(@Path("id") id: Int): Response<BaseResponse<SaleItem>>
 
     @GET("admin/egg-pickup/daily-stats")
     suspend fun getRiderDailyStats(
@@ -306,7 +311,7 @@ interface ApiInterface {
         @Part("note") note: RequestBody? = null,
         @Part("payment_type") payment_type: RequestBody,
         @Part("expense_date") expense_date: RequestBody
-    ): Response<BaseResponse<Any>>
+    ): Response<BaseResponse<ExpenseModel>>
 
 
     @Multipart
@@ -319,7 +324,52 @@ interface ApiInterface {
         @Part("expense_date") expense_date: RequestBody,
         @Part image: MultipartBody.Part,
         @Part("payment_note") payment_note: RequestBody? = null,
+    ): Response<BaseResponse<ExpenseModel>>
 
-    ): Response<BaseResponse<Any>>
+    @Multipart
+    @POST("seller/collections")
+    suspend fun addCollectionByCash(
+        @Part("shop_id") shop_id: RequestBody,
+        @Part("payment_type") payment_type: RequestBody,
+        @Part("amount") amount: RequestBody,
+    ): Response<BaseResponse<CollectionResponse>>
+
+
+
+    @Multipart
+    @POST("seller/collections")
+    suspend fun addCollectionByCheque(
+        @Part("shop_id") shop_id: RequestBody,
+        @Part("payment_type") payment_type: RequestBody,
+        @Part("amount") amount: RequestBody,
+        @Part image: MultipartBody.Part,
+        @Part("payment_note") payment_note: RequestBody? = null,
+
+    ): Response<BaseResponse<CollectionResponse>>
+
+
+
+        @GET("seller/history")
+        suspend fun getHistory(
+            @Query("page") page: Int,
+            @Query("duration") duration: String,
+            @Query("type") type: String
+        ): Response<BaseResponse<HistoryData>>
+
+    @GET("seller/sales/{id}")
+    suspend fun getSaleDetail(@Path("id") id: Int): Response<BaseResponse<SaleHistory>>
+
+
+    @GET("seller/collections/{id}")
+    suspend fun getCollectionDetail(@Path("id") id: Int): Response<BaseResponse<CollectionHistory>>
+
+
+    @POST("seller/change-password")  // your login API endpoint
+    suspend fun changePassword(@Body request: ChangePasswordRequestModel): Response<BaseResponse<Any>>
+
+
+    @GET("seller/expenses/{id}")
+    suspend fun getExpenseDetail(@Path("id") id: Int): Response<BaseResponse<ExpenseItem>>
+
 
 }

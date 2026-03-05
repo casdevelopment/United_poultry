@@ -1,6 +1,7 @@
 package com.example.unitedpoultry.rider_expense
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
@@ -15,12 +16,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
-import com.example.unitedpoultry.AdminShopModule.viewmodel.AddShopViewModel
 import com.example.unitedpoultry.BaseActivity
+import com.example.unitedpoultry.Collection.CollectionSuccessActivity
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.ActivityAddExpenseBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse
+import com.example.unitedpoultry.rider_expense.ViewModel.ExpenseViewModel
 import com.example.unitedpoultry.util.AppUtil
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -74,6 +76,14 @@ class AddExpenseActivity : BaseActivity() {
 
         binding.cashLayout.setOnClickListener {
             selectButton(binding.cashLayout)
+        }
+
+        binding.backArrow.setOnClickListener {
+            finish()
+        }
+
+        binding.btnCancel.setOnClickListener {
+            finish()
         }
 
         binding.addExpenseLayout.setOnClickListener {
@@ -241,7 +251,10 @@ class AddExpenseActivity : BaseActivity() {
 
                                 if (baseResponse?.result == "success") {
 
-                                    finish()
+                                    val jsonData = Gson().toJson(baseResponse.data)
+                                    val intent = Intent(this, ExpenseSuccessActivity::class.java)
+                                    intent.putExtra("expense_data_json", jsonData)
+                                    startActivity(intent)
                                 }
                             } else {
                                 val errorMessage = try {
@@ -318,7 +331,10 @@ class AddExpenseActivity : BaseActivity() {
 
                                 if (baseResponse?.result == "success") {
 
-                                    finish()
+                                    val jsonData = Gson().toJson(baseResponse.data)
+                                    val intent = Intent(this, ExpenseSuccessActivity::class.java)
+                                    intent.putExtra("expense_data_json", jsonData)
+                                    startActivity(intent)
                                 }
                             } else {
                                 val errorMessage = try {
@@ -350,16 +366,6 @@ class AddExpenseActivity : BaseActivity() {
                 }
             }
     }
-
-
-
-
-
-
-
-
-
-
 
 
     private fun showImagePickerDialog() {

@@ -79,7 +79,7 @@ class EggPickupActivity : BaseActivity() {
     private fun setupClicks() {
         binding.backArrow.setOnClickListener { finish() }
 
-        binding.btnDeleteShops.setOnClickListener {
+        binding.btnSave.setOnClickListener {
             val items = quantityMap.filter { it.value > 0 }
                 .map { PickedItem(product_id = it.key, quantity = it.value) }
 

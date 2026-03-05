@@ -67,8 +67,8 @@
                     android:id="@+id/tvAreaName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="-"
                     android:fontFamily="@font/poppins"
-                    android:text="Gulberg"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold"
@@ -81,9 +81,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="Lahore, Punjab"
                     android:textColor="@color/black"
                     android:textSize="12sp"
+                    android:text="-"
                     android:layout_marginLeft="5dp"/>
 
             </LinearLayout>

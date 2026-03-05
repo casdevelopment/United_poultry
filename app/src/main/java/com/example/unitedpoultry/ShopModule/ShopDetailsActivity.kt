@@ -22,6 +22,7 @@ import com.example.unitedpoultry.util.AppConstants
 import com.example.unitedpoultry.util.AppUtil
 import com.google.gson.Gson
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.Locale
 
 class ShopDetailsActivity : BaseActivity() {
 
@@ -54,6 +55,27 @@ class ShopDetailsActivity : BaseActivity() {
             return
         }
 
+
+        onclick()
+
+
+
+
+        binding.recyclerRecentActivities.layoutManager =
+            LinearLayoutManager(this)
+
+
+    }
+
+    // ✅ refresh when coming back from edit
+    override fun onResume() {
+        super.onResume()
+
+        fetchShopDetails(shopId)
+
+    }
+
+    private fun onclick(){
 
         binding.backArrow.setOnClickListener { finish() }
 
@@ -92,35 +114,40 @@ class ShopDetailsActivity : BaseActivity() {
         }
 
 
+
         binding.btnCollectPayment.setOnClickListener {
-            shopDetails?.let { shop ->
+            // First check if the user is active
+            UserStatusChecker.check(
+                lifecycleOwner = this,
+                viewModel = viewModel1,
 
-                val intent = Intent(this, CollectionformActivity::class.java)
+                onActive = {
+                    shopDetails?.let { shop ->
+                        val intent = Intent(this, CollectionformActivity::class.java)
+                        intent.putExtra("SHOP_ID", shop.id)
+                        //   intent.putExtra("AREA_ID", areaId)
+                        intent.putExtra("NAME", shop.name)
+                        intent.putExtra("ADDRESS", shop.address)
+                        intent.putExtra("BORROWED", shop.borrowed)
+                        startActivity(intent)
+                    } ?: run {
+                        Toast.makeText(this, "Shop details not loaded yet", Toast.LENGTH_SHORT).show()
+                    }
+                },
 
-                intent.putExtra("SHOP_ID", shop.id)
-                intent.putExtra("AREA_ID", areaId)
-                intent.putExtra("NAME", shop.name)
-                intent.putExtra("ADDRESS", shop.address)
-                intent.putExtra("DISCOUNT", shop.discount_per_petti)
-                startActivity(intent)
+                onInactive = {
+                    Toast.makeText(
+                        this,
+                        "Your account is inactive. Contact admin.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                },
 
-            } ?: run {
-                Toast.makeText(this, "Shop details not loaded yet", Toast.LENGTH_SHORT).show()
-            }
+                onError = { message ->
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                }
+            )
         }
-
-        binding.recyclerRecentActivities.layoutManager =
-            LinearLayoutManager(this)
-
-
-    }
-
-    // ✅ refresh when coming back from edit
-    override fun onResume() {
-        super.onResume()
-
-        fetchShopDetails(shopId)
-
     }
 
     private fun fetchShopDetails(shopId: Int) {
@@ -197,23 +224,23 @@ class ShopDetailsActivity : BaseActivity() {
 
     private fun bindData(shop: ShopDetailsResponse) {
 
-        // BASIC INFO
+
         binding.tvShopName.text = shop.name
         binding.tvAddress.text = shop.address
         binding.tvContactName.text = shop.owner_name
         binding.tvPhoneNumber.text = shop.phone_number
 
-        // AREA + LAST VISIT
-       // binding.tvAreaName.text = shop.area_name
-        binding.tvLastVisit.text = shop.last_visit
 
-        // FINANCIAL INFO
+       // binding.tvAreaName.text = shop.area_name
+        binding.tvLastVisit.text = formatDate(shop.last_visit)
+
+
         binding.tvCashIn.text = "${shop.cash_in}"
         binding.tvBorrowed.text = "${shop.borrowed}"
         binding.tvRepaid.text = "${shop.repaid}"
         binding.tvDiscountPerPatti.text = "${shop.discount_per_petti}"
 
-        // DAMAGE / RETURN / LIQUID
+
         val damage = shop.damage_return
 
         // EXPIRE
@@ -269,5 +296,13 @@ class ShopDetailsActivity : BaseActivity() {
             parts.size >= 2 -> "${parts[0][0]}${parts[1][0]}".uppercase()
             else -> parts[0][0].uppercase()
         }
+    }
+
+    fun formatDate(inputDate: String): String {
+        val inputFormat = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val outputFormat = java.text.SimpleDateFormat("dd MMM yyyy h:mm a", Locale.getDefault())
+
+        val date = inputFormat.parse(inputDate)
+        return outputFormat.format(date!!)
     }
 }

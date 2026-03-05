@@ -107,7 +107,6 @@
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/square_white"
                         android:gravity="center"
-                        android:text="-"
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:textSize="17sp"
@@ -134,7 +133,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="-"
                                 android:textColor="@color/black"
                                 android:textSize="15sp"
                                 android:textStyle="bold"
@@ -146,7 +144,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="-"
                                 android:textColor="@color/black60"
                                 android:textSize="12sp"
                                 android:layout_marginLeft="5dp"/>
@@ -301,10 +298,9 @@
 
 
                 <EditText
-                    android:id="@+id/collectionAmount"
+                    android:id="@+id/etCollectionAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Rs 0"
                     android:background="@drawable/edit_text_bg_black"
                     android:textColor="@color/black"
                     android:textSize="22sp"
@@ -315,6 +311,16 @@
                     android:padding="20dp"
                     android:inputType="number"
                     />
+
+                <TextView
+                    android:id="@+id/etCollectionAmountError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginStart="10dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -454,7 +460,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:backgroundTint="@color/primary"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
 
 
                 <LinearLayout
@@ -811,6 +818,7 @@
 
 
                     <TextView
+                        android:id="@+id/imageError"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/holo_red_dark"
@@ -869,6 +877,7 @@
 
                             <EditText
 
+                                android:id="@+id/etPaymentNote"
                                 android:hint="Any payment reference or notes..."
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"

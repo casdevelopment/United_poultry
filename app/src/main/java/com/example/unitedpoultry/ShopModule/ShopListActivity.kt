@@ -190,7 +190,7 @@ class ShopListActivity : BaseActivity() {
 
                     } else {
                         if (shopList.isEmpty()) showEmptyState(true)
-                        showToast(body?.message ?: "No shops found")
+                       // showToast(body?.message ?: "No shops found")
                     }
                 }
 
@@ -198,7 +198,8 @@ class ShopListActivity : BaseActivity() {
                     if (page == 1) AppUtil.stopLoader()
                     isLoading = false
                     if (shopList.isEmpty()) showEmptyState(true)
-                    showToast(apiResponse.message ?: "Network error")
+                    //showToast(apiResponse.message ?: "Network error")
+                    showToast("Network problem")
                 }
             }
         }

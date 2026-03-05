@@ -21,6 +21,12 @@
         android:theme="@style/Theme.UnitedPoultry"
         tools:targetApi="31">
         <activity
+            android:name=".History.ExpenseHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".rider_expense.ExpenseSuccessActivity"
+            android:exported="false" />
+        <activity
             android:name=".rider_expense.AddExpenseActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
@@ -142,7 +148,7 @@
         <activity
             android:name=".Profile.ChangePasswordActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Profile.MyProfileActivity"
             android:exported="false" />
@@ -161,7 +167,7 @@
         <activity
             android:name=".Collection.CollectionformActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Collection.SelectShopCollectionActivity"
             android:exported="true" />
@@ -174,7 +180,7 @@
         <activity
             android:name=".NewSale.SaleFormActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".NewSale.SelectShopActivity"
             android:exported="true" />

@@ -3,28 +3,18 @@ package com.example.unitedpoultry.NewSale
 import android.content.Intent
 import android.os.Bundle
 import com.example.unitedpoultry.BaseActivity
+import com.example.unitedpoultry.NewSale.model.SaleItem
+import com.example.unitedpoultry.NewSale.model.SaleResponseData
 import com.example.unitedpoultry.RiderDashBoard.RiderDashBoardActivity
 import com.example.unitedpoultry.databinding.ActivitySaleSuccessBinding
+import com.google.gson.Gson
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 
 class SaleSuccessActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySaleSuccessBinding
-
-    private var totalQuantity = 0
-    private var totalAmount = 0.0
-
-    private var discount = 0.0
-    private var shopId = 0
-    private var areaId = 0
-
-    private var name: String = ""
-    private var address: String = ""
-    private var initials: String = ""
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,58 +27,90 @@ class SaleSuccessActivity : BaseActivity() {
             colorResId = android.R.color.white
         )
 
-        showData()
+
+        val jsonData = intent.getStringExtra("sale_data_json")
+        val saleData = Gson().fromJson(jsonData, SaleResponseData::class.java)
+
+       binding.tvSubTitle.text = "Receipt #${saleData.id} has been generated"
+
+        binding.tvShopName.text = saleData.shop_name
+        binding.tvShopAddress.text = saleData.area_name
+        binding.tvInitials.text = getInitials(saleData.shop_name)
+
+        binding.tvPaymentType.text = saleData.payment_type
 
 
-        binding.btnNewSale.setOnClickListener {
-            val intent = Intent(this, SaleFormActivity::class.java)
+        binding.tvDiscount.text = "Rs ${
+            if (saleData.discount % 1.0 == 0.0) {
+                "%.0f".format(saleData.discount) // whole number → no decimal
+            } else {
+                "%.2f".format(saleData.discount) // decimal → 2 places
+            }
+        }"
 
-            intent.putExtra("SHOP_ID", shopId)
-            intent.putExtra("AREA_ID", areaId)
-            intent.putExtra("NAME", name)
-            intent.putExtra("ADDRESS", address)
-            intent.putExtra("DISCOUNT", discount)
+        binding.tvDate.text = formatDateTime(saleData.sale_date)
 
 
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
-            finish()
+        binding.tvTotal.text = "Rs ${
+            if (saleData.total % 1.0 == 0.0) {
+                "%.0f".format(saleData.total) // whole number → no decimal
+            } else {
+                "%.2f".format(saleData.total) // decimal → 2 places
+            }
+        }"
+
+
+        val damageEggs = saleData.damage_eggs
+
+        binding.tvExpire.text = "Peti: ${damageEggs.expire.peti} " + "Tray: ${damageEggs.expire.tray} " + "Single: ${damageEggs.expire.single}"
+
+        binding.tvReturn.text = "Peti: ${damageEggs.return_.peti} " + "Tray: ${damageEggs.return_.tray} " + "Single: ${damageEggs.return_.single}"
+
+        binding.tvLiquid.text = "Peti: ${damageEggs.liquid.peti} " + "Tray: ${damageEggs.liquid.tray} " + "Single: ${damageEggs.liquid.single}"
+
+
+
+        val items: List<SaleItem>
+
+        val itemsText = saleData.items.joinToString(separator = "\n") { item ->
+            "${item.product_name}: ${item.qty}"
         }
+
+        binding.tvQuantity.text = itemsText
+
+
+
+
 
 
 
         binding.moveToDashBoard.setOnClickListener {
             val intent = Intent(this, RiderDashBoardActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+
         }
 
 
-
     }
 
-    private fun showData(){
-
-        totalQuantity = intent.getIntExtra("TOTAL_QUANTITY", 0)
-        totalAmount = intent.getDoubleExtra("TOTAL_AMOUNT", 0.0)
-        name = intent.getStringExtra("SHOP_NAME") ?: ""
-        address = intent.getStringExtra("ADDRESS") ?: ""
-        initials = intent.getStringExtra("INITIALS") ?: ""
-
-        binding.tvShopName.text = name
-        binding.tvShopAddress.text = address
-        binding.tvInitials.text = initials
-
-        binding.tvQuantity.text = totalQuantity.toString()
-        binding.tvTotal.text  = "Rs. %.2f".format(totalAmount)
-
-        binding.tvDate.text = getTodayDate()
-
+    private fun getInitials(name: String): String {
+        if (name.isBlank()) return ""
+        val parts = name.trim().split(" ")
+        return if (parts.size >= 2) "${parts[0][0]}${parts[1][0]}".uppercase()
+        else parts[0][0].uppercase()
     }
 
-    private fun getTodayDate(): String {
-        val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-        return sdf.format(Date())
-    }
+    fun formatDateTime(dateTimeString: String): String {
+        return try {
+            // Input format from server
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+            val date = inputFormat.parse(dateTimeString)
 
+            // Desired output format
+            val outputFormat = SimpleDateFormat("d MMM yyyy, hh:mm a", Locale.getDefault())
+            date?.let { outputFormat.format(it) } ?: dateTimeString
+        } catch (e: Exception) {
+            dateTimeString // fallback if parsing fails
+        }
+    }
 }

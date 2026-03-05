@@ -23,6 +23,7 @@ import com.example.unitedpoultry.databinding.FragmentProfileBinding
 import com.example.unitedpoultry.status_check.UserStatusChecker
 import com.example.unitedpoultry.status_check.viewmodel.UserStatusViewModel
 import com.example.unitedpoultry.util.AppConstants.userData
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -58,9 +59,6 @@ class ProfileFragment : Fragment() {
     private fun showData(){
 
         binding.tvName.text = userData?.username ?: "User Name"
-
-
-
 
         binding.tvInitials.text = getInitials(userData?.username ?: "User Name")
 
@@ -124,9 +122,6 @@ class ProfileFragment : Fragment() {
             dialog.show()
         }
 
-
-
-
         binding.myProfileCard.setOnClickListener {
             val intent = Intent(requireContext(), MyProfileActivity::class.java)
             startActivity(intent)
@@ -137,10 +132,10 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
 
-//        binding.cardMyPerformance.setOnClickListener {
-//            val intent = Intent(requireContext(), MyPerformanceActivity::class.java)
-//            startActivity(intent)
-//        }
+        binding.assignedAreas.setOnClickListener {
+            val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
+            bottomNav.selectedItemId = R.id.nav_address
+        }
 
     }
 

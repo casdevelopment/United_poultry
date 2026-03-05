@@ -1,8 +1,9 @@
-package com.example.unitedpoultry.rider_expense
+package com.example.unitedpoultry.Collection.ViewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import com.example.unitedpoultry.Collection.model.CollectionResponse
 import com.example.unitedpoultry.network.NetworkStates
 import com.example.unitedpoultry.network.repo.Repository
 import com.example.unitedpoultry.network.retrofit.BaseResponse
@@ -11,18 +12,16 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 
-class ExpenseViewModel(private val repository: Repository) : ViewModel() {
+class CollectionViewModel(private val repository: Repository) : ViewModel() {
 
-    fun addExpenseByCash(
-        title: RequestBody,
-        amount: RequestBody,
-        note: RequestBody? = null,
+    fun addCollectionByCash(
+        shop_id: RequestBody,
         payment_type: RequestBody,
-        expense_date: RequestBody
-    ): LiveData<NetworkStates<Response<BaseResponse<Any>>>> = liveData(Dispatchers.IO) {
+        amount: RequestBody
+    ): LiveData<NetworkStates<Response<BaseResponse<CollectionResponse>>>> = liveData(Dispatchers.IO) {
         emit(NetworkStates.loading(null))
         try {
-            val response = repository.addExpenseByCash(title, amount, note, payment_type,expense_date)
+            val response = repository.addCollectionByCash(shop_id, payment_type, amount)
             emit(NetworkStates.success(response))
         } catch (e: Exception) {
             emit(NetworkStates.error(null, e.message ?: "Something went wrong"))
@@ -30,19 +29,18 @@ class ExpenseViewModel(private val repository: Repository) : ViewModel() {
     }
 
 
-    fun addExpenseByCheque(
-        title: RequestBody,
-        amount: RequestBody,
-        note: RequestBody? = null,
+    fun addCollectionByCheque(
+        shop_id: RequestBody,
         payment_type: RequestBody,
-        expense_date: RequestBody,
+        amount: RequestBody,
+
         payment_record: MultipartBody.Part,
         payment_note: RequestBody? = null,
 
-    ): LiveData<NetworkStates<Response<BaseResponse<Any>>>> = liveData(Dispatchers.IO) {
+        ): LiveData<NetworkStates<Response<BaseResponse<CollectionResponse>>>> = liveData(Dispatchers.IO) {
         emit(NetworkStates.loading(null))
         try {
-            val response = repository.addExpenseByCheque(title, amount, note, payment_type,expense_date,payment_record,payment_note)
+            val response = repository.addCollectionByCheque(shop_id, payment_type, amount, payment_record,payment_note)
             emit(NetworkStates.success(response))
         } catch (e: Exception) {
             emit(NetworkStates.error(null, e.message ?: "Something went wrong"))

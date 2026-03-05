@@ -26,9 +26,6 @@ class MyProfileActivity : BaseActivity() {
         binding.backArrow.setOnClickListener {
             finish()
         }
-
-
-
     }
 
     override fun onResume() {
@@ -77,8 +74,6 @@ class MyProfileActivity : BaseActivity() {
                 .placeholder(binding.imgShop.drawable)
                 .into(binding.imgShop)
         }
-
-
     }
 
     private fun getInitials(name: String): String {

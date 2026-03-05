@@ -29,10 +29,12 @@ import com.example.unitedpoultry.Authentications.forgetpassword.ForgetPasswordVi
 import com.example.unitedpoultry.Authentications.login.viewmodel.LoginViewModel
 import com.example.unitedpoultry.Authentications.resetpassword.ResetPasswordViewModel
 import com.example.unitedpoultry.Authentications.verifyotp.OtpVerificationViewModel
-import com.example.unitedpoultry.History.viewmodel.RiderSaleHistoryViewModel
+import com.example.unitedpoultry.Collection.ViewModel.CollectionViewModel
+import com.example.unitedpoultry.History.viewmodel.HistoryViewModel
 import com.example.unitedpoultry.History.viewmodel.SaleHistoryDetailViewModel
 import com.example.unitedpoultry.NewSale.viewmodel.GetRiderProductViewModel
 import com.example.unitedpoultry.NewSale.viewmodel.RiderNewSaleViewModel
+import com.example.unitedpoultry.Profile.ViewModel.ChangePasswordViewModel
 import com.example.unitedpoultry.RiderArea.viewmodel.RiderAreaViewModel
 import com.example.unitedpoultry.ShopModule.viewmodel.RiderShopListViewModel
 import com.example.unitedpoultry.SessionManager
@@ -43,7 +45,7 @@ import com.example.unitedpoultry.network.repo.Repository
 import com.example.unitedpoultry.network.retrofit.provideOkHttpClient
 import com.example.unitedpoultry.network.retrofit.provideRetrofit
 import com.example.unitedpoultry.network.retrofit.provideRetrofitInterface
-import com.example.unitedpoultry.rider_expense.ExpenseViewModel
+import com.example.unitedpoultry.rider_expense.ViewModel.ExpenseViewModel
 import com.example.unitedpoultry.rider_home.viewmodel.DailyPaymentStatsViewModel
 import com.example.unitedpoultry.rider_home.viewmodel.DailyStatsViewModel
 import com.example.unitedpoultry.rider_home.viewmodel.EggPickupViewModel
@@ -110,7 +112,7 @@ val viewModelModule= module{
     viewModel { RiderNewSaleViewModel(get()) }
     viewModel { RiderReturnOrExchangeSaleViewModel(get()) }
 
-    viewModel { RiderSaleHistoryViewModel(get()) }
+    viewModel { HistoryViewModel(get()) }
     viewModel { SaleHistoryDetailViewModel(get()) }
 
     viewModel { RiderReturnProductViewModel(get()) }
@@ -119,6 +121,10 @@ val viewModelModule= module{
     viewModel { UserStatusViewModel(get()) }
 
     viewModel { ExpenseViewModel(get()) }
+
+    viewModel { CollectionViewModel(get()) }
+
+    viewModel { ChangePasswordViewModel(get()) }
 
 }
 

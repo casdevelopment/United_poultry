@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.unitedpoultry.NewSale.model.SaleRequest
+import com.example.unitedpoultry.NewSale.model.SaleResponseData
 import com.example.unitedpoultry.network.NetworkStates
 import com.example.unitedpoultry.network.repo.Repository
 import kotlinx.coroutines.Dispatchers
@@ -35,7 +36,7 @@ class RiderNewSaleViewModel(private val repository: Repository) : ViewModel() {
         borrowedAmount: RequestBody,
         items: RequestBody,
         damageEggs: RequestBody,
-    ): LiveData<NetworkStates<Response<BaseResponse<Any>>>> {
+    ): LiveData<NetworkStates<Response<BaseResponse<SaleResponseData>>>> {
         return liveData(Dispatchers.IO) {
             emit(NetworkStates.loading(null))
             try {
@@ -67,7 +68,7 @@ class RiderNewSaleViewModel(private val repository: Repository) : ViewModel() {
         payment_record: MultipartBody.Part,
         note: RequestBody
 
-    ): LiveData<NetworkStates<Response<BaseResponse<Any>>>> {
+    ): LiveData<NetworkStates<Response<BaseResponse<SaleResponseData>>>> {
         return liveData(Dispatchers.IO) {
             emit(NetworkStates.loading(null))
             try {

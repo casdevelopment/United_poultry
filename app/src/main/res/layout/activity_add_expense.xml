@@ -609,14 +609,11 @@
                         android:text="Cancel"
                         android:layout_weight="1"
                         android:textAllCaps="false"
-                        android:textSize="16sp"
+                        android:textSize="13sp"
                         android:textStyle="bold"
                         android:textColor="@color/primary"
                         android:background="@drawable/btn_light_bg"
                         app:backgroundTint="@null"
-                        app:iconTint="@null"
-                        app:iconGravity="textStart"
-                        app:iconPadding="12dp"
                         android:layout_marginRight="10dp"/>
 
                     <com.google.android.material.button.MaterialButton
@@ -624,9 +621,9 @@
                         android:layout_width="0dp"
                         android:layout_height="48dp"
                         android:layout_weight="1"
-                        android:text="Save Area"
+                        android:text="Submit Expense"
                         android:textAllCaps="false"
-                        android:textSize="16sp"
+                        android:textSize="13sp"
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         android:background="@drawable/btn_continue_bg"

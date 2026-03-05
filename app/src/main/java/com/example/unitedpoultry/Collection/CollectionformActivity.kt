@@ -7,35 +7,46 @@ import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.unitedpoultry.BaseActivity
-import com.example.unitedpoultry.NewSale.Adapter.SelectShopAdapter
-import com.example.unitedpoultry.NewSale.SaleConfirmationActivity
+import com.example.unitedpoultry.Collection.ViewModel.CollectionViewModel
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.ActivityCollectionformBinding
+import com.example.unitedpoultry.network.Status
+import com.example.unitedpoultry.network.retrofit.BaseResponse
+import com.example.unitedpoultry.util.AppUtil
+import com.google.gson.Gson
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileOutputStream
+
 
 class CollectionformActivity : BaseActivity() {
 
     private lateinit var binding: ActivityCollectionformBinding
-    private lateinit var adapter: SelectShopAdapter
-
-    private var discountPercent: Double = 0.0
+    private val viewModel: CollectionViewModel by viewModel()
 
     private var shopId: Int = 0
-    private var areaId: Int = 0
 
     private var name: String = ""
     private var address: String = ""
+
+    private var borrowed: Int = 0
+
+    private var paymentType = "cash"
 
     private var selectedImageFile: File? = null
 
@@ -49,7 +60,6 @@ class CollectionformActivity : BaseActivity() {
     }
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCollectionformBinding.inflate(layoutInflater)
@@ -59,40 +69,48 @@ class CollectionformActivity : BaseActivity() {
             isLightBackground = true,
             colorResId = android.R.color.white
         )
-        binding.backArrow.setOnClickListener {
-            finish()
-        }
-
-//        intent.putExtra("SHOP_ID", item.id)
-//        intent.putExtra("AREA_ID", areaId)
-//        intent.putExtra("NAME", item.name)
-//        intent.putExtra("ADDRESS", item.address)
-//        intent.putExtra("DISCOUNT", item.discount_per_petti)
-
 
         shopId = intent.getIntExtra("SHOP_ID", 0)
-        areaId = intent.getIntExtra("AREA_ID", 0)
 
         name = intent.getStringExtra("NAME") ?: "N/A"
         address = intent.getStringExtra("ADDRESS") ?: "N/A"
 
+        borrowed = intent.getIntExtra("BORROWED", 0)
+
+        showData()
+
+        setupCollectionWatcher()
+
+        setupClicks()
+        resetImageViews()
+
+        selectButton(binding.cashLayout)
+
+
+    }
+
+    private fun showData() {
 
         binding.tvShopName.text = name
         binding.tvShopAddress.text = address
         binding.tvInitials.text = getInitials(name)
-       // binding.tvBalance.text = "Rs. $balance"
 
 
-        setupClicks()
+        binding.tvBalance.text = "Rs ${borrowed}"
 
-        resetImageViews()
-        selectButton(binding.cashLayout)
+
+        binding.tvAfterBalance.text = "Rs ${borrowed}"
+
+    }
+
+    private fun getInitials(name: String): String {
+        if (name.isBlank()) return ""
+        val parts = name.trim().split(" ")
+        return if (parts.size >= 2) "${parts[0][0]}${parts[1][0]}".uppercase()
+        else parts[0][0].uppercase()
     }
 
     private fun setupClicks() {
-        binding.backArrow.setOnClickListener { finish() }
-
-        binding.btnCancel.setOnClickListener { finish() }
 
         binding.cashLayout.setOnClickListener {
             selectButton(binding.cashLayout)
@@ -105,62 +123,28 @@ class CollectionformActivity : BaseActivity() {
         binding.imageContainer.setOnClickListener { showImagePickerDialog() }
 
         binding.btnConfirmCollection.setOnClickListener {
+            val isAmountValid = validateCollectionInputs()
 
-            val intent = Intent(this, CollectionSuccessActivity::class.java)
-
-            intent.putExtra("SHOP_NAME", name)
-            intent.putExtra("ADDRESS", address)
-            intent.putExtra("INITIALS", getInitials(name))
-            startActivity(intent)
+            // For cash, only amount validation
+            if (paymentType == "cash") {
+                if (isAmountValid) addCollectionByCash()
+            }
+            // For online_cheque, both validations
+            else {
+                val isImageValid = validateImage()
+                if (isAmountValid && isImageValid) addCollectionByCheque()
+            }
         }
 
-
-//        binding.btnConfirmSale.setOnClickListener {
-//
-//            val selectedItems = quantityMap.filter { it.value > 0 }
-//            if (selectedItems.isEmpty()) {
-//                Toast.makeText(this, "Please pick at least one item", Toast.LENGTH_SHORT).show()
-//                return@setOnClickListener
-//            }
-//
-//
-//            val intent = Intent(this, SaleConfirmationActivity::class.java)
-//
-//            val totalQuantity = selectedItems.values.sum()
-//
-//
-//            intent.putExtra("SHOP_NAME", name)
-//            intent.putExtra("ADDRESS", address)
-//            intent.putExtra("INITIALS", getInitials(name))
-//
-//            intent.putExtra("SHOP_ID", shopId)
-//            intent.putExtra("AREA_ID", areaId)
-//            intent.putExtra("SUB_TOTAL", currentSubtotal)
-//            intent.putExtra("DISCOUNT", currentDiscountAmount)
-//            intent.putExtra("TOTAL", currentTotalAfterDiscount)
-//            intent.putExtra("TOTAL_QUANTITY", totalQuantity)
-//
-//
-//            // Pass product IDs & quantities
-//            intent.putIntegerArrayListExtra(
-//                "PRODUCT_IDS",
-//                ArrayList(selectedItems.keys)
-//            )
-//
-//            intent.putIntegerArrayListExtra(
-//                "QUANTITIES",
-//                ArrayList(selectedItems.values)
-//            )
-//
-//            startActivity(intent)
-//        }
-
     }
+
 
     private fun selectButton(selected: LinearLayout) {
 
 
         if (selected == binding.cashLayout) {
+
+            paymentType = "cash"
 
             // For a LinearLayout
             val primaryColor = ContextCompat.getColor(this, R.color.primary)
@@ -181,6 +165,9 @@ class CollectionformActivity : BaseActivity() {
             binding.card.visibility  = View.GONE
 
         } else {
+
+            paymentType = "online_cheque"
+
             val primaryColor = ContextCompat.getColor(this, R.color.white)
             val whiteColor = ContextCompat.getColor(this, R.color.primary)
 
@@ -200,6 +187,215 @@ class CollectionformActivity : BaseActivity() {
         }
 
     }
+
+
+    private fun setupCollectionWatcher() {
+        binding.etCollectionAmount.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                validateCollectionInputs() // Live validation while typing
+            }
+        })
+    }
+
+
+    private fun validateCollectionInputs(): Boolean {
+        var valid = true
+
+        // Reset errors
+        binding.etCollectionAmountError.visibility = View.GONE
+        binding.imageError.visibility = View.GONE
+
+        // Get borrowed amount
+        val borrowedAmount = borrowed  // use class variable
+        if (borrowedAmount == 0) {
+            binding.etCollectionAmountError.visibility = View.VISIBLE
+            binding.etCollectionAmountError.text = "Cannot add collection. Borrowed amount is zero."
+            binding.tvAfterBalance.text = "Rs 0"
+            binding.btnConfirmCollection.isEnabled = false
+            return false
+        }
+
+        // Get entered amount
+        val enteredAmount = binding.etCollectionAmount.text.toString().toIntOrNull() ?: 0
+
+        when {
+            enteredAmount <= 0 -> {
+                binding.etCollectionAmountError.visibility = View.VISIBLE
+                binding.etCollectionAmountError.text = "Amount must be greater than 0"
+                binding.tvAfterBalance.text = "Rs $borrowedAmount"
+                valid = false
+            }
+
+            enteredAmount > borrowedAmount -> {
+                binding.etCollectionAmountError.visibility = View.VISIBLE
+                binding.etCollectionAmountError.text = "Amount cannot exceed borrowed"
+                binding.tvAfterBalance.text = "Rs 0"
+                valid = false
+            }
+
+            else -> {
+                // Valid amount → update remaining
+                val remaining = borrowedAmount - enteredAmount
+                binding.tvAfterBalance.text = "Rs $remaining"
+            }
+        }
+
+
+        return valid
+    }
+
+    private fun validateImage(): Boolean {
+        binding.imageError.visibility = View.GONE
+
+        if (paymentType == "online_cheque" && selectedImageFile == null) {
+            binding.imageError.visibility = View.VISIBLE
+            binding.imageError.text = "Image required"
+            return false
+        }
+        return true
+    }
+
+
+    private fun addCollectionByCash() {
+
+        val shop_id = shopId.toString().toRequestBody()
+        val amount = binding.etCollectionAmount.text.toString().trim().toRequestBody()
+        val payment_type = paymentType.toRequestBody()
+
+        AppUtil.startLoader(this)
+        viewModel.addCollectionByCash(shop_id, payment_type, amount)
+            .observe(this) { apiResponse ->
+                AppUtil.stopLoader()
+                when (apiResponse.status) {
+                    Status.SUCCESS -> {
+                        val retrofitResponse = apiResponse.data
+                        if (retrofitResponse != null && retrofitResponse.isSuccessful) {
+                            val baseResponse = retrofitResponse.body()
+                            val message = baseResponse?.message ?: "Collection added"
+                            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+                            if (baseResponse?.result == "success" && baseResponse.data != null) {
+                                // Convert the "data" field to JSON
+                                val jsonData = Gson().toJson(baseResponse.data)
+
+                                // Pass JSON to next activity
+                                val intent = Intent(this, CollectionSuccessActivity::class.java)
+                                intent.putExtra("collection_data_json", jsonData)
+                                startActivity(intent)
+
+                            }
+
+                        } else {
+                            val errorMessage = try {
+                                val errorBody = retrofitResponse?.errorBody()?.string()
+                                if (!errorBody.isNullOrEmpty()) {
+                                    val baseResponse =
+                                        Gson().fromJson(errorBody, BaseResponse::class.java)
+                                    baseResponse.message ?: "Something went wrong"
+                                } else {
+                                    "Something went wrong"
+                                }
+                            } catch (e: Exception) {
+                                "Something went wrong"
+                            }
+                            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    Status.ERROR -> {
+                        Toast.makeText(this, apiResponse.message ?: "Network error", Toast.LENGTH_SHORT).show()
+                    }
+
+                    Status.LOADING -> {
+                        AppUtil.startLoader(this)
+                    }
+                }
+            }
+    }
+
+
+    private fun String.toRequestBody() = toRequestBody("text/plain".toMediaTypeOrNull())
+
+
+    private fun addCollectionByCheque() {
+
+
+        val shop_id = shopId.toString().toRequestBody()
+
+        val amount = binding.etCollectionAmount.text.toString().trim().toRequestBody()
+
+
+        val payment_type = paymentType.toRequestBody()
+
+        val payment_record: MultipartBody.Part = MultipartBody.Part.createFormData(
+            "payment_record",
+            selectedImageFile!!.name,
+            selectedImageFile!!.asRequestBody("image/*".toMediaTypeOrNull())
+        )
+
+        val payment_note = binding.etPaymentNote.text.toString().trim().toRequestBody()
+
+
+        AppUtil.startLoader(this)
+        viewModel.addCollectionByCheque(shop_id, payment_type, amount, payment_record,payment_note)
+            .observe(this) { apiResponse ->
+                AppUtil.stopLoader()
+                when (apiResponse.status) {
+                    Status.SUCCESS -> {
+                        val retrofitResponse = apiResponse.data
+                        if (retrofitResponse != null && retrofitResponse.isSuccessful) {
+                            val baseResponse = retrofitResponse.body()
+                            val message = baseResponse?.message ?: "Collection added"
+                            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+                            if (baseResponse?.result == "success" && baseResponse.data != null) {
+                                // Convert the "data" field to JSON
+                                val jsonData = Gson().toJson(baseResponse.data)
+
+                                // Pass JSON to next activity
+                                val intent = Intent(this, CollectionSuccessActivity::class.java)
+                                intent.putExtra("collection_data_json", jsonData)
+                                startActivity(intent)
+
+                            }
+
+                        } else {
+                            val errorMessage = try {
+                                val errorBody = retrofitResponse?.errorBody()?.string()
+                                if (!errorBody.isNullOrEmpty()) {
+                                    val baseResponse =
+                                        Gson().fromJson(errorBody, BaseResponse::class.java)
+                                    baseResponse.message ?: "Something went wrong"
+                                } else {
+                                    "Something went wrong"
+                                }
+                            } catch (e: Exception) {
+                                "Something went wrong"
+                            }
+                            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    Status.ERROR -> {
+                        Toast.makeText(this, apiResponse.message ?: "Network error", Toast.LENGTH_SHORT).show()
+                    }
+
+                    Status.LOADING -> {
+                        AppUtil.startLoader(this)
+                    }
+                }
+            }
+    }
+
+
+
+
+
+
+
+
 
     private fun showImagePickerDialog() {
         AlertDialog.Builder(this)
@@ -279,19 +475,5 @@ class CollectionformActivity : BaseActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 101 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) openCamera()
         else Toast.makeText(this, "Camera permission required", Toast.LENGTH_SHORT).show()
-    }
-
-
-
-
-
-    private fun getInitials(name: String): String {
-        if (name.isBlank()) return ""
-
-        val parts = name.trim().split(" ")
-        return when {
-            parts.size >= 2 -> "${parts[0][0]}${parts[1][0]}".uppercase()
-            else -> parts[0][0].uppercase()
-        }
     }
 }

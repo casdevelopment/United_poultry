@@ -1,72 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    android:id="@+id/nestedScrollView"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/rootLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/topPortion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <ImageView
+            android:id="@+id/bgImage"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/bgfull" />
 
-        <FrameLayout
-            android:id="@+id/topPortion"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/transparent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:layout_marginTop="25dp"
+            >
 
-            <ImageView
-                android:id="@+id/bgImage"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bgfull" />
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/tvTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp"
-                android:layout_marginTop="25dp"
-                >
-
-                <TextView
-                    android:id="@+id/tvTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="History"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/poppins"
-                    app:layout_constraintTop_toTopOf="@id/ivCurve"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginStart="20dp"
-                    />
+                android:text="History"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:fontFamily="@font/poppins"
+                app:layout_constraintTop_toTopOf="@id/ivCurve"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                />
 
 
 
 
 
-            </LinearLayout>
+        </LinearLayout>
 
-        </FrameLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/filterLayoutTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
         android:orientation="horizontal"
         android:weightSum="3"
         app:layout_constraintTop_toBottomOf="@id/topPortion"
@@ -115,440 +112,506 @@
     </LinearLayout>
 
 
-
-    <LinearLayout
-        android:id="@+id/summaryLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="12dp"
-        app:layout_constraintTop_toBottomOf="@id/filterLayoutTime"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <!-- Sales -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            android:backgroundTint="@color/primary20">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/tvTotalSales"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="-"
-                    android:textColor="@color/primary"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="center_horizontal"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="Total Cash In"
-                    android:textColor="@color/black75"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_gravity="center_horizontal"/>
-
-            </LinearLayout>
-
-
-
-        </androidx.cardview.widget.CardView>
-
-
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            android:layout_marginLeft="10dp"
-            android:backgroundTint="@color/purple15">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="-"
-                    android:textColor="@color/purple"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="center_horizontal"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="Total Repaid"
-                    android:textColor="@color/black75"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_gravity="center_horizontal"/>
-
-            </LinearLayout>
-
-
-
-        </androidx.cardview.widget.CardView>
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/summaryLayout2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="12dp"
-        app:layout_constraintTop_toBottomOf="@id/summaryLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <!-- Sales -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            android:backgroundTint="@color/sub_primary18">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="-"
-                    android:textColor="@color/sub_primary"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="center_horizontal"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="Borrowed"
-                    android:textColor="@color/black75"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_gravity="center_horizontal"/>
-
-            </LinearLayout>
-
-
-
-        </androidx.cardview.widget.CardView>
-
-
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            android:layout_marginLeft="10dp"
-            android:backgroundTint="@color/mint20">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/tvTotalTransactions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="-"
-                    android:textColor="@color/mint"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="center_horizontal"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="Transactions"
-                    android:textColor="@color/black75"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_gravity="center_horizontal"/>
-
-            </LinearLayout>
-
-
-
-        </androidx.cardview.widget.CardView>
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/table"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        android:layout_margin="12dp"
-        app:layout_constraintTop_toBottomOf="@id/summaryLayout2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="7dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:background="@drawable/rounded_bg_pink"
-            android:layout_marginEnd="10dp">
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textStyle="bold"
-                android:text="Expire"
-                android:fontFamily="@font/poppins"
-                android:textSize="16sp"
-                android:textColor="@color/black"/>
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:text="Peti : 0"
-                android:textStyle="bold"
-                android:background="@drawable/edit_text_bg_pink"
-                android:fontFamily="@font/poppins"
-                android:textSize="10sp"
-                android:gravity="center"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:text="Tray : 0"
-                android:textStyle="bold"
-                android:background="@drawable/edit_text_bg_pink"
-                android:fontFamily="@font/poppins"
-                android:textSize="10sp"
-                android:gravity="center"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/black" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="7dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:background="@drawable/rounded_bg_orange"
-            android:layout_marginEnd="10dp">
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textStyle="bold"
-                android:text="Return"
-                android:fontFamily="@font/poppins"
-                android:textSize="16sp"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:text="Peti : 0"
-                android:textStyle="bold"
-                android:background="@drawable/edit_text_bg_orange"
-                android:fontFamily="@font/poppins"
-                android:textSize="10sp"
-                android:gravity="center"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:text="Tray : 0"
-                android:textStyle="bold"
-                android:background="@drawable/edit_text_bg_orange"
-                android:fontFamily="@font/poppins"
-                android:textSize="10sp"
-                android:gravity="center"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/black" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="7dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:background="@drawable/rounded_bg_blue">
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textStyle="bold"
-                android:text="Liquid"
-                android:fontFamily="@font/poppins"
-                android:textSize="16sp"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:text="Peti : 0"
-                android:textStyle="bold"
-                android:background="@drawable/edit_text_bg_blue"
-                android:fontFamily="@font/poppins"
-                android:textSize="10sp"
-                android:gravity="center"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:text="Tray : 0"
-                android:textStyle="bold"
-                android:background="@drawable/edit_text_bg_blue"
-                android:fontFamily="@font/poppins"
-                android:textSize="10sp"
-                android:gravity="center"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/black" />
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/filterLayoutTime1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/table"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <TextView
-            android:layout_height="wrap_content"
-            android:id="@+id/filterAll"
-            android:layout_width="100dp"
-            android:padding="6dp"
-            android:text="All"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:background="@drawable/filter_bg_selected"/>
-
-        <TextView
-            android:layout_height="wrap_content"
-            android:id="@+id/filterSale"
-            android:layout_width="100dp"
-            android:layout_marginHorizontal="6dp"
-            android:padding="6dp"
-            android:text="Sale"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:textColor="@color/black60"
-            android:background="@drawable/filter_bg"/>
-
-        <TextView
-            android:layout_height="wrap_content"
-            android:id="@+id/filterCollection"
-            android:layout_width="100dp"
-            android:padding="6dp"
-            android:text="Collection"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:textColor="@color/black60"
-            android:background="@drawable/filter_bg"/>
-    </LinearLayout>
-
-
-
-    <!-- ================= HISTORY LIST ================= -->
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/historyRv"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingBottom="24dp"
-        android:clipToPadding="false"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:paddingTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/filterLayoutTime1"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/filterLayoutTime"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/summaryLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="12dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <!-- Sales -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    android:backgroundTint="@color/primary20">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/tvCashIn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:textColor="@color/primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_horizontal"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Total Cash In"
+                            android:textColor="@color/black75"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_gravity="center_horizontal"/>
+
+                    </LinearLayout>
+
+
+
+                </androidx.cardview.widget.CardView>
+
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:backgroundTint="@color/purple15">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/tvTotalRepaid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:textColor="@color/purple"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_horizontal"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Total Repaid"
+                            android:textColor="@color/black75"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_gravity="center_horizontal"/>
+
+                    </LinearLayout>
+
+
+
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/summaryLayout2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="12dp"
+                app:layout_constraintTop_toBottomOf="@id/summaryLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <!-- Sales -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    android:backgroundTint="@color/sub_primary18">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/tvTotalBorrowed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:textColor="@color/sub_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_horizontal"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Borrowed"
+                            android:textColor="@color/black75"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_gravity="center_horizontal"/>
+
+                    </LinearLayout>
+
+
+
+                </androidx.cardview.widget.CardView>
+
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:backgroundTint="@color/mint20">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/tvTotalExpense"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:textColor="@color/mint"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_horizontal"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Total Expense"
+                            android:textColor="@color/black75"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_gravity="center_horizontal"/>
+
+                    </LinearLayout>
+
+
+
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_margin="12dp"
+                app:layout_constraintTop_toBottomOf="@id/summaryLayout2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="7dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@drawable/rounded_bg_pink"
+                    android:layout_marginEnd="10dp">
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textStyle="bold"
+                        android:text="Expire"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/tvExpirePeti"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textStyle="bold"
+                        android:background="@drawable/edit_text_bg_pink"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="10sp"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tvExpireTray"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textStyle="bold"
+                        android:background="@drawable/edit_text_bg_pink"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="10sp"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tvExpireSingle"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textStyle="bold"
+                        android:background="@drawable/edit_text_bg_pink"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="10sp"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="7dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@drawable/rounded_bg_orange"
+                    android:layout_marginEnd="10dp">
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textStyle="bold"
+                        android:text="Return"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="16sp"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tvReturnPeti"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textStyle="bold"
+                        android:background="@drawable/edit_text_bg_orange"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="10sp"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tvReturnTray"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textStyle="bold"
+                        android:background="@drawable/edit_text_bg_orange"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="10sp"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tvReturnSingle"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textStyle="bold"
+                        android:background="@drawable/edit_text_bg_orange"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="10sp"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="7dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@drawable/rounded_bg_blue">
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textStyle="bold"
+                        android:text="Liquid"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="16sp"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tvLiquidPeti"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textStyle="bold"
+                        android:background="@drawable/edit_text_bg_blue"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="10sp"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tvLiquidTray"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textStyle="bold"
+                        android:background="@drawable/edit_text_bg_blue"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="10sp"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tvLiquidSingle"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:textStyle="bold"
+                        android:background="@drawable/edit_text_bg_blue"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="10sp"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/filterLayoutTime1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/table"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/filterAll"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:padding="6dp"
+                    android:text="All"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/filter_bg_selected"/>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/filterSale"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="6dp"
+                    android:padding="6dp"
+                    android:text="Sale"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black60"
+                    android:background="@drawable/filter_bg"/>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/filterCollection"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:padding="6dp"
+                    android:text="Collection"
+                    android:layout_marginHorizontal="6dp"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black60"
+                    android:background="@drawable/filter_bg"/>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/filterExpense"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:padding="6dp"
+                    android:text="Expense"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black60"
+                    android:background="@drawable/filter_bg"/>
+
+            </LinearLayout>
+
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/historyRv"
+                android:layout_width="0dp"
+                android:layout_height="400dp"
+                android:paddingBottom="24dp"
+                android:clipToPadding="false"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="20dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/filterLayoutTime1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>

@@ -19,13 +19,20 @@ import com.example.unitedpoultry.Authentications.login.model.LoginRequestModel
 import com.example.unitedpoultry.Authentications.login.model.LoginResponseModel
 import com.example.unitedpoultry.Authentications.resetpassword.ResetPasswordRequestModel
 import com.example.unitedpoultry.Authentications.verifyotp.VerifyOtpRequestModel
-import com.example.unitedpoultry.History.model.SaleHistoryData
-import com.example.unitedpoultry.History.model.SaleItem
+import com.example.unitedpoultry.Collection.model.CollectionResponse
+import com.example.unitedpoultry.History.model.CollectionHistory
+import com.example.unitedpoultry.History.model.ExpenseItem
+import com.example.unitedpoultry.History.model.HistoryData
+import com.example.unitedpoultry.History.model.SaleHistory
+
 import com.example.unitedpoultry.NewSale.model.PickedItemsResponse
 import com.example.unitedpoultry.NewSale.model.SaleRequest
+import com.example.unitedpoultry.NewSale.model.SaleResponseData
+import com.example.unitedpoultry.Profile.model.ChangePasswordRequestModel
 import com.example.unitedpoultry.exchange_return.model.ReturnOrExchangeRequest
 import com.example.unitedpoultry.network.api.ApiInterface
 import com.example.unitedpoultry.network.retrofit.BaseResponse
+import com.example.unitedpoultry.rider_expense.ExpenseModel
 import com.example.unitedpoultry.rider_home.model.EggPickupData
 import com.example.unitedpoultry.rider_home.model.EggPickupRequest
 import com.example.unitedpoultry.status_check.model.UserStatusResponse
@@ -245,7 +252,7 @@ class Repository(private val api: ApiInterface) {
         borrowedAmount: RequestBody,
         items: RequestBody,
         damageEggs: RequestBody
-    ): Response<BaseResponse<Any>> {
+    ): Response<BaseResponse<SaleResponseData>> {
         return api.createNewSale(shopId, areaId, paymentType, collectionAmount, borrowedAmount, items, damageEggs)
     }
 
@@ -260,7 +267,7 @@ class Repository(private val api: ApiInterface) {
         borrowed_amount: RequestBody,
         payment_record: MultipartBody.Part,
         note: RequestBody
-    ): Response<BaseResponse<Any>> {
+    ): Response<BaseResponse<SaleResponseData>> {
         return api.createNewSaleCheque(
             shop_id,
             area_id,
@@ -287,13 +294,11 @@ class Repository(private val api: ApiInterface) {
     }
 
 
-    suspend fun getSaleHistory(page: Int, duration: String): Response<BaseResponse<SaleHistoryData>> {
-        return api.getSaleHistory(page, duration)
-    }
+//    suspend fun getSaleHistory(page: Int, duration: String): Response<BaseResponse<SaleHistoryData>> {
+//        return api.getSaleHistory(page, duration)
+//    }
+//
 
-    suspend fun getSaleDetail(id: Int): Response<BaseResponse<SaleItem>> {
-        return api.getSaleDetail(id)
-    }
 
     suspend fun getRiderDailyStats(id: Int) = api.getRiderDailyStats(id)
 
@@ -317,7 +322,7 @@ class Repository(private val api: ApiInterface) {
         note: RequestBody? = null,
         payment_type: RequestBody,
         expense_date: RequestBody
-    ): Response<BaseResponse<Any>> {
+    ): Response<BaseResponse<ExpenseModel>> {
         return api.addExpenseByCash(title, amount, note, payment_type,expense_date)
     }
 
@@ -330,11 +335,51 @@ class Repository(private val api: ApiInterface) {
         expense_date: RequestBody,
         payment_record: MultipartBody.Part,
         payment_note: RequestBody? = null
-    ): Response<BaseResponse<Any>> {
+    ): Response<BaseResponse<ExpenseModel>> {
         return api.addExpenseByCheque(title, amount, note, payment_type,expense_date,payment_record,payment_note)
     }
 
+    suspend fun addCollectionByCash(
+        shop_id: RequestBody,
+        payment_type: RequestBody,
+        amount: RequestBody
+    ): Response<BaseResponse<CollectionResponse>> {
+        return api.addCollectionByCash(shop_id, payment_type, amount)
+    }
 
 
+    suspend fun addCollectionByCheque(
+        shop_id: RequestBody,
+        payment_type: RequestBody,
+        amount: RequestBody,
+
+        payment_record: MultipartBody.Part,
+        payment_note: RequestBody? = null
+
+    ): Response<BaseResponse<CollectionResponse>> {
+        return api.addCollectionByCheque(shop_id, payment_type, amount, payment_record,payment_note)
+    }
+
+
+    suspend fun getHistory(page: Int,duration: String, type: String): Response<BaseResponse<HistoryData>> {
+        return api.getHistory(page,duration,type)
+    }
+
+        suspend fun getSaleDetail(id: Int): Response<BaseResponse<SaleHistory>> {
+        return api.getSaleDetail(id)
+    }
+
+    suspend fun getCollectionDetail(id: Int): Response<BaseResponse<CollectionHistory>> {
+        return api.getCollectionDetail(id)
+    }
+
+
+    suspend fun changePassword(request: ChangePasswordRequestModel): Response<BaseResponse<Any>> {
+        return api.changePassword(request)
+    }
+
+    suspend fun getExpenseDetail(id: Int): Response<BaseResponse<ExpenseItem>> {
+        return api.getExpenseDetail(id)
+    }
 }
 
