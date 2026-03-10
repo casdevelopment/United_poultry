@@ -2,11 +2,16 @@ package com.example.unitedpoultry.NewSale
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.NewSale.model.SaleItem
 import com.example.unitedpoultry.NewSale.model.SaleResponseData
 import com.example.unitedpoultry.RiderDashBoard.RiderDashBoardActivity
+import com.example.unitedpoultry.RotateTransformation
 import com.example.unitedpoultry.databinding.ActivitySaleSuccessBinding
+import com.example.unitedpoultry.util.AppConstants
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -60,6 +65,23 @@ class SaleSuccessActivity : BaseActivity() {
         }"
 
 
+        binding.tvBorrowedAmount.text = "Rs ${
+            if (saleData.borrowed_amount % 1.0 == 0.0) {
+                "%.0f".format(saleData.borrowed_amount) // whole number → no decimal
+            } else {
+                "%.2f".format(saleData.borrowed_amount) // decimal → 2 places
+            }
+        }"
+
+        binding.tvCollectionAmount.text = "Rs ${
+            if (saleData.collection_amount % 1.0 == 0.0) {
+                "%.0f".format(saleData.collection_amount) // whole number → no decimal
+            } else {
+                "%.2f".format(saleData.collection_amount) // decimal → 2 places
+            }
+        }"
+
+
         val damageEggs = saleData.damage_eggs
 
         binding.tvExpire.text = "Peti: ${damageEggs.expire.peti} " + "Tray: ${damageEggs.expire.tray} " + "Single: ${damageEggs.expire.single}"
@@ -70,24 +92,58 @@ class SaleSuccessActivity : BaseActivity() {
 
 
 
-        val items: List<SaleItem>
-
         val itemsText = saleData.items.joinToString(separator = "\n") { item ->
-            "${item.product_name}: ${item.qty}"
+
+            val qty = item.qty
+            val peti = qty / 12
+            val tray = qty % 12
+
+            val quantityText = if (qty < 12) {
+                "Tray: $qty"
+            } else {
+                if (tray == 0) {
+                    "Peti: $peti"
+                } else {
+                    "Peti: $peti Tray: $tray"
+                }
+            }
+
+            "$quantityText"
         }
 
         binding.tvQuantity.text = itemsText
 
 
+        val imageUrl = saleData.payment_record_url
+        if (!imageUrl.isNullOrEmpty()) {
+            binding.slipLayout.visibility = View.VISIBLE
+
+            val fullImageUrl = AppConstants.ImageURL + imageUrl
+
+            Glide.with(this)
+                .load(fullImageUrl)
+                .apply(
+                    RequestOptions()
+                        .fitCenter() // keep aspect ratio
+                        .transform(RotateTransformation(90f)) // rotate 90 degrees
+                )
+                .placeholder(binding.ivPaymentSlip.drawable)
+                .into(binding.ivPaymentSlip)
+
+        }
+
+        if (saleData.payment_note != null) {
+            binding.noteLayout.visibility = View.VISIBLE
+            binding.etNote1.text = saleData.payment_note
+
+        }
 
 
 
 
 
         binding.moveToDashBoard.setOnClickListener {
-            val intent = Intent(this, RiderDashBoardActivity::class.java)
-            startActivity(intent)
-
+            finishActivity()
         }
 
 
@@ -112,5 +168,14 @@ class SaleSuccessActivity : BaseActivity() {
         } catch (e: Exception) {
             dateTimeString // fallback if parsing fails
         }
+    }
+
+    private fun finishActivity() {
+        finish()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishActivity()
     }
 }

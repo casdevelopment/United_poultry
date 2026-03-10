@@ -301,6 +301,7 @@
                     android:id="@+id/etCollectionAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="Enter Amount"
                     android:background="@drawable/edit_text_bg_black"
                     android:textColor="@color/black"
                     android:textSize="22sp"
@@ -935,7 +936,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="40dp"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp">
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="20dp">
 
 
             <com.google.android.material.button.MaterialButton

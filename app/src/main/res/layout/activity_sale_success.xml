@@ -64,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="12dp"
-        app:cardElevation="2dp"
+        app:cardElevation="4dp"
         android:padding="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -268,7 +268,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
-            app:cardElevation="2dp"
+            app:cardElevation="4dp"
             android:padding="16dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
@@ -393,6 +393,74 @@
                 </LinearLayout>
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:layout_marginLeft="15dp">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Borrowed Amount"
+                        android:textColor="@color/black60"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginRight="10dp"/>
+
+                    <TextView
+                        android:id="@+id/tvBorrowedAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="-"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:gravity="end"/>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:layout_marginLeft="15dp">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Collection Amount"
+                        android:textColor="@color/black60"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginRight="10dp"/>
+
+                    <TextView
+                        android:id="@+id/tvCollectionAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="-"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:gravity="end"/>
+
+
+                </LinearLayout>
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -407,7 +475,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="Date and Time"
+                    android:text="Date"
                     android:textColor="@color/black60"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -475,63 +543,129 @@
     </androidx.cardview.widget.CardView>
 
 
-    <LinearLayout
-        android:id="@+id/buttonCard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/quantityCard2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="50dp"
-        android:visibility="gone">
+        <LinearLayout
+            android:id="@+id/slipLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/quantityCard2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Payment Slip"
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/black60"
+                android:textSize="14sp"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:cardCornerRadius="10dp"
+                android:elevation="2dp"
+                android:backgroundTint="@color/white"
+                android:layout_margin="8dp">
+
+                <ImageView
+                    android:id="@+id/ivPaymentSlip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Payment Slip"/>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/noteLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/white"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/slipLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSubmitSale"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="Print Receipt"
-            android:textAllCaps="false"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:background="@drawable/btn_continue_bg"
-            app:backgroundTint="@null"
-            android:fontFamily="@font/poppins"
-            android:layout_marginRight="10dp"
-            app:icon="@drawable/printvector"
-            />
+                <!-- Text Container -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnNewSale"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:text="New Sale"
-            android:layout_weight="1"
-            android:textAllCaps="false"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary"
-            android:background="@drawable/btn_light_bg"
-            app:icon="@drawable/addcirclevector"
-            app:backgroundTint="@null"
-            app:iconTint="@color/primary"
-            android:fontFamily="@font/poppins"
-            />
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/notes_icon"
+                        app:tint="@color/primary"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Note"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="15dp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="10dp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/etNote1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="90dp"
+                    android:gravity="top|start"
+                    android:background="@drawable/edit_text_bg_black"
+                    android:textColor="@color/black60"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <TextView
+                    android:id="@+id/etDescriptionError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginStart="10dp"/>
+
+
+            </LinearLayout>
 
 
 
-
-
-
-
-    </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/moveToDashBoard"
@@ -544,7 +678,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
-            app:layout_constraintTop_toBottomOf="@id/buttonCard"
+            app:layout_constraintTop_toBottomOf="@id/noteLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">

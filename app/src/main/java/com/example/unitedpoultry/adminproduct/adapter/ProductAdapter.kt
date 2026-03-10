@@ -26,9 +26,23 @@ class ProductAdapter(
 
         holder.binding.etQuantity.setText(quantityMap[product.id]?.toString())
 
+//        holder.binding.etQuantity.addTextChangedListener {
+//            val qty = it.toString().toIntOrNull() ?: 0
+//            quantityMap[product.id] = qty
+//        }
         holder.binding.etQuantity.addTextChangedListener {
+
             val qty = it.toString().toIntOrNull() ?: 0
-            quantityMap[product.id] = qty
+
+            val product = products[position]
+
+            if (product.name.contains("tray", true) && qty > 11) {
+                holder.binding.etQuantity.setText("11")
+                holder.binding.etQuantity.setSelection(holder.binding.etQuantity.text.length)
+                quantityMap[product.id] = 11
+            } else {
+                quantityMap[product.id] = qty
+            }
         }
     }
 

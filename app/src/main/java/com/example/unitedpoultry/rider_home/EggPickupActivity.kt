@@ -79,14 +79,59 @@ class EggPickupActivity : BaseActivity() {
     private fun setupClicks() {
         binding.backArrow.setOnClickListener { finish() }
 
-        binding.btnSave.setOnClickListener {
-            val items = quantityMap.filter { it.value > 0 }
-                .map { PickedItem(product_id = it.key, quantity = it.value) }
+//        binding.btnSave.setOnClickListener {
+//            val items = quantityMap.filter { it.value > 0 }
+//                .map { PickedItem(product_id = it.key, quantity = it.value) }
+//
+//            if (items.isEmpty()) {
+//                Toast.makeText(this, "Please enter quantity for at least one item", Toast.LENGTH_SHORT).show()
+//                return@setOnClickListener
+//            }
+//
+//            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+//            val todayDate = sdf.format(Date())
+//
+//            val request = EggPickupRequest(
+//                date = todayDate,
+//                items = items
+//            )
+//
+//           // val token = "Bearer " + getTokenFromPrefs()
+//            savePickedEggs(request)
+//        }
 
-            if (items.isEmpty()) {
-                Toast.makeText(this, "Please enter quantity for at least one item", Toast.LENGTH_SHORT).show()
+        binding.btnSave.setOnClickListener {
+
+            var petiQty = 0
+            var trayQty = 0
+
+            // Find quantities from selected products
+            quantityMap.forEach { (productId, qty) ->
+
+                val product = productList.find { it.id == productId }
+
+                if (product?.name?.contains("peti", true) == true) {
+                    petiQty = qty
+                }
+                else if (product?.name?.contains("tray", true) == true) {
+                    trayQty = qty
+                }
+            }
+
+            // Convert Peti to trays
+            val totalTrays = (petiQty * 12) + trayQty
+
+            if (totalTrays <= 0) {
+                Toast.makeText(this, "Please enter quantity", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            val items = listOf(
+                PickedItem(
+                    product_id = 2,   // Tray ID
+                    quantity = totalTrays
+                )
+            )
 
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val todayDate = sdf.format(Date())
@@ -96,7 +141,6 @@ class EggPickupActivity : BaseActivity() {
                 items = items
             )
 
-           // val token = "Bearer " + getTokenFromPrefs()
             savePickedEggs(request)
         }
     }

@@ -164,7 +164,7 @@ class AddExpenseActivity : BaseActivity() {
 
             binding.uploadTitle.visibility  = View.GONE
             binding.imageContainer.visibility  = View.GONE
-            binding.card.visibility  = View.GONE
+           // binding.card.visibility  = View.GONE
 
         } else {
 
@@ -185,7 +185,7 @@ class AddExpenseActivity : BaseActivity() {
 
             binding.uploadTitle.visibility  = View.VISIBLE
             binding.imageContainer.visibility  = View.VISIBLE
-            binding.card.visibility  = View.VISIBLE
+            //binding.card.visibility  = View.VISIBLE
         }
 
     }
@@ -255,6 +255,7 @@ class AddExpenseActivity : BaseActivity() {
                                     val intent = Intent(this, ExpenseSuccessActivity::class.java)
                                     intent.putExtra("expense_data_json", jsonData)
                                     startActivity(intent)
+                                    finish()
                                 }
                             } else {
                                 val errorMessage = try {
@@ -335,6 +336,7 @@ class AddExpenseActivity : BaseActivity() {
                                     val intent = Intent(this, ExpenseSuccessActivity::class.java)
                                     intent.putExtra("expense_data_json", jsonData)
                                     startActivity(intent)
+                                    finish()
                                 }
                             } else {
                                 val errorMessage = try {

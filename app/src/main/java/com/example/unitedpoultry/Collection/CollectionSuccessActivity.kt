@@ -3,13 +3,18 @@ package com.example.unitedpoultry.Collection
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.Collection.model.CollectionResponse
 import com.example.unitedpoultry.NewSale.Adapter.SelectShopAdapter
 import com.example.unitedpoultry.RiderDashBoard.RiderDashBoardActivity
+import com.example.unitedpoultry.RotateTransformation
 import com.example.unitedpoultry.databinding.ActivityCollectionSuccessBinding
 import com.example.unitedpoultry.databinding.ActivitySaleSuccessBinding
+import com.example.unitedpoultry.util.AppConstants
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -34,7 +39,7 @@ class CollectionSuccessActivity : BaseActivity() {
         val jsonData = intent.getStringExtra("collection_data_json")
         val collectionData = Gson().fromJson(jsonData, CollectionResponse::class.java)
 
-        binding.tvSubTitle.text = "Receipt # ${collectionData.receipt_number} has been generated"
+        binding.tvSubTitle.text = "Receipt #${collectionData.receipt_number} has been generated"
 
         binding.tvShopName.text = collectionData.shop_name
         binding.tvShopAddress.text = collectionData.shop_address
@@ -52,10 +57,34 @@ class CollectionSuccessActivity : BaseActivity() {
         binding.tvRemainingBalance.text = "Rs ${collectionData.remaining_balance}"
 
 
+        val imageUrl = collectionData.payment_record_url
+        if (!imageUrl.isNullOrEmpty()) {
+            binding.slipLayout.visibility = View.VISIBLE
+
+            val fullImageUrl = AppConstants.ImageURL + imageUrl
+
+            Glide.with(this)
+                .load(fullImageUrl)
+                .apply(
+                    RequestOptions()
+                        .fitCenter() // keep aspect ratio
+                        .transform(RotateTransformation(90f)) // rotate 90 degrees
+                )
+                .placeholder(binding.ivPaymentSlip.drawable)
+                .into(binding.ivPaymentSlip)
+
+        }
+
+        if (collectionData.payment_note != null) {
+            binding.noteLayout.visibility = View.VISIBLE
+            binding.etNote1.text = collectionData.payment_note
+
+        }
+
+
 
         binding.moveToDashBoard.setOnClickListener {
-            val intent = Intent(this, RiderDashBoardActivity::class.java)
-            startActivity(intent)
+            finishActivity()
 
         }
 
@@ -81,5 +110,14 @@ class CollectionSuccessActivity : BaseActivity() {
         } catch (e: Exception) {
             dateTimeString // fallback if parsing fails
         }
+    }
+
+    private fun finishActivity() {
+        finish()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishActivity()
     }
 }

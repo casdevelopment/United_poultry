@@ -284,6 +284,7 @@ class CollectionformActivity : BaseActivity() {
                                 val intent = Intent(this, CollectionSuccessActivity::class.java)
                                 intent.putExtra("collection_data_json", jsonData)
                                 startActivity(intent)
+                                finish()
 
                             }
 
@@ -358,6 +359,7 @@ class CollectionformActivity : BaseActivity() {
                                 val intent = Intent(this, CollectionSuccessActivity::class.java)
                                 intent.putExtra("collection_data_json", jsonData)
                                 startActivity(intent)
+                                finish()
 
                             }
 

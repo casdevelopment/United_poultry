@@ -63,3 +63,11 @@ data class SaleProduct(
     val remainingQty: Int,
     val price: Double
 )
+
+
+data class SaleProductTray(
+    val id: Int,
+    val name: String,
+    val latest_price: Double,
+    var total_trays: Int = 0
+)

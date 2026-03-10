@@ -91,7 +91,6 @@ class HomeFragment : Fragment() {
 
         showData()
         onclick()
-       //setupRecycler()
 
 
     }
@@ -498,12 +497,28 @@ class HomeFragment : Fragment() {
       //  binding.tvDate.text = data.date
 
         // TOTAL PICKED
-        binding.tvTotalPickedPeti.text = "Peti: ${data.total_picked.peti}"
-        binding.tvTotalPickedTray.text = "Tray: ${data.total_picked.tray}"
+//        binding.tvTotalPickedPeti.text = "Peti: ${data.total_picked.peti}"
+//        binding.tvTotalPickedTray.text = "Tray: ${data.total_picked.tray}"
+
+        val totalTrays = data.total_picked.tray ?: 0
+
+        val peti = totalTrays / 12
+        val tray = totalTrays % 12
+
+        binding.tvTotalPickedPeti.text = "Peti: $peti"
+        binding.tvTotalPickedTray.text = "Tray: $tray"
 
         // REMAINING
-        binding.tvRemainingPeti.text = data.remaining.total_peti.toString()
-        binding.tvRemainingTray.text = data.remaining.total_trays.toString()
+//        binding.tvRemainingPeti.text = data.remaining.total_peti.toString()
+//        binding.tvRemainingTray.text = data.remaining.total_trays.toString()
+
+        val remainingTrays = data.remaining.total_trays ?: 0
+
+        val rPeti = remainingTrays / 12
+        val rTray = remainingTrays % 12
+
+        binding.tvRemainingPeti.text = rPeti.toString()
+        binding.tvRemainingTray.text = rTray.toString()
 
         // EXPIRE
         binding.tvExpirePeti.text = "Peti: ${data.categories.expire.peti}"
