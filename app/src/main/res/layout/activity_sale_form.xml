@@ -272,7 +272,7 @@
 
                             <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_weight="2"
+                                android:layout_weight="3"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
                                 >
@@ -289,10 +289,16 @@
 
                             </LinearLayout>
 
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="2"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                >
+
                             <EditText
                                 android:id="@+id/etTrayQuantity"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
+                                android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:background="@drawable/edit_text_bg_no_border"
                                 android:textColor="@color/black60"
@@ -300,6 +306,17 @@
                                 android:inputType="number"
                                 android:backgroundTint="@color/primary20"
                                 android:hint="Enter Amount" />
+
+                                <TextView
+                                    android:id="@+id/etTrayQuantityError"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@android:color/holo_red_dark"
+                                    android:textSize="10sp"
+                                    android:visibility="gone"
+                                    android:layout_marginBottom="7dp" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
@@ -319,7 +336,7 @@
 
                             <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_weight="2"
+                                android:layout_weight="3"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
                                 >
@@ -336,10 +353,16 @@
 
                             </LinearLayout>
 
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="2"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                >
+
                             <EditText
                                 android:id="@+id/etPetiQuantity"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
+                                android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:background="@drawable/edit_text_bg_no_border"
                                 android:textColor="@color/black60"
@@ -347,6 +370,17 @@
                                 android:inputType="number"
                                 android:backgroundTint="@color/primary20"
                                 android:hint="Enter Amount" />
+
+                                <TextView
+                                    android:id="@+id/etPetiQuantityError"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@android:color/holo_red_dark"
+                                    android:textSize="10sp"
+                                    android:visibility="gone"
+                                    android:layout_marginBottom="7dp" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
@@ -743,6 +777,162 @@
                     </LinearLayout>
 
                     <!-- ================= LIQUID ================= -->
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:background="@drawable/rounded_bg_blue"-->
+<!--                        android:layout_marginTop="15dp"-->
+<!--                        android:padding="10dp">-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="horizontal"-->
+<!--                            android:gravity="center_vertical">-->
+
+<!--                            <androidx.cardview.widget.CardView-->
+<!--                                android:layout_width="30dp"-->
+<!--                                android:layout_height="30dp"-->
+<!--                                app:cardCornerRadius="12dp"-->
+<!--                                app:cardElevation="0dp"-->
+<!--                                android:backgroundTint="@color/blue_lite_shade1"-->
+<!--                                android:layout_gravity="center">-->
+
+<!--                                <ImageView-->
+<!--                                    android:layout_width="15dp"-->
+<!--                                    android:layout_height="15dp"-->
+<!--                                    android:src="@drawable/liquidsvg"-->
+<!--                                    app:tint="@color/blue"-->
+<!--                                    android:layout_gravity="center"/>-->
+<!--                            </androidx.cardview.widget.CardView>-->
+
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:orientation="vertical">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:fontFamily="@font/poppins"-->
+<!--                                    android:text="Liquid"-->
+<!--                                    android:textColor="@color/black"-->
+<!--                                    android:textSize="13sp"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:layout_marginLeft="5dp"-->
+<!--                                    android:layout_marginTop="5dp" />-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:fontFamily="@font/poppins"-->
+<!--                                    android:text="broken"-->
+<!--                                    android:textColor="@color/black"-->
+<!--                                    android:textSize="11sp"-->
+<!--                                    android:layout_marginLeft="5dp"/>-->
+
+<!--                            </LinearLayout>-->
+
+
+<!--                            &lt;!&ndash; PETI &ndash;&gt;-->
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:gravity="center"-->
+<!--                                android:padding="2dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="Peti"-->
+<!--                                    android:textColor="@color/blue"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:textSize="12sp"/>-->
+
+<!--                                <EditText-->
+<!--                                    android:id="@+id/etLiquidPeti"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:textSize="11sp"-->
+<!--                                    android:hint="Amount"-->
+<!--                                    android:layout_marginTop="4dp"-->
+<!--                                    android:textColor="@color/black60"-->
+<!--                                    android:background="@drawable/edit_text_bg_no_border"-->
+<!--                                    android:inputType="number"-->
+<!--                                    android:gravity="center"/>-->
+<!--                            </LinearLayout>-->
+
+<!--                            &lt;!&ndash; TRAY &ndash;&gt;-->
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:gravity="center"-->
+<!--                                android:padding="2dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="Tray"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:textColor="@color/blue"-->
+<!--                                    android:textSize="12sp"/>-->
+
+<!--                                <EditText-->
+<!--                                    android:id="@+id/etLiquidTray"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:textSize="11sp"-->
+<!--                                    android:hint="Amount"-->
+<!--                                    android:layout_marginTop="4dp"-->
+<!--                                    android:textColor="@color/black60"-->
+<!--                                    android:background="@drawable/edit_text_bg_no_border"-->
+<!--                                    android:inputType="number"-->
+<!--                                    android:gravity="center"/>-->
+<!--                            </LinearLayout>-->
+
+<!--                            &lt;!&ndash; EGG &ndash;&gt;-->
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:gravity="center"-->
+<!--                                android:padding="2dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="Egg"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:textColor="@color/blue"-->
+<!--                                    android:textSize="12sp"/>-->
+
+<!--                                <EditText-->
+<!--                                    android:id="@+id/etLiquidSingle"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:textSize="11sp"-->
+<!--                                    android:hint="Amount"-->
+<!--                                    android:layout_marginTop="4dp"-->
+<!--                                    android:textColor="@color/black60"-->
+<!--                                    android:background="@drawable/edit_text_bg_no_border"-->
+<!--                                    android:inputType="number"-->
+<!--                                    android:gravity="center"/>-->
+<!--                            </LinearLayout>-->
+
+<!--                        </LinearLayout>-->
+
+
+<!--                    </LinearLayout>-->
+
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -777,7 +967,7 @@
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="2"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -795,15 +985,13 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins"
-                                    android:text="broken"
+                                    android:text="Damaged/broken eggs"
                                     android:textColor="@color/black"
                                     android:textSize="11sp"
                                     android:layout_marginLeft="5dp"/>
 
                             </LinearLayout>
 
-
-                            <!-- PETI -->
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -815,86 +1003,30 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Peti"
-                                    android:textColor="@color/blue"
-                                    android:textStyle="bold"
-                                    android:textSize="12sp"/>
-
-                                <EditText
-                                    android:id="@+id/etLiquidPeti"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="11sp"
-                                    android:hint="Amount"
-                                    android:layout_marginTop="4dp"
-                                    android:textColor="@color/black60"
-                                    android:background="@drawable/edit_text_bg_no_border"
-                                    android:inputType="number"
-                                    android:gravity="center"/>
-                            </LinearLayout>
-
-                            <!-- TRAY -->
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
-                                android:gravity="center"
-                                android:padding="2dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Tray"
+                                    android:text="Kgs"
                                     android:textStyle="bold"
                                     android:textColor="@color/blue"
                                     android:textSize="12sp"/>
 
                                 <EditText
-                                    android:id="@+id/etLiquidTray"
+                                    android:id="@+id/etLiquidKg"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textSize="11sp"
-                                    android:hint="Amount"
+                                    android:hint="Kgs"
                                     android:layout_marginTop="4dp"
                                     android:textColor="@color/black60"
                                     android:background="@drawable/edit_text_bg_no_border"
-                                    android:inputType="number"
-                                    android:gravity="center"/>
-                            </LinearLayout>
-
-                            <!-- EGG -->
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
-                                android:gravity="center"
-                                android:padding="2dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Egg"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/blue"
-                                    android:textSize="12sp"/>
-
-                                <EditText
-                                    android:id="@+id/etLiquidSingle"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="11sp"
-                                    android:hint="Amount"
-                                    android:layout_marginTop="4dp"
-                                    android:textColor="@color/black60"
-                                    android:background="@drawable/edit_text_bg_no_border"
-                                    android:inputType="number"
+                                    android:inputType="numberDecimal"
                                     android:gravity="center"/>
                             </LinearLayout>
 
                         </LinearLayout>
+
+
                     </LinearLayout>
+
+
 
                 </LinearLayout>
 

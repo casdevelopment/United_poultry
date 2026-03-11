@@ -20,6 +20,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UnitedPoultry"
         tools:targetApi="31">
+
+
+        <activity
+            android:name=".History.FullScreenImageActivity"
+            android:exported="false" />
         <activity
             android:name=".History.ExpenseHistoryActivity"
             android:exported="false" />

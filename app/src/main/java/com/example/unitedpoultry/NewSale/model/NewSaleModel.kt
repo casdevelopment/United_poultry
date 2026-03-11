@@ -40,6 +40,10 @@ data class EggCount(
     val total_eggs: Int
 )
 
+data class EggLiquid(
+    val kg: Int,
+)
+
 
 data class DamageEggs(
     val expire: EggCount,
@@ -47,7 +51,7 @@ data class DamageEggs(
     @SerializedName("return")
     val return_: EggCount,
 
-    val liquid: EggCount
+    val liquid: EggLiquid
 )
 
 data class NewSaleRequest(

@@ -16,9 +16,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.Collection.CollectionSuccessActivity
 import com.example.unitedpoultry.R
+import com.example.unitedpoultry.RotateTransformation
 import com.example.unitedpoultry.databinding.ActivityAddExpenseBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse
@@ -32,6 +34,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileOutputStream
+import android.view.Surface
 
 
 class AddExpenseActivity : BaseActivity() {
@@ -400,7 +403,7 @@ class AddExpenseActivity : BaseActivity() {
     }
 
     private fun openCamera() {
-        cameraLauncher.launch(null) // TakePicturePreview automatically opens camera and returns bitmap
+        cameraLauncher.launch(null)
     }
 
     private fun openGallery() {
@@ -420,6 +423,37 @@ class AddExpenseActivity : BaseActivity() {
         }
     }
 
+//    private fun getCameraRotation(): Float {
+//        val rotation = windowManager.defaultDisplay.rotation
+//        return when (rotation) {
+//            Surface.ROTATION_0 -> 90f
+//            Surface.ROTATION_90 -> 0f
+//            Surface.ROTATION_180 -> 270f
+//            Surface.ROTATION_270 -> 180f
+//            else -> 90f
+//        }
+//    }
+//
+//    private fun handleCameraImage(bitmap: Bitmap) {
+//        val rotatedBitmap = rotateBitmap(bitmap, getCameraRotation())
+//
+//        binding.selectedImage.visibility = View.VISIBLE
+//        binding.txtPlaceholder.visibility = View.GONE
+//        binding.selectedImage.setImageBitmap(rotatedBitmap)
+//
+//        // Save rotated bitmap for API upload
+//        selectedImageFile = File(getExternalFilesDir(null), "shop_${System.currentTimeMillis()}.jpg")
+//        FileOutputStream(selectedImageFile!!).use { out ->
+//            rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+//        }
+//    }
+//
+//    private fun rotateBitmap(source: Bitmap, angle: Float): Bitmap {
+//        val matrix = android.graphics.Matrix()
+//        matrix.postRotate(angle)
+//        return Bitmap.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
+//    }
+
     private fun handleGalleryImage(uri: Uri) {
         selectedImageFile = getFileFromUri(uri)
         binding.selectedImage.visibility = View.VISIBLE
@@ -427,8 +461,10 @@ class AddExpenseActivity : BaseActivity() {
 
         Glide.with(this)
             .load(selectedImageFile)
-            .centerCrop()
+            .placeholder(binding.selectedImage.drawable)
             .into(binding.selectedImage)
+
+
     }
 
     private fun getFileFromUri(uri: Uri): File {

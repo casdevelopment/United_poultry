@@ -254,9 +254,9 @@ class ShopDetailsActivity : BaseActivity() {
         binding.tvReturnSingle.text = damage.`return`.single.toString()
 
         // LIQUID
-        binding.tvLiquidPeti.text = damage.liquid.peti.toString()
-        binding.tvLiquidTray.text = damage.liquid.tray.toString()
-        binding.tvLiquidSingle.text = damage.liquid.single.toString()
+        binding.etLiquidKgs.text = damage.liquid.kg.toString()
+//        binding.tvLiquidTray.text = damage.liquid.tray.toString()
+//        binding.tvLiquidSingle.text = damage.liquid.single.toString()
 
         // SHOP IMAGE
         val imageUrl = shop.image

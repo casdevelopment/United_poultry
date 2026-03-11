@@ -463,17 +463,16 @@
                             android:padding="10dp"
                             android:layout_margin="10dp">
 
+
                             <!-- Image -->
                             <ImageView
                                 android:id="@+id/selectedImage"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-
                                 android:visibility="gone"
                                 android:scaleType="fitXY"
                                 />
 
-                            <!-- Placeholder text -->
                             <TextView
                                 android:id="@+id/txtPlaceholder"
                                 android:layout_width="match_parent"

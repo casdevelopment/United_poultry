@@ -39,7 +39,6 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    //noinspection DataBindingWithoutKapt
     android.buildFeatures.dataBinding = true
 }
 
@@ -62,7 +61,7 @@ dependencies {
 
     implementation ("androidx.gridlayout:gridlayout:1.0.0")
 
-    implementation ("com.google.android.material:material:1.11.0")
+   // implementation ("com.google.android.material:material:1.11.0")
 
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
 
@@ -90,6 +89,7 @@ dependencies {
 
     implementation ("com.google.android.material:material:1.11.0")
 
+    implementation ("com.github.chrisbanes:PhotoView:2.3.0")
 
 
 }

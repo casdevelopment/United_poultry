@@ -1,5 +1,6 @@
 package com.example.unitedpoultry.History
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -26,6 +27,8 @@ class ExpenseHistoryActivity : BaseActivity() {
     private val viewModel: SaleHistoryDetailViewModel by viewModel()
 
     private var id: Int = 0
+
+    private var fullImageUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +57,12 @@ class ExpenseHistoryActivity : BaseActivity() {
 
         binding.backButton.setOnClickListener {
             finish()
+        }
+
+        binding.ivPaymentSlip.setOnClickListener {
+            val intent = Intent(this, FullScreenImageActivity::class.java)
+            intent.putExtra("image_url", fullImageUrl) // pass your image URL or local path
+            startActivity(intent)
         }
 
     }
@@ -90,19 +99,22 @@ class ExpenseHistoryActivity : BaseActivity() {
 
                             binding.tvTotalAmount.text = "Rs ${data.amount}"
 
-                            val imageUrl = data.payment_record_url
-                            if (!imageUrl.isNullOrEmpty()) {
+                            fullImageUrl = data.payment_record_url
+                            if (!fullImageUrl.isNullOrEmpty()) {
                                 binding.slipLayout.visibility = View.VISIBLE
 
+
+
                                 Glide.with(this)
-                                    .load(imageUrl)
-                                    .apply(
-                                        RequestOptions()
-                                            .fitCenter() // keep aspect ratio
-                                            .transform(RotateTransformation(90f)) // rotate 90 degrees
-                                    )
+                                    .load(fullImageUrl)
                                     .placeholder(binding.ivPaymentSlip.drawable)
                                     .into(binding.ivPaymentSlip)
+
+                            }
+
+                            if (data.note != null) {
+                                binding.noteLayout.visibility = View.VISIBLE
+                                binding.etNote1.text = data.note
 
                             }
 
@@ -114,8 +126,7 @@ class ExpenseHistoryActivity : BaseActivity() {
                 Status.ERROR -> {
                     AppUtil.stopLoader()
                     Toast.makeText(
-                        this,
-                        response.message ?: "Network error",
+                        this, "Network Failed",
                         Toast.LENGTH_SHORT
                     ).show()
                 }

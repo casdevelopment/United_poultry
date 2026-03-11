@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.Collection.model.CollectionResponse
+import com.example.unitedpoultry.History.FullScreenImageActivity
 import com.example.unitedpoultry.NewSale.Adapter.SelectShopAdapter
 import com.example.unitedpoultry.RiderDashBoard.RiderDashBoardActivity
 import com.example.unitedpoultry.RotateTransformation
@@ -24,6 +25,8 @@ class CollectionSuccessActivity : BaseActivity() {
 
     private lateinit var binding: ActivityCollectionSuccessBinding
 
+    private var fullImageUrl: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +37,12 @@ class CollectionSuccessActivity : BaseActivity() {
             isLightBackground = true,
             colorResId = android.R.color.white
         )
+
+        binding.ivPaymentSlip.setOnClickListener {
+            val intent = Intent(this, FullScreenImageActivity::class.java)
+            intent.putExtra("image_url", fullImageUrl) // pass your image URL or local path
+            startActivity(intent)
+        }
 
 
         val jsonData = intent.getStringExtra("collection_data_json")
@@ -61,15 +70,10 @@ class CollectionSuccessActivity : BaseActivity() {
         if (!imageUrl.isNullOrEmpty()) {
             binding.slipLayout.visibility = View.VISIBLE
 
-            val fullImageUrl = AppConstants.ImageURL + imageUrl
+            fullImageUrl = AppConstants.ImageURL + imageUrl
 
             Glide.with(this)
                 .load(fullImageUrl)
-                .apply(
-                    RequestOptions()
-                        .fitCenter() // keep aspect ratio
-                        .transform(RotateTransformation(90f)) // rotate 90 degrees
-                )
                 .placeholder(binding.ivPaymentSlip.drawable)
                 .into(binding.ivPaymentSlip)
 
@@ -84,7 +88,10 @@ class CollectionSuccessActivity : BaseActivity() {
 
 
         binding.moveToDashBoard.setOnClickListener {
-            finishActivity()
+            val intent = Intent(this, RiderDashBoardActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
 
         }
 

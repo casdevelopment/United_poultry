@@ -2,7 +2,10 @@ package com.example.unitedpoultry.History
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.databinding.ActivitySaleHistoryBinding
@@ -10,9 +13,11 @@ import com.example.unitedpoultry.AdminHome.viewmodel.DailyPerformanceStatsViewMo
 import com.example.unitedpoultry.History.model.SaleHistory
 import com.example.unitedpoultry.History.viewmodel.SaleHistoryDetailViewModel
 import com.example.unitedpoultry.RiderDashBoard.RiderDashBoardActivity
+import com.example.unitedpoultry.RotateTransformation
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse
 import com.example.unitedpoultry.rider_home.model.DailyPaymentStatsData
+import com.example.unitedpoultry.util.AppConstants
 import com.example.unitedpoultry.util.AppUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,6 +28,8 @@ class SaleHistoryActivity : BaseActivity() {
     private val viewModel: SaleHistoryDetailViewModel by viewModel()
 
     private var id: Int = 0
+
+    private var fullImageUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +57,12 @@ class SaleHistoryActivity : BaseActivity() {
 
         binding.backButton.setOnClickListener {
             finish()
+        }
+
+        binding.ivPaymentSlip.setOnClickListener {
+            val intent = Intent(this, FullScreenImageActivity::class.java)
+            intent.putExtra("image_url", fullImageUrl) // pass your image URL or local path
+            startActivity(intent)
         }
 
     }
@@ -92,8 +105,12 @@ class SaleHistoryActivity : BaseActivity() {
                                 binding.tvDate.text = data.sale_date
 
                                 binding.tvPaymentType.text = data.payment_type
-                                binding.tvDiscount.text = "Rs ${data.discount}"
-                                binding.tvTotal.text = "Rs ${data.total}"
+                                binding.tvDiscount.text = "Rs ${formatAmountString(data.discount)}"
+                                binding.tvTotal.text = "Rs ${formatAmountString(data.total)}"
+
+
+                                binding.tvBorrowed.text = "Rs ${data.borrowed_amount}"
+                                binding.tvCollection.text = "Rs ${data.collection_amount}"
 
 //                                // Totals
 //                                binding.tvSubTotal.text = "Rs ${data.sub_total}"
@@ -109,14 +126,57 @@ class SaleHistoryActivity : BaseActivity() {
 
                                 binding.tvReturn.text = "Peti: ${data.damage_eggs.`return`.peti} Tray: ${data.damage_eggs.`return`.tray} Egg: ${data.damage_eggs.`return`.single}"
 
-                                binding.tvLiquid.text = "Peti: ${data.damage_eggs.liquid.peti} Tray: ${data.damage_eggs.liquid.tray} Egg: ${data.damage_eggs.liquid.single}"
+                                binding.tvLiquid.text = "Kg: ${data.damage_eggs.liquid.kg}"
 
+
+
+
+//                                val itemsText = data.items.joinToString(separator = "\n") { item ->
+//                                    "${item.product_name}: ${item.qty}"
+//                                }
+//
+//                                binding.tvQuantity.text = itemsText
 
                                 val itemsText = data.items.joinToString(separator = "\n") { item ->
-                                    "${item.product_name}: ${item.qty}"
+
+                                    val qty = item.qty
+                                    val peti = qty / 12
+                                    val tray = qty % 12
+
+                                    val quantityText = if (qty < 12) {
+                                        "Tray: $qty"
+                                    } else {
+                                        if (tray == 0) {
+                                            "Peti: $peti"
+                                        } else {
+                                            "Peti: $peti Tray: $tray"
+                                        }
+                                    }
+
+                                    "$quantityText"
                                 }
 
                                 binding.tvQuantity.text = itemsText
+
+
+                                val imageUrl = data.payment_record_url
+                                if (!imageUrl.isNullOrEmpty()) {
+                                    binding.slipLayout.visibility = View.VISIBLE
+
+                                    fullImageUrl = AppConstants.ImageURL + imageUrl
+
+                                    Glide.with(this)
+                                        .load(fullImageUrl)
+                                        .placeholder(binding.ivPaymentSlip.drawable)
+                                        .into(binding.ivPaymentSlip)
+
+                                }
+
+                                if (data.payment_note != null) {
+                                    binding.noteLayout.visibility = View.VISIBLE
+                                    binding.etNote1.text = data.payment_note
+
+                                }
 //                                binding.tvReturnPeti.text = data.damage_eggs.`return`.peti.toString()
 //                                binding.tvReturnTray.text = data.damage_eggs.`return`.tray.toString()
 //                                binding.tvReturnSingle.text = data.damage_eggs.`return`.single.toString()
@@ -169,4 +229,14 @@ class SaleHistoryActivity : BaseActivity() {
 //            else -> value.toInt().toString()
 //        }
 //    }
+
+
+    fun formatAmountString(amount: String): String {
+        val value = amount.toDoubleOrNull() ?: 0.0
+        return if (value % 1.0 == 0.0) {
+            "%.0f".format(value)
+        } else {
+            "%.2f".format(value)
+        }
+    }
 }

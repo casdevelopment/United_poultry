@@ -4,12 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.example.unitedpoultry.BaseActivity
-import com.example.unitedpoultry.NewSale.model.SaleItem
+import com.example.unitedpoultry.History.FullScreenImageActivity
 import com.example.unitedpoultry.NewSale.model.SaleResponseData
 import com.example.unitedpoultry.RiderDashBoard.RiderDashBoardActivity
-import com.example.unitedpoultry.RotateTransformation
 import com.example.unitedpoultry.databinding.ActivitySaleSuccessBinding
 import com.example.unitedpoultry.util.AppConstants
 import com.google.gson.Gson
@@ -21,6 +19,8 @@ class SaleSuccessActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySaleSuccessBinding
 
+    private var fullImageUrl: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +31,12 @@ class SaleSuccessActivity : BaseActivity() {
             isLightBackground = true,
             colorResId = android.R.color.white
         )
+
+        binding.ivPaymentSlip.setOnClickListener {
+            val intent = Intent(this, FullScreenImageActivity::class.java)
+            intent.putExtra("image_url", fullImageUrl) // pass your image URL or local path
+            startActivity(intent)
+        }
 
 
         val jsonData = intent.getStringExtra("sale_data_json")
@@ -88,7 +94,7 @@ class SaleSuccessActivity : BaseActivity() {
 
         binding.tvReturn.text = "Peti: ${damageEggs.return_.peti} " + "Tray: ${damageEggs.return_.tray} " + "Single: ${damageEggs.return_.single}"
 
-        binding.tvLiquid.text = "Peti: ${damageEggs.liquid.peti} " + "Tray: ${damageEggs.liquid.tray} " + "Single: ${damageEggs.liquid.single}"
+        binding.tvLiquid.text = "Kg: ${damageEggs.liquid.kg}"
 
 
 
@@ -118,15 +124,10 @@ class SaleSuccessActivity : BaseActivity() {
         if (!imageUrl.isNullOrEmpty()) {
             binding.slipLayout.visibility = View.VISIBLE
 
-            val fullImageUrl = AppConstants.ImageURL + imageUrl
+            fullImageUrl = AppConstants.ImageURL + imageUrl
 
             Glide.with(this)
                 .load(fullImageUrl)
-                .apply(
-                    RequestOptions()
-                        .fitCenter() // keep aspect ratio
-                        .transform(RotateTransformation(90f)) // rotate 90 degrees
-                )
                 .placeholder(binding.ivPaymentSlip.drawable)
                 .into(binding.ivPaymentSlip)
 
@@ -143,7 +144,10 @@ class SaleSuccessActivity : BaseActivity() {
 
 
         binding.moveToDashBoard.setOnClickListener {
-            finishActivity()
+            val intent = Intent(this, RiderDashBoardActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
         }
 
 

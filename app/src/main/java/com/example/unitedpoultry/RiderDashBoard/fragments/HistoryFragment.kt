@@ -149,14 +149,14 @@ class HistoryFragment : Fragment() {
                         isLoading = false
 
                         // response.data is Response<BaseResponse<HistoryResponse>>
-                        val historyResponse = response.data?.body()  // BaseResponse<HistoryResponse>
-                        val body = historyResponse?.data           // HistoryResponse.data (HistoryData)
+                        val historyResponse = response.data?.body()
+                        val body = historyResponse?.data
                         val productStatus = historyResponse?.data?.product_status
 
                         // Pagination
                         lastPage = body?.pagination?.last_page ?: 1
 
-                        // Transactions
+
                         body?.transactions?.let { transactions ->
                             transactionsList.addAll(transactions)
                             adapter.notifyItemRangeInserted(
@@ -165,7 +165,6 @@ class HistoryFragment : Fragment() {
                             )
                         }
 
-                        // Summary
                         body?.summary?.let { summary ->
 
 
@@ -190,9 +189,9 @@ class HistoryFragment : Fragment() {
                             binding.tvReturnTray.text = "Tray: ${status.return_.tray}"
                             binding.tvReturnSingle.text = "Eggs: ${status.return_.single}"
 
-                            binding.tvLiquidPeti.text = "Peti: ${status.liquid.peti}"
-                            binding.tvLiquidTray.text = "Tray: ${status.liquid.tray}"
-                            binding.tvLiquidSingle.text = "Eggs: ${status.liquid.single}"
+                            binding.tvLiquidKg.text = "Kg: ${status.liquid.kg}"
+//                            binding.tvLiquidTray.text = "Tray: ${status.liquid.tray}"
+//                            binding.tvLiquidSingle.text = "Eggs: ${status.liquid.single}"
 
                         }
                     }
@@ -200,7 +199,7 @@ class HistoryFragment : Fragment() {
                     Status.ERROR -> {
                         AppUtil.stopLoader()
                         isLoading = false
-                        showToast(response.message ?: "Failed to load history")
+                        showToast( "Network Failed")
                     }
                 }
             }

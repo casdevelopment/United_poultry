@@ -60,7 +60,7 @@ data class ProductStatus(
     @SerializedName("return")
     val return_: ProductDetail,
 
-    val liquid: ProductDetail
+    val liquid: ProductLiquidDetail
 )
 
 data class ProductDetail(
@@ -68,6 +68,10 @@ data class ProductDetail(
     val tray: Int,
     val single: Int,
     val total_eggs: Int
+)
+
+data class ProductLiquidDetail(
+    val kg: Int,
 )
 
 data class TransactionItem(

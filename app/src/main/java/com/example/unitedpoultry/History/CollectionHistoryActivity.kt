@@ -2,7 +2,11 @@ package com.example.unitedpoultry.History
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
+import com.bumptech.glide.request.RequestOptions
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.databinding.ActivitySaleHistoryBinding
@@ -11,10 +15,12 @@ import com.example.unitedpoultry.History.model.CollectionHistory
 import com.example.unitedpoultry.History.model.SaleHistory
 import com.example.unitedpoultry.History.viewmodel.SaleHistoryDetailViewModel
 import com.example.unitedpoultry.RiderDashBoard.RiderDashBoardActivity
+import com.example.unitedpoultry.RotateTransformation
 import com.example.unitedpoultry.databinding.ActivityCollectionHistoryBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse
 import com.example.unitedpoultry.rider_home.model.DailyPaymentStatsData
+import com.example.unitedpoultry.util.AppConstants
 import com.example.unitedpoultry.util.AppUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -27,6 +33,8 @@ class CollectionHistoryActivity : BaseActivity() {
     private val viewModel: SaleHistoryDetailViewModel by viewModel()
 
     private var id: Int = 0
+
+    private var fullImageUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +63,12 @@ class CollectionHistoryActivity : BaseActivity() {
 
         binding.backButton.setOnClickListener {
            finish()
+        }
+
+        binding.ivPaymentSlip.setOnClickListener {
+            val intent = Intent(this, FullScreenImageActivity::class.java)
+            intent.putExtra("image_url", fullImageUrl) // pass your image URL or local path
+            startActivity(intent)
         }
 
     }
@@ -105,6 +119,26 @@ class CollectionHistoryActivity : BaseActivity() {
 //                                // Totals
                                 binding.tvRemainingBalance.text = "Rs ${data.remaining_balance}"
 
+                                val imageUrl = data.payment_record_url
+                                if (!imageUrl.isNullOrEmpty()) {
+                                    binding.slipLayout.visibility = View.VISIBLE
+
+                                    fullImageUrl = AppConstants.ImageURL + imageUrl
+
+                                    Glide.with(this)
+                                        .load(fullImageUrl)
+                                        .placeholder(binding.ivPaymentSlip.drawable)
+                                        .into(binding.ivPaymentSlip)
+
+
+                                }
+
+                                if (data.payment_note != null) {
+                                    binding.noteLayout.visibility = View.VISIBLE
+                                    binding.etNote1.text = data.payment_note
+
+                                }
+
                             }
                         }
                     }
@@ -112,8 +146,7 @@ class CollectionHistoryActivity : BaseActivity() {
                     Status.ERROR -> {
                         AppUtil.stopLoader()
                         Toast.makeText(
-                            this,
-                            response.message ?: "Network error",
+                            this, "Network Failed",
                             Toast.LENGTH_SHORT
                         ).show()
                     }

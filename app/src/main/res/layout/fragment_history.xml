@@ -485,7 +485,7 @@
                         android:textColor="@color/black" />
 
                     <TextView
-                        android:id="@+id/tvLiquidPeti"
+                        android:id="@+id/tvLiquidKg"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:textStyle="bold"
@@ -506,7 +506,8 @@
                         android:textSize="10sp"
                         android:gravity="center"
                         android:layout_marginTop="5dp"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:visibility="invisible"/>
 
                     <TextView
                         android:id="@+id/tvLiquidSingle"
@@ -518,7 +519,8 @@
                         android:textSize="10sp"
                         android:gravity="center"
                         android:layout_marginTop="5dp"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:visibility="invisible"/>
 
 
                 </LinearLayout>

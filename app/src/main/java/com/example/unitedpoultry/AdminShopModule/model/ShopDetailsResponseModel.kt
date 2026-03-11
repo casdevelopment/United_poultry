@@ -35,11 +35,15 @@ data class ShopDetailsResponse(
 data class DamageReturn(
     val expire: DamageItem,
     val `return`: DamageItem,
-    val liquid: DamageItem
+    val liquid: DamageLiquidItem
 )
 
 data class DamageItem(
     val peti: Int,
     val tray: Int,
     val single: Int
+)
+
+data class DamageLiquidItem(
+    val kg: Int,
 )

@@ -239,7 +239,21 @@ class SaleFormActivity : BaseActivity() {
                 var tray = s.toString().toIntOrNull() ?: 0
                 var peti = binding.etPetiQuantity.text.toString().toIntOrNull() ?: 0
 
-                if (tray > 11) tray = 11
+//                if (tray > 11){
+//
+//                    Toast.makeText(this@SaleFormActivity, "Tray cannot be more than 11", Toast.LENGTH_SHORT).show()
+//
+//                    tray = 11
+//                }
+
+                if (tray > 11) {
+                    binding.etTrayQuantityError.visibility = View.VISIBLE
+                    binding.etTrayQuantityError.text = "Cannot exceed 11 trays"
+
+                    tray = 11
+                } else {
+                    binding.etTrayQuantityError.visibility = View.GONE
+                }
 
                 val total = tray + peti * traysPerPeti
 
@@ -295,11 +309,11 @@ class SaleFormActivity : BaseActivity() {
 
                     peti = maxPeti
 
-                    Toast.makeText(
-                        this@SaleFormActivity,
-                        "Cannot order more Peti than available",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    binding.etPetiQuantityError.visibility = View.VISIBLE
+                    binding.etPetiQuantityError.text = "Cannot order more Peti than available"
+
+                }else {
+                    binding.etPetiQuantityError.visibility = View.GONE
                 }
 
                 setNumberOrHint(binding.etPetiQuantity, peti)
@@ -384,7 +398,6 @@ class SaleFormActivity : BaseActivity() {
     }
 
 
-
     private fun setupDamageTextWatchers() {
         val damageFields: Map<String, Map<String, android.widget.EditText>> = mapOf(
             "expire" to mapOf(
@@ -398,9 +411,9 @@ class SaleFormActivity : BaseActivity() {
                 "single" to binding.etReturnSingle
             ),
             "liquid" to mapOf(
-                "peti" to binding.etLiquidPeti,
-                "tray" to binding.etLiquidTray,
-                "single" to binding.etLiquidSingle
+//                "peti" to binding.etLiquidPeti,
+//                "tray" to binding.etLiquidTray,
+                "kg" to binding.etLiquidKg
             )
         )
 
@@ -435,9 +448,11 @@ class SaleFormActivity : BaseActivity() {
                 "Tray:${damageMap["return"]?.get("tray") ?: 0} " +
                 "Single:${damageMap["return"]?.get("single") ?: 0}"
 
-        binding.tvLiquid.text = "Peti:${damageMap["liquid"]?.get("peti") ?: 0} " +
-                "Tray:${damageMap["liquid"]?.get("tray") ?: 0} " +
-                "Single:${damageMap["liquid"]?.get("single") ?: 0}"
+//        binding.tvLiquid.text = "Peti:${damageMap["liquid"]?.get("peti") ?: 0} " +
+//                "Tray:${damageMap["liquid"]?.get("tray") ?: 0} " +
+//                "Single:${damageMap["liquid"]?.get("single") ?: 0}"
+
+        binding.tvLiquid.text = "Kg:${damageMap["liquid"]?.get("kg") ?: 0}"
     }
 
     private fun getDamageEggsMap(): Map<String, Map<String, Int>> {
@@ -452,10 +467,14 @@ class SaleFormActivity : BaseActivity() {
                 "tray" to (binding.etReturnTray.text.toString().toIntOrNull() ?: 0),
                 "single" to (binding.etReturnSingle.text.toString().toIntOrNull() ?: 0)
             ),
+//            "liquid" to mapOf(
+////                "peti" to (binding.etLiquidPeti.text.toString().toIntOrNull() ?: 0),
+////                "tray" to (binding.etLiquidTray.text.toString().toIntOrNull() ?: 0),
+//                "single" to (binding.etLiquidSingle.text.toString().toIntOrNull() ?: 0)
+//            )
+
             "liquid" to mapOf(
-                "peti" to (binding.etLiquidPeti.text.toString().toIntOrNull() ?: 0),
-                "tray" to (binding.etLiquidTray.text.toString().toIntOrNull() ?: 0),
-                "single" to (binding.etLiquidSingle.text.toString().toIntOrNull() ?: 0)
+                "kg" to (binding.etLiquidKg.text.toString().toIntOrNull() ?: 0)
             )
         )
     }
@@ -548,7 +567,9 @@ class SaleFormActivity : BaseActivity() {
         var valid = true
 
         binding.imageError.visibility = View.GONE
-        binding.etNoteError.visibility = View.GONE
+      //  binding.etNoteError.visibility = View.GONE
+
+        binding.etTrayQuantityError.visibility = View.GONE
 
 
         if (selectedImageFile == null && paymentType == "online_cheque") {
@@ -558,20 +579,46 @@ class SaleFormActivity : BaseActivity() {
         }
 
 
-        val note = binding.etNote.text.toString().trim()
-        if (note.isEmpty() && paymentType == "online_cheque") {
-            binding.etNoteError.visibility = View.VISIBLE
-            binding.etNoteError.text = "Enter note"
-            valid = false
-        }
-//
-//        val Collected = binding.etCollectionAmount.text.toString().trim()
-//        if (Collected.isEmpty()) {
-//            binding.etCollectionAmountError.visibility = View.VISIBLE
-//            binding.etCollectionAmountError.text = "Enter Collected Amount"
+//        val note = binding.etNote.text.toString().trim()
+//        if (note.isEmpty() && paymentType == "online_cheque") {
+//            binding.etNoteError.visibility = View.VISIBLE
+//            binding.etNoteError.text = "Enter note"
 //            valid = false
 //        }
 
+        val tray = binding.etTrayQuantity.text.toString().toIntOrNull() ?: 0
+        val peti = binding.etPetiQuantity.text.toString().toIntOrNull() ?: 0
+        val totalTrayQty = tray + (peti * traysPerPeti)
+
+        // 1️⃣ No stock remaining
+        if (remainingQty <= 0) {
+            Toast.makeText(this, "No stock remaining", Toast.LENGTH_SHORT).show()
+            valid = false
+        }
+
+
+        if (totalTrayQty > remainingQty) {
+            Toast.makeText(this, "Not enough stock available", Toast.LENGTH_SHORT).show()
+            valid = false
+        }
+        if (tray > 11) {
+            binding.etTrayQuantityError.visibility = View.VISIBLE
+            binding.etTrayQuantityError.text = "Cannot exceed 11 trays"
+            valid = false
+        }
+
+        if (tray == 0 && peti == 0) {
+            binding.etTrayQuantityError.visibility = View.VISIBLE
+            binding.etTrayQuantityError.text = "Please enter tray or peti quantity"
+            valid = false
+        }
+
+        // 3️⃣ Remaining stock check
+//        if (totalTrayQty > remainingQty) {
+//            binding.etTrayQuantityError.visibility = View.VISIBLE
+//            binding.etTrayQuantityError.text = "Not enough trays available"
+//            valid = false
+//        }
 
         return valid
     }
@@ -615,10 +662,14 @@ class SaleFormActivity : BaseActivity() {
                 "tray" to (binding.etReturnTray.text.toString().toIntOrNull() ?: 0),
                 "single" to (binding.etReturnSingle.text.toString().toIntOrNull() ?: 0)
             ),
+//            "liquid" to mapOf(
+////                "peti" to (binding.etLiquidPeti.text.toString().toIntOrNull() ?: 0),
+////                "tray" to (binding.etLiquidTray.text.toString().toIntOrNull() ?: 0),
+//                "single" to (binding.etLiquidSingle.text.toString().toIntOrNull() ?: 0)
+//            )
+
             "liquid" to mapOf(
-                "peti" to (binding.etLiquidPeti.text.toString().toIntOrNull() ?: 0),
-                "tray" to (binding.etLiquidTray.text.toString().toIntOrNull() ?: 0),
-                "single" to (binding.etLiquidSingle.text.toString().toIntOrNull() ?: 0)
+                "kg" to (binding.etLiquidKg.text.toString().toIntOrNull() ?: 0)
             )
         )
 
@@ -718,10 +769,14 @@ class SaleFormActivity : BaseActivity() {
                 "tray" to (binding.etReturnTray.text.toString().toIntOrNull() ?: 0),
                 "single" to (binding.etReturnSingle.text.toString().toIntOrNull() ?: 0)
             ),
+//            "liquid" to mapOf(
+//               // "peti" to (binding.etLiquidPeti.text.toString().toIntOrNull() ?: 0),
+//             //   "tray" to (binding.etLiquidTray.text.toString().toIntOrNull() ?: 0),
+//                "single" to (binding.etLiquidSingle.text.toString().toIntOrNull() ?: 0)
+//            )
+
             "liquid" to mapOf(
-                "peti" to (binding.etLiquidPeti.text.toString().toIntOrNull() ?: 0),
-                "tray" to (binding.etLiquidTray.text.toString().toIntOrNull() ?: 0),
-                "single" to (binding.etLiquidSingle.text.toString().toIntOrNull() ?: 0)
+                "kg" to (binding.etLiquidKg.text.toString().toIntOrNull() ?: 0)
             )
         )
 
@@ -748,10 +803,21 @@ class SaleFormActivity : BaseActivity() {
 //            )
 //        }
 
-        val payment_record: MultipartBody.Part = MultipartBody.Part.createFormData(
+//        val payment_record: MultipartBody.Part = MultipartBody.Part.createFormData(
+//            "payment_record",
+//            selectedImageFile!!.name,
+//            selectedImageFile!!.asRequestBody("image/*".toMediaTypeOrNull())
+//        )
+
+        val imageFile = selectedImageFile ?: run {
+            Toast.makeText(this, "Image required", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val payment_record = MultipartBody.Part.createFormData(
             "payment_record",
-            selectedImageFile!!.name,
-            selectedImageFile!!.asRequestBody("image/*".toMediaTypeOrNull())
+            imageFile.name,
+            imageFile.asRequestBody("image/*".toMediaTypeOrNull())
         )
 
 

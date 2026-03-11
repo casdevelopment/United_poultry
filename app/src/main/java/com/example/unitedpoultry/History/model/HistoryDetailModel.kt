@@ -44,7 +44,7 @@ data class SaleHistoryItem(
 data class DamageEggs(
     val expire: EggStatus,
     val `return`: EggStatus,
-    val liquid: EggStatus
+    val liquid: EggLiquid
 )
 
 data class EggStatus(
@@ -52,6 +52,10 @@ data class EggStatus(
     val tray: Int,
     val single: Int,
     val total_eggs: Int
+)
+
+data class EggLiquid(
+    val kg: Int,
 )
 
 

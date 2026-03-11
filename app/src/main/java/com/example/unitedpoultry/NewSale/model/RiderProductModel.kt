@@ -42,13 +42,18 @@ data class Remaining(
 data class Categories(
     val expire: CategoryItem,
     val `return`: CategoryItem,
-    val liquid: CategoryItem
+    val liquid: LiquidItem
 )
 
 data class CategoryItem(
     val peti: Int,
     val tray: Int,
     val single: Int
+)
+
+data class LiquidItem(
+    val kg: Int,
+
 )
 
 data class ProductInfo(

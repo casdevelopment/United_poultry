@@ -7,10 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.unitedpoultry.AdminRiderModule.model.RiderModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.RiderDetailsViewModel
 import com.example.unitedpoultry.Authentications.login.model.LoginResponseModel
@@ -21,8 +19,6 @@ import com.example.unitedpoultry.rider_home.adapter.RiderHomeAdapter
 import com.example.unitedpoultry.databinding.FragmentHomeBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse
-import com.example.unitedpoultry.rider_home.model.DailyPaymentStatsData
-import com.example.unitedpoultry.rider_home.model.EggPickupData
 import com.example.unitedpoultry.rider_home.viewmodel.DailyPaymentStatsViewModel
 import com.example.unitedpoultry.rider_home.viewmodel.DailyStatsViewModel
 import com.example.unitedpoultry.util.AppConstants.userData
@@ -31,19 +27,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.example.unitedpoultry.NewSale.Adapter.RiderProductHorizontalAdapter
 import com.example.unitedpoultry.NewSale.model.PickedItemsResponse
 import com.example.unitedpoultry.NewSale.model.Product
-import com.example.unitedpoultry.NewSale.model.RiderProductData
 import com.example.unitedpoultry.NewSale.viewmodel.GetRiderProductViewModel
 import com.example.unitedpoultry.SessionManager
 import com.example.unitedpoultry.rider_expense.AddExpenseActivity
-import com.example.unitedpoultry.rider_home.model.ReturnWasteRequestModel
 import com.example.unitedpoultry.rider_home.viewmodel.ReturnWasteViewModel
 import com.example.unitedpoultry.status_check.UserStatusChecker
 import com.example.unitedpoultry.status_check.viewmodel.UserStatusViewModel
 import com.example.unitedpoultry.util.AppConstants
-import com.example.unitedpoultry.waste_return.RiderProductReturnActivity
-import com.example.unitedpoultry.waste_return.RiderWasteProductActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
@@ -54,17 +45,17 @@ import java.util.Locale
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var shopAdapter: RiderHomeAdapter
+  //  private lateinit var shopAdapter: RiderHomeAdapter
 
-    private val ViewModel: DailyStatsViewModel by viewModel()
-    private val ViewModel1: DailyPaymentStatsViewModel by viewModel()
-    private val ViewModel2: ReturnWasteViewModel by viewModel()
+//    private val ViewModel: DailyStatsViewModel by viewModel()
+//    private val ViewModel1: DailyPaymentStatsViewModel by viewModel()
+//    private val ViewModel2: ReturnWasteViewModel by viewModel()
     private val ViewModel3: GetRiderProductViewModel by viewModel()
     private val ViewModel4: UserStatusViewModel by viewModel()
 
-    private var productList = listOf<Product>()
-
-    private lateinit var productAdapter: RiderProductHorizontalAdapter
+//    private var productList = listOf<Product>()
+//
+//    private lateinit var productAdapter: RiderProductHorizontalAdapter
 
     private val riderViewModel: RiderDetailsViewModel by viewModel()
     private val sessionManager: SessionManager by inject()
@@ -122,16 +113,15 @@ class HomeFragment : Fragment() {
                     if (response != null && response.isSuccessful) {
 
                         response.body()?.data?.let { riderModel ->
-                            // ✅ Map RiderModel to LoginResponseModel manually
+
                             val updatedUser = mapRiderToLoginResponse(riderModel)
 
-                            // Update runtime session
+
                             AppConstants.userData = updatedUser
 
-                            // Update local storage
+
                             sessionManager.userInfo(Gson().toJson(updatedUser))
 
-                            // Update UI
                             showData()
                         }
                     }
@@ -139,11 +129,7 @@ class HomeFragment : Fragment() {
 
                 Status.ERROR -> {
                     AppUtil.stopLoader()
-                    Toast.makeText(
-                        requireContext(),
-                        apiResponse.message ?: "Failed to refresh profile",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                   // Toast.makeText(requireContext(),"Failed to refresh profile", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -166,8 +152,6 @@ class HomeFragment : Fragment() {
             updated_at = rider.updated_at ?: ""
         )
     }
-
-
 
 
     private fun onclick(){
@@ -454,7 +438,7 @@ class HomeFragment : Fragment() {
         ViewModel3.getRiderProducts().observe(viewLifecycleOwner) { response ->
             when (response.status) {
 
-                Status.LOADING -> { /* loader if needed */ }
+                Status.LOADING -> {  }
 
                 Status.SUCCESS -> {
                     val res = response.data
@@ -468,11 +452,7 @@ class HomeFragment : Fragment() {
                             bindPickedItemsData(data)
                         } else {
                            // showProductEmptyState(true)
-                            Toast.makeText(
-                                requireContext(),
-                                baseResponse?.message ?: "Failed to fetch data",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(requireContext(),"Failed to fetch data", Toast.LENGTH_SHORT).show()
                         }
 
                     }
@@ -481,11 +461,7 @@ class HomeFragment : Fragment() {
 
                 Status.ERROR -> {
                     //showProductEmptyState(true)
-                    Toast.makeText(
-                        requireContext(),
-                        response.message ?: "Network Error",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(requireContext(),"Network Failed", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -531,9 +507,9 @@ class HomeFragment : Fragment() {
         binding.tvReturnSingle.text = "Eggs: ${data.categories.`return`.single}"
 
         // LIQUID
-        binding.tvLiquidPeti.text = "Peti: ${data.categories.liquid.peti}"
-        binding.tvLiquidTray.text = "Tray: ${data.categories.liquid.tray}"
-        binding.tvLiquidSingle.text = "Eggs: ${data.categories.liquid.single}"
+     //   binding.tvLiquidPeti.text = "Peti: ${data.categories.liquid.peti}"
+        binding.tvLiquid.text = "Kg: ${data.categories.liquid.kg}"
+     //   binding.tvLiquidSingle.text = "Eggs: ${data.categories.liquid.single}"
     }
 
     private fun getTodayDate(): String {
