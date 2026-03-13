@@ -36,6 +36,8 @@
             android:src="@drawable/singlearrow"
             app:tint="@color/black"
             android:layout_gravity="center"/>
+
+
     </androidx.cardview.widget.CardView>
 
 

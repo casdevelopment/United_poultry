@@ -125,7 +125,7 @@ class AddressFragment : Fragment() {
                     if (page == 1) AppUtil.stopLoader()
                     isLoading = false
                     if (areaList.isEmpty()) showEmptyState(true)
-                    showToast("Network problem")
+                    showToast("Network connection problem. Please try again.")
                 }
             }
         }

@@ -159,7 +159,7 @@ class RiderShopListAdapter(
                 },
 
                 onError = { message ->
-                    Toast.makeText(holder.itemView.context, message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(holder.itemView.context, "Network connection problem. Please try again.", Toast.LENGTH_SHORT).show()
                 }
             )
         }
@@ -190,7 +190,7 @@ class RiderShopListAdapter(
                 },
 
                 onError = { message ->
-                    Toast.makeText(holder.itemView.context, message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(holder.itemView.context, "Network connection problem. Please try again.", Toast.LENGTH_SHORT).show()
                 }
             )
         }

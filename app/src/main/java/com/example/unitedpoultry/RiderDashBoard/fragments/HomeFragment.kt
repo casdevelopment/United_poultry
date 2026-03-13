@@ -450,9 +450,6 @@ class HomeFragment : Fragment() {
                         if (baseResponse?.result == "success" && data != null) {
                            // showProductEmptyState(false)
                             bindPickedItemsData(data)
-                        } else {
-                           // showProductEmptyState(true)
-                            Toast.makeText(requireContext(),"Failed to fetch data", Toast.LENGTH_SHORT).show()
                         }
 
                     }
@@ -461,7 +458,7 @@ class HomeFragment : Fragment() {
 
                 Status.ERROR -> {
                     //showProductEmptyState(true)
-                    Toast.makeText(requireContext(),"Network Failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),"Network connection problem. Please try again.", Toast.LENGTH_SHORT).show()
                 }
             }
         }

@@ -148,19 +148,60 @@ class HistoryFragment : Fragment() {
                         AppUtil.stopLoader()
                         isLoading = false
 
-                        // response.data is Response<BaseResponse<HistoryResponse>>
+
                         val historyResponse = response.data?.body()
                         val body = historyResponse?.data
                         val productStatus = historyResponse?.data?.product_status
 
-                        // Pagination
                         lastPage = body?.pagination?.last_page ?: 1
 
 
-                        body?.transactions?.let { transactions ->
+//                        body?.transactions?.let { transactions ->
+//                            transactionsList.addAll(transactions)
+//                            adapter.notifyItemRangeInserted(
+//                                transactionsList.size - transactions.size,
+//                                transactions.size
+//                            )
+//                        }
+
+
+
+
+
+//                        body?.transactions?.let { transactions ->
+//
+//                            if (transactions.isEmpty() && transactionsList.isEmpty()) {
+//
+//                                showEmptyState(true)
+//
+//                            } else {
+//
+//                                showEmptyState(false)
+//
+//
+//                                transactionsList.addAll(transactions)
+//
+//                                adapter.notifyItemRangeInserted(
+//                                    transactionsList.size - transactions.size,
+//                                    transactions.size
+//                                )
+//                            }
+//                        }
+
+
+
+                        val transactions = body?.transactions ?: emptyList()
+
+                        if (transactions.isEmpty() && transactionsList.isEmpty()) {
+                            showEmptyState(true)
+                        } else {
+                            showEmptyState(false)
+
+                            val startPosition = transactionsList.size
                             transactionsList.addAll(transactions)
+
                             adapter.notifyItemRangeInserted(
-                                transactionsList.size - transactions.size,
+                                startPosition,
                                 transactions.size
                             )
                         }
@@ -199,7 +240,8 @@ class HistoryFragment : Fragment() {
                     Status.ERROR -> {
                         AppUtil.stopLoader()
                         isLoading = false
-                        showToast( "Network Failed")
+                        showEmptyState(true)
+                        showToast( "Network connection problem. Please try again.")
                     }
                 }
             }
@@ -208,5 +250,10 @@ class HistoryFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun showEmptyState(show: Boolean) {
+        binding.layoutEmpty.visibility = if (show) View.VISIBLE else View.GONE
+        binding.historyRv.visibility = if (show) View.GONE else View.VISIBLE
     }
 }

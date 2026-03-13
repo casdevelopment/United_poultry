@@ -4,7 +4,6 @@ import android.os.Bundle
 import com.bumptech.glide.Glide
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.R
-import com.example.unitedpoultry.databinding.ActivityCollectionHistoryBinding
 import com.example.unitedpoultry.databinding.ActivityFullScreenImageBinding
 
 class FullScreenImageActivity : BaseActivity() {
@@ -24,7 +23,6 @@ class FullScreenImageActivity : BaseActivity() {
 
         val imageUrl = intent.getStringExtra("image_url")
 
-        // Load image with Glide
         Glide.with(this)
             .load(imageUrl)
             .placeholder(binding.ivPaymentSlip.drawable) // optional
@@ -32,8 +30,6 @@ class FullScreenImageActivity : BaseActivity() {
 
 
 
-
-//        // Tap anywhere to close
 //        photoView.setOnClickListener { finish() }
 
         binding.backArrow.setOnClickListener {

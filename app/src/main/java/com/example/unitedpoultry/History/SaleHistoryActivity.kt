@@ -42,7 +42,6 @@ class SaleHistoryActivity : BaseActivity() {
         binding = ActivitySaleHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 🔹 Get ID from Intent
         id = intent.getIntExtra("ID", 0)
 
         onclick()
@@ -61,7 +60,7 @@ class SaleHistoryActivity : BaseActivity() {
 
         binding.ivPaymentSlip.setOnClickListener {
             val intent = Intent(this, FullScreenImageActivity::class.java)
-            intent.putExtra("image_url", fullImageUrl) // pass your image URL or local path
+            intent.putExtra("image_url", fullImageUrl)
             startActivity(intent)
         }
 
@@ -89,14 +88,10 @@ class SaleHistoryActivity : BaseActivity() {
                         val res = response.data
                         if (res != null && res.isSuccessful) {
 
-
-
-                            // ⚡ Important: use SaleHistory, not SaleItem
                             val baseResponse = res.body() as BaseResponse<SaleHistory>?
 
                             baseResponse?.data?.let { data ->
 
-                                // Shop info
                                 binding.tvShopName.text = data.shop_name
                                 binding.tvShopAddress.text = data.area_name
 
@@ -121,7 +116,7 @@ class SaleHistoryActivity : BaseActivity() {
 //                                binding.tvBorrowedAmount.text = "Rs ${data.borrowed_amount}"
 //                                binding.tvCollectionAmount.text = "Rs ${data.collection_amount}"
 
-                                // ================= DAMAGE EGGS =================
+
                                 binding.tvExpire.text = "Peti: ${data.damage_eggs.expire.peti} Tray: ${data.damage_eggs.expire.tray} Egg: ${data.damage_eggs.expire.single}"
 
                                 binding.tvReturn.text = "Peti: ${data.damage_eggs.`return`.peti} Tray: ${data.damage_eggs.`return`.tray} Egg: ${data.damage_eggs.`return`.single}"
@@ -196,11 +191,7 @@ class SaleHistoryActivity : BaseActivity() {
 
                     Status.ERROR -> {
                         AppUtil.stopLoader()
-                        Toast.makeText(
-                            this,
-                            response.message ?: "Network error",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(this, "Network connection problem. Please try again.", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -209,10 +200,10 @@ class SaleHistoryActivity : BaseActivity() {
 
     fun getInitials(name: String): String {
         return name
-            .split(" ")                        // Split the name by spaces
-            .filter { it.isNotBlank() }        // Ignore empty strings
-            .map { it.first().uppercaseChar() } // Take the first char of each word, uppercase
-            .joinToString("")                  // Combine into a single string
+            .split(" ")
+            .filter { it.isNotBlank() }
+            .map { it.first().uppercaseChar() }
+            .joinToString("")
     }
 //
 //    // 🔹 K & M formatter (textbox friendly)

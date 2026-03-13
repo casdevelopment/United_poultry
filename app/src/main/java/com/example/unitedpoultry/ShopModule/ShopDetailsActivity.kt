@@ -55,7 +55,7 @@ class ShopDetailsActivity : BaseActivity() {
             return
         }
 
-
+        fetchShopDetails(shopId)
         onclick()
 
 
@@ -67,20 +67,13 @@ class ShopDetailsActivity : BaseActivity() {
 
     }
 
-    // ✅ refresh when coming back from edit
-    override fun onResume() {
-        super.onResume()
-
-        fetchShopDetails(shopId)
-
-    }
 
     private fun onclick(){
 
         binding.backArrow.setOnClickListener { finish() }
 
         binding.btnNewSale.setOnClickListener {
-            // First check if the user is active
+
             UserStatusChecker.check(
                 lifecycleOwner = this,
                 viewModel = viewModel1,
@@ -181,7 +174,7 @@ class ShopDetailsActivity : BaseActivity() {
 
                 com.example.unitedpoultry.network.Status.ERROR -> {
                     AppUtil.stopLoader()
-                    Toast.makeText(this, apiResponse.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Network connection problem. Please try again.", Toast.LENGTH_SHORT).show()
                 }
             }
         }

@@ -54,7 +54,7 @@ import retrofit2.http.Query
 
 interface ApiInterface {
 
-    @POST("login")  // your login API endpoint
+    @POST("login")
     suspend fun login(@Body loginRequest: LoginRequestModel): Response<BaseResponse<LoginResponseModel>>
 
     @POST("admin/forgot-password")

@@ -249,7 +249,7 @@ class AddExpenseActivity : BaseActivity() {
                         if (retrofitResponse != null) {
                             if (retrofitResponse.isSuccessful) {
                                 val baseResponse = retrofitResponse.body()
-                                val message = baseResponse?.message ?: "Shop added"
+                                val message = baseResponse?.message ?: "Expense added"
                                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
                                 if (baseResponse?.result == "success") {
@@ -281,7 +281,7 @@ class AddExpenseActivity : BaseActivity() {
                     }
 
                     Status.ERROR -> {
-                        Toast.makeText(this, apiResponse.message ?: "Network error", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,"Network connection problem. Please try again.", Toast.LENGTH_SHORT).show()
                     }
 
                    Status.LOADING -> {
@@ -330,7 +330,7 @@ class AddExpenseActivity : BaseActivity() {
                         if (retrofitResponse != null) {
                             if (retrofitResponse.isSuccessful) {
                                 val baseResponse = retrofitResponse.body()
-                                val message = baseResponse?.message ?: "Shop added"
+                                val message = baseResponse?.message ?: "Expense added"
                                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
                                 if (baseResponse?.result == "success") {
@@ -362,7 +362,7 @@ class AddExpenseActivity : BaseActivity() {
                     }
 
                     Status.ERROR -> {
-                        Toast.makeText(this, apiResponse.message ?: "Network error", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Network connection problem. Please try again.", Toast.LENGTH_SHORT).show()
                     }
 
                     Status.LOADING -> {

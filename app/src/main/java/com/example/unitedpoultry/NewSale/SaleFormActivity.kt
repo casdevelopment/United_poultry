@@ -719,7 +719,7 @@ class SaleFormActivity : BaseActivity() {
                 }
 
                 Status.ERROR -> {
-                    Toast.makeText(this, apiResponse.message ?: "Network error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Network connection problem. Please try again.", Toast.LENGTH_SHORT).show()
                 }
 
                 Status.LOADING -> { /* Already handled */ }
@@ -860,7 +860,7 @@ class SaleFormActivity : BaseActivity() {
                 }
 
                 Status.ERROR -> {
-                    Toast.makeText(this, apiResponse.message ?: "Network error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Network connection problem. Please try again.", Toast.LENGTH_SHORT).show()
                 }
 
                 Status.LOADING -> { /* Already handled */ }

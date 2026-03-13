@@ -67,7 +67,7 @@ class CollectionHistoryActivity : BaseActivity() {
 
         binding.ivPaymentSlip.setOnClickListener {
             val intent = Intent(this, FullScreenImageActivity::class.java)
-            intent.putExtra("image_url", fullImageUrl) // pass your image URL or local path
+            intent.putExtra("image_url", fullImageUrl)
             startActivity(intent)
         }
 
@@ -96,7 +96,6 @@ class CollectionHistoryActivity : BaseActivity() {
 
 
 
-                            // ⚡ Important: use SaleHistory, not SaleItem
                             val baseResponse = res.body() as BaseResponse<CollectionHistory>?
 
                             baseResponse?.data?.let { data ->
@@ -116,7 +115,6 @@ class CollectionHistoryActivity : BaseActivity() {
 
                                 binding.tvDate.text = formatDateTime(data.collected_at)
 
-//                                // Totals
                                 binding.tvRemainingBalance.text = "Rs ${data.remaining_balance}"
 
                                 val imageUrl = data.payment_record_url
@@ -145,10 +143,7 @@ class CollectionHistoryActivity : BaseActivity() {
 
                     Status.ERROR -> {
                         AppUtil.stopLoader()
-                        Toast.makeText(
-                            this, "Network Failed",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(this, "Network connection problem. Please try again.", Toast.LENGTH_SHORT).show()
                     }
                 }
 

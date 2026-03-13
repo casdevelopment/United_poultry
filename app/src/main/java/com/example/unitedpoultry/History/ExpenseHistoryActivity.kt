@@ -41,8 +41,6 @@ class ExpenseHistoryActivity : BaseActivity() {
         )
 
 
-
-        // 🔹 Get ID from Intent
         id = intent.getIntExtra("ID", 0)
 
         onclick()
@@ -61,7 +59,7 @@ class ExpenseHistoryActivity : BaseActivity() {
 
         binding.ivPaymentSlip.setOnClickListener {
             val intent = Intent(this, FullScreenImageActivity::class.java)
-            intent.putExtra("image_url", fullImageUrl) // pass your image URL or local path
+            intent.putExtra("image_url", fullImageUrl)
             startActivity(intent)
         }
 
@@ -92,7 +90,6 @@ class ExpenseHistoryActivity : BaseActivity() {
 
                         baseResponse?.data?.let { data ->
 
-                            // Shop info
                             binding.tvExpenseTitle.text = data.title
                             binding.tvPaymentType.text = data.payment_type
 
@@ -125,10 +122,7 @@ class ExpenseHistoryActivity : BaseActivity() {
 
                 Status.ERROR -> {
                     AppUtil.stopLoader()
-                    Toast.makeText(
-                        this, "Network Failed",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this, "Network connection problem. Please try again.", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -144,7 +138,7 @@ class ExpenseHistoryActivity : BaseActivity() {
             val date = inputFormat.parse(inputDate)
             outputFormat.format(date!!)
         } catch (e: Exception) {
-            inputDate // fallback if parsing fails
+            inputDate
         }
     }
 //

@@ -233,7 +233,7 @@ class EggPickupActivity : BaseActivity() {
                 }
                 Status.ERROR -> {
                     AppUtil.stopLoader()
-                    Toast.makeText(this, response.message ?: "Network error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Network connection problem. Please try again.", Toast.LENGTH_SHORT).show()
                 }
             }
         }
