@@ -47,14 +47,15 @@ class ProfileFragment : Fragment() {
 
 
         onclick()
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        checkStatus()
         showData()
+
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//       // checkStatus()
+//
+//    }
 
     private fun showData(){
 
@@ -62,29 +63,39 @@ class ProfileFragment : Fragment() {
 
         binding.tvInitials.text = getInitials(userData?.username ?: "User Name")
 
+        binding.tvId.text = "ID: ${userData?.id ?: 0}"
+
+        val type = userData?.role_id ?: 0
+
+        if(type == 2){
+            binding.tvUserType.text = "Delivery Rider"
+        }else{
+            binding.tvUserType.text = "Admin"
+        }
+
     }
 
-    private fun checkStatus(){
-
-        UserStatusChecker.check(
-            lifecycleOwner = viewLifecycleOwner,
-            viewModel = ViewModel4,
-
-            onActive = {
-
-                binding.capsuleText.text = "Active"
-            },
-
-            onInactive = {
-
-                binding.capsuleText.text = "Inactive"
-            },
-
-            onError = { message ->
-                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-            }
-        )
-    }
+//    private fun checkStatus(){
+//
+//        UserStatusChecker.check(
+//            lifecycleOwner = viewLifecycleOwner,
+//            viewModel = ViewModel4,
+//
+//            onActive = {
+//
+//                binding.capsuleText.text = "Active"
+//            },
+//
+//            onInactive = {
+//
+//                binding.capsuleText.text = "Inactive"
+//            },
+//
+//            onError = { message ->
+//                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+//            }
+//        )
+//    }
 
     private fun  onclick(){
 

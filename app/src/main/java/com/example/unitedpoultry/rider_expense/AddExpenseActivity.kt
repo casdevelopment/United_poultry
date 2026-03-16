@@ -34,7 +34,6 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileOutputStream
-import android.view.Surface
 
 
 class AddExpenseActivity : BaseActivity() {
@@ -50,7 +49,6 @@ class AddExpenseActivity : BaseActivity() {
         uri?.let { handleGalleryImage(it) }
     }
 
-    // ------------------ CAMERA ------------------
     private val cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
         bitmap?.let { handleCameraImage(it) } ?: Toast.makeText(this, "Failed to capture image", Toast.LENGTH_SHORT).show()
     }

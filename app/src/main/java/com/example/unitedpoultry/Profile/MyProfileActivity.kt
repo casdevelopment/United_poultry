@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.View
 import com.bumptech.glide.Glide
 import com.example.unitedpoultry.BaseActivity
+import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.ActivityMyProfileBinding
 import com.example.unitedpoultry.util.AppConstants
 import com.example.unitedpoultry.util.AppConstants.userData
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 class MyProfileActivity : BaseActivity() {
@@ -23,57 +26,64 @@ class MyProfileActivity : BaseActivity() {
             colorResId = android.R.color.white
         )
 
+        showData()
+
         binding.backArrow.setOnClickListener {
             finish()
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        showData()
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        showData()
+//    }
 
     private fun showData(){
 
-        binding.tvUserName.text = userData?.username ?: "User Name"
-        binding.capsuleText.text = if (userData?.is_active == true) {
-            "Active"
+
+        if (userData?.image.isNullOrEmpty()) {
+
+            binding.imgShop.visibility = View.GONE
+            binding.tvInitials.visibility = View.VISIBLE
+
+            val name = userData?.name ?: "User Name"
+
+            binding.tvInitials.text = getInitials(name)
+
         } else {
-            "Inactive"
+
+            binding.imgShop.visibility = View.VISIBLE
+            binding.tvInitials.visibility = View.GONE
+
+            Glide.with(this)
+                .load(userData?.image)
+                .centerCrop()
+                .into(binding.imgShop)
         }
 
 
-        //  binding.tvInitials.text = getInitials(userData?.username ?: "User Name")
+
+        binding.tvUserName.text = userData?.username ?: "User Name"
+
+        binding.tvId.text = "ID: ${userData?.id ?: 0}"
+
+        val type = userData?.role_id ?: 0
+
+        if(type == 2){
+            binding.tvUserType.text = "Delivery Rider"
+        }else{
+            binding.tvUserType.text = "Admin"
+        }
+
 
         binding.tvFullName.text = userData?.name ?: "User Name"
 
         binding.tvCnic.text = userData?. cnic ?: "0"
 
-        binding.dateOfBirth.text = "-"
-
-        binding.dateOfJoining.text = "-"
+        binding.dateOfJoining.text = formatJoinDate(userData?.created_at ?: "")
 
         binding.tvContact.text = userData?.phone_number?: "0"
 
-        binding.tvEmergencyContact.text = "-"
-
-        binding.tvAddress.text = userData?.address?: "0"
-
-
-
-        val imageUrl = userData?.image
-        if (!imageUrl.isNullOrEmpty()) {
-            binding.imgShop.visibility = View.VISIBLE
-            //  binding.imgCamera.visibility = View.GONE
-
-            // Use full URL to show existing image
-            val fullImageUrl = AppConstants.ImageURL + imageUrl
-            Glide.with(this)
-                .load(fullImageUrl)
-                .centerCrop()
-                .placeholder(binding.imgShop.drawable)
-                .into(binding.imgShop)
-        }
     }
 
     private fun getInitials(name: String): String {
@@ -84,5 +94,12 @@ class MyProfileActivity : BaseActivity() {
             parts.size >= 2 -> "${parts[0][0]}${parts[1][0]}".uppercase()
             else -> parts[0][0].uppercase()
         }
+    }
+
+    fun formatJoinDate(dateString: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("d MMM yyyy", Locale.getDefault())
+        val date = inputFormat.parse(dateString)
+        return outputFormat.format(date!!)
     }
 }

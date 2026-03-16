@@ -138,7 +138,6 @@ class HomeAdminFragment : Fragment() {
                             adapter.updateList(activeRiderList)
                         }
 
-                        // Update currentPage only after success
                         currentPage = page
                         if(currentPage<lastPage){
                             fetchRidersFromApi(currentPage + 1)

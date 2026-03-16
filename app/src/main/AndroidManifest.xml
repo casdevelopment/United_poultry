@@ -20,9 +20,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UnitedPoultry"
         tools:targetApi="31">
+
+        <activity
+            android:name=".AdminArea.AssignAreasAndShopActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+
         <activity
             android:name=".AdminExpense.AdminExpenseActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".History.FullScreenImageActivity"
             android:exported="false" />

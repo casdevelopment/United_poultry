@@ -81,18 +81,18 @@
                 android:id="@+id/imgShop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                />
+                android:scaleType="centerCrop"/>
 
-            <!-- Camera Icon -->
-            <ImageView
-                android:id="@+id/imgCamera"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center"
-                android:src="@drawable/adminshopdetailvector"
-                android:visibility="gone"
-                />
+            <!-- Initials Text -->
+            <TextView
+                android:id="@+id/tvInitials"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="-"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
 
         </FrameLayout>
 
@@ -110,9 +110,10 @@
 
 
         <TextView
+            android:id="@+id/tvUserType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delivery Rider"
+            android:text="-"
             android:textSize="14sp"
             android:textColor="@color/black"
             android:layout_marginStart="6dp"
@@ -138,7 +139,7 @@
 
 
             <TextView
-                android:id="@+id/capsuleText"
+                android:id="@+id/tvId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-"
