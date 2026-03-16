@@ -5,9 +5,7 @@ import com.example.unitedpoultry.AdminArea.model.AreaDataResponseModel
 import com.example.unitedpoultry.AdminArea.model.AreaModel
 import com.example.unitedpoultry.rider_home.model.ReturnWasteRequestModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderDataResponceModel
-import com.example.unitedpoultry.AdminRiderModule.model.RiderEditRequestModel
 import com.example.unitedpoultry.AdminRiderModule.model.RiderModel
-import com.example.unitedpoultry.AdminRiderModule.model.RiderRequestModel
 import com.example.unitedpoultry.AdminSettingModule.DataModel.RateData
 import com.example.unitedpoultry.AdminSettingModule.DataModel.UpdateRateModel
 import com.example.unitedpoultry.AdminShopModule.model.ShopDetailsResponse
@@ -24,14 +22,12 @@ import com.example.unitedpoultry.History.model.ExpenseItem
 import com.example.unitedpoultry.History.model.HistoryData
 import com.example.unitedpoultry.History.model.SaleHistory
 import com.example.unitedpoultry.NewSale.model.PickedItemsResponse
-import com.example.unitedpoultry.NewSale.model.RiderProductData
-import com.example.unitedpoultry.NewSale.model.SaleRequest
 import com.example.unitedpoultry.NewSale.model.SaleResponseData
 import com.example.unitedpoultry.Profile.model.ChangePasswordRequestModel
 import com.example.unitedpoultry.adminproduct.model.ProductData
 import com.example.unitedpoultry.exchange_return.model.ReturnOrExchangeRequest
 import com.example.unitedpoultry.network.retrofit.BaseResponse
-import com.example.unitedpoultry.rider_expense.ExpenseModel
+import com.example.unitedpoultry.rider_expense.Model.ExpenseModel
 import com.example.unitedpoultry.rider_home.model.DailyPaymentStatsData
 import com.example.unitedpoultry.rider_home.model.EggPickupData
 import com.example.unitedpoultry.rider_home.model.EggPickupRequest
@@ -44,7 +40,6 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT

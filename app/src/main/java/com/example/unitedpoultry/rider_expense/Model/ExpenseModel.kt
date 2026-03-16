@@ -1,4 +1,4 @@
-package com.example.unitedpoultry.rider_expense
+package com.example.unitedpoultry.rider_expense.Model
 
 data class ExpenseModel(
     val id: Int,

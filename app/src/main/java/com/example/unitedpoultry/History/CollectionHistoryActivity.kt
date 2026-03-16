@@ -5,21 +5,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
-import com.bumptech.glide.request.RequestOptions
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.BaseActivity
-import com.example.unitedpoultry.databinding.ActivitySaleHistoryBinding
-import com.example.unitedpoultry.AdminHome.viewmodel.DailyPerformanceStatsViewModel
 import com.example.unitedpoultry.History.model.CollectionHistory
-import com.example.unitedpoultry.History.model.SaleHistory
 import com.example.unitedpoultry.History.viewmodel.SaleHistoryDetailViewModel
-import com.example.unitedpoultry.RiderDashBoard.RiderDashBoardActivity
-import com.example.unitedpoultry.RotateTransformation
 import com.example.unitedpoultry.databinding.ActivityCollectionHistoryBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse
-import com.example.unitedpoultry.rider_home.model.DailyPaymentStatsData
 import com.example.unitedpoultry.util.AppConstants
 import com.example.unitedpoultry.util.AppUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -152,10 +144,10 @@ class CollectionHistoryActivity : BaseActivity() {
 
     fun getInitials(name: String): String {
         return name
-            .split(" ")                        // Split the name by spaces
-            .filter { it.isNotBlank() }        // Ignore empty strings
-            .map { it.first().uppercaseChar() } // Take the first char of each word, uppercase
-            .joinToString("")                  // Combine into a single string
+            .split(" ")
+            .filter { it.isNotBlank() }
+            .map { it.first().uppercaseChar() }
+            .joinToString("")
     }
 
     fun formatDateTime(inputDate: String): String {
@@ -166,7 +158,7 @@ class CollectionHistoryActivity : BaseActivity() {
             val date = inputFormat.parse(inputDate)
             outputFormat.format(date!!)
         } catch (e: Exception) {
-            inputDate // fallback if parsing fails
+            inputDate
         }
     }
 //

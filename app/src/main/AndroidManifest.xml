@@ -46,17 +46,21 @@
         <activity
             android:name=".AdminSettingModule.AdminRateHistoryActivity"
             android:exported="false" />
+
         <activity
             android:name=".waste_return.RiderWasteProductActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name=".waste_return.RiderProductReturnActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name=".AdminSettingModule.AdminCatagoryActivity"
             android:exported="false" />
+
         <activity
             android:name=".exchange_return.ReturnSucessActivity"
             android:exported="false" />

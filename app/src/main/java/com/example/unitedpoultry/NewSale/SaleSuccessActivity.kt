@@ -174,12 +174,5 @@ class SaleSuccessActivity : BaseActivity() {
         }
     }
 
-    private fun finishActivity() {
-        finish()
-    }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finishActivity()
-    }
 }

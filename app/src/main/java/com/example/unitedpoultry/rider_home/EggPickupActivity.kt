@@ -3,16 +3,11 @@ package com.example.unitedpoultry.rider_home
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.unitedpoultry.BaseActivity
-import com.example.unitedpoultry.adminproduct.viewmodel.GetProductViewModel
 import com.example.unitedpoultry.adminproduct.model.Product
-import com.example.unitedpoultry.adminproduct.adapter.ProductAdapter
-import com.example.unitedpoultry.adminproduct.model.ProductData
 import com.example.unitedpoultry.databinding.ActivityEggPickupBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse
-import com.example.unitedpoultry.rider_home.model.EggPickupData
 import com.example.unitedpoultry.rider_home.model.EggPickupRequest
 import com.example.unitedpoultry.rider_home.model.PickedItem
 import com.example.unitedpoultry.rider_home.viewmodel.EggPickupViewModel

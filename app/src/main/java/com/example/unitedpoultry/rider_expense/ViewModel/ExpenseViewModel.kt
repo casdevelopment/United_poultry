@@ -6,7 +6,7 @@ import androidx.lifecycle.liveData
 import com.example.unitedpoultry.network.NetworkStates
 import com.example.unitedpoultry.network.repo.Repository
 import com.example.unitedpoultry.network.retrofit.BaseResponse
-import com.example.unitedpoultry.rider_expense.ExpenseModel
+import com.example.unitedpoultry.rider_expense.Model.ExpenseModel
 import kotlinx.coroutines.Dispatchers
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

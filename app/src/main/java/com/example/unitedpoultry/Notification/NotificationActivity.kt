@@ -1,7 +1,6 @@
 package com.example.unitedpoultry.Notification
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.Notification.Adapter.NotificationAdapter

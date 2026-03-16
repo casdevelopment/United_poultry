@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import com.example.unitedpoultry.AdminDashBoard.AdminDashBoardActivity
-import com.example.unitedpoultry.Authentications.AuthenticationActivity
 import com.example.unitedpoultry.Authentications.login.model.LoginResponseModel
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.R
@@ -16,7 +14,6 @@ import com.example.unitedpoultry.SessionManager
 import com.example.unitedpoultry.Welcome.WelcomeActivity
 import com.example.unitedpoultry.util.AppConstants
 import com.google.gson.Gson
-import kotlinx.coroutines.delay
 import org.koin.android.ext.android.inject
 
 class SplashActivity :  BaseActivity() {

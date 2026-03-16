@@ -16,11 +16,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.example.unitedpoultry.BaseActivity
-import com.example.unitedpoultry.Collection.CollectionSuccessActivity
 import com.example.unitedpoultry.R
-import com.example.unitedpoultry.RotateTransformation
 import com.example.unitedpoultry.databinding.ActivityAddExpenseBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse

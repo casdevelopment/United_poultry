@@ -259,12 +259,4 @@ class EditAreaActivity : BaseActivity() {
         }
     }
 
-
-
-    override fun onResume() {
-        super.onResume()
-        window.setSoftInputMode(
-            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
-        )
-    }
 }

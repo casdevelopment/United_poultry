@@ -7,13 +7,13 @@ import com.bumptech.glide.Glide
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.History.FullScreenImageActivity
 import com.example.unitedpoultry.databinding.ActivityExpenseSuccessBinding
+import com.example.unitedpoultry.rider_expense.Model.ExpenseModel
 import com.google.gson.Gson
 
 
 class ExpenseSuccessActivity : BaseActivity() {
 
     private lateinit var binding: ActivityExpenseSuccessBinding
-
 
     private var fullImageUrl: String? = null
 
@@ -59,23 +59,14 @@ class ExpenseSuccessActivity : BaseActivity() {
 
         }
 
-
-
-
         binding.moveToDashBoard.setOnClickListener {
             finishActivity()
         }
-
 
     }
 
     private fun finishActivity() {
         finish()
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finishActivity()
     }
 
 }

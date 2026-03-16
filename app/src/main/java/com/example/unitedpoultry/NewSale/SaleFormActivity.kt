@@ -17,10 +17,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.unitedpoultry.BaseActivity
-import com.example.unitedpoultry.NewSale.Adapter.ShowPickedProductSaleAdapter
 import com.example.unitedpoultry.NewSale.model.PickedItemsResponse
 import com.example.unitedpoultry.NewSale.model.Product
 import com.example.unitedpoultry.NewSale.model.SaleProduct

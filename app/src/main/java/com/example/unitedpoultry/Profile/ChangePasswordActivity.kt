@@ -4,12 +4,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
-import com.example.unitedpoultry.AdminArea.model.AddAreaRequestModel
-import com.example.unitedpoultry.AdminArea.viewmodel.AddAreaViewModel
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.Profile.ViewModel.ChangePasswordViewModel
 import com.example.unitedpoultry.Profile.model.ChangePasswordRequestModel
-import com.example.unitedpoultry.databinding.ActivityAddNewAreaBinding
 import com.example.unitedpoultry.databinding.ActivityChangePasswordBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse

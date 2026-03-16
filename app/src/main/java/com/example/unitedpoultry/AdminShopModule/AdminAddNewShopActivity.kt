@@ -321,10 +321,6 @@ class AdminAddNewShopActivity : BaseActivity() {
 
     private fun String.toRequestBody() = toRequestBody("text/plain".toMediaTypeOrNull())
 
-    override fun onResume() {
-        super.onResume()
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)

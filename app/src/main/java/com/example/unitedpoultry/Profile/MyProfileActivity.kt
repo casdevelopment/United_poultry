@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.bumptech.glide.Glide
 import com.example.unitedpoultry.BaseActivity
-import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.ActivityMyProfileBinding
-import com.example.unitedpoultry.util.AppConstants
 import com.example.unitedpoultry.util.AppConstants.userData
 import java.text.SimpleDateFormat
 import java.util.Locale
