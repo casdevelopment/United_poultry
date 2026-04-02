@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.unitedpoultry.AdminShopModule.model.ShopModel
 import com.example.unitedpoultry.AdminShopModule.model.ShopsData
 import com.example.unitedpoultry.BaseActivity
@@ -50,7 +51,6 @@ class ShopListActivity : BaseActivity() {
         setupClicks()
     }
 
-    // 🔥 ALWAYS refresh list when screen becomes visible
     override fun onResume() {
         super.onResume()
         resetAndFetch()
@@ -113,7 +113,7 @@ class ShopListActivity : BaseActivity() {
 
         binding.rvShopList.layoutManager = LinearLayoutManager(this)
         binding.rvShopList.adapter = adapter
-        binding.rvShopList.isNestedScrollingEnabled = false
+
     }
 
     private fun setupSearch() {
@@ -124,15 +124,24 @@ class ShopListActivity : BaseActivity() {
     }
 
     private fun setupScrollPagination() {
-        binding.nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
-            val view = binding.rvShopList.getChildAt(binding.rvShopList.childCount - 1)
-            if (view != null) {
-                val diff = view.bottom - (binding.nestedScrollView.height + scrollY)
-                if (diff <= 200 && !isLoading && currentPage < lastPage) {
+        val layoutManager = binding.rvShopList.layoutManager as LinearLayoutManager
+        binding.rvShopList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy <= 0) return // only scroll down
+
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+
+                // Load more when near the end
+                if (!isLoading && currentPage < lastPage &&
+                    (visibleItemCount + firstVisibleItemPosition >= totalItemCount - 3)
+                ) {
                     fetchShops(currentPage + 1)
                 }
             }
-        }
+        })
     }
 
     // 🔁 Reset pagination + list

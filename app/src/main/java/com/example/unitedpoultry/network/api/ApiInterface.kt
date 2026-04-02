@@ -61,10 +61,10 @@ interface ApiInterface {
     @POST("admin/reset-password")
     suspend fun resetPassword(@Body request: ResetPasswordRequestModel): Response<BaseResponse<Any>>
 
-    @GET("admin/areas") // replace with your endpoint
+    @GET("admin/areas")
     suspend fun getAreas(@Query("page") page: Int): Response<BaseResponse<AreaDataResponseModel>>
 
-    @POST("admin/areas")  // your login API endpoint
+    @POST("admin/areas")
     suspend fun addArea(@Body request: AddAreaRequestModel): Response<BaseResponse<AreaModel>>
 
     @PUT("admin/areas/{id}")

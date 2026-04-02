@@ -39,13 +39,13 @@ class AdminEditShopActivity : BaseActivity() {
     private var selectedImageFile: File? = null
     private var shopId: Int = 0
 
-    // ================= CAMERA =================
+
     private val cameraLauncher =
         registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
             bitmap?.let { handleCameraImage(it) }
         }
 
-    // ================= GALLERY =================
+
     private val galleryLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let { handleGalleryImage(it) }
@@ -69,7 +69,7 @@ class AdminEditShopActivity : BaseActivity() {
         prefillData()
     }
 
-    // ================= PREFILL =================
+
     private fun prefillData() {
         binding.etShopName.setText(intent.getStringExtra("SHOP_NAME"))
         binding.etContactName.setText(intent.getStringExtra("CONTACT"))
@@ -114,7 +114,7 @@ class AdminEditShopActivity : BaseActivity() {
 
     }
 
-    // ================= IMAGE PICKER =================
+
     private fun showImagePicker() {
         AlertDialog.Builder(this)
             .setItems(arrayOf("Camera", "Gallery")) { _, which ->
@@ -172,7 +172,7 @@ class AdminEditShopActivity : BaseActivity() {
         binding.imgCamera.visibility = View.GONE
     }
 
-    // ================= VALIDATION =================
+
     private fun validateInputs(): Boolean {
 
         var valid = true
@@ -367,8 +367,6 @@ class AdminEditShopActivity : BaseActivity() {
         }
     }
 
-
-    // ================= DELETE =================
     private fun showDeleteConfirmation() {
         AlertDialog.Builder(this)
             .setTitle("Delete Shop")

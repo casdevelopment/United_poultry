@@ -213,7 +213,8 @@
         <activity
             android:name=".RiderDashBoard.RiderDashBoardActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
+
         <activity
             android:name=".Authentications.AuthenticationActivity"
             android:exported="true"

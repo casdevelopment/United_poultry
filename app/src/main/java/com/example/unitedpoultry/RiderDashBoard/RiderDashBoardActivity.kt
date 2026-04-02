@@ -9,6 +9,9 @@ import com.example.unitedpoultry.RiderDashBoard.fragments.HistoryFragment
 import com.example.unitedpoultry.RiderDashBoard.fragments.HomeFragment
 import com.example.unitedpoultry.RiderDashBoard.fragments.ProfileFragment
 import com.example.unitedpoultry.databinding.ActivityRiderDashBoardBinding
+import android.graphics.Rect
+import android.view.View
+import android.view.ViewTreeObserver
 
 class RiderDashBoardActivity : BaseActivity() {
 
@@ -32,6 +35,8 @@ class RiderDashBoardActivity : BaseActivity() {
         binding.bottomNavigation.selectedItemId = selectedTabId
 
         setupBottomNavigation()
+
+        setupKeyboardListener()
     }
 
     private fun setupBottomNavigation() {
@@ -63,6 +68,19 @@ class RiderDashBoardActivity : BaseActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("tab", selectedTabId)
+    }
+
+    private fun setupKeyboardListener() {
+        val rootView = binding.root
+        rootView.viewTreeObserver.addOnGlobalLayoutListener {
+            val rect = android.graphics.Rect()
+            rootView.getWindowVisibleDisplayFrame(rect)
+            val screenHeight = rootView.rootView.height
+            val keypadHeight = screenHeight - rect.bottom
+
+            binding.bottomNavigation.visibility =
+                if (keypadHeight > screenHeight * 0.15) View.GONE else View.VISIBLE
+        }
     }
 
 //    override fun onBackPressed() {

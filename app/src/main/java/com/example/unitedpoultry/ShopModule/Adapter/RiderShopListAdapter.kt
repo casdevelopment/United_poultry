@@ -1,15 +1,12 @@
 package com.example.unitedpoultry.ShopModule.Adapter
 
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -19,7 +16,6 @@ import com.example.unitedpoultry.Collection.CollectionformActivity
 import com.example.unitedpoultry.NewSale.SaleFormActivity
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.ShopModule.ShopDetailsActivity
-import com.example.unitedpoultry.exchange_return.ExchangeOrReturnActivity
 import com.example.unitedpoultry.status_check.UserStatusChecker
 import com.example.unitedpoultry.status_check.viewmodel.UserStatusViewModel
 import com.example.unitedpoultry.util.AppConstants
@@ -28,7 +24,7 @@ import com.google.android.material.button.MaterialButton
 class RiderShopListAdapter(
     private var originalList: MutableList<ShopModel>,
     private val areaId: Int,
-    private val lifecycleOwner: LifecycleOwner,          // Add this
+    private val lifecycleOwner: LifecycleOwner,
     private val viewModel: UserStatusViewModel
 ) : RecyclerView.Adapter<RiderShopListAdapter.ViewHolder>() {
 

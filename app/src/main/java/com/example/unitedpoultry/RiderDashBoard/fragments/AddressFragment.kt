@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.unitedpoultry.AdminArea.model.AreaModel
 import com.example.unitedpoultry.RiderArea.Adapter.AreaAdapter
 import com.example.unitedpoultry.RiderArea.viewmodel.RiderAreaViewModel
@@ -30,6 +32,8 @@ class AddressFragment : Fragment() {
     private var lastPage = 1
     private var isLoading = false
 
+    private var currentQuery = ""
+    private var isSearching = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,44 +46,57 @@ class AddressFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
         setupRecyclerView()
-       // setupSearch()
-        setupNestedScrollPagination()
+        setupSearch()
     }
 
     override fun onResume() {
         super.onResume()
-        areaList.clear()
-        currentPage = 1
-        fetchAreasFromApi(currentPage)
+        resetAndFetch()
     }
-
 
     private fun setupRecyclerView() {
         adapter = AreaAdapter(mutableListOf())
-        binding.rvAreas.layoutManager = LinearLayoutManager(requireContext())
+        val layoutManager = LinearLayoutManager(requireContext())
+        binding.rvAreas.layoutManager = layoutManager
         binding.rvAreas.adapter = adapter
-        binding.rvAreas.isNestedScrollingEnabled = false
-    }
 
-//    private fun setupSearch() {
-//        binding.etSearch.addTextChangedListener { editable ->
-//            adapter.filter(editable.toString())
-//            showEmptyState(adapter.itemCount == 0)
-//        }
-//    }
+        // Pagination scroll listener
+        binding.rvAreas.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy <= 0 || isLoading || isSearching) return
 
-    private fun setupNestedScrollPagination() {
-        binding.nestedScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
-            val view = binding.rvAreas.getChildAt(binding.rvAreas.childCount - 1)
-            if (view != null) {
-                val diff = (view.bottom - (binding.nestedScrollView.height + scrollY))
-                if (diff <= 200 && !isLoading && currentPage < lastPage) {
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+
+                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount - 3
+                    && firstVisibleItemPosition >= 0
+                    && currentPage < lastPage
+                ) {
                     isLoading = true
                     fetchAreasFromApi(currentPage + 1)
                 }
             }
+        })
+    }
+
+    private fun setupSearch() {
+        binding.etSearch.addTextChangedListener { editable ->
+            currentQuery = editable.toString()
+            isSearching = currentQuery.isNotEmpty()
+
+            adapter.filter(currentQuery)
+            showEmptyState(adapter.itemCount == 0)
         }
+    }
+
+    private fun resetAndFetch() {
+        areaList.clear()
+        currentPage = 1
+        fetchAreasFromApi(currentPage)
     }
 
     private fun fetchAreasFromApi(page: Int) {
@@ -91,33 +108,26 @@ class AddressFragment : Fragment() {
                 Status.SUCCESS -> {
                     if (page == 1) AppUtil.stopLoader()
 
-                    val response: Response<BaseResponse<com.example.unitedpoultry.AdminArea.model.AreaDataResponseModel>>? =
-                        apiResponse.data
+                    val response = apiResponse.data
+                    val baseResponse = response?.body()
+                    val areas = baseResponse?.data?.areas
+                    val pagination = baseResponse?.data?.pagination
 
-                    if (response != null && response.isSuccessful) {
-                        val baseResponse = response.body()
-                        val areas = baseResponse?.data?.areas
-                        val pagination = baseResponse?.data?.pagination
+                    val totalRecords = pagination?.total_matching_record ?: 0
+                    binding.tvAreasCount.text = "$totalRecords areas"
+                    if (pagination != null) lastPage = pagination.last_page
 
-                        val totalRecords = pagination?.total_matching_record ?: 0
-                        binding.tvAreasCount.text = "$totalRecords areas"
-
-                        if (pagination != null) lastPage = pagination.last_page
-
-                        if (!areas.isNullOrEmpty()) {
-                            if (page == 1) areaList.clear()
-                            areaList.addAll(areas)
-                            adapter.updateList(areaList)
-                            showEmptyState(false)
-                        } else if (areaList.isEmpty()) {
-                            showEmptyState(true)
-                        }
-
-                        currentPage = page
+                    if (!areas.isNullOrEmpty()) {
+                        if (page == 1) areaList.clear()
+                        areaList.addAll(areas)
+                        adapter.updateList(areaList)
+                        adapter.filter(currentQuery)
+                        showEmptyState(adapter.itemCount == 0)
                     } else if (areaList.isEmpty()) {
                         showEmptyState(true)
                     }
 
+                    currentPage = page
                     isLoading = false
                 }
 
