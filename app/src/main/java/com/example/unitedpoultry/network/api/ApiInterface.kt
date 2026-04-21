@@ -128,7 +128,7 @@ interface ApiInterface {
     suspend fun addRider(
         @Part("name") name: RequestBody? = null,
         @Part("email") email: RequestBody? = null,
-//        @Part("username") username: RequestBody? = null,
+        @Part("username") username: RequestBody? = null,
         @Part("phone_number") phoneNumber: RequestBody? = null,
         @Part("cnic") cnic: RequestBody? = null,
         @Part("address") address: RequestBody? = null,
@@ -149,11 +149,11 @@ interface ApiInterface {
         @Path("id") riderId: Int,
         @Part("name") name: RequestBody? = null,
         @Part("email") email: RequestBody? = null,
-//        @Part("username") username: RequestBody? = null,
+        @Part("username") username: RequestBody? = null,
         @Part("phone_number") phoneNumber: RequestBody? = null,
         @Part("cnic") cnic: RequestBody? = null,
         @Part("address") address: RequestBody? = null,
-        @Part("password") password: RequestBody? = null,
+      //  @Part("password") password: RequestBody? = null,
         @Part("is_active") isActive: RequestBody? = null,
         @Part image: MultipartBody.Part? = null
     ): Response<BaseResponse<RiderModel>>

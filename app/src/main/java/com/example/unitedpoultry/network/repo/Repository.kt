@@ -126,7 +126,7 @@ class Repository(private val api: ApiInterface) {
     suspend fun addRider(
         name: RequestBody? = null,
         email: RequestBody? = null,
-//        username: RequestBody? = null,
+        username: RequestBody? = null,
         phoneNumber: RequestBody? = null,
         cnic: RequestBody? = null,
         address: RequestBody? = null,
@@ -134,7 +134,7 @@ class Repository(private val api: ApiInterface) {
         isActive: RequestBody? = null,
         image: MultipartBody.Part? = null
     ): Response<BaseResponse<Any>> {
-        return api.addRider(name, email,  phoneNumber, cnic, address, password,isActive, image)
+        return api.addRider(name, email, username, phoneNumber, cnic, address, password,isActive, image)
     }
 
 
@@ -154,15 +154,17 @@ class Repository(private val api: ApiInterface) {
         id: Int,
         name: RequestBody? = null,
         email: RequestBody? = null,
-//        username: RequestBody? = null,
+        username: RequestBody? = null,
         phoneNumber: RequestBody? = null,
         cnic: RequestBody? = null,
         address: RequestBody? = null,
-        password: RequestBody? = null,
+      //  password: RequestBody? = null,
         isActive: RequestBody? = null,
         image: MultipartBody.Part? = null
     ): Response<BaseResponse<RiderModel>> {
-        return api.editRider(id,name, email, phoneNumber, cnic, address, password,isActive, image)
+        return api.editRider(id,name, email,username, phoneNumber, cnic, address,
+            //password,
+            isActive, image)
     }
 
     suspend fun deleteRider(ShopId: Int): Response<BaseResponse<Any>> {

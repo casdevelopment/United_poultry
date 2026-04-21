@@ -163,16 +163,16 @@ class AdminAddNewRiderActivity : BaseActivity() {
         binding.etEmailError.visibility = View.GONE
         binding.etPhoneNumberError.visibility = View.GONE
         binding.etAddressError.visibility = View.GONE
-       // binding.etUserNameError.visibility = View.GONE
+        binding.etUserNameError.visibility = View.GONE
         binding.etPasswordError.visibility = View.GONE
         binding.etImageError.visibility = View.GONE
 
-//        if (selectedImageFile == null) {
-//            binding.etImageError.visibility = View.VISIBLE
-//            binding.etImageError.text = "Shop image required"
-//            valid = false
-//        }
-//
+        if (selectedImageFile == null) {
+            binding.etImageError.visibility = View.VISIBLE
+            binding.etImageError.text = "image required"
+            valid = false
+        }
+
 
         val Name = binding.etName.text.toString().trim()
         if (Name.isEmpty()) {
@@ -180,24 +180,24 @@ class AdminAddNewRiderActivity : BaseActivity() {
             binding.etNameError.text = "Name required"
             valid = false
         }
-//        else if (!Name.matches(Regex("^[a-zA-Z ]+$"))) {
-//            binding.etNameError.visibility = View.VISIBLE
-//            binding.etNameError.text = "Enter valid name"
-//            valid = false
-//        }
+        else if (!Name.matches(Regex("^[a-zA-Z ]+$"))) {
+            binding.etNameError.visibility = View.VISIBLE
+            binding.etNameError.text = "Enter valid name"
+            valid = false
+        }
 
-//        val cnic = binding.etCnic.text.toString().trim()
-//
-//        if (cnic.isEmpty()) {
-//            binding.etCnicError.visibility = View.VISIBLE
-//            binding.etCnicError.text = "Cnic required"
-//            valid = false
-//        } else if (!cnic.matches(Regex("^\\d{13}$"))){
-//            binding.etCnicError.visibility = View.VISIBLE
-//            binding.etCnicError.text = "Enter valid Cnic"
-//            valid = false
-//        }
-//
+        val cnic = binding.etCnic.text.toString().trim()
+
+        if (cnic.isEmpty()) {
+            binding.etCnicError.visibility = View.VISIBLE
+            binding.etCnicError.text = "Cnic required"
+            valid = false
+        } else if (!cnic.matches(Regex("^\\d{13}$"))){
+            binding.etCnicError.visibility = View.VISIBLE
+            binding.etCnicError.text = "Enter valid Cnic"
+            valid = false
+        }
+
         val email = binding.etEmail.text.toString().trim()
 
         if (email.isEmpty()) {
@@ -209,44 +209,47 @@ class AdminAddNewRiderActivity : BaseActivity() {
             binding.etEmailError.text = "Enter valid email address"
             valid = false
         }
-//
-//        val phone = binding.etPhoneNumber.text.toString().trim()
-//
-//        if (phone.isEmpty()) {
-//            binding.etPhoneNumberError.visibility = View.VISIBLE
-//            binding.etPhoneNumberError.text = "Phone number required"
-//            valid = false
-//        } else if (!phone.matches(Regex("^\\d{11}$"))){
-//            binding.etPhoneNumberError.visibility = View.VISIBLE
-//            binding.etPhoneNumberError.text = "Enter valid phone number"
-//            valid = false
-//        }
-//
-//        val address = binding.etAddress.text.toString().trim()
-//
-//        if (address.isEmpty()) {
-//            binding.etAddressError.visibility = View.VISIBLE
-//            binding.etAddressError.text = "Address required"
-//            valid = false
-//        }else if (!address.matches(Regex(".*[a-zA-Z].*"))) {
+
+        val phone = binding.etPhoneNumber.text.toString().trim()
+
+        if (phone.isEmpty()) {
+            binding.etPhoneNumberError.visibility = View.VISIBLE
+            binding.etPhoneNumberError.text = "Phone number required"
+            valid = false
+        } else if (!phone.matches(Regex("^\\d{11}$"))){
+            binding.etPhoneNumberError.visibility = View.VISIBLE
+            binding.etPhoneNumberError.text = "Enter valid phone number"
+            valid = false
+        }
+
+
+        val address = binding.etAddress.text.toString().trim()
+
+        if (address.isEmpty()) {
+            binding.etAddressError.visibility = View.VISIBLE
+            binding.etAddressError.text = "Address required"
+            valid = false
+        }
+//        else if (!address.matches(Regex(".*[a-zA-Z].*"))) {
 //            binding.etAddressError.visibility = View.VISIBLE
 //            binding.etAddressError.text = "Enter valid address"
 //            valid = false
 //        }
-//
-//        val username = binding.etUserName.text.toString().trim()
-//
-//        if (username.isEmpty()) {
-//            binding.etUserNameError.visibility = View.VISIBLE
-//            binding.etUserNameError.text = "User Name required"
-//            valid = false
-//        } else if (!username.matches(Regex(".*[a-zA-Z].*"))) {
-//            binding.etUserNameError.visibility = View.VISIBLE
-//            binding.etUserNameError.text = "Enter valid username"
-//            valid = false
-//        }
-//
-//
+
+        val username = binding.etUserName.text.toString().trim()
+
+        if (username.isEmpty()) {
+            binding.etUserNameError.visibility = View.VISIBLE
+            binding.etUserNameError.text = "User Name required"
+            valid = false
+        } else if (!username.matches(Regex(".*[a-zA-Z].*"))) {
+            binding.etUserNameError.visibility = View.VISIBLE
+            binding.etUserNameError.text = "Enter valid username"
+            valid = false
+        }
+
+
+
         val password = binding.etPassword.text.toString().trim()
 
         if (password.isEmpty()) {
@@ -270,7 +273,7 @@ class AdminAddNewRiderActivity : BaseActivity() {
 
         val name = binding.etName.text.toString().trim().toRequestBody()
         val email = binding.etEmail.text.toString().trim().toRequestBody()
-      //  val username = binding.etUserName.text.toString().trim().toRequestBody()
+        val username = binding.etUserName.text.toString().trim().toRequestBody()
         val phone_number = binding.etPhoneNumber.text.toString().trim().toRequestBody()
         val cnic = binding.etCnic.text.toString().trim().toRequestBody()
         val address = binding.etAddress.text.toString().trim().toRequestBody()
@@ -308,7 +311,7 @@ class AdminAddNewRiderActivity : BaseActivity() {
 //            is_active = isActive // ✅ backend expects Int
 //        )
 
-        viewModel.addRider(name,email,phone_number,cnic,address,password,active,imagePart).observe(this) { apiResponse ->
+        viewModel.addRider(name,email,username,phone_number,cnic,address,password,active,imagePart).observe(this) { apiResponse ->
 
             when (apiResponse.status) {
 

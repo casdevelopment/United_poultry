@@ -163,6 +163,8 @@
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
+
+
                         <EditText
                             android:id="@+id/etName"
                             android:hint="Enter full name"
@@ -214,6 +216,7 @@
                             android:ellipsize="end"
                             android:scrollHorizontally="true"
                             android:imeOptions="actionDone"
+                            android:inputType="number"
                             />
 
                         <TextView
@@ -252,6 +255,7 @@
                             android:ellipsize="end"
                             android:scrollHorizontally="true"
                             android:imeOptions="actionDone"
+                            android:inputType="number"
                             />
 
 
@@ -471,41 +475,41 @@
                     </LinearLayout>
 
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:fontFamily="@font/poppins"-->
-<!--                        android:text="Username"-->
-<!--                        android:textColor="@color/black"-->
-<!--                        android:textSize="15sp"-->
-<!--                        android:textStyle="bold" />-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Username"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
-<!--                    <EditText-->
-<!--                        android:id="@+id/etUserName"-->
-<!--                        android:hint="Enter Username"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:background="@drawable/edit_text_bg_black"-->
-<!--                        android:textColor="@color/black60"-->
-<!--                        android:textSize="13sp"-->
-<!--                        android:textStyle="bold"-->
-<!--                        android:layout_marginTop="10dp"-->
-<!--                        android:layout_marginBottom="10dp"-->
-<!--                        android:singleLine="true"-->
-<!--                        android:ellipsize="end"-->
-<!--                        android:scrollHorizontally="true"-->
-<!--                        android:imeOptions="actionDone"-->
-<!--                        />-->
+                    <EditText
+                        android:id="@+id/etUserName"
+                        android:hint="Enter Username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_bg_black"
+                        android:textColor="@color/black60"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:scrollHorizontally="true"
+                        android:imeOptions="actionDone"
+                        />
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/etUserNameError"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:textColor="@android:color/holo_red_dark"-->
-<!--                        android:textSize="11sp"-->
-<!--                        android:visibility="gone"-->
-<!--                        android:layout_marginBottom="7dp"-->
-<!--                        android:layout_marginStart="10dp"/>-->
+                    <TextView
+                        android:id="@+id/etUserNameError"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:textSize="11sp"
+                        android:visibility="gone"
+                        android:layout_marginBottom="7dp"
+                        android:layout_marginStart="10dp"/>
 
 
                     <TextView
@@ -579,7 +583,7 @@
                         android:textColor="@android:color/holo_red_dark"
                         android:textSize="11sp"
                         android:visibility="gone"
-                        android:layout_marginBottom="7dp"
+                        android:layout_marginBottom="15dp"
                         android:layout_marginStart="10dp"/>
 
                 </LinearLayout>

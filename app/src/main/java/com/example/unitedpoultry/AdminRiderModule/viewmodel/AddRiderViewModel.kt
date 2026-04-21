@@ -16,7 +16,7 @@ class AddRiderViewModel(private val repository: Repository) : ViewModel() {
     fun addRider(
         name: RequestBody? = null,
         email: RequestBody? = null,
-//        username: RequestBody? = null,
+        username: RequestBody? = null,
         phoneNumber: RequestBody? = null,
         cnic: RequestBody? = null,
         address: RequestBody? = null,
@@ -29,7 +29,7 @@ class AddRiderViewModel(private val repository: Repository) : ViewModel() {
             val response = repository.addRider(
                 name,
                 email,
-             //   username,
+                username,
                 phoneNumber,
                 cnic,
                 address,
