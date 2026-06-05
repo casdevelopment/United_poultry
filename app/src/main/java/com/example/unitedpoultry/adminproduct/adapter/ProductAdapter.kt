@@ -20,31 +20,54 @@ class ProductAdapter(
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
+
         val product = products[position]
+
         holder.binding.tvProductName.text = product.name
-        //holder.binding.tvPacking.text = "${product.packing} / ${product.eggs_count} eggs"
 
-        holder.binding.etQuantity.setText(quantityMap[product.id]?.toString())
+        holder.binding.etQuantity.setText(
+            quantityMap[product.id]?.toString() ?: ""
+        )
 
-//        holder.binding.etQuantity.addTextChangedListener {
-//            val qty = it.toString().toIntOrNull() ?: 0
-//            quantityMap[product.id] = qty
-//        }
         holder.binding.etQuantity.addTextChangedListener {
 
-            val qty = it.toString().toIntOrNull() ?: 0
+            val qty = it.toString().toIntOrNull()
 
-            val product = products[position]
-
-            if (product.name.contains("tray", true) && qty > 11) {
-                holder.binding.etQuantity.setText("11")
-                holder.binding.etQuantity.setSelection(holder.binding.etQuantity.text.length)
-                quantityMap[product.id] = 11
+            if (qty == null || qty <= 0) {
+                quantityMap.remove(product.id)
             } else {
                 quantityMap[product.id] = qty
             }
         }
     }
+
+
+//    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
+//        val product = products[position]
+//        holder.binding.tvProductName.text = product.name
+//        //holder.binding.tvPacking.text = "${product.packing} / ${product.eggs_count} eggs"
+//
+//        holder.binding.etQuantity.setText(quantityMap[product.id]?.toString())
+//
+////        holder.binding.etQuantity.addTextChangedListener {
+////            val qty = it.toString().toIntOrNull() ?: 0
+////            quantityMap[product.id] = qty
+////        }
+//        holder.binding.etQuantity.addTextChangedListener {
+//
+//            val qty = it.toString().toIntOrNull() ?: 0
+//
+//            val product = products[position]
+//
+//            if (product.name.contains("tray", true) && qty > 11) {
+//                holder.binding.etQuantity.setText("11")
+//                holder.binding.etQuantity.setSelection(holder.binding.etQuantity.text.length)
+//                quantityMap[product.id] = 11
+//            } else {
+//                quantityMap[product.id] = qty
+//            }
+//        }
+//    }
 
     override fun getItemCount(): Int = products.size
 }

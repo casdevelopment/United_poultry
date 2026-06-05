@@ -225,6 +225,9 @@ class SaleFormActivity : BaseActivity() {
         }
     }
 
+
+
+
     private fun setupQuantityWatchers() {
 
         binding.etTrayQuantity.addTextChangedListener(object : SimpleTextWatcher() {
