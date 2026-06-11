@@ -131,27 +131,27 @@
 
                     </LinearLayout>
 
-                    <FrameLayout
-                        android:id="@+id/dataLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp">
+<!--                    <FrameLayout-->
+<!--                        android:id="@+id/dataLayout"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="200dp">-->
 
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/todatRateRv"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:clipToPadding="false"
                             android:paddingBottom="24dp"
                             android:overScrollMode="never"/>
 
-                        <!-- Fade overlay -->
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="64dp"
-                            android:layout_gravity="bottom"
-                            android:background="@drawable/bottom_fade"/>
-                    </FrameLayout>
+<!--                        &lt;!&ndash; Fade overlay &ndash;&gt;-->
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="64dp"-->
+<!--                            android:layout_gravity="bottom"-->
+<!--                            android:background="@drawable/bottom_fade"/>-->
+<!--                    </FrameLayout>-->
 
                     <LinearLayout
                         android:id="@+id/layoutEmpty"
@@ -244,97 +244,97 @@
             </androidx.cardview.widget.CardView>
 
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp"
-                android:padding="16dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp">
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:cardCornerRadius="12dp"-->
+<!--                app:cardElevation="6dp"-->
+<!--                android:padding="16dp"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginBottom="10dp">-->
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="12dp"
-                    android:gravity="center_vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:padding="12dp"-->
+<!--                    android:gravity="center_vertical">-->
 
 
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:text="Rate History"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="5dp"/>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:fontFamily="@font/poppins"-->
+<!--                        android:text="Rate History"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="18sp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:layout_marginTop="5dp"/>-->
 
 
-                    <FrameLayout
-                        android:id="@+id/historyLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp">
+<!--                    <FrameLayout-->
+<!--                        android:id="@+id/historyLayout"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="200dp">-->
 
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/historyRv"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:clipToPadding="false"
-                            android:paddingBottom="24dp"
-                            android:overScrollMode="never"/>
+<!--                        <androidx.recyclerview.widget.RecyclerView-->
+<!--                            android:id="@+id/historyRv"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:clipToPadding="false"-->
+<!--                            android:paddingBottom="24dp"-->
+<!--                            android:overScrollMode="never"/>-->
 
-                        <!-- Fade overlay -->
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="64dp"
-                            android:layout_gravity="bottom"
-                            android:background="@drawable/bottom_fade"/>
-                    </FrameLayout>
+<!--                        &lt;!&ndash; Fade overlay &ndash;&gt;-->
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="64dp"-->
+<!--                            android:layout_gravity="bottom"-->
+<!--                            android:background="@drawable/bottom_fade"/>-->
+<!--                    </FrameLayout>-->
 
-                    <LinearLayout
-                        android:id="@+id/layoutEmptyHistory"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:visibility="gone"
-                        android:padding="10dp">
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/layoutEmptyHistory"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="200dp"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:gravity="center"-->
+<!--                        android:visibility="gone"-->
+<!--                        android:padding="10dp">-->
 
-                        <ImageView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:src="@drawable/nodata"
-                            app:tint="@color/black44"/>
+<!--                        <ImageView-->
+<!--                            android:layout_width="60dp"-->
+<!--                            android:layout_height="60dp"-->
+<!--                            android:src="@drawable/nodata"-->
+<!--                            app:tint="@color/black44"/>-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="No Rate History Found"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:layout_marginTop="5dp"/>
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="No Rate History Found"-->
+<!--                            android:textSize="14sp"-->
+<!--                            android:textStyle="bold"-->
+<!--                            android:textColor="@color/black"-->
+<!--                            android:layout_marginTop="5dp"/>-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Rates will appear once they are added"
-                            android:textSize="12sp"
-                            android:textColor="@color/black60"
-                            android:layout_marginTop="6dp"/>
-                    </LinearLayout>
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Rates will appear once they are added"-->
+<!--                            android:textSize="12sp"-->
+<!--                            android:textColor="@color/black60"-->
+<!--                            android:layout_marginTop="6dp"/>-->
+<!--                    </LinearLayout>-->
 
 
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+<!--                </LinearLayout>-->
+<!--            </androidx.cardview.widget.CardView>-->
 
 
 

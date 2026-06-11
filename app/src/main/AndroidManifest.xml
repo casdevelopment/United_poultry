@@ -20,16 +20,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UnitedPoultry"
         tools:targetApi="31">
-
+        <activity
+            android:name=".AdminReportModule.ProductRateHistory.ProductRateHistoryActivity"
+            android:exported="false" />
         <activity
             android:name=".AdminArea.AssignAreasAndShopActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
-
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".AdminExpense.AdminExpenseActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".History.FullScreenImageActivity"
             android:exported="false" />
@@ -46,21 +47,17 @@
         <activity
             android:name=".AdminSettingModule.AdminRateHistoryActivity"
             android:exported="false" />
-
         <activity
             android:name=".waste_return.RiderWasteProductActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".waste_return.RiderProductReturnActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".AdminSettingModule.AdminCatagoryActivity"
             android:exported="false" />
-
         <activity
             android:name=".exchange_return.ReturnSucessActivity"
             android:exported="false" />
@@ -213,8 +210,7 @@
         <activity
             android:name=".RiderDashBoard.RiderDashBoardActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize"/>
-
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Authentications.AuthenticationActivity"
             android:exported="true"

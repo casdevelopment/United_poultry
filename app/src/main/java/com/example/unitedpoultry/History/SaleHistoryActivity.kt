@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.History.Adapter.SaleHistoryAdapter
+import com.example.unitedpoultry.History.Adapter.SaleHistoryDamageAdapter
 import com.example.unitedpoultry.databinding.ActivitySaleHistoryBinding
 import com.example.unitedpoultry.History.model.SaleHistory
 import com.example.unitedpoultry.History.viewmodel.SaleHistoryDetailViewModel
@@ -30,6 +31,14 @@ class SaleHistoryActivity : BaseActivity() {
 
     private lateinit var itemsAdapter: SaleHistoryAdapter
 
+    private lateinit var expireItemsAdapter: SaleHistoryDamageAdapter
+
+    private lateinit var returnItemsAdapter: SaleHistoryDamageAdapter
+
+    var ReturnD = "return"
+
+    var ExpireD = "expire"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -44,6 +53,8 @@ class SaleHistoryActivity : BaseActivity() {
         id = intent.getIntExtra("ID", 0)
 
         setupRecycler()
+
+        setupDamageRecycler()
 
         onclick()
 
@@ -79,6 +90,24 @@ class SaleHistoryActivity : BaseActivity() {
         binding.recyclerItems.apply {
             layoutManager = LinearLayoutManager(this@SaleHistoryActivity)
             adapter = itemsAdapter
+        }
+
+    }
+
+
+    private fun setupDamageRecycler() {
+        expireItemsAdapter = SaleHistoryDamageAdapter(emptyList(), ExpireD)
+
+        binding.recyclerExpireItems.apply {
+            layoutManager = LinearLayoutManager(this@SaleHistoryActivity)
+            adapter = expireItemsAdapter
+        }
+
+        returnItemsAdapter = SaleHistoryDamageAdapter(emptyList(), ReturnD)
+
+        binding.recyclerReturnItems.apply {
+            layoutManager = LinearLayoutManager(this@SaleHistoryActivity)
+            adapter = returnItemsAdapter
         }
     }
 
@@ -129,6 +158,34 @@ class SaleHistoryActivity : BaseActivity() {
                                     binding.recyclerItems.visibility = View.GONE
                                 }
 
+
+
+                                val expireItems = data.damage_eggs.expire
+
+                                if (!expireItems.isNullOrEmpty()) {
+                                    binding.recyclerExpireItems.visibility = View.VISIBLE
+                                    binding.tvExpireTitle.visibility = View.VISIBLE
+                                    expireItemsAdapter.updateList(expireItems)
+                                } else {
+                                    binding.recyclerExpireItems.visibility = View.GONE
+                                    binding.tvExpireTitle.visibility = View.GONE
+                                }
+
+
+                                val returnItems = data.damage_eggs.`return`
+
+                                if (!returnItems.isNullOrEmpty()) {
+                                    binding.recyclerReturnItems.visibility = View.VISIBLE
+                                    binding.tvReturnTitle.visibility = View.VISIBLE
+                                    returnItemsAdapter.updateList(returnItems)
+                                } else {
+                                    binding.recyclerReturnItems.visibility = View.GONE
+                                    binding.tvReturnTitle.visibility = View.GONE
+                                }
+
+                                val liquid = data.damage_eggs.liquid.kg
+
+                                binding.tvLiquid.text = "$liquid kgs"
 
 
                                 val imageUrl = data.payment_record_url

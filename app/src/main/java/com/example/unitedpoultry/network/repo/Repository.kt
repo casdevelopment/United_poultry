@@ -23,7 +23,6 @@ import com.example.unitedpoultry.History.model.ExpenseItem
 import com.example.unitedpoultry.History.model.HistoryData
 import com.example.unitedpoultry.History.model.SaleHistory
 
-import com.example.unitedpoultry.NewSale.model.PickedItemsResponse
 import com.example.unitedpoultry.NewSale.model.SaleResponse
 import com.example.unitedpoultry.Profile.model.ChangePasswordRequestModel
 import com.example.unitedpoultry.exchange_return.model.ReturnOrExchangeRequest

@@ -76,9 +76,16 @@ data class SaleItems(
 
 
 data class DamageEggs(
-    val expire: Map<String, Int>,
-    val `return`: Map<String, Int>,
+    val expire: List<DamageItems>,
+    val `return`: List<DamageItems>,
     val liquid: Liquid
+)
+
+data class DamageItems(
+    val product_id: Int,
+    val product_name: String,
+    val qty: Int,
+    val total_eggs: Int,
 )
 
 

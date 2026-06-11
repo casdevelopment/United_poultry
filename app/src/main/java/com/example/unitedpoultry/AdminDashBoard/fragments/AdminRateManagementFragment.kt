@@ -42,13 +42,16 @@ class AdminRateManagementFragment : Fragment(), TodayRateAdapter.OnPriceChangeLi
     private lateinit var binding: FragmentAdminRateManagementBinding
 
     private val viewModel: AdminSettingViewModel by viewModel()
-    private var historyCurrentPage = 1
-    private var historyLastPage = 1
-    private lateinit var historyListData: List<HistoryData>
+//    private var historyCurrentPage = 1
+//    private var historyLastPage = 1
+//    private lateinit var historyListData: List<HistoryData>
     private var toDayRateListData = mutableListOf<TodayRateItem>()
-    private var ratesList = mutableListOf<RatesData>()
-    private lateinit var rateHistoryAdapter: RateHistoryAdapter
+//    private var ratesList = mutableListOf<RatesData>()
+//    private lateinit var rateHistoryAdapter: RateHistoryAdapter
     private lateinit var todayRateAdapter: TodayRateAdapter
+
+
+    private val changedRatesMap = mutableMapOf<Int, Int>()
 
 
 
@@ -71,7 +74,7 @@ class AdminRateManagementFragment : Fragment(), TodayRateAdapter.OnPriceChangeLi
     override fun onResume() {
         super.onResume()
         getTodayRate()
-        getRateHistory()
+       // getRateHistory()
 
     }
 
@@ -109,24 +112,22 @@ class AdminRateManagementFragment : Fragment(), TodayRateAdapter.OnPriceChangeLi
                         toDayRateListData = baseResponse?.data?.rates?.toMutableList() ?: mutableListOf()
 
                         if (toDayRateListData.isNotEmpty()) {
-                            binding.dataLayout.visibility = View.VISIBLE
+                            binding.todatRateRv.visibility = View.VISIBLE
                             binding.layoutEmpty.visibility = View.GONE
                             setupTodayRateAdapter()
                         } else {
-                            // ✅ Show "No Data" layout
-                            binding.dataLayout.visibility = View.GONE
+                            binding.todatRateRv.visibility = View.GONE
                             binding.layoutEmpty.visibility = View.VISIBLE
                         }
                     } else {
-                        // API returned empty
-                        binding.dataLayout.visibility = View.GONE
+                        binding.todatRateRv.visibility = View.GONE
                         binding.layoutEmpty.visibility = View.VISIBLE
                     }
                 }
 
                 Status.ERROR -> {
                     AppUtil.stopLoader()
-                    binding.dataLayout.visibility = View.GONE
+                    binding.todatRateRv.visibility = View.GONE
                     binding.layoutEmpty.visibility = View.VISIBLE
                     showToast(serverResponse.message.toString())
                 }
@@ -139,111 +140,111 @@ class AdminRateManagementFragment : Fragment(), TodayRateAdapter.OnPriceChangeLi
     }
 
 
-    private fun getRateHistory() {
-        viewModel.rateHistory(historyCurrentPage).observe(viewLifecycleOwner) { serverResponse ->
-            when (serverResponse.status) {
-                Status.SUCCESS -> {
-                    AppUtil.stopLoader()
-
-                    if (serverResponse.data != null && serverResponse.data.isSuccessful) {
-                        val baseResponse = serverResponse.data.body()
-                        historyListData = baseResponse?.data?.history ?: emptyList()
-                        val pagination = baseResponse?.data?.pagination
-                        historyLastPage = pagination?.last_page ?: 1
-
-                        ratesList.clear() // clear previous data
-
-                        if (historyListData.isNotEmpty()) {
-                            for (ratesItem in historyListData) {
-                                val date = ratesItem.date
-                                for (item in ratesItem.rates ?: emptyList()) {
-                                    ratesList.add(
-                                        RatesData(
-                                            id = item.id,
-                                            product_id = item.product_id,
-                                            product_name = item.product_name,
-                                            packing = item.packing,
-                                            eggs_count = item.eggs_count,
-                                            price = item.price,
-                                            date = date
-                                        )
-                                    )
-                                }
-                            }
-
-                            if (ratesList.isNotEmpty()) {
-                                setupHistoryAdapter()
-                                binding.layoutEmptyHistory.visibility = View.GONE
-                                binding.historyLayout.visibility = View.VISIBLE
-                            } else {
-                                // No rate items
-                                binding.layoutEmptyHistory.visibility = View.VISIBLE
-                                binding.historyLayout.visibility = View.GONE
-                            }
-
-                        } else {
-                            // No history data
-                            binding.layoutEmptyHistory.visibility = View.VISIBLE
-                            binding.historyLayout.visibility = View.GONE
-                        }
-                    }
-                }
-
-                Status.ERROR -> {
-                    AppUtil.stopLoader()
-                    showToast(serverResponse.message.toString())
-                    binding.layoutEmptyHistory.visibility = View.VISIBLE
-                    binding.historyLayout.visibility = View.GONE
-                }
-
-                Status.LOADING -> AppUtil.startLoader(requireContext())
-            }
-        }
-    }
-
-
-    private fun setupHistoryAdapter() {
-        rateHistoryAdapter = RateHistoryAdapter(ratesList)
-        binding.historyRv.apply {
-            this.layoutManager =
-                LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            this.adapter = rateHistoryAdapter
-            // Add scroll listener to detect when last item is reached
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-
-                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                    val totalItemCount = layoutManager.itemCount
-                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-                    val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-
-                    // Check if we've reached the last item
-                    if (lastVisibleItemPosition >= totalItemCount - 1) {
-                        // Load more data
-                        if (historyCurrentPage < historyLastPage) {
-                            loadMoreHistoryData()
-                        }
-
-                    }
-
-                    // Optional: Log for debugging
-                    Log.v(
-                        "ScrollInfo",
-                        "First: $firstVisibleItemPosition, Last: $lastVisibleItemPosition, Total: $totalItemCount"
-                    )
-                }
-            })
-        }
-
-    }
+//    private fun getRateHistory() {
+//        viewModel.rateHistory(historyCurrentPage).observe(viewLifecycleOwner) { serverResponse ->
+//            when (serverResponse.status) {
+//                Status.SUCCESS -> {
+//                    AppUtil.stopLoader()
+//
+//                    if (serverResponse.data != null && serverResponse.data.isSuccessful) {
+//                        val baseResponse = serverResponse.data.body()
+//                        historyListData = baseResponse?.data?.history ?: emptyList()
+//                        val pagination = baseResponse?.data?.pagination
+//                        historyLastPage = pagination?.last_page ?: 1
+//
+//                        ratesList.clear() // clear previous data
+//
+//                        if (historyListData.isNotEmpty()) {
+//                            for (ratesItem in historyListData) {
+//                                val date = ratesItem.date
+//                                for (item in ratesItem.rates ?: emptyList()) {
+//                                    ratesList.add(
+//                                        RatesData(
+//                                            id = item.id,
+//                                            product_id = item.product_id,
+//                                            product_name = item.product_name,
+//                                            packing = item.packing,
+//                                            eggs_count = item.eggs_count,
+//                                            price = item.price,
+//                                            date = date
+//                                        )
+//                                    )
+//                                }
+//                            }
+//
+//                            if (ratesList.isNotEmpty()) {
+//                                setupHistoryAdapter()
+//                                binding.layoutEmptyHistory.visibility = View.GONE
+//                                binding.historyLayout.visibility = View.VISIBLE
+//                            } else {
+//                                // No rate items
+//                                binding.layoutEmptyHistory.visibility = View.VISIBLE
+//                                binding.historyLayout.visibility = View.GONE
+//                            }
+//
+//                        } else {
+//                            // No history data
+//                            binding.layoutEmptyHistory.visibility = View.VISIBLE
+//                            binding.historyLayout.visibility = View.GONE
+//                        }
+//                    }
+//                }
+//
+//                Status.ERROR -> {
+//                    AppUtil.stopLoader()
+//                    showToast(serverResponse.message.toString())
+//                    binding.layoutEmptyHistory.visibility = View.VISIBLE
+//                    binding.historyLayout.visibility = View.GONE
+//                }
+//
+//                Status.LOADING -> AppUtil.startLoader(requireContext())
+//            }
+//        }
+//    }
 
 
-    private fun loadMoreHistoryData() {
-        // Increment page and fetch more data
-        historyCurrentPage++
-        getRateHistory()
-    }
+//    private fun setupHistoryAdapter() {
+//        rateHistoryAdapter = RateHistoryAdapter(ratesList)
+//        binding.historyRv.apply {
+//            this.layoutManager =
+//                LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+//            this.adapter = rateHistoryAdapter
+//            // Add scroll listener to detect when last item is reached
+//            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                    super.onScrolled(recyclerView, dx, dy)
+//
+//                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+//                    val totalItemCount = layoutManager.itemCount
+//                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+//                    val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+//
+//                    // Check if we've reached the last item
+//                    if (lastVisibleItemPosition >= totalItemCount - 1) {
+//                        // Load more data
+//                        if (historyCurrentPage < historyLastPage) {
+//                            loadMoreHistoryData()
+//                        }
+//
+//                    }
+//
+//                    // Optional: Log for debugging
+//                    Log.v(
+//                        "ScrollInfo",
+//                        "First: $firstVisibleItemPosition, Last: $lastVisibleItemPosition, Total: $totalItemCount"
+//                    )
+//                }
+//            })
+//        }
+//
+//    }
+
+
+//    private fun loadMoreHistoryData() {
+//        // Increment page and fetch more data
+//        historyCurrentPage++
+//        getRateHistory()
+//    }
 
     private fun setupTodayRateAdapter() {
 
@@ -258,46 +259,82 @@ class AdminRateManagementFragment : Fragment(), TodayRateAdapter.OnPriceChangeLi
 
     }
 
+//    private fun updateProductRate() {
+//        var updateRateModel= UpdateRateModel()
+//        var updateRateItem=mutableListOf<UpdateRateItem>()
+//        // updateRateModel.date=binding.rateDate.text.toString()
+//        if (toDayRateListData.isNotEmpty()) {
+//            for (ratesListItem in toDayRateListData) {
+//                if(ratesListItem.price!=0){
+//                    updateRateItem.add(UpdateRateItem(ratesListItem.product_id,ratesListItem.price))
+//                }
+//
+//                // Log.v("updateProductRate","product id: ${ratesListItem.product_id}"+ "product Name: ${ratesListItem.product_name}"+"-- price: ${ratesListItem.price}")
+//            }
+//
+//            val todayDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Calendar.getInstance().time)
+//            //Log.v("tomorrowDate","tomorrow "+tomorrowDate)
+//            updateRateModel.date=todayDate
+//            //  updateRateModel.date=tomorrowDate
+//            updateRateModel.rates=updateRateItem
+//            updateProductRateApi(updateRateModel)
+//            Log.v("updateProductRate","updateRateItem size ${updateRateItem.size}")
+//            Log.v("updateProductRate","updateRateModel .rates size ${updateRateModel.rates?.size}")
+//            //  Log.v("updateProductRate","product id: ${ratesListItem.product_id}"+ "product Name: ${ratesListItem.price}")
+//            val rates= updateRateModel.rates
+//            if (rates != null) {
+//                for (ratesListItem in rates) {
+//                    Log.v("updateProductRate","product id: ${ratesListItem.product_id}"+ "product Name: ${ratesListItem.price}")
+//                }
+//            }
+//
+//        }
+//
+//
+//    }
+
+
     private fun updateProductRate() {
-        var updateRateModel= UpdateRateModel()
-        var updateRateItem=mutableListOf<UpdateRateItem>()
-        // updateRateModel.date=binding.rateDate.text.toString()
-        if (toDayRateListData.isNotEmpty()) {
-            for (ratesListItem in toDayRateListData) {
-                if(ratesListItem.price!=0){
-                    updateRateItem.add(UpdateRateItem(ratesListItem.product_id,ratesListItem.price))
-                }
 
-                // Log.v("updateProductRate","product id: ${ratesListItem.product_id}"+ "product Name: ${ratesListItem.product_name}"+"-- price: ${ratesListItem.price}")
-            }
-
-            val tomorrowDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Calendar.getInstance().apply { add(Calendar.DATE, 1) }.time)
-            Log.v("tomorrowDate","tomorrow "+tomorrowDate)
-            updateRateModel.date=tomorrowDate
-            //  updateRateModel.date=tomorrowDate
-            updateRateModel.rates=updateRateItem
-            updateProductRateApi(updateRateModel)
-            Log.v("updateProductRate","updateRateItem size ${updateRateItem.size}")
-            Log.v("updateProductRate","updateRateModel .rates size ${updateRateModel.rates?.size}")
-            //  Log.v("updateProductRate","product id: ${ratesListItem.product_id}"+ "product Name: ${ratesListItem.price}")
-            val rates= updateRateModel.rates
-            if (rates != null) {
-                for (ratesListItem in rates) {
-                    Log.v("updateProductRate","product id: ${ratesListItem.product_id}"+ "product Name: ${ratesListItem.price}")
-                }
-            }
-
+        if (changedRatesMap.isEmpty()) {
+            Toast.makeText(requireContext(), "No changes to update", Toast.LENGTH_SHORT).show()
+            return
         }
 
+        val updateRateItem = mutableListOf<UpdateRateItem>()
 
+        for ((productId, price) in changedRatesMap) {
+            updateRateItem.add(
+                UpdateRateItem(
+                    product_id = productId,
+                    price = price
+                )
+            )
+        }
+
+        val todayDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            .format(Calendar.getInstance().time)
+
+        val updateRateModel = UpdateRateModel().apply {
+            date = todayDate
+            rates = updateRateItem
+        }
+
+        Log.v("UPDATE_API", "Sending ${updateRateItem.size} changed items")
+
+        updateProductRateApi(updateRateModel)
     }
 
-    override fun onPriceChanged(
-        position: Int,
-        newPrice: String
-    ) {
-        toDayRateListData[position].price=newPrice.toInt()
-        Log.v("updateProductRate", "newPrice : ${toDayRateListData[position].price}")
+
+
+
+
+    override fun onPriceChanged(productId: Int, newPrice: String) {
+        val priceInt = newPrice.toIntOrNull() ?: return
+
+        changedRatesMap[productId] = priceInt
+
+        Log.v("RATE_CHANGE", "Product: $productId -> $priceInt")
     }
 //    private fun updateProductRateApi(updateRateModel: UpdateRateModel) {
 //        viewModel.updateRate(updateRateModel).observe(this@AdminRateManagmentActivity){serverResponse ->
@@ -325,12 +362,12 @@ class AdminRateManagementFragment : Fragment(), TodayRateAdapter.OnPriceChangeLi
 
                     if (retrofitResponse != null) {
                         if (retrofitResponse.isSuccessful) {
-                            // ✅ 2xx response
+
                             val baseResponse = retrofitResponse.body()
                             val message = baseResponse?.message ?: "Operation successful"
                             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                         } else {
-                            // ❗ HTTP error (401, 422, 500, etc.)
+
                             val errorMessage = try {
                                 val errorBody = retrofitResponse.errorBody()?.string()
                                 if (!errorBody.isNullOrEmpty()) {

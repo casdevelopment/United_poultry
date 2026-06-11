@@ -24,7 +24,6 @@ import com.example.unitedpoultry.NewSale.Adapter.RiderProductAdapter
 import com.example.unitedpoultry.NewSale.model.Damage
 import com.example.unitedpoultry.NewSale.model.DamageEggsRequest
 import com.example.unitedpoultry.NewSale.model.LiquidItem
-import com.example.unitedpoultry.NewSale.model.PickedItemsResponse
 import com.example.unitedpoultry.NewSale.model.QtyRequest
 import com.example.unitedpoultry.NewSale.model.RiderProductUI
 import com.example.unitedpoultry.NewSale.viewmodel.GetRiderProductViewModel
@@ -90,7 +89,7 @@ class SaleFormActivity : BaseActivity() {
     private lateinit var expireAdapter: NewSaleAdapter
     private lateinit var returnAdapter: NewSaleAdapter
 
-    private var liquidKg: Int = 0
+    private var liquidKg: Double = 0.0
 
 
     private var selectedImageFile: File? = null
@@ -560,13 +559,9 @@ class SaleFormActivity : BaseActivity() {
     }
 
 
+    private fun buildRequest(): Damage {
 
-
-
-
-    private fun buildRequest(): DamageEggsRequest {
-
-        liquidKg = binding.etLiquidKg.text.toString().toIntOrNull() ?: 0
+        liquidKg = binding.etLiquidKg.text.toString().toDoubleOrNull() ?: 0.0
 
         val expire = expireQuantityMap
             .filter { it.value > 0 }
@@ -586,12 +581,10 @@ class SaleFormActivity : BaseActivity() {
                 )
             }
 
-        return DamageEggsRequest(
-            damage_eggs = Damage(
-                expire = expire,
-                returnData = returnList,
-                liquid = LiquidItem(liquidKg)
-            )
+        return Damage(
+            expire = expire,
+            returnData = returnList,
+            liquid = LiquidItem(liquidKg)
         )
     }
 

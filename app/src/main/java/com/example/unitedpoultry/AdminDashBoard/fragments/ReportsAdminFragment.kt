@@ -6,12 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.unitedpoultry.AdminReportModule.AreaReport.AdminAreaReportActivity
-import com.example.unitedpoultry.AdminReportModule.CollectionReport.AdminCollectionReportActivity
-import com.example.unitedpoultry.AdminReportModule.DiscountReport.AdminDiscountReportActivity
-import com.example.unitedpoultry.AdminReportModule.ReceivablesReport.AdminReceivableReportActivity
-import com.example.unitedpoultry.AdminReportModule.RiderReport.AdminRiderReportActivity
-import com.example.unitedpoultry.AdminReportModule.SaleReport.AdminSalesReportActivity
+import com.example.unitedpoultry.AdminSettingModule.AdminRateHistoryActivity
 
 import com.example.unitedpoultry.databinding.FragmentReportsAdminBinding
 
@@ -33,10 +28,10 @@ class ReportsAdminFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        binding.cardCollection.setOnClickListener {
-//            val intent = Intent(requireContext(), AdminCollectionReportActivity::class.java)
-//            startActivity(intent)
-//        }
+        binding.cardRateHistory.setOnClickListener {
+            val intent = Intent(requireContext(), AdminRateHistoryActivity::class.java)
+            startActivity(intent)
+        }
 //
 //        binding.cardReceivables.setOnClickListener {
 //            val intent = Intent(requireContext(), AdminRiderReportActivity::class.java)
