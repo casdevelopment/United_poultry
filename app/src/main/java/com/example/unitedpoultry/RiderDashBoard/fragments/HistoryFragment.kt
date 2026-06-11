@@ -9,11 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.unitedpoultry.History.Adapter.HistoryAdapter
+import com.example.unitedpoultry.History.model.ProductStatus
 import com.example.unitedpoultry.History.model.TransactionItem
 import com.example.unitedpoultry.History.viewmodel.HistoryViewModel
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.databinding.FragmentHistoryBinding
 import com.example.unitedpoultry.network.Status
+import com.example.unitedpoultry.rider_home.adapter.RiderHomeStatsAdapter
+import com.example.unitedpoultry.rider_home.model.PickedTodayProduct
 import com.example.unitedpoultry.util.AppUtil
 import com.example.unitedpoultry.util.showToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -34,6 +37,10 @@ class HistoryFragment : Fragment() {
     private val transactionsList = mutableListOf<TransactionItem>()
     private lateinit var adapter: HistoryAdapter
 
+
+    private lateinit var expireAdapter: RiderHomeStatsAdapter
+    private lateinit var returnAdapter: RiderHomeStatsAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,6 +53,7 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
+        setupDamageEggsRecyclerViews()
         setupFilters()
         setupTypeFilters()
 
@@ -74,6 +82,40 @@ class HistoryFragment : Fragment() {
                 }
             })
         }
+    }
+
+    private fun setupDamageEggsRecyclerViews() {
+
+        expireAdapter = RiderHomeStatsAdapter()
+
+        binding.rvExpire.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            adapter = expireAdapter
+            setHasFixedSize(true)
+            isNestedScrollingEnabled = false
+            overScrollMode = View.OVER_SCROLL_NEVER
+        }
+
+
+
+        returnAdapter = RiderHomeStatsAdapter()
+
+        binding.rvReturn.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            adapter = returnAdapter
+            setHasFixedSize(true)
+            isNestedScrollingEnabled = false
+            overScrollMode = View.OVER_SCROLL_NEVER
+        }
+
     }
 
     private fun setupFilters() {
@@ -156,40 +198,6 @@ class HistoryFragment : Fragment() {
                         lastPage = body?.pagination?.last_page ?: 1
 
 
-//                        body?.transactions?.let { transactions ->
-//                            transactionsList.addAll(transactions)
-//                            adapter.notifyItemRangeInserted(
-//                                transactionsList.size - transactions.size,
-//                                transactions.size
-//                            )
-//                        }
-
-
-
-
-
-//                        body?.transactions?.let { transactions ->
-//
-//                            if (transactions.isEmpty() && transactionsList.isEmpty()) {
-//
-//                                showEmptyState(true)
-//
-//                            } else {
-//
-//                                showEmptyState(false)
-//
-//
-//                                transactionsList.addAll(transactions)
-//
-//                                adapter.notifyItemRangeInserted(
-//                                    transactionsList.size - transactions.size,
-//                                    transactions.size
-//                                )
-//                            }
-//                        }
-
-
-
                         val transactions = body?.transactions ?: emptyList()
 
                         if (transactions.isEmpty() && transactionsList.isEmpty()) {
@@ -210,7 +218,7 @@ class HistoryFragment : Fragment() {
 
 
                             binding.tvCashIn.text = "Rs ${summary.total_cash_in}"
-                          //  binding.tvTotalTransactions.text = summary.transactions_count.toString()
+                            //  binding.tvTotalTransactions.text = summary.transactions_count.toString()
                             binding.tvTotalRepaid.text = "Rs ${summary.total_repaid}"
                             binding.tvTotalBorrowed.text = "Rs ${summary.borrowed}"
 
@@ -218,23 +226,11 @@ class HistoryFragment : Fragment() {
 
 
                         }
-
-                        productStatus?.let { status ->
-
-                            // EXPIRE
-                            binding.tvExpirePeti.text = "Peti: ${status.expire.peti}"
-                            binding.tvExpireTray.text = "Tray: ${status.expire.tray}"
-                            binding.tvExpireSingle.text = "Eggs: ${status.expire.single}"
-
-                            binding.tvReturnPeti.text = "Peti: ${status.return_.peti}"
-                            binding.tvReturnTray.text = "Tray: ${status.return_.tray}"
-                            binding.tvReturnSingle.text = "Eggs: ${status.return_.single}"
-
-                            binding.tvLiquidKg.text = "Kg: ${status.liquid.kg}"
-//                            binding.tvLiquidTray.text = "Tray: ${status.liquid.tray}"
-//                            binding.tvLiquidSingle.text = "Eggs: ${status.liquid.single}"
-
+                        if (productStatus != null) {
+                            bindPickedItemsData(productStatus)
                         }
+
+
                     }
 
                     Status.ERROR -> {
@@ -246,6 +242,35 @@ class HistoryFragment : Fragment() {
                 }
             }
     }
+
+
+    private fun toggleSection(
+        recyclerView: View,
+        emptyView: View,
+        hasData: Boolean
+    ) {
+        recyclerView.visibility = if (hasData) View.VISIBLE else View.GONE
+        emptyView.visibility = if (hasData) View.GONE else View.VISIBLE
+    }
+
+
+    private fun bindPickedItemsData(data: ProductStatus) {
+
+        val expireList = data.expire.map { it.key to it.value }
+        val returnList = data.`return`.map { it.key to it.value }
+
+        binding.tvLiquidQuantity.text = data.liquid.kg.toString()
+
+
+        expireAdapter.submitList(expireList)
+        returnAdapter.submitList(returnList)
+
+
+        toggleSection(binding.rvExpire, binding.emptyExpire, expireList.isNotEmpty())
+        toggleSection(binding.rvReturn, binding.emptyReturn, returnList.isNotEmpty())
+    }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

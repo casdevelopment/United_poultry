@@ -1,5 +1,7 @@
 package com.example.unitedpoultry.NewSale.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Product(
     val product_id: Int,
     val product_name: String,
@@ -21,8 +23,8 @@ data class RiderProductData(
 
 data class PickedItemsResponse(
     val date: String,
-    val total_picked: Quantity,
-    val remaining: Remaining,
+    val total_picked: Map<String, Int>,
+    val remaining: Map<String, Int>,
     val categories: Categories,
     val products: List<ProductInfo>
 )
@@ -33,8 +35,8 @@ data class Quantity(
 )
 
 data class Remaining(
-    val total_peti: Int,
-    val total_trays: Int
+    val name: String,
+    val quantity: Int,
 )
 
 
@@ -69,10 +71,34 @@ data class SaleProduct(
     val price: Double
 )
 
+data class RiderProductUI(
+    val id: Int,
+    val name: String,
+    val price: Double,
+    val remainingQty: Int
+)
 
 data class SaleProductTray(
     val id: Int,
     val name: String,
     val latest_price: Double,
     var total_trays: Int = 0
+)
+
+
+data class DamageEggsRequest(
+    val damage_eggs: Damage
+)
+
+data class Damage(
+    val expire: List<QtyRequest>,
+    @SerializedName("return")
+    val returnData: List<QtyRequest>,
+
+    val liquid: LiquidItem
+)
+
+data class QtyRequest(
+    val product_id: Int,
+    val qty: Int
 )

@@ -6,7 +6,7 @@ import android.view.View
 import com.bumptech.glide.Glide
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.History.FullScreenImageActivity
-import com.example.unitedpoultry.NewSale.model.SaleResponseData
+import com.example.unitedpoultry.NewSale.model.SaleResponse
 import com.example.unitedpoultry.RiderDashBoard.RiderDashBoardActivity
 import com.example.unitedpoultry.databinding.ActivitySaleSuccessBinding
 import com.example.unitedpoultry.util.AppConstants
@@ -40,7 +40,7 @@ class SaleSuccessActivity : BaseActivity() {
 
 
         val jsonData = intent.getStringExtra("sale_data_json")
-        val saleData = Gson().fromJson(jsonData, SaleResponseData::class.java)
+        val saleData = Gson().fromJson(jsonData, SaleResponse::class.java)
 
        binding.tvSubTitle.text = "Receipt #${saleData.id} has been generated"
 
@@ -51,73 +51,81 @@ class SaleSuccessActivity : BaseActivity() {
         binding.tvPaymentType.text = saleData.payment_type
 
 
-        binding.tvDiscount.text = "Rs ${
-            if (saleData.discount % 1.0 == 0.0) {
-                "%.0f".format(saleData.discount) // whole number → no decimal
-            } else {
-                "%.2f".format(saleData.discount) // decimal → 2 places
-            }
-        }"
+//        binding.tvDiscount.text = "Rs ${
+//            if (saleData.discount % 1.0 == 0.0) {
+//                "%.0f".format(saleData.discount) // whole number → no decimal
+//            } else {
+//                "%.2f".format(saleData.discount) // decimal → 2 places
+//            }
+//        }"
 
         binding.tvDate.text = formatDateTime(saleData.sale_date)
 
 
-        binding.tvTotal.text = "Rs ${
-            if (saleData.total % 1.0 == 0.0) {
-                "%.0f".format(saleData.total) // whole number → no decimal
-            } else {
-                "%.2f".format(saleData.total) // decimal → 2 places
-            }
-        }"
+//        binding.tvTotal.text = "Rs ${
+//            if (saleData.total % 1.0 == 0.0) {
+//                "%.0f".format(saleData.total) // whole number → no decimal
+//            } else {
+//                "%.2f".format(saleData.total) // decimal → 2 places
+//            }
+//        }"
 
 
-        binding.tvBorrowedAmount.text = "Rs ${
-            if (saleData.borrowed_amount % 1.0 == 0.0) {
-                "%.0f".format(saleData.borrowed_amount) // whole number → no decimal
-            } else {
-                "%.2f".format(saleData.borrowed_amount) // decimal → 2 places
-            }
-        }"
+//        binding.tvBorrowedAmount.text = "Rs ${
+//            if (saleData.borrowed_amount % 1.0 == 0.0) {
+//                "%.0f".format(saleData.borrowed_amount) // whole number → no decimal
+//            } else {
+//                "%.2f".format(saleData.borrowed_amount) // decimal → 2 places
+//            }
+//        }"
+//
+//        binding.tvCollectionAmount.text = "Rs ${
+//            if (saleData.collection_amount % 1.0 == 0.0) {
+//                "%.0f".format(saleData.collection_amount) // whole number → no decimal
+//            } else {
+//                "%.2f".format(saleData.collection_amount) // decimal → 2 places
+//            }
+//        }"
 
-        binding.tvCollectionAmount.text = "Rs ${
-            if (saleData.collection_amount % 1.0 == 0.0) {
-                "%.0f".format(saleData.collection_amount) // whole number → no decimal
-            } else {
-                "%.2f".format(saleData.collection_amount) // decimal → 2 places
-            }
-        }"
+        binding.tvDiscount.text = "Rs ${saleData.discount}"
 
+        binding.tvTotal.text = "Rs ${saleData.total}"
 
-        val damageEggs = saleData.damage_eggs
+        binding.tvBorrowedAmount.text = "Rs ${saleData.borrowed_amount}"
 
-        binding.tvExpire.text = "Peti: ${damageEggs.expire.peti} " + "Tray: ${damageEggs.expire.tray} " + "Single: ${damageEggs.expire.single}"
-
-        binding.tvReturn.text = "Peti: ${damageEggs.return_.peti} " + "Tray: ${damageEggs.return_.tray} " + "Single: ${damageEggs.return_.single}"
-
-        binding.tvLiquid.text = "Kg: ${damageEggs.liquid.kg}"
-
+        binding.tvCollectionAmount.text = "Rs ${saleData.collection_amount}"
 
 
-        val itemsText = saleData.items.joinToString(separator = "\n") { item ->
+//        val damageEggs = saleData.damage_eggs
+//
+//        binding.tvExpire.text = "Peti: ${damageEggs.expire.peti} " + "Tray: ${damageEggs.expire.tray} " + "Single: ${damageEggs.expire.single}"
+//
+//        binding.tvReturn.text = "Peti: ${damageEggs.return_.peti} " + "Tray: ${damageEggs.return_.tray} " + "Single: ${damageEggs.return_.single}"
+//
+//        binding.tvLiquid.text = "Kg: ${damageEggs.liquid.kg}"
 
-            val qty = item.qty
-            val peti = qty / 12
-            val tray = qty % 12
 
-            val quantityText = if (qty < 12) {
-                "Tray: $qty"
-            } else {
-                if (tray == 0) {
-                    "Peti: $peti"
-                } else {
-                    "Peti: $peti Tray: $tray"
-                }
-            }
 
-            "$quantityText"
-        }
+//        val itemsText = saleData.items.joinToString(separator = "\n") { item ->
+//
+//            val qty = item.qty
+//            val peti = qty / 12
+//            val tray = qty % 12
+//
+//            val quantityText = if (qty < 12) {
+//                "Tray: $qty"
+//            } else {
+//                if (tray == 0) {
+//                    "Peti: $peti"
+//                } else {
+//                    "Peti: $peti Tray: $tray"
+//                }
+//            }
+//
+//            "$quantityText"
+//        }
 
-        binding.tvQuantity.text = itemsText
+     //   binding.tvQuantity.text = itemsText
 
 
         val imageUrl = saleData.payment_record_url

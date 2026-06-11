@@ -3,12 +3,14 @@ package com.example.unitedpoultry.RiderDashBoard.fragments
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.unitedpoultry.AdminRiderModule.model.RiderModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.RiderDetailsViewModel
 import com.example.unitedpoultry.Authentications.login.model.LoginResponseModel
@@ -24,12 +26,14 @@ import com.example.unitedpoultry.rider_home.viewmodel.DailyStatsViewModel
 import com.example.unitedpoultry.util.AppConstants.userData
 import com.example.unitedpoultry.util.AppUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.example.unitedpoultry.NewSale.Adapter.RiderProductHorizontalAdapter
 import com.example.unitedpoultry.NewSale.model.PickedItemsResponse
 import com.example.unitedpoultry.NewSale.model.Product
 import com.example.unitedpoultry.NewSale.viewmodel.GetRiderProductViewModel
 import com.example.unitedpoultry.SessionManager
 import com.example.unitedpoultry.rider_expense.AddExpenseActivity
+import com.example.unitedpoultry.rider_home.adapter.RiderHomeStatsAdapter
+import com.example.unitedpoultry.rider_home.model.PickedToday
+import com.example.unitedpoultry.rider_home.model.PickedTodayProduct
 import com.example.unitedpoultry.rider_home.viewmodel.ReturnWasteViewModel
 import com.example.unitedpoultry.status_check.UserStatusChecker
 import com.example.unitedpoultry.status_check.viewmodel.UserStatusViewModel
@@ -61,6 +65,11 @@ class HomeFragment : Fragment() {
     private val sessionManager: SessionManager by inject()
 
 
+    private lateinit var totalPickedAdapter: RiderHomeStatsAdapter
+    private lateinit var remainingAdapter: RiderHomeStatsAdapter
+    private lateinit var expireAdapter: RiderHomeStatsAdapter
+    private lateinit var returnAdapter: RiderHomeStatsAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,11 +86,12 @@ class HomeFragment : Fragment() {
 
         // Optional: Change status bar icons to dark if needed
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            activity?.window?.decorView?.systemUiVisibility = 0 // light icons: 0, dark icons: View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            activity?.window?.decorView?.systemUiVisibility = 0
         }
 
         showData()
         onclick()
+        setupRecyclerViews()
 
 
     }
@@ -229,6 +239,69 @@ class HomeFragment : Fragment() {
       //  loadDailyPaymentStats()
         loadProducts()
         refreshUserSession()
+    }
+
+    private fun setupRecyclerViews() {
+
+        totalPickedAdapter = RiderHomeStatsAdapter()
+
+        binding.rvTotalPicked.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+
+            adapter = totalPickedAdapter
+            setHasFixedSize(true)
+            isNestedScrollingEnabled = false
+            overScrollMode = View.OVER_SCROLL_NEVER
+        }
+
+        remainingAdapter = RiderHomeStatsAdapter()
+
+        binding.rvRemaining.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            adapter = remainingAdapter
+            setHasFixedSize(true)
+            isNestedScrollingEnabled = false
+            overScrollMode = View.OVER_SCROLL_NEVER
+        }
+
+
+        expireAdapter = RiderHomeStatsAdapter()
+
+        binding.rvExpire.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            adapter = expireAdapter
+            setHasFixedSize(true)
+            isNestedScrollingEnabled = false
+            overScrollMode = View.OVER_SCROLL_NEVER
+        }
+
+
+
+        returnAdapter = RiderHomeStatsAdapter()
+
+        binding.rvReturn.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            adapter = returnAdapter
+            setHasFixedSize(true)
+            isNestedScrollingEnabled = false
+            overScrollMode = View.OVER_SCROLL_NEVER
+        }
     }
 
 //    private fun loadDailyStats() {
@@ -444,7 +517,7 @@ class HomeFragment : Fragment() {
                     val res = response.data
                     if (res != null && res.isSuccessful) {
 
-                        val baseResponse = res.body() as BaseResponse<PickedItemsResponse>?
+                        val baseResponse = res.body() as BaseResponse<PickedToday>?
                         val data = baseResponse?.data
 
                         if (baseResponse?.result == "success" && data != null) {
@@ -464,50 +537,84 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun bindPickedItemsData(data: PickedItemsResponse) {
 
-        // DATE
-      //  binding.tvDate.text = data.date
-
-        // TOTAL PICKED
-//        binding.tvTotalPickedPeti.text = "Peti: ${data.total_picked.peti}"
-//        binding.tvTotalPickedTray.text = "Tray: ${data.total_picked.tray}"
-
-        val totalTrays = data.total_picked.tray ?: 0
-
-        val peti = totalTrays / 12
-        val tray = totalTrays % 12
-
-        binding.tvTotalPickedPeti.text = "Peti: $peti"
-        binding.tvTotalPickedTray.text = "Tray: $tray"
-
-        // REMAINING
-//        binding.tvRemainingPeti.text = data.remaining.total_peti.toString()
-//        binding.tvRemainingTray.text = data.remaining.total_trays.toString()
-
-        val remainingTrays = data.remaining.total_trays ?: 0
-
-        val rPeti = remainingTrays / 12
-        val rTray = remainingTrays % 12
-
-        binding.tvRemainingPeti.text = rPeti.toString()
-        binding.tvRemainingTray.text = rTray.toString()
-
-        // EXPIRE
-        binding.tvExpirePeti.text = "Peti: ${data.categories.expire.peti}"
-        binding.tvExpireTray.text = "Tray: ${data.categories.expire.tray}"
-        binding.tvExpireSingle.text = "Eggs: ${data.categories.expire.single}"
-
-        // RETURN
-        binding.tvReturnPeti.text = "Peti: ${data.categories.`return`.peti}"
-        binding.tvReturnTray.text = "Tray: ${data.categories.`return`.tray}"
-        binding.tvReturnSingle.text = "Eggs: ${data.categories.`return`.single}"
-
-        // LIQUID
-     //   binding.tvLiquidPeti.text = "Peti: ${data.categories.liquid.peti}"
-        binding.tvLiquid.text = "Kg: ${data.categories.liquid.kg}"
-     //   binding.tvLiquidSingle.text = "Eggs: ${data.categories.liquid.single}"
+    private fun toggleSection(
+        recyclerView: View,
+        emptyView: View,
+        hasData: Boolean
+    ) {
+        recyclerView.visibility = if (hasData) View.VISIBLE else View.GONE
+        emptyView.visibility = if (hasData) View.GONE else View.VISIBLE
     }
+
+
+
+
+
+    private fun bindPickedItemsData(data: PickedToday) {
+
+        val totalPickedList = data.total_picked.map { it.key to it.value }
+        val remainingList = data.remaining.map { it.key to it.value }
+        val expireList = data.categories.expire.map { it.key to it.value }
+        val returnList = data.categories.`return`.map { it.key to it.value }
+
+        binding.tvLiquidQuantity.text = data.categories.liquid.kg.toString()
+
+        totalPickedAdapter.submitList(totalPickedList)
+        remainingAdapter.submitList(remainingList)
+        expireAdapter.submitList(expireList)
+        returnAdapter.submitList(returnList)
+
+        toggleSection(binding.rvTotalPicked, binding.emptyTotalPicked, totalPickedList.isNotEmpty())
+        toggleSection(binding.rvRemaining, binding.emptyRemaining, remainingList.isNotEmpty())
+        toggleSection(binding.rvExpire, binding.emptyExpire, expireList.isNotEmpty())
+        toggleSection(binding.rvReturn, binding.emptyReturn, returnList.isNotEmpty())
+    }
+
+//    private fun bindPickedItemsData(data: PickedItemsResponse) {
+//
+//        // DATE
+//      //  binding.tvDate.text = data.date
+//
+//        // TOTAL PICKED
+////        binding.tvTotalPickedPeti.text = "Peti: ${data.total_picked.peti}"
+////        binding.tvTotalPickedTray.text = "Tray: ${data.total_picked.tray}"
+//
+//        val totalTrays = data.total_picked.tray ?: 0
+//
+//        val peti = totalTrays / 12
+//        val tray = totalTrays % 12
+//
+//        binding.tvTotalPickedPeti.text = "Peti: $peti"
+//        binding.tvTotalPickedTray.text = "Tray: $tray"
+//
+//        // REMAINING
+////        binding.tvRemainingPeti.text = data.remaining.total_peti.toString()
+////        binding.tvRemainingTray.text = data.remaining.total_trays.toString()
+//
+//        val remainingTrays = data.remaining.total_trays ?: 0
+//
+//        val rPeti = remainingTrays / 12
+//        val rTray = remainingTrays % 12
+//
+//        binding.tvRemainingPeti.text = rPeti.toString()
+//        binding.tvRemainingTray.text = rTray.toString()
+//
+//        // EXPIRE
+//        binding.tvExpirePeti.text = "Peti: ${data.categories.expire.peti}"
+//        binding.tvExpireTray.text = "Tray: ${data.categories.expire.tray}"
+//        binding.tvExpireSingle.text = "Eggs: ${data.categories.expire.single}"
+//
+//        // RETURN
+//        binding.tvReturnPeti.text = "Peti: ${data.categories.`return`.peti}"
+//        binding.tvReturnTray.text = "Tray: ${data.categories.`return`.tray}"
+//        binding.tvReturnSingle.text = "Eggs: ${data.categories.`return`.single}"
+//
+//        // LIQUID
+//     //   binding.tvLiquidPeti.text = "Peti: ${data.categories.liquid.peti}"
+//        binding.tvLiquid.text = "Kg: ${data.categories.liquid.kg}"
+//     //   binding.tvLiquidSingle.text = "Eggs: ${data.categories.liquid.single}"
+//    }
 
     private fun getTodayDate(): String {
         val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())

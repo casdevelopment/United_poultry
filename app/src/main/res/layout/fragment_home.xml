@@ -8,27 +8,27 @@
     android:fillViewport="true">
 
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/rootLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rootLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
-    <FrameLayout
-        android:id="@+id/topPortion"
-        android:layout_width="0dp"
-        android:layout_height="300dp"
-        android:background="@color/transparent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        <FrameLayout
+            android:id="@+id/topPortion"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            android:background="@color/transparent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            android:id="@+id/bgImage"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bgfull" />
+            <ImageView
+                android:id="@+id/bgImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bgfull" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -186,108 +186,888 @@
 
 
 
-    </FrameLayout>
+        </FrameLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topPortion">
-
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp"
-            android:layout_gravity="bottom"
-            app:cardUseCompatPadding="true">
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topPortion">
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp">
-
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="Total Picked "
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/poppins" />
-
-
-
-                    <!-- SECOND ROW -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="4dp">
-
-                        <TextView
-                            android:id="@+id/tvTotalPickedPeti"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Peti: -"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/primary"
-                            android:fontFamily="@font/poppins" />
-
-                        <TextView
-                            android:id="@+id/tvTotalPickedTray"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Tray: -"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            android:textColor="@color/primary"
-                            android:fontFamily="@font/poppins" />
-
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Remaining"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:layout_marginStart="12dp"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppins" />
-
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:layout_gravity="bottom"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="5dp">
+                    android:padding="12dp">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total Picked "
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="12dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvTotalPicked"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="120dp" />
+
+                    <LinearLayout
+                        android:id="@+id/emptyTotalPicked"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                       android:visibility="gone"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/emptybox"
+                            android:alpha="0.7"
+                            android:contentDescription="No Data" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="No picked items available"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/gray"
+                            android:fontFamily="@font/poppins" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Items will appear here when available"
+                            android:textSize="12sp"
+                            android:textColor="@color/gray"
+                            android:fontFamily="@font/poppins" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+
+
+                        <!-- SECOND ROW -->
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:layout_marginTop="4dp">-->
+
+<!--                            <TextView-->
+<!--                                android:id="@+id/tvTotalPickedPeti"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="Peti: -"-->
+<!--                                android:textSize="16sp"-->
+<!--                                android:textStyle="bold"-->
+<!--                                android:textColor="@color/primary"-->
+<!--                                android:fontFamily="@font/poppins" />-->
+
+<!--                            <TextView-->
+<!--                                android:id="@+id/tvTotalPickedTray"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="Tray: -"-->
+<!--                                android:textStyle="bold"-->
+<!--                                android:textSize="16sp"-->
+<!--                                android:textColor="@color/primary"-->
+<!--                                android:fontFamily="@font/poppins" />-->
+
+
+<!--                        </LinearLayout>-->
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Remaining"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="12dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvRemaining"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="120dp" />
+
+
+                        <LinearLayout
+                            android:id="@+id/emptyRemaining"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:src="@drawable/emptybox"
+                                android:alpha="0.7"
+                                android:contentDescription="No Data" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="No items Remaining"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/gray"
+                                android:fontFamily="@font/poppins" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Items will appear here when available"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray"
+                                android:fontFamily="@font/poppins" />
+
+                        </LinearLayout>
+
+                </LinearLayout>
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Expire"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="12dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvExpire"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="120dp" />
+
+
+
+                    <LinearLayout
+                        android:id="@+id/emptyExpire"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/emptybox"
+                            android:alpha="0.7"
+                            android:contentDescription="No Data" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="No Expired items"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/gray"
+                            android:fontFamily="@font/poppins" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Items will appear here when available"
+                            android:textSize="12sp"
+                            android:textColor="@color/gray"
+                            android:fontFamily="@font/poppins" />
+
+                    </LinearLayout>
+
+
+
+
+                </LinearLayout>
+
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Return"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="12dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins" />
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvReturn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="120dp"
+                        />
+
+
+
+                    <LinearLayout
+                        android:id="@+id/emptyReturn"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/emptybox"
+                            android:alpha="0.7"
+                            android:contentDescription="No Data" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="No Returned items"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/gray"
+                            android:fontFamily="@font/poppins" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Items will appear here when available"
+                            android:textSize="12sp"
+                            android:textColor="@color/gray"
+                            android:fontFamily="@font/poppins" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Liquid"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="12dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins" />
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:backgroundTint="@color/blue_lite"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp">
+
+
+                        <LinearLayout
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_marginEnd="10dp">
+
+                            <TextView
+                                android:id="@+id/tvLiquidQuantity"
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:text="-"
+                                android:layout_marginTop="8dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/poppins"
+                                android:textSize="16sp"
+                                android:gravity="center"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:text="Kgs"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/poppins"
+                                android:textSize="12sp"
+                                android:gravity="center"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+                    <!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:padding="5dp">-->
+
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="horizontal"-->
+<!--                            android:layout_marginBottom="20dp">-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:padding="16dp"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:gravity="center"-->
+<!--                                android:backgroundTint="@color/primary20"-->
+<!--                                android:background="@drawable/rounded_bg"-->
+<!--                                android:layout_marginEnd="10dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:id="@+id/tvRemainingPeti"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:text="-"-->
+<!--                                    android:layout_marginTop="8dp"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:fontFamily="@font/poppins"-->
+<!--                                    android:textSize="16sp"-->
+<!--                                    android:textColor="@color/black" />-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:text="Total Peti"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:fontFamily="@font/poppins"-->
+<!--                                    android:textSize="12sp"-->
+<!--                                    android:gravity="end"-->
+<!--                                    android:textColor="@color/black" />-->
+
+<!--                            </LinearLayout>-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:padding="16dp"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:gravity="center"-->
+<!--                                android:backgroundTint="@color/primary20"-->
+<!--                                android:background="@drawable/rounded_bg">-->
+
+<!--                                <TextView-->
+<!--                                    android:id="@+id/tvRemainingTray"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_marginTop="8dp"-->
+<!--                                    android:text="-"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:fontFamily="@font/poppins"-->
+<!--                                    android:textSize="16sp"-->
+<!--                                    android:textColor="@color/black" />-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:text="Total Trays"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:fontFamily="@font/poppins"-->
+<!--                                    android:textSize="12sp"-->
+<!--                                    android:gravity="end"-->
+<!--                                    android:textColor="@color/black" />-->
+
+<!--                            </LinearLayout>-->
+
+
+
+<!--                        </LinearLayout>-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="horizontal"-->
+<!--                            android:weightSum="3">-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:padding="7dp"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:gravity="center"-->
+<!--                                android:background="@drawable/rounded_bg_pink"-->
+<!--                                android:layout_marginEnd="10dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_marginTop="8dp"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:text="Expire"-->
+<!--                                    android:fontFamily="@font/poppins"-->
+<!--                                    android:textSize="16sp"-->
+<!--                                    android:textColor="@color/black"/>-->
+
+<!--                                <TextView-->
+<!--                                    android:id="@+id/tvExpirePeti"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:text="-"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:background="@drawable/edit_text_bg_pink"-->
+<!--                                    android:fontFamily="@font/poppins"-->
+<!--                                    android:textSize="10sp"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:layout_marginTop="8dp"-->
+<!--                                    android:textColor="@color/black" />-->
+
+<!--                                <TextView-->
+<!--                                    android:id="@+id/tvExpireTray"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:text="-"-->
+<!--                                    android:background="@drawable/edit_text_bg_pink"-->
+<!--                                    android:fontFamily="@font/poppins"-->
+<!--                                    android:textSize="10sp"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:layout_marginTop="5dp"-->
+<!--                                    android:textColor="@color/black" />-->
+
+
+<!--                                <TextView-->
+<!--                                    android:id="@+id/tvExpireSingle"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:text="-"-->
+<!--                                    android:background="@drawable/edit_text_bg_pink"-->
+<!--                                    android:fontFamily="@font/poppins"-->
+<!--                                    android:textSize="10sp"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:layout_marginTop="5dp"-->
+<!--                                    android:textColor="@color/black" />-->
+
+<!--                            </LinearLayout>-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:padding="7dp"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:gravity="center"-->
+<!--                                android:background="@drawable/rounded_bg_orange"-->
+<!--                                android:layout_marginEnd="10dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_marginTop="8dp"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:text="Return"-->
+<!--                                    android:fontFamily="@font/poppins"-->
+<!--                                    android:textSize="16sp"-->
+<!--                                    android:textColor="@color/black" />-->
+
+<!--                                <TextView-->
+<!--                                    android:id="@+id/tvReturnPeti"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:text="-"-->
+<!--                                    android:background="@drawable/edit_text_bg_orange"-->
+<!--                                    android:fontFamily="@font/poppins"-->
+<!--                                    android:textSize="10sp"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:layout_marginTop="8dp"-->
+<!--                                    android:textColor="@color/black" />-->
+
+<!--                                <TextView-->
+<!--                                    android:id="@+id/tvReturnTray"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:text="-"-->
+<!--                                    android:background="@drawable/edit_text_bg_orange"-->
+<!--                                    android:fontFamily="@font/poppins"-->
+<!--                                    android:textSize="10sp"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:layout_marginTop="5dp"-->
+<!--                                    android:textColor="@color/black" />-->
+
+<!--                                <TextView-->
+<!--                                    android:id="@+id/tvReturnSingle"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:text="-"-->
+<!--                                    android:background="@drawable/edit_text_bg_orange"-->
+<!--                                    android:fontFamily="@font/poppins"-->
+<!--                                    android:textSize="10sp"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:layout_marginTop="5dp"-->
+<!--                                    android:textColor="@color/black" />-->
+
+
+<!--                            </LinearLayout>-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:padding="7dp"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:gravity="center"-->
+<!--                                android:background="@drawable/rounded_bg_blue">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_marginTop="8dp"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:text="Liquid"-->
+<!--                                    android:fontFamily="@font/poppins"-->
+<!--                                    android:textSize="16sp"-->
+<!--                                    android:textColor="@color/black" />-->
+
+<!--                                <TextView-->
+<!--                                    android:id="@+id/tvLiquid"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:text="-"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:background="@drawable/edit_text_bg_blue"-->
+<!--                                    android:fontFamily="@font/poppins"-->
+<!--                                    android:textSize="10sp"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:layout_marginTop="8dp"-->
+<!--                                    android:textColor="@color/black"-->
+<!--                                    />-->
+
+<!--                                <TextView-->
+<!--                                    android:id="@+id/tvLiquidnjs"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:text="-"-->
+<!--                                    android:background="@drawable/edit_text_bg_blue"-->
+<!--                                    android:fontFamily="@font/poppins"-->
+<!--                                    android:textSize="10sp"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:layout_marginTop="5dp"-->
+<!--                                    android:textColor="@color/black"-->
+<!--                                    android:visibility="invisible"-->
+<!--                                    />-->
+
+<!--                                <TextView-->
+<!--                                    android:id="@+id/tvLiquidSingle"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:background="@drawable/edit_text_bg_blue"-->
+<!--                                    android:fontFamily="@font/poppins"-->
+<!--                                    android:textSize="10sp"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:layout_marginTop="5dp"-->
+<!--                                    android:textColor="@color/black"-->
+<!--                                    android:visibility="invisible"/>-->
+
+
+<!--                            </LinearLayout>-->
+
+
+<!--                        </LinearLayout>-->
+
+
+<!--                    </LinearLayout>-->
+
+
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="12dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Picked Products"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary"
+                        android:layout_marginBottom="12dp"/>
+
+                    <TextView
+                        android:id="@+id/tvTotalEggs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black60"
+                        android:fontFamily="@font/poppins" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerProducts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingStart="4dp"
+                    android:overScrollMode="never" />
+
+                <LinearLayout
+                    android:id="@+id/layoutEmpty"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/emptybox"
+                        android:contentDescription="No products picked"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No products picked yet!"
+                        android:textSize="16sp"
+                        android:textColor="@color/gray"
+                        android:layout_marginTop="13dp"
+                        android:gravity="center"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/openReturnDialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:layout_gravity="bottom"
+                app:cardUseCompatPadding="true"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="12dp">
+
+                    <!-- Icon -->
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/circle_white"
+                        android:src="@drawable/resource_return" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp">
+
+                        <!-- FIRST ROW -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:text="Return Eggs"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/poppins" />
+
+
+                        </LinearLayout>
+
+                        <!-- SECOND ROW -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="4dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Damaged, extra or rejected stock"
+                                android:textSize="11sp"
+                                android:textColor="@color/gray"
+                                android:fontFamily="@font/poppins" />
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="OPEN"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/sub_primary"
+                        android:fontFamily="@font/poppins"
+                        android:layout_gravity="center_vertical"/>
+
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/todayTargetCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:cardUseCompatPadding="true"
+                android:backgroundTint="@color/primary"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Top Row : Title + Completion -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="20dp">
+                        android:visibility="gone">
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -295,31 +1075,29 @@
                             android:orientation="vertical"
                             android:padding="16dp"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:backgroundTint="@color/primary20"
+                            android:backgroundTint="@color/ice_blue15"
                             android:background="@drawable/rounded_bg"
                             android:layout_marginEnd="10dp">
 
                             <TextView
-                                android:id="@+id/tvRemainingPeti"
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
-                                android:text="-"
                                 android:layout_marginTop="8dp"
+                                android:text="Total Picked"
                                 android:textStyle="bold"
                                 android:fontFamily="@font/poppins"
                                 android:textSize="16sp"
-                                android:textColor="@color/black" />
+                                android:textColor="@color/white" />
 
                             <TextView
+                                android:id="@+id/totalPicked"
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
-                                android:text="Total Peti"
+                                android:text="26000"
                                 android:textStyle="bold"
                                 android:fontFamily="@font/poppins"
-                                android:textSize="12sp"
-                                android:gravity="end"
-                                android:textColor="@color/black" />
+                                android:textSize="14sp"
+                                android:textColor="@color/white74" />
 
                         </LinearLayout>
 
@@ -329,37 +1107,34 @@
                             android:orientation="vertical"
                             android:padding="16dp"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:backgroundTint="@color/primary20"
+                            android:backgroundTint="@color/ice_blue15"
                             android:background="@drawable/rounded_bg">
 
                             <TextView
-                                android:id="@+id/tvRemainingTray"
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="8dp"
-                                android:text="-"
+                                android:text="Remaining"
                                 android:textStyle="bold"
                                 android:fontFamily="@font/poppins"
                                 android:textSize="16sp"
-                                android:textColor="@color/black" />
+                                android:textColor="@color/white" />
 
                             <TextView
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
-                                android:text="Total Trays"
+                                android:text="-"
                                 android:textStyle="bold"
                                 android:fontFamily="@font/poppins"
-                                android:textSize="12sp"
-                                android:gravity="end"
-                                android:textColor="@color/black" />
+                                android:textSize="14sp"
+                                android:textColor="@color/white74" />
 
                         </LinearLayout>
 
-
-
                     </LinearLayout>
 
+
+                    <!-- Bottom Row : Books + Amount -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -370,61 +1145,32 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="7dp"
+                            android:padding="16dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:background="@drawable/rounded_bg_pink"
+                            android:backgroundTint="@color/ice_blue15"
+                            android:background="@drawable/rounded_bg"
                             android:layout_marginEnd="10dp">
 
                             <TextView
+                                android:id="@+id/totalSold"
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:textStyle="bold"
-                                android:text="Expire"
                                 android:fontFamily="@font/poppins"
                                 android:textSize="16sp"
-                                android:textColor="@color/black"/>
+                                android:textColor="@color/white" />
 
                             <TextView
-                                android:id="@+id/tvExpirePeti"
                                 android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:text="-"
+                                android:layout_width="wrap_content"
+                                android:text="Eggs Sold"
                                 android:textStyle="bold"
-                                android:background="@drawable/edit_text_bg_pink"
                                 android:fontFamily="@font/poppins"
-                                android:textSize="10sp"
-                                android:gravity="center"
-                                android:layout_marginTop="8dp"
-                                android:textColor="@color/black" />
-
-                            <TextView
-                                android:id="@+id/tvExpireTray"
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:textStyle="bold"
-                                android:text="-"
-                                android:background="@drawable/edit_text_bg_pink"
-                                android:fontFamily="@font/poppins"
-                                android:textSize="10sp"
-                                android:gravity="center"
-                                android:layout_marginTop="5dp"
-                                android:textColor="@color/black" />
-
-
-                            <TextView
-                                android:id="@+id/tvExpireSingle"
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:textStyle="bold"
-                                android:text="-"
-                                android:background="@drawable/edit_text_bg_pink"
-                                android:fontFamily="@font/poppins"
-                                android:textSize="10sp"
-                                android:gravity="center"
-                                android:layout_marginTop="5dp"
-                                android:textColor="@color/black" />
+                                android:textSize="12sp"
+                                android:gravity="end"
+                                android:textColor="@color/white74" />
 
                         </LinearLayout>
 
@@ -432,61 +1178,32 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="7dp"
+                            android:padding="16dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:background="@drawable/rounded_bg_orange"
+                            android:backgroundTint="@color/ice_blue15"
+                            android:background="@drawable/rounded_bg"
                             android:layout_marginEnd="10dp">
 
                             <TextView
+                                android:id="@+id/totalReturned"
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:textStyle="bold"
-                                android:text="Return"
                                 android:fontFamily="@font/poppins"
                                 android:textSize="16sp"
-                                android:textColor="@color/black" />
+                                android:textColor="@color/white" />
 
                             <TextView
-                                android:id="@+id/tvReturnPeti"
                                 android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
+                                android:text="Returned"
                                 android:textStyle="bold"
-                                android:text="-"
-                                android:background="@drawable/edit_text_bg_orange"
                                 android:fontFamily="@font/poppins"
-                                android:textSize="10sp"
-                                android:gravity="center"
-                                android:layout_marginTop="8dp"
-                                android:textColor="@color/black" />
-
-                            <TextView
-                                android:id="@+id/tvReturnTray"
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:textStyle="bold"
-                                android:text="-"
-                                android:background="@drawable/edit_text_bg_orange"
-                                android:fontFamily="@font/poppins"
-                                android:textSize="10sp"
-                                android:gravity="center"
-                                android:layout_marginTop="5dp"
-                                android:textColor="@color/black" />
-
-                            <TextView
-                                android:id="@+id/tvReturnSingle"
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:textStyle="bold"
-                                android:text="-"
-                                android:background="@drawable/edit_text_bg_orange"
-                                android:fontFamily="@font/poppins"
-                                android:textSize="10sp"
-                                android:gravity="center"
-                                android:layout_marginTop="5dp"
-                                android:textColor="@color/black" />
-
+                                android:textSize="12sp"
+                                android:gravity="end"
+                                android:textColor="@color/white74" />
 
                         </LinearLayout>
 
@@ -494,280 +1211,195 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="7dp"
-                            android:layout_weight="1"
+                            android:padding="16dp"
                             android:gravity="center"
-                            android:background="@drawable/rounded_bg_blue">
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/ice_blue15"
+                            android:background="@drawable/rounded_bg">
 
                             <TextView
+                                android:id="@+id/totalWaste"
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:textStyle="bold"
-                                android:text="Liquid"
                                 android:fontFamily="@font/poppins"
                                 android:textSize="16sp"
-                                android:textColor="@color/black" />
+                                android:textColor="@color/white" />
 
                             <TextView
-                                android:id="@+id/tvLiquid"
                                 android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:text="-"
+                                android:layout_width="wrap_content"
+                                android:text="Waste"
                                 android:textStyle="bold"
-                                android:background="@drawable/edit_text_bg_blue"
                                 android:fontFamily="@font/poppins"
-                                android:textSize="10sp"
+                                android:textSize="12sp"
                                 android:gravity="center"
-                                android:layout_marginTop="8dp"
-                                android:textColor="@color/black"
-                                />
-
-                            <TextView
-                                android:id="@+id/tvLiquidnjs"
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:textStyle="bold"
-                                android:text="-"
-                                android:background="@drawable/edit_text_bg_blue"
-                                android:fontFamily="@font/poppins"
-                                android:textSize="10sp"
-                                android:gravity="center"
-                                android:layout_marginTop="5dp"
-                                android:textColor="@color/black"
-                                android:visibility="invisible"
-                               />
-
-                            <TextView
-                                android:id="@+id/tvLiquidSingle"
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:textStyle="bold"
-                                android:background="@drawable/edit_text_bg_blue"
-                                android:fontFamily="@font/poppins"
-                                android:textSize="10sp"
-                                android:gravity="center"
-                                android:layout_marginTop="5dp"
-                                android:textColor="@color/black"
-                                android:visibility="invisible"/>
-
+                                android:textColor="@color/white74" />
 
                         </LinearLayout>
 
-
                     </LinearLayout>
 
-
-                </LinearLayout>
-
-
-
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="12dp"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Picked Products"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/primary"
-                android:layout_marginBottom="12dp"/>
-
-            <TextView
-                android:id="@+id/tvTotalEggs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@color/black60"
-                android:fontFamily="@font/poppins" />
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerProducts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:paddingStart="4dp"
-                android:overScrollMode="never" />
-
-            <LinearLayout
-                android:id="@+id/layoutEmpty"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="10dp"
-                android:visibility="gone">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/emptybox"
-                    android:contentDescription="No products picked"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="No products picked yet!"
-                    android:textSize="16sp"
-                    android:textColor="@color/gray"
-                    android:layout_marginTop="13dp"
-                    android:gravity="center"/>
-            </LinearLayout>
-        </LinearLayout>
-
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/openReturnDialog"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp"
-            android:layout_gravity="bottom"
-            app:cardUseCompatPadding="true"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="12dp">
-
-                <!-- Icon -->
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/circle_white"
-                    android:src="@drawable/resource_return" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp">
-
-                    <!-- FIRST ROW -->
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="Return Eggs"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/poppins" />
-
-
-                    </LinearLayout>
-
-                    <!-- SECOND ROW -->
-                    <LinearLayout
+                        android:id="@+id/areaShortCut"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="4dp">
+                        android:layout_marginTop="10dp">
 
-                        <TextView
-                            android:layout_width="0dp"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Damaged, extra or rejected stock"
-                            android:textSize="11sp"
-                            android:textColor="@color/gray"
-                            android:fontFamily="@font/poppins" />
+                            android:orientation="horizontal"
+                            android:padding="16dp"
+                            android:background="@drawable/rounded_bg"
+                            android:backgroundTint="@color/ice_blue15"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginEnd="10dp"
+                                android:contentDescription="Status"
+                                android:src="@drawable/areavectorsvg"
+                                app:tint="@color/white"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Return/Exchange"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/poppins"
+                                android:textSize="16sp"
+                                android:textColor="@color/white"
+                                android:layout_marginTop="4dp"
+                                />
+                        </LinearLayout>
 
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="OPEN"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/sub_primary"
-                    android:fontFamily="@font/poppins"
-                    android:layout_gravity="center_vertical"/>
+            </androidx.cardview.widget.CardView>
 
 
 
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/tvStatesTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="50dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins"
+                android:text="Todays Payment Stats"
+                android:textColor="@color/primary"
+                android:textSize="20sp"
+                android:visibility="gone"/>
 
-
-
-
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/todayTargetCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            app:cardUseCompatPadding="true"
-            android:backgroundTint="@color/primary"
-            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="12dp"
+                android:visibility="gone"
+                >
 
-                <!-- Top Row : Title + Completion -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="20dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/green15"
+                        android:background="@drawable/rounded_bg"
+                        android:gravity="center"
+                        android:layout_marginEnd="20dp">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/card1"
+                            android:contentDescription="icon" />
+
+                        <TextView
+                            android:id="@+id/tvTotalAmount"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="-"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins"
+                            android:textSize="16sp"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="Total Amount"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins"
+                            android:textSize="13sp"
+                            android:textColor="@color/blackLight"
+                            android:gravity="center"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/primary20"
+                        android:background="@drawable/rounded_bg"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/totalsalesvector"
+                            android:contentDescription="icon" />
+
+                        <TextView
+                            android:id="@+id/tvTotalSales"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="-"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins"
+                            android:textSize="16sp"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="Total Eggs Sold"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins"
+                            android:textSize="13sp"
+                            android:textColor="@color/blackLight"
+                            android:gravity="center"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -780,71 +1412,39 @@
                         android:orientation="vertical"
                         android:padding="16dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/ice_blue15"
+                        android:backgroundTint="@color/sub_primary18"
                         android:background="@drawable/rounded_bg"
-                        android:layout_marginEnd="10dp">
+                        android:gravity="center"
+                        android:layout_marginEnd="20dp">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/card2"
+                            android:contentDescription="icon" />
 
                         <TextView
+                            android:id="@+id/tvRecieved"
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="Total Picked"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/poppins"
-                            android:textSize="16sp"
-                            android:textColor="@color/white" />
-
-                        <TextView
-                            android:id="@+id/totalPicked"
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:text="26000"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/poppins"
-                            android:textSize="14sp"
-                            android:textColor="@color/white74" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/ice_blue15"
-                        android:background="@drawable/rounded_bg">
-
-                        <TextView
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Remaining"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/poppins"
-                            android:textSize="16sp"
-                            android:textColor="@color/white" />
-
-                        <TextView
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
                             android:text="-"
                             android:textStyle="bold"
                             android:fontFamily="@font/poppins"
-                            android:textSize="14sp"
-                            android:textColor="@color/white74" />
+                            android:textSize="16sp"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="Payment received"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins"
+                            android:textSize="13sp"
+                            android:textColor="@color/blackLight"
+                            android:gravity="center"/>
 
                     </LinearLayout>
-
-                </LinearLayout>
-
-
-                <!-- Bottom Row : Books + Amount -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -852,496 +1452,191 @@
                         android:orientation="vertical"
                         android:padding="16dp"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:backgroundTint="@color/ice_blue15"
+                        android:backgroundTint="@color/pink15"
                         android:background="@drawable/rounded_bg"
-                        android:layout_marginEnd="10dp">
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/card3"
+                            android:contentDescription="icon" />
 
                         <TextView
-                            android:id="@+id/totalSold"
+                            android:id="@+id/tvShopvisited"
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
                             android:layout_marginTop="8dp"
+                            android:text="-"
                             android:textStyle="bold"
                             android:fontFamily="@font/poppins"
                             android:textSize="16sp"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/black" />
 
                         <TextView
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
-                            android:text="Eggs Sold"
+                            android:text="Due payment"
                             android:textStyle="bold"
                             android:fontFamily="@font/poppins"
-                            android:textSize="12sp"
-                            android:gravity="end"
-                            android:textColor="@color/white74" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:backgroundTint="@color/ice_blue15"
-                        android:background="@drawable/rounded_bg"
-                        android:layout_marginEnd="10dp">
-
-                        <TextView
-                            android:id="@+id/totalReturned"
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/poppins"
-                            android:textSize="16sp"
-                            android:textColor="@color/white" />
-
-                        <TextView
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:text="Returned"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/poppins"
-                            android:textSize="12sp"
-                            android:gravity="end"
-                            android:textColor="@color/white74" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/ice_blue15"
-                        android:background="@drawable/rounded_bg">
-
-                        <TextView
-                            android:id="@+id/totalWaste"
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/poppins"
-                            android:textSize="16sp"
-                            android:textColor="@color/white" />
-
-                        <TextView
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:text="Waste"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/poppins"
-                            android:textSize="12sp"
-                            android:gravity="center"
-                            android:textColor="@color/white74" />
+                            android:textSize="13sp"
+                            android:textColor="@color/blackLight"
+                            android:gravity="center"/>
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/areaShortCut"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="16dp"
-                    android:background="@drawable/rounded_bg"
-                    android:backgroundTint="@color/ice_blue15"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="10dp"
-                        android:contentDescription="Status"
-                        android:src="@drawable/areavectorsvg"
-                        app:tint="@color/white"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Return/Exchange"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/poppins"
-                        android:textSize="16sp"
-                        android:textColor="@color/white"
-                        android:layout_marginTop="4dp"
-                        />
-                </LinearLayout>
-
-
             </LinearLayout>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-
-
-        <TextView
-            android:id="@+id/tvStatesTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="50dp"
-            android:textStyle="bold"
-            android:fontFamily="@font/poppins"
-            android:text="Todays Payment Stats"
-            android:textColor="@color/primary"
-            android:textSize="20sp"
-            android:visibility="gone"/>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp"
-        android:visibility="gone"
-        >
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="20dp"
-            >
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/green15"
-                android:background="@drawable/rounded_bg"
-                android:gravity="center"
-                android:layout_marginEnd="20dp">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/card1"
-                    android:contentDescription="icon" />
-
-                <TextView
-                    android:id="@+id/tvTotalAmount"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="-"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppins"
-                    android:textSize="16sp"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="Total Amount"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppins"
-                    android:textSize="13sp"
-                    android:textColor="@color/blackLight"
-                    android:gravity="center"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/primary20"
-                android:background="@drawable/rounded_bg"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/totalsalesvector"
-                    android:contentDescription="icon" />
-
-                <TextView
-                    android:id="@+id/tvTotalSales"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="-"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppins"
-                    android:textSize="16sp"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="Total Eggs Sold"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppins"
-                    android:textSize="13sp"
-                    android:textColor="@color/blackLight"
-                    android:gravity="center"/>
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/sub_primary18"
-                android:background="@drawable/rounded_bg"
-                android:gravity="center"
-                android:layout_marginEnd="20dp">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/card2"
-                    android:contentDescription="icon" />
-
-                <TextView
-                    android:id="@+id/tvRecieved"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="-"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppins"
-                    android:textSize="16sp"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="Payment received"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppins"
-                    android:textSize="13sp"
-                    android:textColor="@color/blackLight"
-                    android:gravity="center"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/pink15"
-                android:background="@drawable/rounded_bg"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/card3"
-                    android:contentDescription="icon" />
-
-                <TextView
-                    android:id="@+id/tvShopvisited"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="-"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppins"
-                    android:textSize="16sp"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="Due payment"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppins"
-                    android:textSize="13sp"
-                    android:textColor="@color/blackLight"
-                    android:gravity="center"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="50dp"
-            android:textStyle="bold"
-            android:fontFamily="@font/poppins"
-            android:text="Quick Actions"
-            android:textColor="@color/primary"
-            android:textSize="20sp" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:layout_marginBottom="30dp">
-
-            <LinearLayout
-                android:id="@+id/newSaleLayout"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/primary20"
-                android:background="@drawable/rounded_bg"
-                android:gravity="center"
-                android:layout_marginEnd="10dp"
-                >
-
-                <ImageView
-                    android:id="@+id/quickNewImage"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/new_sale"
-                    android:contentDescription="icon" />
-
-
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="New Sale"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppins"
-                    android:textSize="11sp"
-                    android:textColor="@color/blackLight"
-                    android:layout_gravity="center"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/addExpenseLayout"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/sub_primary18"
-                android:background="@drawable/rounded_bg"
-                android:gravity="center"
-                android:layout_marginEnd="5dp">
-
-                <ImageView
-                    android:id="@+id/quickCollectImage"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/add_expence"
-                    android:contentDescription="icon" />
-
-
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="Add an Expense"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppins"
-                    android:textSize="11sp"
-                    android:textColor="@color/blackLight"
-                    android:layout_gravity="center"/>
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-
-
-        <LinearLayout
-            android:id="@+id/pendingshops"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:text="Pending Shops"
-                android:textColor="@color/primary"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                android:layout_marginLeft="15dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:text="View All"
-                android:textColor="@color/sub_primary"
-                android:textSize="13sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="50dp"
                 android:textStyle="bold"
-                android:layout_marginRight="10dp"/>
+                android:fontFamily="@font/poppins"
+                android:text="Quick Actions"
+                android:textColor="@color/primary"
+                android:textSize="20sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:layout_marginBottom="30dp">
+
+                <LinearLayout
+                    android:id="@+id/newSaleLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/primary20"
+                    android:background="@drawable/rounded_bg"
+                    android:gravity="center"
+                    android:layout_marginEnd="10dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/quickNewImage"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/new_sale"
+                        android:contentDescription="icon" />
+
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="New Sale"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="11sp"
+                        android:textColor="@color/blackLight"
+                        android:layout_gravity="center"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/addExpenseLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/sub_primary18"
+                    android:background="@drawable/rounded_bg"
+                    android:gravity="center"
+                    android:layout_marginEnd="5dp">
+
+                    <ImageView
+                        android:id="@+id/quickCollectImage"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/add_expence"
+                        android:contentDescription="icon" />
+
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="Add an Expense"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="11sp"
+                        android:textColor="@color/blackLight"
+                        android:layout_gravity="center"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/pendingshops"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Pending Shops"
+                    android:textColor="@color/primary"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="15dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="View All"
+                    android:textColor="@color/sub_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:layout_marginRight="10dp"/>
+
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvVisitedShops"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="16dp"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone"/>
+
+
+
+
+
+
+
 
         </LinearLayout>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvVisitedShops"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="16dp"
-            android:clipToPadding="false"
-            android:clipChildren="false"
-            android:nestedScrollingEnabled="false"
-            android:visibility="gone"/>
 
 
-
-
-
-
-
-
-    </LinearLayout>
-
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

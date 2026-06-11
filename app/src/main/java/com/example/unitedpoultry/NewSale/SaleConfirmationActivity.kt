@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import com.example.unitedpoultry.BaseActivity
-import com.example.unitedpoultry.NewSale.model.SaleItem
 import com.example.unitedpoultry.NewSale.viewmodel.RiderNewSaleViewModel
 import com.example.unitedpoultry.databinding.ActivitySaleConfirmationBinding
 import com.example.unitedpoultry.network.Status

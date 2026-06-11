@@ -13,7 +13,7 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="2"
+        android:layout_weight="1.5"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
@@ -44,7 +44,7 @@
         android:id="@+id/etQuantity"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:background="@drawable/edit_text_bg_no_border"
         android:textColor="@color/black60"
         android:textSize="14sp"

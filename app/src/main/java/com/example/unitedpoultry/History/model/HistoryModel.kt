@@ -55,23 +55,14 @@ data class Summary(
 )
 
 data class ProductStatus(
-    val expire: ProductDetail,
-
-    @SerializedName("return")
-    val return_: ProductDetail,
-
+    val expire: Map<String, Int>,
+    val `return`: Map<String, Int>,
     val liquid: ProductLiquidDetail
 )
 
-data class ProductDetail(
-    val peti: Int,
-    val tray: Int,
-    val single: Int,
-    val total_eggs: Int
-)
 
 data class ProductLiquidDetail(
-    val kg: Int,
+    val kg: Double,
 )
 
 data class TransactionItem(

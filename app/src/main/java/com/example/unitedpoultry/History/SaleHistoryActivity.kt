@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.BaseActivity
+import com.example.unitedpoultry.History.Adapter.SaleHistoryAdapter
 import com.example.unitedpoultry.databinding.ActivitySaleHistoryBinding
 import com.example.unitedpoultry.History.model.SaleHistory
 import com.example.unitedpoultry.History.viewmodel.SaleHistoryDetailViewModel
@@ -26,6 +28,8 @@ class SaleHistoryActivity : BaseActivity() {
 
     private var fullImageUrl: String? = null
 
+    private lateinit var itemsAdapter: SaleHistoryAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,6 +42,8 @@ class SaleHistoryActivity : BaseActivity() {
         setContentView(binding.root)
 
         id = intent.getIntExtra("ID", 0)
+
+        setupRecycler()
 
         onclick()
 
@@ -60,9 +66,20 @@ class SaleHistoryActivity : BaseActivity() {
         }
 
     }
+
+
     override fun onResume() {
         super.onResume()
         loadSaleDetail()
+    }
+
+    private fun setupRecycler() {
+        itemsAdapter = SaleHistoryAdapter(emptyList())
+
+        binding.recyclerItems.apply {
+            layoutManager = LinearLayoutManager(this@SaleHistoryActivity)
+            adapter = itemsAdapter
+        }
     }
 
 
@@ -102,51 +119,16 @@ class SaleHistoryActivity : BaseActivity() {
                                 binding.tvBorrowed.text = "Rs ${data.borrowed_amount}"
                                 binding.tvCollection.text = "Rs ${data.collection_amount}"
 
-//                                // Totals
-//                                binding.tvSubTotal.text = "Rs ${data.sub_total}"
-//
-//
-//                                binding.tvAmount.text = "Rs ${data.total}"
-//                                binding.tvCashReceived.text = "Rs ${data.cash_received}"
-//                                binding.tvBorrowedAmount.text = "Rs ${data.borrowed_amount}"
-//                                binding.tvCollectionAmount.text = "Rs ${data.collection_amount}"
 
+                                val items = data.items
 
-                                binding.tvExpire.text = "Peti: ${data.damage_eggs.expire.peti} Tray: ${data.damage_eggs.expire.tray} Egg: ${data.damage_eggs.expire.single}"
-
-                                binding.tvReturn.text = "Peti: ${data.damage_eggs.`return`.peti} Tray: ${data.damage_eggs.`return`.tray} Egg: ${data.damage_eggs.`return`.single}"
-
-                                binding.tvLiquid.text = "Kg: ${data.damage_eggs.liquid.kg}"
-
-
-
-
-//                                val itemsText = data.items.joinToString(separator = "\n") { item ->
-//                                    "${item.product_name}: ${item.qty}"
-//                                }
-//
-//                                binding.tvQuantity.text = itemsText
-
-                                val itemsText = data.items.joinToString(separator = "\n") { item ->
-
-                                    val qty = item.qty
-                                    val peti = qty / 12
-                                    val tray = qty % 12
-
-                                    val quantityText = if (qty < 12) {
-                                        "Tray: $qty"
-                                    } else {
-                                        if (tray == 0) {
-                                            "Peti: $peti"
-                                        } else {
-                                            "Peti: $peti Tray: $tray"
-                                        }
-                                    }
-
-                                    "$quantityText"
+                                if (!items.isNullOrEmpty()) {
+                                    binding.recyclerItems.visibility = View.VISIBLE
+                                    itemsAdapter.updateList(items)
+                                } else {
+                                    binding.recyclerItems.visibility = View.GONE
                                 }
 
-                                binding.tvQuantity.text = itemsText
 
 
                                 val imageUrl = data.payment_record_url
@@ -167,18 +149,6 @@ class SaleHistoryActivity : BaseActivity() {
                                     binding.etNote1.text = data.payment_note
 
                                 }
-//                                binding.tvReturnPeti.text = data.damage_eggs.`return`.peti.toString()
-//                                binding.tvReturnTray.text = data.damage_eggs.`return`.tray.toString()
-//                                binding.tvReturnSingle.text = data.damage_eggs.`return`.single.toString()
-//
-//                                binding.tvLiquidPeti.text = data.damage_eggs.liquid.peti.toString()
-//                                binding.tvLiquidTray.text = data.damage_eggs.liquid.tray.toString()
-//                                binding.tvLiquidSingle.text = data.damage_eggs.liquid.single.toString()
-
-//                                // ================= ITEMS LIST =================
-//                                // If you have a RecyclerView to show `items`
-//                                val adapter = SaleItemAdapter(data.items)
-//                                binding.itemsRecyclerView.adapter = adapter
 
                             }
                         }
@@ -200,21 +170,7 @@ class SaleHistoryActivity : BaseActivity() {
             .map { it.first().uppercaseChar() }
             .joinToString("")
     }
-//
-//    // 🔹 K & M formatter (textbox friendly)
-//    private fun formatAmount(value: Double): String {
-//        return when {
-//            value >= 1_000_000 -> {
-//                val v = value / 1_000_000
-//                String.format("%.1f", v).removeSuffix(".0") + "M"
-//            }
-//            value >= 1_000 -> {
-//                val v = value / 1_000
-//                String.format("%.1f", v).removeSuffix(".0") + "K"
-//            }
-//            else -> value.toInt().toString()
-//        }
-//    }
+
 
 
     fun formatAmountString(amount: String): String {

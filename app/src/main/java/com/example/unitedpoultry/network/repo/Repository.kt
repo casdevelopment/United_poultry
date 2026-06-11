@@ -24,13 +24,14 @@ import com.example.unitedpoultry.History.model.HistoryData
 import com.example.unitedpoultry.History.model.SaleHistory
 
 import com.example.unitedpoultry.NewSale.model.PickedItemsResponse
-import com.example.unitedpoultry.NewSale.model.SaleResponseData
+import com.example.unitedpoultry.NewSale.model.SaleResponse
 import com.example.unitedpoultry.Profile.model.ChangePasswordRequestModel
 import com.example.unitedpoultry.exchange_return.model.ReturnOrExchangeRequest
 import com.example.unitedpoultry.network.api.ApiInterface
 import com.example.unitedpoultry.network.retrofit.BaseResponse
 import com.example.unitedpoultry.rider_expense.Model.ExpenseModel
 import com.example.unitedpoultry.rider_home.model.EggPickupRequest
+import com.example.unitedpoultry.rider_home.model.PickedToday
 import com.example.unitedpoultry.status_check.model.UserStatusResponse
 import com.example.unitedpoultry.waste_return.model.RiderReturnRequest
 import com.example.unitedpoultry.waste_return.model.RiderWasteRequest
@@ -231,7 +232,7 @@ class Repository(private val api: ApiInterface) {
         return api.adminLogout()
     }
 
-    suspend fun getRiderProducts(): Response<BaseResponse<PickedItemsResponse>> {
+    suspend fun getRiderProducts(): Response<BaseResponse<PickedToday>> {
         return api.getRiderProducts()
     }
 
@@ -247,7 +248,7 @@ class Repository(private val api: ApiInterface) {
         borrowedAmount: RequestBody,
         items: RequestBody,
         damageEggs: RequestBody
-    ): Response<BaseResponse<SaleResponseData>> {
+    ): Response<BaseResponse<SaleResponse>> {
         return api.createNewSale(shopId, areaId, paymentType, collectionAmount, borrowedAmount, items, damageEggs)
     }
 
@@ -262,7 +263,7 @@ class Repository(private val api: ApiInterface) {
         borrowed_amount: RequestBody,
         payment_record: MultipartBody.Part,
         note: RequestBody
-    ): Response<BaseResponse<SaleResponseData>> {
+    ): Response<BaseResponse<SaleResponse>> {
         return api.createNewSaleCheque(
             shop_id,
             area_id,

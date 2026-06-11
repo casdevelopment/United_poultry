@@ -10,24 +10,33 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.unitedpoultry.BaseActivity
+import com.example.unitedpoultry.NewSale.Adapter.NewSaleAdapter
+import com.example.unitedpoultry.NewSale.Adapter.RiderProductAdapter
+import com.example.unitedpoultry.NewSale.model.Damage
+import com.example.unitedpoultry.NewSale.model.DamageEggsRequest
+import com.example.unitedpoultry.NewSale.model.LiquidItem
 import com.example.unitedpoultry.NewSale.model.PickedItemsResponse
-import com.example.unitedpoultry.NewSale.model.Product
-import com.example.unitedpoultry.NewSale.model.SaleProduct
+import com.example.unitedpoultry.NewSale.model.QtyRequest
+import com.example.unitedpoultry.NewSale.model.RiderProductUI
 import com.example.unitedpoultry.NewSale.viewmodel.GetRiderProductViewModel
 import com.example.unitedpoultry.NewSale.viewmodel.RiderNewSaleViewModel
 import com.example.unitedpoultry.R
+import com.example.unitedpoultry.adminproduct.model.ProductData
+import com.example.unitedpoultry.adminproduct.viewmodel.GetProductViewModel
 import com.example.unitedpoultry.databinding.ActivitySaleFormBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse
+import com.example.unitedpoultry.rider_home.model.PickedToday
+import com.example.unitedpoultry.rider_home.model.PickedTodayProduct
 import com.example.unitedpoultry.util.AppUtil
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -39,23 +48,15 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileOutputStream
 
-
 class SaleFormActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySaleFormBinding
     private val viewModel: GetRiderProductViewModel by viewModel()
     private val saleViewModel: RiderNewSaleViewModel by viewModel()
 
-    private var remainingQty = 0
-    private val traysPerPeti = 12
-    private var stockPeti = 0
 
-    private var trayProductObj: SaleProduct? = null
-
-    private var isUpdatingTray = false
-    private var isUpdatingPeti = false
-
-    private var productList = listOf<Product>()
+    private val quantityMap = mutableMapOf<Int, Int>()
+    private var productList = listOf<RiderProductUI>()
     private var discountPercent: Double = 0.0
 
     private var shopId: Int = 0
@@ -65,7 +66,32 @@ class SaleFormActivity : BaseActivity() {
     private var address: String = ""
 
     private var paymentType = "cash"
-    private var discountPerPeti: Double = 0.0
+
+
+
+    private var currentSubtotal: Double = 0.0
+    private var currentTotalEggs: Int = 0
+    private var currentNumberOfPattis: Int = 0
+    private var currentDiscountAmount: Double = 0.0
+    private var currentTotalAfterDiscount: Double = 0.0
+
+
+
+
+    private val productViewModel: GetProductViewModel by viewModel()
+
+
+
+    private val expireQuantityMap = mutableMapOf<Int, Int>()
+    private val returnQuantityMap = mutableMapOf<Int, Int>()
+
+    private var allproductList = listOf<com.example.unitedpoultry.adminproduct.model.Product>()
+
+    private lateinit var expireAdapter: NewSaleAdapter
+    private lateinit var returnAdapter: NewSaleAdapter
+
+    private var liquidKg: Int = 0
+
 
     private var selectedImageFile: File? = null
 
@@ -79,31 +105,33 @@ class SaleFormActivity : BaseActivity() {
     }
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySaleFormBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        discountPerPeti = intent.getStringExtra("DISCOUNT")?.toDoubleOrNull() ?: 0.0
-
         configureStatusBar(isLightBackground = true, colorResId = android.R.color.white)
+
+        discountPercent = intent.getStringExtra("DISCOUNT")?.toDoubleOrNull() ?: 0.0
 
         shopId = intent.getIntExtra("SHOP_ID", 0)
         areaId = intent.getIntExtra("AREA_ID", 0)
-
 
         name = intent.getStringExtra("NAME") ?: "N/A"
         address = intent.getStringExtra("ADDRESS") ?: "N/A"
 
 
-        loadProducts()
+        setupRecycler()
+        setupExpireRecycler()
+        setupReturnRecycler()
+
         setupClicks()
         showData()
-        setupDamageTextWatchers()
         setupCollectionWatcher()
+
         resetImageViews()
         selectButton(binding.cashLayout)
-
     }
 
     private fun showData() {
@@ -112,15 +140,13 @@ class SaleFormActivity : BaseActivity() {
         binding.tvShopAddress.text = address
         binding.tvInitials.text = getInitials(name)
         binding.tvDiscount.text = "Rs 0"
-        binding.tvSubtotal.text = "Rs 0"
-        binding.tvTotal.text = "Rs 0"
     }
-
 
     private fun setupClicks() {
         binding.backArrow.setOnClickListener { finish() }
 
         binding.btnCancel.setOnClickListener { finish() }
+
 
         binding.cashLayout.setOnClickListener {
             selectButton(binding.cashLayout)
@@ -130,7 +156,10 @@ class SaleFormActivity : BaseActivity() {
             selectButton(binding.addExpenseLayout)
         }
 
+
+
         binding.imageContainer.setOnClickListener { showImagePickerDialog() }
+
 
 
         binding.btnConfirmSale.setOnClickListener {
@@ -139,87 +168,144 @@ class SaleFormActivity : BaseActivity() {
             if (validateInputs()) {
 
                 if(paymentType=="cash") {
-                    submitSale()
+                   submitSale()
                 }else{
                     submitSaleCheque()
                 }
             }
         }
 
+
     }
 
-
-//    override fun onResume() {
-//        super.onResume()
-//        loadProducts()
+//    private fun submitSale(selectedItems: Map<Int, Int>) {
+//        val subTotal = calculateSubtotal(selectedItems)
+//        val discountAmount = subTotal * (discountPercent / 100.0)
+//        val totalAmount = (subTotal - discountAmount).coerceAtLeast(0.0)
+//
+//        val items = selectedItems.map { (productId, qty) ->
+//            SaleItem(product_id = productId, qty = qty)
+//        }
+//
+//        val request = SaleRequest(
+//            shop_id = shopId,
+//            area_id = areaId,
+//            sub_total = subTotal,
+//            discount = discountAmount,
+//            total = totalAmount,
+//            cash_received = totalAmount,
+//            items = items
+//        )
+//
+//        saleViewModel.createNewSale(request).observe(this) { response ->
+//            when (response.status) {
+//                Status.LOADING -> AppUtil.startLoader(this)
+//                Status.SUCCESS -> {
+//                    AppUtil.stopLoader()
+//                    val res = response.data
+//                    if (res != null && res.isSuccessful) {
+//                        val body = res.body()
+//                        if (body?.result == "success") {
+//                            Toast.makeText(this, "Sale created successfully", Toast.LENGTH_SHORT).show()
+//                            finish()
+//                        } else {
+//                            Toast.makeText(this, body?.message ?: "Failed to create sale", Toast.LENGTH_SHORT).show()
+//                        }
+//                    }
+//                }
+//                Status.ERROR -> {
+//                    AppUtil.stopLoader()
+//                    Toast.makeText(this, response.message ?: "Network Error", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        }
 //    }
 
+    override fun onResume() {
+        super.onResume()
+        loadProducts()
+        loadAllProducts()
+    }
 
+    private fun setupRecycler() {
+        binding.recyclerProducts.layoutManager = LinearLayoutManager(this)
+        binding.recyclerProducts.adapter = RiderProductAdapter(productList, quantityMap) { subtotal, totalEggs ->
+            updateTotal(subtotal, totalEggs)
+        }
+    }
 
     private fun loadProducts() {
         viewModel.getRiderProducts().observe(this) { response ->
-
             when (response.status) {
 
                 Status.LOADING -> AppUtil.startLoader(this)
 
                 Status.SUCCESS -> {
-
                     AppUtil.stopLoader()
 
                     val res = response.data
-
                     if (res != null && res.isSuccessful) {
 
-                        val base = res.body() as BaseResponse<PickedItemsResponse>?
+                        val baseResponse = res.body() as BaseResponse<PickedToday>?
 
-                        if (base?.result == "success" && base.data != null) {
+                        if (baseResponse?.result == "success" && baseResponse.data != null) {
 
-                            remainingQty = base.data.remaining.total_trays
+                            val data = baseResponse.data
 
+                            val remainingMap = data.remaining
 
-                            if (remainingQty <= 0) {
-                                binding.productLayout.visibility = View.GONE
-                                binding.tvEmptyProducts.visibility = View.VISIBLE
-                                return@observe
+                            productList = data.products.mapNotNull { product ->
+
+                                val remainingQty = remainingMap.entries.find {
+                                    it.key.equals(product.name, ignoreCase = true)
+                                }?.value ?: 0
+
+                                if (remainingQty > 0) {
+                                    RiderProductUI(
+                                        id = product.id,
+                                        name = product.name,
+                                        price = product.latest_price,
+                                        remainingQty = remainingQty
+                                    )
+                                } else null
                             }
 
-                            binding.productLayout.visibility = View.VISIBLE
-                            binding.tvEmptyProducts.visibility = View.GONE
 
-                            val trayProduct = base.data.products.find { it.name.equals("Tray", true) }
+                            if (productList.isEmpty()) {
 
-                            trayProduct?.let { tray ->
+                                binding.productLayout.visibility = View.GONE
+                                binding.tvEmptyProducts.visibility = View.VISIBLE
 
-                                trayProductObj = SaleProduct(
-                                    id = tray.id,
-                                    name = tray.name,
-                                    price = tray.latest_price,
-                                    remainingQty = remainingQty
-                                )
+                            } else {
 
-                                stockPeti = remainingQty / traysPerPeti
+                                binding.productLayout.visibility = View.VISIBLE
+                                binding.tvEmptyProducts.visibility = View.GONE
 
-                                binding.trayLayout.visibility = View.VISIBLE
-                                binding.petiLayout.visibility =
-                                    if (stockPeti > 0) View.VISIBLE else View.GONE
+                                binding.recyclerProducts.layoutManager = LinearLayoutManager(this)
 
-//                                binding.etTrayQuantity.text.clear()
-//                                binding.etPetiQuantity.text.clear()
-
-                                setupQuantityWatchers()
+                                binding.recyclerProducts.adapter =
+                                    RiderProductAdapter(productList, quantityMap) { subtotal, totalEggs ->
+                                        updateTotal(subtotal, totalEggs)
+                                    }
                             }
 
                         } else {
-                            binding.productLayout.visibility = View.GONE
-                            binding.tvEmptyProducts.visibility = View.VISIBLE
+                            Toast.makeText(
+                                this,
+                                baseResponse?.message ?: "Failed to fetch products",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }
 
                 Status.ERROR -> {
                     AppUtil.stopLoader()
-                    Toast.makeText(this, "Network error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        response.message ?: "Network Error",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -228,139 +314,83 @@ class SaleFormActivity : BaseActivity() {
 
 
 
-    private fun setupQuantityWatchers() {
+    private fun setupExpireRecycler() {
+        binding.recyclerExpireProducts.layoutManager = LinearLayoutManager(this)
 
-        binding.etTrayQuantity.addTextChangedListener(object : SimpleTextWatcher() {
-
-            override fun afterTextChanged(s: Editable?) {
-
-                if (isUpdatingTray) return
-                isUpdatingTray = true
-
-                var tray = s.toString().toIntOrNull() ?: 0
-                var peti = binding.etPetiQuantity.text.toString().toIntOrNull() ?: 0
-
-//                if (tray > 11){
-//
-//                    Toast.makeText(this@SaleFormActivity, "Tray cannot be more than 11", Toast.LENGTH_SHORT).show()
-//
-//                    tray = 11
-//                }
-
-                if (tray > 11) {
-                    binding.etTrayQuantityError.visibility = View.VISIBLE
-                    binding.etTrayQuantityError.text = "Cannot exceed 11 trays"
-
-                    tray = 11
-                } else {
-                    binding.etTrayQuantityError.visibility = View.GONE
-                }
-
-                val total = tray + peti * traysPerPeti
-
-                if (total > remainingQty) {
-
-                    tray = (remainingQty - peti * traysPerPeti).coerceAtLeast(0)
-
-                    Toast.makeText(
-                        this@SaleFormActivity,
-                        "Tray adjusted because of Peti",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-                setNumberOrHint(binding.etTrayQuantity, tray)
-
-                val remainingForPeti = remainingQty - tray
-
-                stockPeti = remainingForPeti / traysPerPeti
-
-                binding.petiLayout.visibility =
-                    if (stockPeti > 0) View.VISIBLE else View.GONE
-
-                if (peti > stockPeti) {
-
-                    peti = stockPeti
-
-                    setNumberOrHint(binding.etPetiQuantity, peti)
-                }
-
-                isUpdatingTray = false
-
-                calculateTotals()
-            }
-        })
-
-
-        binding.etPetiQuantity.addTextChangedListener(object : SimpleTextWatcher() {
-
-            override fun afterTextChanged(s: Editable?) {
-
-                if (isUpdatingPeti) return
-                isUpdatingPeti = true
-
-                var peti = s.toString().toIntOrNull() ?: 0
-                var tray = binding.etTrayQuantity.text.toString().toIntOrNull() ?: 0
-
-                val remainingForPeti = remainingQty - tray
-
-                val maxPeti = remainingForPeti / traysPerPeti
-
-                if (peti > maxPeti) {
-
-                    peti = maxPeti
-
-                    binding.etPetiQuantityError.visibility = View.VISIBLE
-                    binding.etPetiQuantityError.text = "Cannot order more Peti than available"
-
-                }else {
-                    binding.etPetiQuantityError.visibility = View.GONE
-                }
-
-                setNumberOrHint(binding.etPetiQuantity, peti)
-
-                val total = tray + peti * traysPerPeti
-
-                if (total > remainingQty) {
-
-                    tray = (remainingQty - peti * traysPerPeti).coerceAtLeast(0)
-
-                    setNumberOrHint(binding.etTrayQuantity, tray)
-                }
-
-                isUpdatingPeti = false
-
-                calculateTotals()
-            }
-        })
+        expireAdapter = NewSaleAdapter(allproductList, expireQuantityMap)
+        binding.recyclerExpireProducts.adapter = expireAdapter
     }
 
-    private fun calculateTotals() {
+    private fun setupReturnRecycler() {
+        binding.recyclerReturnProducts.layoutManager = LinearLayoutManager(this)
 
-        val tray = binding.etTrayQuantity.text.toString().toIntOrNull() ?: 0
-        val peti = binding.etPetiQuantity.text.toString().toIntOrNull() ?: 0
-
-        val totalTrays = tray + (peti * traysPerPeti)
-
-        val price = trayProductObj?.price ?: 0.0
-
-        val subtotal = totalTrays * price
-
-        val discountAmount = peti * discountPerPeti
-
-        val total = subtotal - discountAmount
-
-        binding.tvSubtotal.text = "Rs. ${formatAmount(subtotal)}"
-
-        binding.tvDiscount.text = "Rs. ${formatAmount(discountAmount)}"
-
-        binding.tvTotal.text = "Rs. ${formatAmount(total)}"
-
-        binding.etBorrowedAmount.setText(formatAmount(total))
-
-        binding.etCollectionAmount.text.clear()
+        returnAdapter = NewSaleAdapter(allproductList, returnQuantityMap)
+        binding.recyclerReturnProducts.adapter = returnAdapter
     }
 
+    private fun loadAllProducts() {
+        productViewModel.getProducts().observe(this) { response ->
+            when (response.status) {
+                Status.LOADING -> AppUtil.startLoader(this)
+                Status.SUCCESS -> {
+                    AppUtil.stopLoader()
+                    val res = response.data
+                    if (res != null && res.isSuccessful) {
+                        val baseResponse = res.body() as BaseResponse<ProductData>?
+                        if (baseResponse?.result == "success" && baseResponse.data != null) {
+
+                            allproductList = baseResponse.data.products
+
+                            expireAdapter = NewSaleAdapter(allproductList, expireQuantityMap)
+                            returnAdapter = NewSaleAdapter(allproductList, returnQuantityMap)
+
+                            binding.recyclerExpireProducts.adapter = expireAdapter
+                            binding.recyclerReturnProducts.adapter = returnAdapter
+
+                        } else {
+                            Toast.makeText(this, baseResponse?.message ?: "Failed to fetch products", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                Status.ERROR -> {
+                    AppUtil.stopLoader()
+                    Toast.makeText(this, response.message ?: "Network Error", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+
+    private fun updateTotal(subtotal: Double, totalEggs: Int) {
+//        val eggsPerPatti = 360
+//        val numberOfPattis = totalEggs / eggsPerPatti   // integer division
+//        val discountAmount = numberOfPattis * discountPercent   // discount per patti
+        val totalAfterDiscount = (subtotal - discountPercent).coerceAtLeast(0.0)
+
+        // Update UI
+        binding.tvSubtotal.text = "Rs. %.2f".format(subtotal)
+        binding.tvDiscount.text = "Rs. %.2f".format(discountPercent)
+        binding.tvTotal.text = "Rs. %.2f".format(totalAfterDiscount)
+        binding.etBorrowedAmount.setText(formatAmount(totalAfterDiscount))
+        binding.etCollectionAmount.setText("")
+
+        // Store for intent
+//        currentSubtotal = subtotal
+//        currentTotalEggs = totalEggs
+//        currentNumberOfPattis = numberOfPattis
+//        currentDiscountAmount = discountAmount
+//        currentTotalAfterDiscount = totalAfterDiscount
+    }
+
+
+    //    private fun calculateSubtotal(selectedItems: Map<Int, Int>): Double {
+//        var subtotal = 0.0
+//        selectedItems.forEach { (productId, qty) ->
+//            val product = productList.find { it.product_id == productId }
+//            subtotal += (product?.price?.toDoubleOrNull() ?: 0.0) * qty
+//        }
+//        return subtotal
+//    }
     fun formatAmount(amount: Double): String {
         return if (amount % 1.0 == 0.0) {
             "%.0f".format(amount)   // whole number → no decimal
@@ -369,116 +399,7 @@ class SaleFormActivity : BaseActivity() {
         }
     }
 
-    private fun setNumberOrHint(editText: EditText, value: Int) {
 
-        val text = if (value == 0) "" else value.toString()
-
-        if (editText.text.toString() != text) {
-            editText.setText(text)
-            editText.setSelection(editText.text.length)
-        }
-    }
-
-    abstract class SimpleTextWatcher : android.text.TextWatcher {
-
-        override fun beforeTextChanged(
-            s: CharSequence?,
-            start: Int,
-            count: Int,
-            after: Int
-        ) {
-        }
-
-        override fun onTextChanged(
-            s: CharSequence?,
-            start: Int,
-            before: Int,
-            count: Int
-        ) {
-        }
-    }
-
-
-    private fun setupDamageTextWatchers() {
-        val damageFields: Map<String, Map<String, android.widget.EditText>> = mapOf(
-            "expire" to mapOf(
-                "peti" to binding.etExpirePeti,
-                "tray" to binding.etExpireTray,
-                "single" to binding.etExpireSingle
-            ),
-            "return" to mapOf(
-                "peti" to binding.etReturnPeti,
-                "tray" to binding.etReturnTray,
-                "single" to binding.etReturnSingle
-            ),
-            "liquid" to mapOf(
-//                "peti" to binding.etLiquidPeti,
-//                "tray" to binding.etLiquidTray,
-                "kg" to binding.etLiquidKg
-            )
-        )
-
-        damageFields.forEach { (_, map) ->
-            map.forEach { (_, editText) ->
-                // Initialize with "0"
-                if (editText.text.isEmpty()) editText.hint = "Amount"
-
-                editText.addTextChangedListener(object : TextWatcher {
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-                    override fun afterTextChanged(s: Editable?) {
-                        // Update TextViews whenever a value changes
-                        updateDamageTextViews()
-                    }
-                })
-            }
-        }
-
-        // Initialize display
-        updateDamageTextViews()
-    }
-
-    private fun updateDamageTextViews() {
-        val damageMap = getDamageEggsMap()
-
-        binding.tvExpire.text = "Peti:${damageMap["expire"]?.get("peti") ?: 0} " +
-                "Tray:${damageMap["expire"]?.get("tray") ?: 0} " +
-                "Single:${damageMap["expire"]?.get("single") ?: 0}"
-
-        binding.tvReturn.text = "Peti:${damageMap["return"]?.get("peti") ?: 0} " +
-                "Tray:${damageMap["return"]?.get("tray") ?: 0} " +
-                "Single:${damageMap["return"]?.get("single") ?: 0}"
-
-//        binding.tvLiquid.text = "Peti:${damageMap["liquid"]?.get("peti") ?: 0} " +
-//                "Tray:${damageMap["liquid"]?.get("tray") ?: 0} " +
-//                "Single:${damageMap["liquid"]?.get("single") ?: 0}"
-
-        binding.tvLiquid.text = "Kg:${damageMap["liquid"]?.get("kg") ?: 0}"
-    }
-
-    private fun getDamageEggsMap(): Map<String, Map<String, Int>> {
-        return mapOf(
-            "expire" to mapOf(
-                "peti" to (binding.etExpirePeti.text.toString().toIntOrNull() ?: 0),
-                "tray" to (binding.etExpireTray.text.toString().toIntOrNull() ?: 0),
-                "single" to (binding.etExpireSingle.text.toString().toIntOrNull() ?: 0)
-            ),
-            "return" to mapOf(
-                "peti" to (binding.etReturnPeti.text.toString().toIntOrNull() ?: 0),
-                "tray" to (binding.etReturnTray.text.toString().toIntOrNull() ?: 0),
-                "single" to (binding.etReturnSingle.text.toString().toIntOrNull() ?: 0)
-            ),
-//            "liquid" to mapOf(
-////                "peti" to (binding.etLiquidPeti.text.toString().toIntOrNull() ?: 0),
-////                "tray" to (binding.etLiquidTray.text.toString().toIntOrNull() ?: 0),
-//                "single" to (binding.etLiquidSingle.text.toString().toIntOrNull() ?: 0)
-//            )
-
-            "liquid" to mapOf(
-                "kg" to (binding.etLiquidKg.text.toString().toIntOrNull() ?: 0)
-            )
-        )
-    }
 
     private fun setupCollectionWatcher() {
         binding.etCollectionAmount.addTextChangedListener(object : TextWatcher {
@@ -502,7 +423,6 @@ class SaleFormActivity : BaseActivity() {
             }
         })
     }
-
 
 
     private fun getInitials(name: String): String {
@@ -564,13 +484,16 @@ class SaleFormActivity : BaseActivity() {
     }
 
 
+
+
+
     private fun validateInputs(): Boolean {
         var valid = true
 
         binding.imageError.visibility = View.GONE
-      //  binding.etNoteError.visibility = View.GONE
+        //  binding.etNoteError.visibility = View.GONE
 
-        binding.etTrayQuantityError.visibility = View.GONE
+        //binding.etTrayQuantityError.visibility = View.GONE
 
 
         if (selectedImageFile == null && paymentType == "online_cheque") {
@@ -587,34 +510,34 @@ class SaleFormActivity : BaseActivity() {
 //            valid = false
 //        }
 
-        val tray = binding.etTrayQuantity.text.toString().toIntOrNull() ?: 0
-        val peti = binding.etPetiQuantity.text.toString().toIntOrNull() ?: 0
-        val totalTrayQty = tray + (peti * traysPerPeti)
+//        val tray = binding.etTrayQuantity.text.toString().toIntOrNull() ?: 0
+//        val peti = binding.etPetiQuantity.text.toString().toIntOrNull() ?: 0
+//        val totalTrayQty = tray + (peti * traysPerPeti)
 
-        // 1️⃣ No stock remaining
-        if (remainingQty <= 0) {
-            Toast.makeText(this, "No stock remaining", Toast.LENGTH_SHORT).show()
-            valid = false
-        }
+//        // 1️⃣ No stock remaining
+//        if (remainingQty <= 0) {
+//            Toast.makeText(this, "No stock remaining", Toast.LENGTH_SHORT).show()
+//            valid = false
+//        }
+//
+//
+//        if (totalTrayQty > remainingQty) {
+//            Toast.makeText(this, "Not enough stock available", Toast.LENGTH_SHORT).show()
+//            valid = false
+//        }
+//        if (tray > 11) {
+//            binding.etTrayQuantityError.visibility = View.VISIBLE
+//            binding.etTrayQuantityError.text = "Cannot exceed 11 trays"
+//            valid = false
+//        }
+//
+//        if (tray == 0 && peti == 0) {
+//            binding.etTrayQuantityError.visibility = View.VISIBLE
+//            binding.etTrayQuantityError.text = "Please enter tray or peti quantity"
+//            valid = false
+//        }
 
 
-        if (totalTrayQty > remainingQty) {
-            Toast.makeText(this, "Not enough stock available", Toast.LENGTH_SHORT).show()
-            valid = false
-        }
-        if (tray > 11) {
-            binding.etTrayQuantityError.visibility = View.VISIBLE
-            binding.etTrayQuantityError.text = "Cannot exceed 11 trays"
-            valid = false
-        }
-
-        if (tray == 0 && peti == 0) {
-            binding.etTrayQuantityError.visibility = View.VISIBLE
-            binding.etTrayQuantityError.text = "Please enter tray or peti quantity"
-            valid = false
-        }
-
-        // 3️⃣ Remaining stock check
 //        if (totalTrayQty > remainingQty) {
 //            binding.etTrayQuantityError.visibility = View.VISIBLE
 //            binding.etTrayQuantityError.text = "Not enough trays available"
@@ -624,58 +547,117 @@ class SaleFormActivity : BaseActivity() {
         return valid
     }
 
+
+    private fun buildItemsList(): List<Map<String, Int>> {
+        return quantityMap
+            .filter { it.value > 0 }
+            .map { (productId, qty) ->
+                mapOf(
+                    "product_id" to productId,
+                    "qty" to qty
+                )
+            }
+    }
+
+
+
+
+
+
+    private fun buildRequest(): DamageEggsRequest {
+
+        liquidKg = binding.etLiquidKg.text.toString().toIntOrNull() ?: 0
+
+        val expire = expireQuantityMap
+            .filter { it.value > 0 }
+            .map {
+                QtyRequest(
+                    product_id = it.key,
+                    qty = it.value
+                )
+            }
+
+        val returnList = returnQuantityMap
+            .filter { it.value > 0 }
+            .map {
+                QtyRequest(
+                    product_id = it.key,
+                    qty = it.value
+                )
+            }
+
+        return DamageEggsRequest(
+            damage_eggs = Damage(
+                expire = expire,
+                returnData = returnList,
+                liquid = LiquidItem(liquidKg)
+            )
+        )
+    }
+
+//    private fun buildExpireMap(): Map<String, Int> {
+//        val result = mutableMapOf<String, Int>()
+//
+//        quantityMap.forEach { (productId, qty) ->
+//            val productName = allproductList
+//                .find { it.id == productId }
+//                ?.name
+//                ?.lowercase()
+//                ?: return@forEach
+//
+//            result[productName] = qty
+//        }
+//
+//        return result
+//    }
+//
+//
+//    private fun buildExpireMap(): Map<String, Int> {
+//        val result = mutableMapOf<String, Int>()
+//
+//        quantityMap.forEach { (productId, qty) ->
+//            val productName = allproductList
+//                .find { it.id == productId }
+//                ?.name
+//                ?.lowercase()
+//                ?: return@forEach
+//
+//            result[productName] = qty
+//        }
+//
+//        return result
+//    }
+//
+//
+//    private fun buildDamageEggs(): Map<String, Any> {
+//        return mapOf(
+//            "expire" to buildExpireMap()
+//        )
+//    }
+
     private fun submitSale() {
-        val tray = binding.etTrayQuantity.text.toString().toIntOrNull() ?: 0
-        val peti = binding.etPetiQuantity.text.toString().toIntOrNull() ?: 0
-
-        val totalTrayQty = tray + (peti * traysPerPeti)
-
-        if (totalTrayQty <= 0) {
-            Toast.makeText(this, "Please enter quantity", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val productId = trayProductObj?.id ?: 0
-
-
 
         val gson = Gson()
 
-        val itemsList = listOf(
-            mapOf(
-                "product_id" to productId,
-                "qty" to totalTrayQty
-            )
-        )
+        val itemsList = buildItemsList()
+
+        if (itemsList.isEmpty()) {
+            Toast.makeText(this, "Please select at least one product", Toast.LENGTH_SHORT).show()
+            return
+        }
+
 
         val itemsJson = gson.toJson(itemsList)
         val itemsBody = itemsJson.toRequestBody("application/json".toMediaTypeOrNull())
 
-        // ---------------- DAMAGE EGGS JSON ----------------
-        val damageEggsMap: Map<String, Map<String, Int>> = mapOf(
-            "expire" to mapOf(
-                "peti" to (binding.etExpirePeti.text.toString().toIntOrNull() ?: 0),
-                "tray" to (binding.etExpireTray.text.toString().toIntOrNull() ?: 0),
-                "single" to (binding.etExpireSingle.text.toString().toIntOrNull() ?: 0)
-            ),
-            "return" to mapOf(
-                "peti" to (binding.etReturnPeti.text.toString().toIntOrNull() ?: 0),
-                "tray" to (binding.etReturnTray.text.toString().toIntOrNull() ?: 0),
-                "single" to (binding.etReturnSingle.text.toString().toIntOrNull() ?: 0)
-            ),
-//            "liquid" to mapOf(
-////                "peti" to (binding.etLiquidPeti.text.toString().toIntOrNull() ?: 0),
-////                "tray" to (binding.etLiquidTray.text.toString().toIntOrNull() ?: 0),
-//                "single" to (binding.etLiquidSingle.text.toString().toIntOrNull() ?: 0)
-//            )
+        val damageEggs = buildRequest()
 
-            "liquid" to mapOf(
-                "kg" to (binding.etLiquidKg.text.toString().toIntOrNull() ?: 0)
-            )
-        )
-
-        val damageEggsJson = gson.toJson(damageEggsMap)
+        val damageEggsJson = gson.toJson(damageEggs)
         val damageEggsBody = damageEggsJson.toRequestBody("application/json".toMediaTypeOrNull())
+
+
+
+
 
         // ---------------- BASIC FIELDS ----------------
         val shop_id = shopId.toString().toPart()
@@ -720,6 +702,7 @@ class SaleFormActivity : BaseActivity() {
                 }
 
                 Status.ERROR -> {
+
                     Toast.makeText(this, "Network connection problem. Please try again.", Toast.LENGTH_SHORT).show()
                 }
 
@@ -728,63 +711,34 @@ class SaleFormActivity : BaseActivity() {
         }
     }
 
+
+
+
+
+
     private fun submitSaleCheque() {
-
-        val tray = binding.etTrayQuantity.text.toString().toIntOrNull() ?: 0
-        val peti = binding.etPetiQuantity.text.toString().toIntOrNull() ?: 0
-
-        val totalTrayQty = tray + (peti * traysPerPeti)
-
-        if (totalTrayQty <= 0) {
-            Toast.makeText(this, "Please enter quantity", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val productId = trayProductObj?.id ?: 0
-
-
 
         val gson = Gson()
 
-        val itemsList = listOf(
-            mapOf(
-                "product_id" to productId,
-                "qty" to totalTrayQty
-            )
-        )
+        val itemsList = buildItemsList()
+
+        if (itemsList.isEmpty()) {
+            Toast.makeText(this, "Please select at least one product", Toast.LENGTH_SHORT).show()
+            return
+        }
+
 
         val itemsJson = gson.toJson(itemsList)
         val itemsBody = itemsJson.toRequestBody("application/json".toMediaTypeOrNull())
 
+        val damageEggs = buildRequest()
 
-
-        // ---------------- DAMAGE EGGS JSON ----------------
-        val damageEggsMap: Map<String, Map<String, Int>> = mapOf(
-            "expire" to mapOf(
-                "peti" to (binding.etExpirePeti.text.toString().toIntOrNull() ?: 0),
-                "tray" to (binding.etExpireTray.text.toString().toIntOrNull() ?: 0),
-                "single" to (binding.etExpireSingle.text.toString().toIntOrNull() ?: 0)
-            ),
-            "return" to mapOf(
-                "peti" to (binding.etReturnPeti.text.toString().toIntOrNull() ?: 0),
-                "tray" to (binding.etReturnTray.text.toString().toIntOrNull() ?: 0),
-                "single" to (binding.etReturnSingle.text.toString().toIntOrNull() ?: 0)
-            ),
-//            "liquid" to mapOf(
-//               // "peti" to (binding.etLiquidPeti.text.toString().toIntOrNull() ?: 0),
-//             //   "tray" to (binding.etLiquidTray.text.toString().toIntOrNull() ?: 0),
-//                "single" to (binding.etLiquidSingle.text.toString().toIntOrNull() ?: 0)
-//            )
-
-            "liquid" to mapOf(
-                "kg" to (binding.etLiquidKg.text.toString().toIntOrNull() ?: 0)
-            )
-        )
-
-        val damageEggsJson = gson.toJson(damageEggsMap)
+        val damageEggsJson = gson.toJson(damageEggs)
         val damageEggsBody = damageEggsJson.toRequestBody("application/json".toMediaTypeOrNull())
 
-        // ---------------- BASIC FIELDS ----------------
+
+
+
         val shop_id = shopId.toString().toPart()
         val area_id = areaId.toString().toPart()
         val payment_type = paymentType.toPart()

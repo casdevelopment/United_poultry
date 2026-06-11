@@ -22,7 +22,7 @@ import com.example.unitedpoultry.History.model.ExpenseItem
 import com.example.unitedpoultry.History.model.HistoryData
 import com.example.unitedpoultry.History.model.SaleHistory
 import com.example.unitedpoultry.NewSale.model.PickedItemsResponse
-import com.example.unitedpoultry.NewSale.model.SaleResponseData
+import com.example.unitedpoultry.NewSale.model.SaleResponse
 import com.example.unitedpoultry.Profile.model.ChangePasswordRequestModel
 import com.example.unitedpoultry.adminproduct.model.ProductData
 import com.example.unitedpoultry.exchange_return.model.ReturnOrExchangeRequest
@@ -31,6 +31,7 @@ import com.example.unitedpoultry.rider_expense.Model.ExpenseModel
 import com.example.unitedpoultry.rider_home.model.DailyPaymentStatsData
 import com.example.unitedpoultry.rider_home.model.EggPickupData
 import com.example.unitedpoultry.rider_home.model.EggPickupRequest
+import com.example.unitedpoultry.rider_home.model.PickedToday
 import com.example.unitedpoultry.status_check.model.UserStatusResponse
 import com.example.unitedpoultry.waste_return.model.RiderReturnRequest
 import com.example.unitedpoultry.waste_return.model.RiderWasteRequest
@@ -224,7 +225,7 @@ interface ApiInterface {
     suspend fun adminLogout():Response<BaseResponse<Any>>
 
     @GET("seller/egg-pickup/picked-today")
-    suspend fun getRiderProducts(): Response<BaseResponse<PickedItemsResponse>>
+    suspend fun getRiderProducts(): Response<BaseResponse<PickedToday>>
 
 //    @POST("seller/sales") // Replace with your actual endpoint
 //    suspend fun createNewSale(@Body request: SaleRequest): Response<BaseResponse<Any>>
@@ -239,7 +240,7 @@ interface ApiInterface {
         @Part("borrowed_amount") borrowedAmount: RequestBody,
         @Part("items") items: RequestBody,
         @Part("damage_eggs") damageEggs: RequestBody
-    ): Response<BaseResponse<SaleResponseData>>
+    ): Response<BaseResponse<SaleResponse>>
 
 
     @Multipart
@@ -254,7 +255,7 @@ interface ApiInterface {
         @Part("borrowed_amount") borrowed_amount: RequestBody,
         @Part payment_record: MultipartBody.Part,
         @Part("payment_note") note: RequestBody,
-        ): Response<BaseResponse<SaleResponseData>>
+        ): Response<BaseResponse<SaleResponse>>
 
 
     @POST("seller/sale-returns") // Replace with your actual endpoint
