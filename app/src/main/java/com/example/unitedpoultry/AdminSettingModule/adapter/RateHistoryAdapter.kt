@@ -12,7 +12,7 @@ import com.example.unitedpoultry.AdminShopModule.AdminShopDetailsActivity
 import com.example.unitedpoultry.R
 
 class RateHistoryAdapter(
-    originalList: MutableList<RatesData>,
+    private val  originalList: MutableList<RatesData>,
 ) : RecyclerView.Adapter<RateHistoryAdapter.ViewHolder>() {
 
     private var filteredList: MutableList<RatesData> = originalList.toMutableList()
@@ -40,6 +40,38 @@ class RateHistoryAdapter(
     }
 
     override fun getItemCount(): Int = filteredList.size
+
+
+    fun updateList(newList: MutableList<RatesData>) {
+        originalList.clear()
+        originalList.addAll(newList)
+
+        filteredList.clear()
+        filteredList.addAll(newList)
+
+        notifyDataSetChanged()
+    }
+
+
+    fun filter(query: String) {
+
+        if (query.isBlank()) {
+
+            filteredList = originalList.toMutableList()
+
+        } else {
+
+            filteredList = originalList.filter {
+
+                it.date.contains(query, true) ||
+                        it.product_name.contains(query, true)
+
+            }.toMutableList()
+        }
+
+        notifyDataSetChanged()
+    }
+
 
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {

@@ -1,6 +1,7 @@
 package com.example.unitedpoultry.AdminDashBoard
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.unitedpoultry.AdminDashBoard.fragments.AdminRateManagementFragment
 import com.example.unitedpoultry.AdminDashBoard.fragments.AreasAdminFragment
@@ -24,14 +25,17 @@ class AdminDashBoardActivity : BaseActivity() {
 
         configureStatusBar(isLightBackground = false, colorResId = R.color.primary)
 
-        configureStatusBar(false, R.color.primary)
+        //configureStatusBar(false, R.color.primary)
 
         selectedTabId = savedInstanceState?.getInt("tab") ?: R.id.nav_home
 
         loadFragment(getFragmentByMenuId(selectedTabId))
 
         binding.bottomNavigation.selectedItemId = selectedTabId
+
         setupBottomNavigation()
+
+        setupKeyboardListener()
     }
 
     private fun setupBottomNavigation() {
@@ -43,6 +47,8 @@ class AdminDashBoardActivity : BaseActivity() {
             true
         }
     }
+
+
 
     private fun loadFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
@@ -64,6 +70,20 @@ class AdminDashBoardActivity : BaseActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("tab", selectedTabId)
+    }
+
+
+    private fun setupKeyboardListener() {
+        val rootView = binding.root
+        rootView.viewTreeObserver.addOnGlobalLayoutListener {
+            val rect = android.graphics.Rect()
+            rootView.getWindowVisibleDisplayFrame(rect)
+            val screenHeight = rootView.rootView.height
+            val keypadHeight = screenHeight - rect.bottom
+
+            binding.bottomNavigation.visibility =
+                if (keypadHeight > screenHeight * 0.15) View.GONE else View.VISIBLE
+        }
     }
 
 
