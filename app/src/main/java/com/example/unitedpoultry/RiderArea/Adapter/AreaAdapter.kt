@@ -50,7 +50,7 @@ class AreaAdapter(
         val item = filteredList[position]
 
         holder.tvAreaName.text = item.name
-        holder.tvAreaAddress.text = "${item.city}, ${item.description}"
+        holder.tvAreaAddress.text = "${item.city}, ${item.description ?: ""}"
         holder.tvTotalShops.text = item.shops_count.toString()
 //        holder.tvRiders.text = "-"        // ignore for now
 //        holder.tvRecieveable.text = "-"
@@ -109,7 +109,7 @@ class AreaAdapter(
         filteredList = if (query.isEmpty()) areaList.toMutableList()
         else areaList.filter {
             it.name.contains(query, true) ||
-                    it.description.contains(query, true) ||
+                  //  it.description.contains(query, true) ||
                     it.city.contains(query, true)
         }.toMutableList()
         notifyDataSetChanged()

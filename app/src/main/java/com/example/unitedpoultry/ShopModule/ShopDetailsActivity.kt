@@ -225,7 +225,8 @@ class ShopDetailsActivity : BaseActivity() {
 
 
        // binding.tvAreaName.text = shop.area_name
-        binding.tvLastVisit.text = formatDate(shop.last_visit)
+        binding.tvLastVisit.text =
+            shop.last_visit?.let { formatDate(it) } ?: "Not visited"
 
 
         binding.tvCashIn.text = "${shop.cash_in}"
@@ -234,20 +235,20 @@ class ShopDetailsActivity : BaseActivity() {
         binding.tvDiscountPerPatti.text = "${shop.discount_per_petti}"
 
 
-        val damage = shop.damage_return
-
-        // EXPIRE
-        binding.etExpirePeti.text = damage.expire.peti.toString()
-        binding.tvExpireTray.text = damage.expire.tray.toString()
-        binding.tvExpireSingle.text = damage.expire.single.toString()
-
-        // RETURN
-        binding.tvReturnPeti.text = damage.`return`.peti.toString()
-        binding.tvReturnTray.text = damage.`return`.tray.toString()
-        binding.tvReturnSingle.text = damage.`return`.single.toString()
-
-        // LIQUID
-        binding.etLiquidKgs.text = damage.liquid.kg.toString()
+//        val damage = shop.damage_return
+//
+//        // EXPIRE
+//        binding.etExpirePeti.text = damage.expire.peti.toString()
+//        binding.tvExpireTray.text = damage.expire.tray.toString()
+//        binding.tvExpireSingle.text = damage.expire.single.toString()
+//
+//        // RETURN
+//        binding.tvReturnPeti.text = damage.`return`.peti.toString()
+//        binding.tvReturnTray.text = damage.`return`.tray.toString()
+//        binding.tvReturnSingle.text = damage.`return`.single.toString()
+//
+//        // LIQUID
+//        binding.etLiquidKgs.text = damage.liquid.kg.toString()
 //        binding.tvLiquidTray.text = damage.liquid.tray.toString()
 //        binding.tvLiquidSingle.text = damage.liquid.single.toString()
 

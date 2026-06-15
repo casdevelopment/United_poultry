@@ -4,7 +4,7 @@ package com.example.unitedpoultry.AdminArea.model
 data class AreaModel(
     val id: Int,
     val name: String,
-    val description: String,
+    val description: String?,
     val city: String,
     val is_active: Boolean,
     val created_at: String,

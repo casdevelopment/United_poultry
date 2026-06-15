@@ -6,7 +6,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.unitedpoultry.AdminShopModule.model.ShopModel
-import com.example.unitedpoultry.AdminShopModule.model.ShopsData
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.R
 import com.example.unitedpoultry.ShopModule.Adapter.RiderShopListAdapter

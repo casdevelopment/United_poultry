@@ -22,8 +22,6 @@ data class ShopModel(
     val borrowed: Int,
     val repaid: Int,
     val visited: Boolean,
-
-
     val contact_person: String,
     val phone_number: String,
     val image: String?,

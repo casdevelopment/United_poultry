@@ -252,7 +252,7 @@ class RiderShopListAdapter(
         val tvAddress: TextView = v.findViewById(R.id.tvAddress)
 
         val statusText: TextView = v.findViewById(R.id.statusText)
-       // val tvInitials: TextView = v.findViewById(R.id.tvInitials)
+        // val tvInitials: TextView = v.findViewById(R.id.tvInitials)
         //val statusLayout: LinearLayout = v.findViewById(R.id.statusLayout)
         val btnNewSale: MaterialButton = v.findViewById(R.id.btnNewSale)
 //        val btnCollect: MaterialButton = v.findViewById(R.id.btnCollect)

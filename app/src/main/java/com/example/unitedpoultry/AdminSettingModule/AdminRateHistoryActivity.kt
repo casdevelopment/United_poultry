@@ -34,7 +34,7 @@ class AdminRateHistoryActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Initialize view binding
+
         binding = ActivityAdminRateHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -149,16 +149,14 @@ class AdminRateHistoryActivity : BaseActivity() {
                     val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
                     val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
-                    // Check if we've reached the last item
+
                     if (lastVisibleItemPosition >= totalItemCount - 1) {
-                        // Load more data
+
                         if (historyCurrentPage < historyLastPage) {
                             loadMoreHistoryData()
                         }
 
                     }
-
-                    // Optional: Log for debugging
                     Log.v(
                         "ScrollInfo",
                         "First: $firstVisibleItemPosition, Last: $lastVisibleItemPosition, Total: $totalItemCount"
@@ -171,7 +169,7 @@ class AdminRateHistoryActivity : BaseActivity() {
 
 
     private fun loadMoreHistoryData() {
-        // Increment page and fetch more data
+
         historyCurrentPage++
         getRateHistory()
     }

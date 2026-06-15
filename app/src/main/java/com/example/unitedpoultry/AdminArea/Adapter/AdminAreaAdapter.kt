@@ -92,7 +92,7 @@ class AdminAreaAdapter(
         filteredList = if (query.isEmpty()) areaList.toMutableList()
         else areaList.filter {
             it.name.contains(query, true) ||
-                    it.description.contains(query, true) ||
+                    //it.description.contains(query, true) ||
                     it.city.contains(query, true)
         }.toMutableList()
         notifyDataSetChanged()
