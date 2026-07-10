@@ -142,7 +142,6 @@ class LoginFragment : Fragment() {
                     if (retrofitResponse != null) {
 
                         if (retrofitResponse.isSuccessful) {
-                            // ✅ 2xx response
                             val baseResponse = retrofitResponse.body()
 
                             if (baseResponse != null) {
@@ -169,15 +168,10 @@ class LoginFragment : Fragment() {
                                 }
 
                             } else {
-                                Toast.makeText(
-                                    requireActivity(),
-                                    "Empty response from server",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                Toast.makeText(requireActivity(), "Empty response from server", Toast.LENGTH_SHORT).show()
                             }
 
                         } else {
-                            // ❗ HTTP error but API responded (401, 422, 500)
                             val errorMessage = try {
                                 val errorBody = retrofitResponse.errorBody()?.string()
                                 if (!errorBody.isNullOrEmpty()) {
@@ -191,29 +185,17 @@ class LoginFragment : Fragment() {
                                 "Login failed"
                             }
 
-                            Toast.makeText(
-                                requireActivity(),
-                                errorMessage,
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show()
                         }
 
                     } else {
-                        Toast.makeText(
-                            requireActivity(),
-                            "No response from server",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(requireActivity(), "No response from server", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 Status.ERROR -> {
                     AppUtil.stopLoader()
-                    Toast.makeText(
-                        requireActivity(),
-                        apiResponse.message ?: "Network Error",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(requireActivity(), apiResponse.message ?: "Network Error", Toast.LENGTH_SHORT).show()
                 }
             }
         }

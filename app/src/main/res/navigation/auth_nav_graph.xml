@@ -2,7 +2,32 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/auth_nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/OnBoardForthFragment">
+
+
+        <fragment
+            android:id="@+id/OnBoardForthFragment"
+            android:name="com.example.unitedpoultry.Welcome.fragments.OnBoardForthFragment"
+            android:label="Forth Fragment">
+            <action
+                android:id="@+id/action_forth_to_fifth"
+                app:destination="@id/OnBoardFifthFragment" />
+        </fragment>
+
+        <fragment
+            android:id="@+id/OnBoardFifthFragment"
+            android:name="com.example.unitedpoultry.Welcome.fragments.OnBoardFifthFragment"
+            android:label="Fifth Fragment">
+            <action
+                android:id="@+id/action_fifth_to_forth"
+                app:destination="@id/OnBoardForthFragment" />
+
+            <action
+                android:id="@+id/action_fifth_to_login"
+                app:destination="@id/loginFragment" />
+
+
+        </fragment>
 
     <fragment
         android:id="@+id/loginFragment"

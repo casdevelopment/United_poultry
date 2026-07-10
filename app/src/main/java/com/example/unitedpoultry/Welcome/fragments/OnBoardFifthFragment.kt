@@ -45,14 +45,18 @@ class OnBoardFifthFragment : Fragment() {
 
         binding.btnNext.setOnClickListener {
 
-            val intent = Intent(requireContext(), AuthenticationActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(requireContext(), AuthenticationActivity::class.java)
+//            startActivity(intent)
+
+            findNavController().navigate(R.id.action_fifth_to_login)
         }
 
         binding.btnContinueEmail.setOnClickListener {
 
-            val intent = Intent(requireContext(), AuthenticationActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(requireContext(), AuthenticationActivity::class.java)
+//            startActivity(intent)
+
+            findNavController().navigate(R.id.action_fifth_to_login)
         }
 
     }

@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.TextView
 import com.example.unitedpoultry.AdminDashBoard.AdminDashBoardActivity
+import com.example.unitedpoultry.Authentications.AuthenticationActivity
 import com.example.unitedpoultry.Authentications.login.model.LoginResponseModel
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.R
@@ -85,7 +86,7 @@ class SplashActivity :  BaseActivity() {
                 Gson().fromJson( sessionManager.getUserInfo(), LoginResponseModel::class.java)
 
             if(AppConstants.userData!!.role_id == 1){
-                //startActivity(Intent(this@SplashActivity, AdminDashBoardActivity::class.java))
+
                 val intent = Intent(this@SplashActivity, AdminDashBoardActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
@@ -93,7 +94,7 @@ class SplashActivity :  BaseActivity() {
 
 
             }else if (AppConstants.userData!!.role_id == 2){
-                //startActivity(Intent(this@SplashActivity, RiderDashBoardActivity::class.java))
+
 
                 val intent = Intent(this@SplashActivity, RiderDashBoardActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -101,7 +102,14 @@ class SplashActivity :  BaseActivity() {
                 finish()
             }
         } else {
-            startActivity(Intent(this@SplashActivity, WelcomeActivity::class.java))
+            // Check if the user is launching the app for the very first time
+            if (sessionManager.isFirstTime()) {
+                // First time ever? Show onboarding/welcome activity
+                startActivity(Intent(this@SplashActivity, WelcomeActivity::class.java))
+            } else {
+                // Returning logged-out user? Skip onboarding, go straight to login
+                startActivity(Intent(this@SplashActivity, AuthenticationActivity::class.java))
+            }
             finish()
         }
     }

@@ -33,6 +33,16 @@ class SessionManager(private val sharedPreferences: SharedPreferences) {
         return sharedPreferences.getString(TOKEN, null)
     }
 
+    // Inside your SessionManager class
+    fun isFirstTime(): Boolean {
+        // Default to true if the key doesn't exist yet
+        return sharedPreferences.getBoolean("KEY_IS_FIRST_TIME", true)
+    }
+
+    fun setFirstTimeLaunch(isFirstTime: Boolean) {
+        sharedPreferences.edit().putBoolean("KEY_IS_FIRST_TIME", isFirstTime).apply()
+    }
+
 
 
 }
