@@ -85,7 +85,8 @@
                     android:scaleType="centerInside"
                     app:tint="@null"
                     android:clickable="true"
-                    android:focusable="true" />
+                    android:focusable="true"
+                    android:visibility="gone"/>
 
 
 

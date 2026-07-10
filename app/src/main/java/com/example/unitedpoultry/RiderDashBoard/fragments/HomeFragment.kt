@@ -194,10 +194,10 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-        binding.notifications.setOnClickListener {
-            val intent = Intent(requireContext(), NotificationActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.notifications.setOnClickListener {
+//            val intent = Intent(requireContext(), NotificationActivity::class.java)
+//            startActivity(intent)
+//        }
 
 //        binding.openReturnDialog.setOnClickListener {
 //

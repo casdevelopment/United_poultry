@@ -185,7 +185,8 @@
                             android:background="@drawable/square_white"
                             android:contentDescription="Status"
                             android:src="@drawable/nextarrowsvg"
-                            android:layout_gravity="center_vertical"/>
+                            android:layout_gravity="center_vertical"
+                            android:visibility="gone"/>
 
 
                     </LinearLayout>

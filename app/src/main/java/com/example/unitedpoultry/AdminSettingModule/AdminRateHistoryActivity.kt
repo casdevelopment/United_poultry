@@ -46,14 +46,11 @@ class AdminRateHistoryActivity : BaseActivity() {
         setupSearch()
 
 
-        with(binding) {
-
-
-            backArrow.setOnClickListener {
+        binding.backArrow.setOnClickListener {
                 finish()
-            }
-
         }
+
+
 
 
     }

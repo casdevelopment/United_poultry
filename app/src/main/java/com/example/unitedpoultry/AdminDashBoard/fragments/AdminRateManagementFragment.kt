@@ -92,6 +92,11 @@ class AdminRateManagementFragment : Fragment(), TodayRateAdapter.OnPriceChangeLi
 //                finish()
 //            }
 
+            btnCancel.setOnClickListener {
+                changedRatesMap.clear()
+                getTodayRate()
+            }
+
             btnSave.setOnClickListener {
                 updateProductRate()
             }

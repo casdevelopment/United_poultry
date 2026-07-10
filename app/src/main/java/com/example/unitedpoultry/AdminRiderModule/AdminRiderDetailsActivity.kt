@@ -188,6 +188,7 @@ class AdminRiderDetailsActivity : BaseActivity() {
         binding.tvRiderName.text= rider.name
         binding.tvAddress.text = rider.address
         binding.tvPhoneNumber.text = rider.phone_number
+        binding.tvEmail.text = rider.email
         binding.tvCnic.text = rider.cnic
         binding.tvAddress.text = rider.address
 

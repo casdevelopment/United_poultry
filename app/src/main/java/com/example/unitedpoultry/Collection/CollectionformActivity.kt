@@ -111,6 +111,14 @@ class CollectionformActivity : BaseActivity() {
     }
 
     private fun setupClicks() {
+        binding.backArrow.setOnClickListener {
+           finish()
+        }
+
+        binding.btnCancel.setOnClickListener {
+            finish()
+        }
+
 
         binding.cashLayout.setOnClickListener {
             selectButton(binding.cashLayout)

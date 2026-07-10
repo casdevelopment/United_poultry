@@ -340,7 +340,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 app:cardUseCompatPadding="true"
-                android:backgroundTint="@color/white"
+                app:cardBackgroundColor="@android:color/white"
                 app:layout_constraintTop_toBottomOf="@id/todayTargetCard"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -386,7 +386,8 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:padding="10dp"
-                        android:layout_marginLeft="15dp">
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="10dp">
 
 
                         <TextView
@@ -420,7 +421,8 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:padding="10dp"
-                        android:layout_marginLeft="15dp">
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="10dp">
 
 
                         <TextView
@@ -436,6 +438,42 @@
 
                         <TextView
                             android:id="@+id/tvCnic"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="-"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:gravity="end"/>
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="10dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="10dp">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Email"
+                            android:textColor="@color/black60"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:layout_marginRight="10dp"/>
+
+                        <TextView
+                            android:id="@+id/tvEmail"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"

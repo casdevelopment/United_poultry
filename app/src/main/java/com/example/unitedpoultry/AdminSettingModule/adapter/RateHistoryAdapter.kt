@@ -30,11 +30,11 @@ class RateHistoryAdapter(
         holder.tVPrice.text = item.price+"/"+item.product_name
 
 
-        holder.itemView.setOnClickListener {
-            val context = holder.itemView.context
-            val intent = Intent(context, AdminRateHistoryActivity::class.java)
-            context.startActivity(intent)
-        }
+//        holder.itemView.setOnClickListener {
+//            val context = holder.itemView.context
+//            val intent = Intent(context, AdminRateHistoryActivity::class.java)
+//            context.startActivity(intent)
+//        }
 
 
     }
