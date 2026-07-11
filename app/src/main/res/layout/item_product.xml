@@ -15,8 +15,7 @@
         android:layout_width="0dp"
         android:layout_weight="1.5"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvProductName"
@@ -44,13 +43,14 @@
         android:id="@+id/etQuantity"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="45dp"
+        android:layout_height="55dp"
         android:background="@drawable/edit_text_bg_no_border"
         android:textColor="@color/black60"
         android:textSize="14sp"
         android:inputType="number"
+        android:gravity="center"
         android:backgroundTint="@color/primary20"
-        android:hint="Enter Amount" />
+        android:hint="Enter Quantity" />
 
     </LinearLayout>
 

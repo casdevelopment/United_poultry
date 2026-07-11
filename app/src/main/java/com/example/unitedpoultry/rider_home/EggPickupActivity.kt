@@ -44,7 +44,7 @@ class EggPickupActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        loadProducts() // Reload products every time activity is resumed
+        loadProducts()
     }
 
     private fun setupRecycler() {
@@ -292,7 +292,6 @@ class EggPickupActivity : BaseActivity() {
 //
 //                            if (body != null) {
 //
-//                                // 🔥 ALWAYS show backend message (success or error)
 //                                Toast.makeText(
 //                                    this,
 //                                    body.message ?: "No message from server",

@@ -155,7 +155,8 @@
         android:layout_margin="16dp"
         app:cardBackgroundColor="@color/primary"
         app:cardElevation="6dp"
-        android:layout_gravity="bottom|end">
+        android:layout_gravity="bottom|end"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="match_parent"
@@ -163,7 +164,8 @@
             android:src="@drawable/pplussvg"
             android:scaleType="center"
             android:padding="12dp"
-            app:tint="@color/white"/>
+            app:tint="@color/white"
+            />
     </com.google.android.material.card.MaterialCardView>
 
 </FrameLayout>

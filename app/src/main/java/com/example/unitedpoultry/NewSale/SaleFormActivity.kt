@@ -56,7 +56,7 @@ class SaleFormActivity : BaseActivity() {
 
     private val quantityMap = mutableMapOf<Int, Int>()
     private var productList = listOf<RiderProductUI>()
-    private var discountPercent: Double = 0.0
+    private var discountPerPetti: Double = 0.0
 
     private var shopId: Int = 0
     private var areaId: Int = 0
@@ -112,7 +112,7 @@ class SaleFormActivity : BaseActivity() {
 
         configureStatusBar(isLightBackground = true, colorResId = android.R.color.white)
 
-        discountPercent = intent.getStringExtra("DISCOUNT")?.toDoubleOrNull() ?: 0.0
+        discountPerPetti = intent.getStringExtra("DISCOUNT")?.toDoubleOrNull() ?: 0.0
 
         shopId = intent.getIntExtra("SHOP_ID", 0)
         areaId = intent.getIntExtra("AREA_ID", 0)
@@ -259,11 +259,34 @@ class SaleFormActivity : BaseActivity() {
                                     it.key.equals(product.name, ignoreCase = true)
                                 }?.value ?: 0
 
+
+
                                 if (remainingQty > 0) {
+                                    val basePrice = product.latest_price ?: 0.0
+
+                                    val finalPrice = when {
+                                        product.name.equals("Petti", ignoreCase = true) -> {
+                                            basePrice - discountPerPetti
+                                        }
+
+                                        product.name.equals("Tray", ignoreCase = true) -> {
+                                            val pettiBasePrice = data.products.find {
+                                                it.name.equals("Petti", ignoreCase = true)
+                                            }?.latest_price ?: 0.0
+
+                                            val adjustedPettiPrice = pettiBasePrice - discountPerPetti
+                                            adjustedPettiPrice / 12.0
+                                        }
+
+                                        // For carton, shapper, liquid, etc., leave the price as-is
+                                        else -> basePrice
+                                    }
+
+                                    // 3. Map it to your UI Model with the updated price
                                     RiderProductUI(
                                         id = product.id,
                                         name = product.name,
-                                        price = product.latest_price,
+                                        price = finalPrice, // Passing the newly calculated price here
                                         remainingQty = remainingQty
                                     )
                                 } else null
@@ -361,26 +384,53 @@ class SaleFormActivity : BaseActivity() {
 
 
     private fun updateTotal(subtotal: Double, totalEggs: Int) {
-//        val eggsPerPatti = 360
-//        val numberOfPattis = totalEggs / eggsPerPatti   // integer division
-//        val discountAmount = numberOfPattis * discountPercent   // discount per patti
-        val totalAfterDiscount = (subtotal - discountPercent).coerceAtLeast(0.0)
+        // 1. Use .contains() instead of .equals() since the name string now contains prices
+        val pettiProduct = productList.find { it.name.contains("Petti", ignoreCase = true) }
+        val trayProduct = productList.find { it.name.contains("Tray", ignoreCase = true) }
 
-        // Update UI
-        binding.tvSubtotal.text = "Rs. %.2f".format(subtotal)
-        binding.tvDiscount.text = "Rs. %.2f".format(discountPercent)
+        val pettiId = pettiProduct?.id
+        val trayId = trayProduct?.id
+
+        val pettiQty = if (pettiId != null) quantityMap[pettiId] ?: 0 else 0
+        val trayQty = if (trayId != null) quantityMap[trayId] ?: 0 else 0
+
+        val totalPettiDiscount = pettiQty * discountPerPetti
+        val totalTrayDiscount = trayQty * (discountPerPetti / 12.0)
+        val totalCalculatedDiscount = totalPettiDiscount + totalTrayDiscount
+
+        val originalSubtotal = subtotal + totalCalculatedDiscount
+        val totalAfterDiscount = subtotal
+
+
+        val discountText = when {
+            pettiQty > 0 && trayQty > 0 -> {
+                "Petti: Rs. %.0f | Tray: Rs. %.0f".format(totalPettiDiscount, totalTrayDiscount)
+            }
+            pettiQty > 0 -> {
+                "Petti Disc: Rs. %.0f".format(totalPettiDiscount)
+            }
+            trayQty > 0 -> {
+                "Tray Disc: Rs. %.0f".format(totalTrayDiscount)
+            }
+            else -> {
+                "Rs. 0.00"
+            }
+        }
+
+
+        binding.tvSubtotal.text = "Rs. %.2f".format(originalSubtotal)
+
+        binding.tvDiscount.text = discountText
+
         binding.tvTotal.text = "Rs. %.2f".format(totalAfterDiscount)
+
         binding.etBorrowedAmount.setText(formatAmount(totalAfterDiscount))
         binding.etCollectionAmount.setText("")
 
-        // Store for intent
-//        currentSubtotal = subtotal
-//        currentTotalEggs = totalEggs
-//        currentNumberOfPattis = numberOfPattis
-//        currentDiscountAmount = discountAmount
-//        currentTotalAfterDiscount = totalAfterDiscount
+        currentSubtotal = originalSubtotal
+        currentDiscountAmount = totalCalculatedDiscount
+        currentTotalAfterDiscount = totalAfterDiscount
     }
-
 
     //    private fun calculateSubtotal(selectedItems: Map<Int, Int>): Double {
 //        var subtotal = 0.0
