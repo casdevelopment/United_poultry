@@ -11,9 +11,17 @@ class SessionManager(private val sharedPreferences: SharedPreferences) {
         return sharedPreferences.getString(KEY_USER_INFO, null) != null
     }
 
+//    fun logout() {
+//        val editor = sharedPreferences.edit()
+//        editor.clear()
+//        editor.apply()
+//    }
+
     fun logout() {
         val editor = sharedPreferences.edit()
-        editor.clear()
+        // Remove only session specific keys instead of wiping the entire sharedPreferences file
+        editor.remove(KEY_USER_INFO)
+        editor.remove(TOKEN)
         editor.apply()
     }
 

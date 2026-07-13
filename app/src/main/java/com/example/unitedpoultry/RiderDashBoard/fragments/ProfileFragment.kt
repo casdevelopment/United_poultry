@@ -108,7 +108,7 @@ class ProfileFragment : Fragment() {
                 .setCancelable(true)
                 .create()
 
-            // 🔥 THIS LINE FIXES THE EDGES
+
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
             val btnCancel = dialogView.findViewById<MaterialButton>(R.id.btnCancel)

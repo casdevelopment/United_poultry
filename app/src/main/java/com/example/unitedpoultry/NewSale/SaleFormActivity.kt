@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide
 import com.example.unitedpoultry.BaseActivity
 import com.example.unitedpoultry.NewSale.Adapter.NewSaleAdapter
 import com.example.unitedpoultry.NewSale.Adapter.RiderProductAdapter
+import com.example.unitedpoultry.NewSale.Adapter.SaleProductAdapter
 import com.example.unitedpoultry.NewSale.model.Damage
 import com.example.unitedpoultry.NewSale.model.DamageEggsRequest
 import com.example.unitedpoultry.NewSale.model.LiquidItem
@@ -139,6 +140,8 @@ class SaleFormActivity : BaseActivity() {
         binding.tvShopAddress.text = address
         binding.tvInitials.text = getInitials(name)
         binding.tvDiscount.text = "Rs 0"
+
+        binding.tvDiscountPerPatti.text = "Rs $discountPerPetti per Petti"
     }
 
     private fun setupClicks() {
@@ -228,7 +231,7 @@ class SaleFormActivity : BaseActivity() {
 
     private fun setupRecycler() {
         binding.recyclerProducts.layoutManager = LinearLayoutManager(this)
-        binding.recyclerProducts.adapter = RiderProductAdapter(productList, quantityMap) { subtotal, totalEggs ->
+        binding.recyclerProducts.adapter = SaleProductAdapter(productList, quantityMap) { subtotal, totalEggs ->
             updateTotal(subtotal, totalEggs)
         }
     }
@@ -306,7 +309,7 @@ class SaleFormActivity : BaseActivity() {
                                 binding.recyclerProducts.layoutManager = LinearLayoutManager(this)
 
                                 binding.recyclerProducts.adapter =
-                                    RiderProductAdapter(productList, quantityMap) { subtotal, totalEggs ->
+                                    SaleProductAdapter(productList, quantityMap) { subtotal, totalEggs ->
                                         updateTotal(subtotal, totalEggs)
                                     }
                             }
@@ -404,13 +407,13 @@ class SaleFormActivity : BaseActivity() {
 
         val discountText = when {
             pettiQty > 0 && trayQty > 0 -> {
-                "Petti: Rs. %.0f | Tray: Rs. %.0f".format(totalPettiDiscount, totalTrayDiscount)
+                "Petti: Rs. %.2f\nTray: Rs. %.2f".format(totalPettiDiscount, totalTrayDiscount)
             }
             pettiQty > 0 -> {
-                "Petti Disc: Rs. %.0f".format(totalPettiDiscount)
+                "Petti : Rs. %.2f".format(totalPettiDiscount)
             }
             trayQty > 0 -> {
-                "Tray Disc: Rs. %.0f".format(totalTrayDiscount)
+                "Tray : Rs. %.2f".format(totalTrayDiscount)
             }
             else -> {
                 "Rs. 0.00"

@@ -2,6 +2,7 @@ package com.example.unitedpoultry.Welcome.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,6 +41,8 @@ class OnBoardThirdFragment : Fragment() {
            // findNavController().navigate(R.id.action_third_to_forth)
 
             sessionManager.setFirstTimeLaunch(false)
+            Log.d("SPLASH_DEBUG", "in third onboarding marking flag to false")
+
 
             val intent = Intent(requireContext(), AuthenticationActivity::class.java)
             startActivity(intent)

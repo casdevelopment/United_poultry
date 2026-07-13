@@ -28,8 +28,7 @@ class AdminShopDetailsActivity : BaseActivity() {
     private var areaId: Int = 0
     private var shopId: Int = 0
 
-    // ✅ refresh flag
-   // private var shouldRefresh = false
+
 
     private val editLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -98,7 +97,6 @@ class AdminShopDetailsActivity : BaseActivity() {
         }
     }
 
-    // ✅ refresh when coming back from edit
     override fun onResume() {
         super.onResume()
         //if (shouldRefresh) {
@@ -150,7 +148,7 @@ class AdminShopDetailsActivity : BaseActivity() {
         binding.tvShopAddress.text = shop.address
         binding.tvAddress.text = shop.address
        // binding.tvDiscount.text = shop.discount_per_petti
-        binding.tvDiscountPercent.text = "${shop.discount_per_petti} per patti"
+        binding.tvDiscountPercent.text = "${shop.discount_per_petti}"
         binding.tvContactName.text = shop.contact_person
         binding.tvPhoneNumber.text = shop.phone_number
 

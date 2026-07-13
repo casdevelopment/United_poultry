@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.TextView
 import com.example.unitedpoultry.AdminDashBoard.AdminDashBoardActivity
 import com.example.unitedpoultry.Authentications.AuthenticationActivity
@@ -77,13 +78,14 @@ class SplashActivity :  BaseActivity() {
 
     private fun navigateFunction(){
 
+        Log.d("SPLASH_DEBUG", "isFirstTime value is currently: ${sessionManager.isFirstTime()}")
+
         if (sessionManager.isLoggedIn()) {
             // setting token
             AppConstants.AUTH_TOKEN = sessionManager.getToken().toString()
 
             //  getting user info
-            AppConstants.userData =
-                Gson().fromJson( sessionManager.getUserInfo(), LoginResponseModel::class.java)
+            AppConstants.userData = Gson().fromJson( sessionManager.getUserInfo(), LoginResponseModel::class.java)
 
             if(AppConstants.userData!!.role_id == 1){
 
@@ -104,10 +106,12 @@ class SplashActivity :  BaseActivity() {
         } else {
             // Check if the user is launching the app for the very first time
             if (sessionManager.isFirstTime()) {
-                // First time ever? Show onboarding/welcome activity
+                Log.d("SPLASH_DEBUG", "Routing to WelcomeActivity because isFirstTime is true")
+                sessionManager.setFirstTimeLaunch(false)
                 startActivity(Intent(this@SplashActivity, WelcomeActivity::class.java))
+
             } else {
-                // Returning logged-out user? Skip onboarding, go straight to login
+                Log.d("SPLASH_DEBUG", "Routing to AuthenticationActivity because isFirstTime is false")
                 startActivity(Intent(this@SplashActivity, AuthenticationActivity::class.java))
             }
             finish()

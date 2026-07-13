@@ -18,14 +18,17 @@ data class ShopModel(
     val discount_per_petti: String,
     val area_id: Int,
     val area_name: String,
-    val cash_in: Int,
-    val borrowed: Int,
-    val repaid: Int,
+
+    val cash_in: Double,
+    val borrowed: Double,
+    val repaid: Double,
+
     val visited: Boolean,
-    val contact_person: String,
-    val phone_number: String,
+
+    val contact_person: String?,
+    val phone_number: String?,
     val image: String?,
-    val is_active: Boolean,
+    val is_active: Boolean?
 )
 
 data class ShopsPagination(

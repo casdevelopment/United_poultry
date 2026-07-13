@@ -47,10 +47,10 @@ data class HistoryData(
 )
 
 data class Summary(
-    val total_cash_in: Int,
-    val total_repaid: Int,
-    val borrowed: Int,
-    val total_expenses: Int,
+    val total_cash_in: Double,
+    val total_repaid: Double,
+    val borrowed: Double,
+    val total_expenses: Double,
     val transactions_count: Int
 )
 
@@ -71,7 +71,7 @@ data class TransactionItem(
     val shop_id: Int,
     val shop_name: String,
     val description: String,
-    val amount: Int,
+    val amount: Double,
     val payment_type: String,
     val transaction_at: String
 )

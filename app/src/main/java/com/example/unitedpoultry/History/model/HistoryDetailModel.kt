@@ -48,8 +48,8 @@ data class SaleHistory(
 
     val payment_type: String,
 
-    val collection_amount: Int,
-    val borrowed_amount: Int,
+    val collection_amount: Double,
+    val borrowed_amount: Double,
 
     val payment_record_url: String?,
     val payment_note: String?,
