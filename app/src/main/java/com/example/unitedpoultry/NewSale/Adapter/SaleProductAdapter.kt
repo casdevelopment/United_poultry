@@ -28,11 +28,9 @@ class SaleProductAdapter(
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-
         val product = products[position]
 
         holder.binding.tvProductName.text = product.name
-
         holder.binding.tvPrice.text = "price: ${product.price.toInt()}/${product.name}"
 
         holder.binding.etQuantity.setText(
@@ -40,9 +38,17 @@ class SaleProductAdapter(
         )
 
         holder.binding.etQuantity.addTextChangedListener {
-
             val enteredQty = it.toString().toIntOrNull() ?: 0
-            val qty = enteredQty.coerceAtMost(product.remainingQty)
+
+            // 1. Determine maximum allowed limit for this specific product
+            val maxAllowed = if (product.name.equals("Tray", ignoreCase = true)) {
+                11.coerceAtMost(product.remainingQty) // Cap at 11 or remainingQty, whichever is lower
+            } else {
+                product.remainingQty
+            }
+
+            // 2. Coerce user input to maxAllowed
+            val qty = enteredQty.coerceAtMost(maxAllowed)
 
             if (qty != enteredQty) {
                 holder.binding.etQuantity.setText(qty.toString())
