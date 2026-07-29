@@ -48,17 +48,8 @@ import java.util.Locale
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-  //  private lateinit var shopAdapter: RiderHomeAdapter
-
-//    private val ViewModel: DailyStatsViewModel by viewModel()
-//    private val ViewModel1: DailyPaymentStatsViewModel by viewModel()
-//    private val ViewModel2: ReturnWasteViewModel by viewModel()
     private val ViewModel3: GetRiderProductViewModel by viewModel()
     private val ViewModel4: UserStatusViewModel by viewModel()
-
-//    private var productList = listOf<Product>()
-//
-//    private lateinit var productAdapter: RiderProductHorizontalAdapter
 
     private val riderViewModel: RiderDetailsViewModel by viewModel()
     private val sessionManager: SessionManager by inject()
@@ -83,7 +74,6 @@ class HomeFragment : Fragment() {
 
         activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.primary)
 
-        // Optional: Change status bar icons to dark if needed
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             activity?.window?.decorView?.systemUiVisibility = 0
         }
@@ -167,7 +157,6 @@ class HomeFragment : Fragment() {
 
         binding.addEggsLayout.setOnClickListener {
 
-            // Call your reusable UserStatusChecker
             UserStatusChecker.check(
                 lifecycleOwner = viewLifecycleOwner,
                 viewModel = ViewModel4,
@@ -303,207 +292,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-//    private fun loadDailyStats() {
-//
-//        ViewModel.getDailyStats().observe(viewLifecycleOwner) { response ->
-//            when (response.status) {
-//                Status.LOADING -> AppUtil.startLoader(requireActivity())
-//
-//                Status.SUCCESS -> {
-//                    AppUtil.stopLoader()
-//                    val res = response.data
-//                    if (res != null && res.isSuccessful) {
-//                        val baseResponse = res.body() as BaseResponse<EggPickupData>?
-//                        baseResponse?.data?.let { data ->
-//                           // binding.totalPicked.text = data.total_picked.toString()
-//                            binding.totalSold.text = data.total_sold.toString()
-//                            binding.totalReturned.text = data.total_returned.toString()
-//                            binding.totalWaste.text = data.total_waste.toString()
-//                        }
-//                    }
-//                }
-//
-//                Status.ERROR -> {
-//                    AppUtil.stopLoader()
-//                    Toast.makeText(
-//                        requireContext(),
-//                        response.message ?: "Network error",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//            }
-//        }
-//    }
-
-
-//    private fun loadDailyPaymentStats() {
-//
-//        ViewModel1.getDailyPaymentStats().observe(viewLifecycleOwner) { response ->
-//            when (response.status) {
-//                Status.LOADING -> AppUtil.startLoader(requireActivity())
-//
-//                Status.SUCCESS -> {
-//                    AppUtil.stopLoader()
-//                    val res = response.data
-//                    if (res != null && res.isSuccessful) {
-//                        val baseResponse = res.body() as BaseResponse<DailyPaymentStatsData>?
-//                        baseResponse?.data?.let { data ->
-//                           // binding.tvRecieved.text = "Rs ${data.today_total_cash_received}"
-//
-////                            binding.tvTotalAmount.text = "Rs ${data.today_total_cash_received}"
-////                            binding.tvTotalSales.text = data.today_total_eggs_sold.toString()
-//
-//                            // Cash received (String → Double → formatted)
-//                            val totalAmount = data.today_total_cash_received.toDoubleOrNull() ?: 0.0
-//                            binding.tvTotalAmount.text = "Rs ${formatNumber(totalAmount)}"
-//
-//                            binding.tvTotalSales.text = formatNumber(data.today_total_eggs_sold)
-//
-//
-//                            // binding.totalWaste.text = data.todayTotalEggsWaste.toString()
-//                        }
-//                    }
-//                }
-//
-//                Status.ERROR -> {
-//                    AppUtil.stopLoader()
-//                    Toast.makeText(
-//                        requireContext(),
-//                        response.message ?: "Network error",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//            }
-//        }
-//    }
-
-//    private fun showReturnWasteDialog() {
-//
-//        val dialogView = layoutInflater.inflate(R.layout.dialog_egg_return, null)
-//
-//        val dialog = AlertDialog.Builder(requireContext())
-//            .setView(dialogView)
-//            .setCancelable(true)
-//            .create()
-//
-//        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-//
-//        val btnReturn = dialogView.findViewById<MaterialButton>(R.id.btnReturn)
-//        val btnWaste = dialogView.findViewById<MaterialButton>(R.id.btnWaste)
-//
-//        // 👉 OPEN RETURN ACTIVITY
-//        btnReturn.setOnClickListener {
-//            val intent = Intent(requireContext(), RiderProductReturnActivity::class.java)
-//            startActivity(intent)
-//            dialog.dismiss()
-//        }
-//
-//
-//        btnWaste.setOnClickListener {
-//            val intent = Intent(requireContext(), RiderWasteProductActivity::class.java)
-//            startActivity(intent)
-//            dialog.dismiss()
-//        }
-//
-//        dialog.show()
-//    }
-
-
-
-
-//    private fun hitReturnWasteApi(returnCount: Int, wasteCount: Int) {
-//
-//        val todayDate = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(java.util.Date())
-//        // Show loader if needed
-//        AppUtil.startLoader(requireActivity())
-//
-//        val request = ReturnWasteRequestModel(
-//            returned = returnCount,
-//            waste = wasteCount,
-//            date = todayDate.toString().trim(),
-//        )
-//
-//        // Example: ViewModel function to hit API
-//        ViewModel2.submitReturnWaste(request).observe(viewLifecycleOwner) { response ->
-//            when (response.status) {
-//                Status.LOADING -> AppUtil.startLoader(requireActivity())
-//                Status.SUCCESS -> {
-//                    AppUtil.stopLoader()
-//                    Toast.makeText(requireContext(), "Submitted successfully", Toast.LENGTH_SHORT).show()
-//                    // Optionally, refresh your daily stats
-//
-//                    loadDailyStats()
-//                    loadDailyPaymentStats()
-//                    loadProducts()
-//                }
-//                Status.ERROR -> {
-//                    AppUtil.stopLoader()
-//                    Toast.makeText(requireContext(), response.message ?: "Network error", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        }
-//    }
-
-//    private fun setupRecycler() {
-//        productAdapter = RiderProductHorizontalAdapter()
-//        binding.recyclerProducts.layoutManager =
-//            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-//        binding.recyclerProducts.adapter = productAdapter
-//    }
-
-//    private fun loadProducts() {
-//        ViewModel3.getRiderProducts().observe(viewLifecycleOwner) { response ->
-//            when (response.status) {
-//                Status.LOADING -> { /* show loader if needed */ }
-//
-//                Status.SUCCESS -> {
-//                    val res = response.data
-//                    if (res != null && res.isSuccessful) {
-//                        val baseResponse = res.body() as BaseResponse<PickedItemsResponse>?
-//                        if (baseResponse?.result == "success" && baseResponse.data != null) {
-//
-//                            val products = baseResponse.data.picked_items
-//
-//                            if (products.isNullOrEmpty()) {
-//                                showProductEmptyState(true)
-//                            } else {
-//                                showProductEmptyState(false)
-//                                productAdapter.submitList(products)
-//
-//                                val totalEggsSum = products.sumOf { it.total_eggs }
-//                               // val total = formatNumber(totalEggsSum)
-//                                binding.tvTotalEggs.text = "Eggs  ${totalEggsSum}"
-//                            }
-//
-//                        } else {
-//                            showProductEmptyState(true)
-//                            Toast.makeText(
-//                                requireContext(),
-//                                baseResponse?.message ?: "Failed to fetch products",
-//                                Toast.LENGTH_SHORT
-//                            ).show()
-//                        }
-//                    } else {
-//                        showProductEmptyState(true)
-//                    }
-//                }
-//
-//                Status.ERROR -> {
-//                    showProductEmptyState(true)
-//                    Toast.makeText(
-//                        requireContext(),
-//                        response.message ?: "Network Error",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//            }
-//        }
-//    }
-
-//    private fun showProductEmptyState(show: Boolean) {
-//        binding.layoutEmpty.visibility = if (show) View.VISIBLE else View.GONE
-//        binding.recyclerProducts.visibility = if (show) View.GONE else View.VISIBLE
-//    }
 
 
     private fun loadProducts() {
@@ -552,10 +340,16 @@ class HomeFragment : Fragment() {
 
     private fun bindPickedItemsData(data: PickedToday) {
 
-        val totalPickedList = data.total_picked.map { it.key to it.value }
-        val remainingList = data.remaining.map { it.key to it.value }
-        val expireList = data.categories.expire.map { it.key to it.value }
-        val returnList = data.categories.`return`.map { it.key to it.value }
+        val rawTotalPickedList = data.total_picked.map { it.key to it.value }
+        val rawRemainingList = data.remaining.map { it.key to it.value }
+        val rawExpireList = data.categories.expire.map { it.key to it.value }
+        val rawReturnList = data.categories.`return`.map { it.key to it.value }
+
+        // Convert raw trays into Pettis + Remaining Trays for ALL lists
+        val totalPickedList = convertTraysToPettiAndTrays(rawTotalPickedList)
+        val remainingList = convertTraysToPettiAndTrays(rawRemainingList)
+        val expireList = convertTraysToPettiAndTrays(rawExpireList)
+        val returnList = convertTraysToPettiAndTrays(rawReturnList)
 
         binding.tvLiquidQuantity.text = data.categories.liquid.kg.toString()
 
@@ -570,50 +364,33 @@ class HomeFragment : Fragment() {
         toggleSection(binding.rvReturn, binding.emptyReturn, returnList.isNotEmpty())
     }
 
-//    private fun bindPickedItemsData(data: PickedItemsResponse) {
-//
-//        // DATE
-//      //  binding.tvDate.text = data.date
-//
-//        // TOTAL PICKED
-////        binding.tvTotalPickedPeti.text = "Peti: ${data.total_picked.peti}"
-////        binding.tvTotalPickedTray.text = "Tray: ${data.total_picked.tray}"
-//
-//        val totalTrays = data.total_picked.tray ?: 0
-//
-//        val peti = totalTrays / 12
-//        val tray = totalTrays % 12
-//
-//        binding.tvTotalPickedPeti.text = "Peti: $peti"
-//        binding.tvTotalPickedTray.text = "Tray: $tray"
-//
-//        // REMAINING
-////        binding.tvRemainingPeti.text = data.remaining.total_peti.toString()
-////        binding.tvRemainingTray.text = data.remaining.total_trays.toString()
-//
-//        val remainingTrays = data.remaining.total_trays ?: 0
-//
-//        val rPeti = remainingTrays / 12
-//        val rTray = remainingTrays % 12
-//
-//        binding.tvRemainingPeti.text = rPeti.toString()
-//        binding.tvRemainingTray.text = rTray.toString()
-//
-//        // EXPIRE
-//        binding.tvExpirePeti.text = "Peti: ${data.categories.expire.peti}"
-//        binding.tvExpireTray.text = "Tray: ${data.categories.expire.tray}"
-//        binding.tvExpireSingle.text = "Eggs: ${data.categories.expire.single}"
-//
-//        // RETURN
-//        binding.tvReturnPeti.text = "Peti: ${data.categories.`return`.peti}"
-//        binding.tvReturnTray.text = "Tray: ${data.categories.`return`.tray}"
-//        binding.tvReturnSingle.text = "Eggs: ${data.categories.`return`.single}"
-//
-//        // LIQUID
-//     //   binding.tvLiquidPeti.text = "Peti: ${data.categories.liquid.peti}"
-//        binding.tvLiquid.text = "Kg: ${data.categories.liquid.kg}"
-//     //   binding.tvLiquidSingle.text = "Eggs: ${data.categories.liquid.single}"
-//    }
+    private fun convertTraysToPettiAndTrays(list: List<Pair<String, Int>>): List<Pair<String, Int>> {
+        val result = mutableListOf<Pair<String, Int>>()
+        var pettiCount = 0
+
+        for ((key, count) in list) {
+            if (count <= 0) continue // Skip 0 items
+
+            if (key.contains("tray", ignoreCase = true)) {
+                pettiCount += count / 12
+                val remainingTrays = count % 12
+
+                if (remainingTrays > 0) {
+                    result.add(key to remainingTrays)
+                }
+            } else {
+                result.add(key to count)
+            }
+        }
+
+        // Insert Petti at the top if any exist (1 Petti = 12 Trays)
+        if (pettiCount > 0) {
+            result.add(0, "Petti" to pettiCount)
+        }
+
+        return result
+    }
+
 
     private fun getTodayDate(): String {
         val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())

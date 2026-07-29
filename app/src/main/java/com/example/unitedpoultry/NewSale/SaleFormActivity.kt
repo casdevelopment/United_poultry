@@ -35,6 +35,7 @@ import com.example.unitedpoultry.adminproduct.viewmodel.GetProductViewModel
 import com.example.unitedpoultry.databinding.ActivitySaleFormBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse
+import com.example.unitedpoultry.rider_home.model.PickedItem
 import com.example.unitedpoultry.rider_home.model.PickedToday
 import com.example.unitedpoultry.rider_home.model.PickedTodayProduct
 import com.example.unitedpoultry.util.AppUtil
@@ -170,7 +171,7 @@ class SaleFormActivity : BaseActivity() {
             if (validateInputs()) {
 
                 if(paymentType=="cash") {
-                   submitSale()
+                    submitSale()
                 }else{
                     submitSaleCheque()
                 }
@@ -253,61 +254,92 @@ class SaleFormActivity : BaseActivity() {
                         if (baseResponse?.result == "success" && baseResponse.data != null) {
 
                             val data = baseResponse.data
-
                             val remainingMap = data.remaining
 
-                            productList = data.products.mapNotNull { product ->
+                            val uiProductsList = mutableListOf<RiderProductUI>()
 
-                                val remainingQty = remainingMap.entries.find {
-                                    it.key.equals(product.name, ignoreCase = true)
-                                }?.value ?: 0
+                            // 1. Extract Base Tray Information
+                            val trayProduct = data.products.find { it.name.equals("Tray", ignoreCase = true) }
+                            val baseTrayPrice = trayProduct?.latest_price ?: 0.0
+
+                            val discountPerTray = discountPerPetti / 12.0
+                            val finalTrayPrice = (baseTrayPrice - discountPerTray).coerceAtLeast(0.0)
+
+                            val rawPettiPrice = baseTrayPrice * 12.0
+                            val finalPettiPrice = (rawPettiPrice - discountPerPetti).coerceAtLeast(0.0)
 
 
+                            val totalTrayQtyInStock = remainingMap.entries.find {
+                                it.key.equals("Tray", ignoreCase = true)
+                            }?.value ?: 0
 
-                                if (remainingQty > 0) {
-                                    val basePrice = product.latest_price ?: 0.0
 
-                                    val finalPrice = when {
-                                        product.name.equals("Petti", ignoreCase = true) -> {
-                                            basePrice - discountPerPetti
-                                        }
+                            if (totalTrayQtyInStock > 11) {
+                                val maxPettisPossible = totalTrayQtyInStock / 12
 
-                                        product.name.equals("Tray", ignoreCase = true) -> {
-                                            val pettiBasePrice = data.products.find {
-                                                it.name.equals("Petti", ignoreCase = true)
-                                            }?.latest_price ?: 0.0
 
-                                            val adjustedPettiPrice = pettiBasePrice - discountPerPetti
-                                            adjustedPettiPrice / 12.0
-                                        }
-
-                                        // For carton, shapper, liquid, etc., leave the price as-is
-                                        else -> basePrice
-                                    }
-
-                                    // 3. Map it to your UI Model with the updated price
+                                uiProductsList.add(
                                     RiderProductUI(
-                                        id = product.id,
-                                        name = product.name,
-                                        price = finalPrice, // Passing the newly calculated price here
-                                        remainingQty = remainingQty
+                                        id = -1,
+                                        name = "Petti",
+                                        price = finalPettiPrice,
+                                        remainingQty = totalTrayQtyInStock
                                     )
-                                } else null
+                                )
+
+
+                                if (trayProduct != null) {
+                                    uiProductsList.add(
+                                        RiderProductUI(
+                                            id = trayProduct.id,
+                                            name = trayProduct.name,
+                                            price = finalTrayPrice,
+                                            remainingQty = totalTrayQtyInStock
+                                        )
+                                    )
+                                }
+                            } else if (totalTrayQtyInStock in 1..11 && trayProduct != null) {
+
+                                uiProductsList.add(
+                                    RiderProductUI(
+                                        id = trayProduct.id,
+                                        name = trayProduct.name,
+                                        price = finalTrayPrice,
+                                        remainingQty = totalTrayQtyInStock
+                                    )
+                                )
                             }
 
+                            data.products
+                                .filter { !it.name.equals("Tray", ignoreCase = true) && !it.name.equals("Petti", ignoreCase = true) }
+                                .forEach { product ->
+                                    val remainingQty = remainingMap.entries.find {
+                                        it.key.equals(product.name, ignoreCase = true)
+                                    }?.value ?: 0
 
+                                    if (remainingQty > 0) {
+                                        uiProductsList.add(
+                                            RiderProductUI(
+                                                id = product.id,
+                                                name = product.name,
+                                                price = product.latest_price ?: 0.0,
+                                                remainingQty = remainingQty
+                                            )
+                                        )
+                                    }
+                                }
+
+                            productList = uiProductsList
+
+                            // 5. Update UI
                             if (productList.isEmpty()) {
-
                                 binding.productLayout.visibility = View.GONE
                                 binding.tvEmptyProducts.visibility = View.VISIBLE
-
                             } else {
-
                                 binding.productLayout.visibility = View.VISIBLE
                                 binding.tvEmptyProducts.visibility = View.GONE
 
                                 binding.recyclerProducts.layoutManager = LinearLayoutManager(this)
-
                                 binding.recyclerProducts.adapter =
                                     SaleProductAdapter(productList, quantityMap) { subtotal, totalEggs ->
                                         updateTotal(subtotal, totalEggs)
@@ -337,8 +369,6 @@ class SaleFormActivity : BaseActivity() {
     }
 
 
-
-
     private fun setupExpireRecycler() {
         binding.recyclerExpireProducts.layoutManager = LinearLayoutManager(this)
 
@@ -364,7 +394,28 @@ class SaleFormActivity : BaseActivity() {
                         val baseResponse = res.body() as BaseResponse<ProductData>?
                         if (baseResponse?.result == "success" && baseResponse.data != null) {
 
-                            allproductList = baseResponse.data.products
+                            val fetchedProducts = baseResponse.data.products.toMutableList()
+
+                            // 1. Find the base Tray product
+                            val trayProduct = fetchedProducts.find { it.name.contains("Tray", ignoreCase = true) }
+
+                            // 2. Add Virtual Petti (ID = -1) at the top if Tray exists
+                            if (trayProduct != null) {
+                                // Parse string price safely to double
+                                val trayBasePrice = trayProduct.price.toDoubleOrNull() ?: 0.0
+                                val calculatedPettiPrice = (trayBasePrice * 12.0).toString()
+
+                                val pettiProduct = trayProduct.copy(
+                                    id = -1,
+                                    name = "Petti",
+                                    price = calculatedPettiPrice,
+                                    eggs_count = trayProduct.eggs_count * 12 // Optional: adjust eggs count for Petti
+                                )
+
+                                fetchedProducts.add(0, pettiProduct)
+                            }
+
+                            allproductList = fetchedProducts
 
                             expireAdapter = NewSaleAdapter(allproductList, expireQuantityMap)
                             returnAdapter = NewSaleAdapter(allproductList, returnQuantityMap)
@@ -435,14 +486,6 @@ class SaleFormActivity : BaseActivity() {
         currentTotalAfterDiscount = totalAfterDiscount
     }
 
-    //    private fun calculateSubtotal(selectedItems: Map<Int, Int>): Double {
-//        var subtotal = 0.0
-//        selectedItems.forEach { (productId, qty) ->
-//            val product = productList.find { it.product_id == productId }
-//            subtotal += (product?.price?.toDoubleOrNull() ?: 0.0) * qty
-//        }
-//        return subtotal
-//    }
     fun formatAmount(amount: Double): String {
         return if (amount % 1.0 == 0.0) {
             "%.0f".format(amount)   // whole number → no decimal
@@ -601,38 +644,110 @@ class SaleFormActivity : BaseActivity() {
 
 
     private fun buildItemsList(): List<Map<String, Int>> {
-        return quantityMap
-            .filter { it.value > 0 }
-            .map { (productId, qty) ->
-                mapOf(
-                    "product_id" to productId,
-                    "qty" to qty
-                )
+        var pettiQty = 0
+        var trayQty = 0
+        var realTrayProductId: Int? = null
+
+        val itemsList = mutableListOf<Map<String, Int>>()
+
+        // 1. Process selected items and separate Tray/Petti from regular items
+        quantityMap.forEach { (productId, qty) ->
+            val product = productList.find { it.id == productId }
+
+            when {
+                // Virtual Petti item
+                productId == -1 || product?.name?.contains("Petti", ignoreCase = true) == true -> {
+                    pettiQty = qty
+                }
+                // Base Tray item
+                product?.name?.contains("Tray", ignoreCase = true) == true -> {
+                    trayQty = qty
+                    realTrayProductId = productId
+                }
+                // Other regular products
+                else -> {
+                    if (qty > 0) {
+                        itemsList.add(
+                            mapOf(
+                                "product_id" to productId,
+                                "qty" to qty
+                            )
+                        )
+                    }
+                }
             }
+        }
+
+        // 2. Convert (Petti * 12) + Tray into total Trays
+        val totalTrays = (pettiQty * 12) + trayQty
+
+        if (totalTrays > 0) {
+            // Find real Tray ID if not directly in quantityMap
+            val targetTrayId = realTrayProductId
+                ?: productList.find { it.name.contains("Tray", ignoreCase = true) }?.id
+                ?: 1 // Fallback Tray ID
+
+            itemsList.add(
+                0,
+                mapOf(
+                    "product_id" to targetTrayId,
+                    "qty" to totalTrays
+                )
+            )
+        }
+
+        return itemsList
+    }
+
+    private fun convertMapToQtyRequests(quantityMap: Map<Int, Int>): List<QtyRequest> {
+        var pettiQty = 0
+        var trayQty = 0
+        var realTrayProductId: Int? = null
+
+        val requests = mutableListOf<QtyRequest>()
+
+        quantityMap.forEach { (productId, qty) ->
+            val product = allproductList.find { it.id == productId }
+
+            when {
+                // Virtual Petti item
+                productId == -1 || product?.name?.contains("Petti", ignoreCase = true) == true -> {
+                    pettiQty = qty
+                }
+                // Base Tray item
+                product?.name?.contains("Tray", ignoreCase = true) == true -> {
+                    trayQty = qty
+                    realTrayProductId = productId
+                }
+                // Regular products
+                else -> {
+                    if (qty > 0) {
+                        requests.add(QtyRequest(product_id = productId, qty = qty))
+                    }
+                }
+            }
+        }
+
+        // Convert (Petti * 12) + Tray into total Trays
+        val totalTrays = (pettiQty * 12) + trayQty
+
+        if (totalTrays > 0) {
+            val targetTrayId = realTrayProductId
+                ?: allproductList.find { it.name.contains("Tray", ignoreCase = true) }?.id
+                ?: 1 // Fallback Tray ID
+
+            requests.add(0, QtyRequest(product_id = targetTrayId, qty = totalTrays))
+        }
+
+        return requests
     }
 
 
     private fun buildRequest(): Damage {
-
         liquidKg = binding.etLiquidKg.text.toString().toDoubleOrNull() ?: 0.0
 
-        val expire = expireQuantityMap
-            .filter { it.value > 0 }
-            .map {
-                QtyRequest(
-                    product_id = it.key,
-                    qty = it.value
-                )
-            }
-
-        val returnList = returnQuantityMap
-            .filter { it.value > 0 }
-            .map {
-                QtyRequest(
-                    product_id = it.key,
-                    qty = it.value
-                )
-            }
+        val expire = convertMapToQtyRequests(expireQuantityMap)
+        val returnList = convertMapToQtyRequests(returnQuantityMap)
 
         return Damage(
             expire = expire,
@@ -868,9 +983,6 @@ class SaleFormActivity : BaseActivity() {
             }
         }
     }
-
-
-
 
 
     private fun String.toPart(): RequestBody {

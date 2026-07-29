@@ -28,9 +28,9 @@ class SaleHistoryAdapter(
 
         holder.binding.tvProductName.text = item.product_name
         holder.binding.tvQty.text = "Qty: ${item.qty}"
-        holder.binding.tvEggs.text = "Eggs: ${item.total_eggs}"
+    //    holder.binding.tvEggs.text = "Eggs: ${item.total_eggs}"
         holder.binding.tvPrice.text = "Rs ${item.price}"
-        holder.binding.tvLineTotal.text = "Total: ${item.line_total}"
+     //   holder.binding.tvLineTotal.text = "Total: ${item.line_total}"
     }
 
     override fun getItemCount(): Int = items.size

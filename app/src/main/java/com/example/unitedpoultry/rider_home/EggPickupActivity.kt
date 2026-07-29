@@ -1,7 +1,6 @@
 package com.example.unitedpoultry.rider_home
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.unitedpoultry.BaseActivity
@@ -12,6 +11,7 @@ import com.example.unitedpoultry.adminproduct.viewmodel.GetProductViewModel
 import com.example.unitedpoultry.databinding.ActivityEggPickupBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse
+import com.example.unitedpoultry.rider_home.adapter.EggPickUpAdapter
 import com.example.unitedpoultry.rider_home.model.EggPickupRequest
 import com.example.unitedpoultry.rider_home.model.PickedItem
 import com.example.unitedpoultry.rider_home.viewmodel.EggPickupViewModel
@@ -47,10 +47,13 @@ class EggPickupActivity : BaseActivity() {
         loadProducts()
     }
 
+
     private fun setupRecycler() {
         binding.recyclerProducts.layoutManager = LinearLayoutManager(this)
-        binding.recyclerProducts.adapter = ProductAdapter(productList, quantityMap)
+        binding.recyclerProducts.adapter = EggPickUpAdapter(productList, quantityMap)
     }
+
+
 
     private fun loadProducts() {
         productViewModel.getProducts().observe(this) { response ->
@@ -62,13 +65,31 @@ class EggPickupActivity : BaseActivity() {
                     if (res != null && res.isSuccessful) {
                         val baseResponse = res.body() as BaseResponse<ProductData>?
                         if (baseResponse?.result == "success" && baseResponse.data != null) {
-                            productList = baseResponse.data.products
-                            binding.recyclerProducts.adapter = ProductAdapter(productList, quantityMap)
+
+
+                            val mutableProducts = baseResponse.data.products.toMutableList()
+
+
+                            val pettiItem = Product(
+                                id = -1,
+                                name = "Petti",
+                                packing = "Petti",
+                                eggs_count = 360,
+                                price = "0",
+                                is_active = 1
+                            )
+                            mutableProducts.add(pettiItem)
+
+
+                            productList = mutableProducts
+                            binding.recyclerProducts.adapter = EggPickUpAdapter(productList, quantityMap)
+
                         } else {
                             Toast.makeText(this, baseResponse?.message ?: "Failed to fetch products", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
+
                 Status.ERROR -> {
                     AppUtil.stopLoader()
                     Toast.makeText(this, response.message ?: "Network Error", Toast.LENGTH_SHORT).show()
@@ -88,14 +109,48 @@ class EggPickupActivity : BaseActivity() {
 
             if (!validateInputs()) return@setOnClickListener
 
-            val items = quantityMap
-                .filter { it.value > 0 }
-                .map { (productId, qty) ->
-                    PickedItem(
-                        product_id = productId,
-                        quantity = qty
-                    )
+            var pettiQty = 0
+            var trayQty = 0
+            var trayProductId: Int? = null
+
+            val items = mutableListOf<PickedItem>()
+
+
+            quantityMap.forEach { (productId, qty) ->
+                val product = productList.find { it.id == productId }
+
+                when {
+
+                    productId == -1 || product?.name?.contains("Petti", ignoreCase = true) == true -> {
+                        pettiQty = qty
+                    }
+
+                    product?.name?.contains("Tray", ignoreCase = true) == true -> {
+                        trayQty = qty
+                        trayProductId = productId
+                    }
+
+                    else -> {
+                        if (qty > 0) {
+                            items.add(PickedItem(product_id = productId, quantity = qty))
+                        }
+                    }
                 }
+            }
+
+
+            val totalTrays = (pettiQty * 12) + trayQty
+
+            if (totalTrays > 0) {
+                val finalTrayId = trayProductId ?: productList.find { it.name.contains("tray", ignoreCase = true) }?.id ?: 2
+                items.add(PickedItem(product_id = finalTrayId, quantity = totalTrays))
+            }
+
+            if (items.isEmpty()) {
+                Toast.makeText(this, "Please enter quantity for at least one product", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
 
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val todayDate = sdf.format(Date())
@@ -108,6 +163,7 @@ class EggPickupActivity : BaseActivity() {
             savePickedEggs(request)
         }
     }
+
 
 
     private fun validateInputs(): Boolean {
@@ -268,70 +324,6 @@ class EggPickupActivity : BaseActivity() {
 
     private fun savePickedEggs(request: EggPickupRequest) {
 
-
-//        eggPickupViewModel.savePickedEggs(request).observe(this) { response ->
-//
-//            when (response.status) {
-//
-//                Status.LOADING -> AppUtil.startLoader(this)
-//
-//                Status.SUCCESS -> {
-//                    AppUtil.stopLoader()
-//
-//                    val res = response.data
-//
-//                    if (res == null) {
-//                        Toast.makeText(this, "Null response from server", Toast.LENGTH_SHORT).show()
-//                        return@observe
-//                    }
-//
-//                    try {
-//                        if (res.isSuccessful) {
-//
-//                            val body = res.body()
-//
-//                            if (body != null) {
-//
-//                                Toast.makeText(
-//                                    this,
-//                                    body.message ?: "No message from server",
-//                                    Toast.LENGTH_LONG
-//                                ).show()
-//
-//                                if (body.result == "success") {
-//                                    finish()
-//                                }
-//
-//                            } else {
-//                                Toast.makeText(this, "Empty body response", Toast.LENGTH_SHORT).show()
-//                            }
-//
-//                        } else {
-//
-//                            // fallback for HTTP errors
-//                            val errorMsg = res.errorBody()?.string()
-//                                ?: "Server error occurred"
-//
-//                            Toast.makeText(this, errorMsg, Toast.LENGTH_LONG).show()
-//                        }
-//
-//                    } catch (e: Exception) {
-//                        Toast.makeText(this, e.message ?: "Parsing error", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//
-//                Status.ERROR -> {
-//                    AppUtil.stopLoader()
-//                    Toast.makeText(
-//                        this,
-//                        "Network connection problem. Please try again.",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//            }
-//        }
-
-
         eggPickupViewModel.savePickedEggs(request).observe(this) { state ->
 
             when (state.status) {
@@ -382,8 +374,4 @@ class EggPickupActivity : BaseActivity() {
     }
 
 
-//    private fun getTokenFromPrefs(): String {
-//        val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
-//        return prefs.getString("token", "") ?: ""
-//    }
 }

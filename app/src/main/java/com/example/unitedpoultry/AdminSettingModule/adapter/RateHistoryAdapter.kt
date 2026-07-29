@@ -26,18 +26,14 @@ class RateHistoryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = filteredList[position]
 
-        holder.tVDate.text = item.date
-        holder.tVPrice.text = item.price+"/"+item.product_name
+        holder.tVDate.text = item.date ?: ""
+        val name = item.product_name ?: "N/A"
+        val price = item.price ?: "0.00"
 
-
-//        holder.itemView.setOnClickListener {
-//            val context = holder.itemView.context
-//            val intent = Intent(context, AdminRateHistoryActivity::class.java)
-//            context.startActivity(intent)
-//        }
-
-
+        holder.tVPrice.text = "$price / $name"
     }
+
+
 
     override fun getItemCount(): Int = filteredList.size
 
@@ -54,21 +50,14 @@ class RateHistoryAdapter(
 
 
     fun filter(query: String) {
-
         if (query.isBlank()) {
-
             filteredList = originalList.toMutableList()
-
         } else {
-
-            filteredList = originalList.filter {
-
-                it.date.contains(query, true) ||
-                        it.product_name.contains(query, true)
-
+            filteredList = originalList.filter { item ->
+                item.date?.contains(query, ignoreCase = true) == true ||
+                        item.product_name?.contains(query, ignoreCase = true) == true
             }.toMutableList()
         }
-
         notifyDataSetChanged()
     }
 

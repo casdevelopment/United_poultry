@@ -29,17 +29,17 @@ import kotlin.collections.mutableListOf
 import kotlin.getValue
 
 
-class AdminRateManagmentActivity : BaseActivity(),TodayRateAdapter.OnPriceChangeListener {
+class AdminRateManagmentActivity : BaseActivity(){
 
     private lateinit var binding: ActivityAdminRateManagmentBinding
     private val viewModel: AdminSettingViewModel by viewModel()
     private var historyCurrentPage = 1
     private var historyLastPage = 1
     private lateinit var historyListData: List<HistoryData>
-    private var toDayRateListData = mutableListOf<TodayRateItem>()
+  //  private var toDayRateListData = mutableListOf<TodayRateItem>()
     private var ratesList = mutableListOf<RatesData>()
     private lateinit var rateHistoryAdapter: RateHistoryAdapter
-    private lateinit var todayRateAdapter: TodayRateAdapter
+ //   private lateinit var todayRateAdapter: TodayRateAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,13 +64,13 @@ class AdminRateManagmentActivity : BaseActivity(),TodayRateAdapter.OnPriceChange
                 finish()
             }
 
-            btnCancel.setOnClickListener {
-                finish()
-            }
+//            btnCancel.setOnClickListener {
+//                finish()
+//            }
 
-            btnSave.setOnClickListener {
-                updateProductRate()
-            }
+//            btnSave.setOnClickListener {
+//                updateProductRate()
+//            }
         }
 
 
@@ -78,46 +78,46 @@ class AdminRateManagmentActivity : BaseActivity(),TodayRateAdapter.OnPriceChange
 
     override fun onResume() {
         super.onResume()
-        getTodayRate()
+       // getTodayRate()
         getRateHistory()
     }
 
 
-    private fun getTodayRate() {
-        viewModel.todayRate().observe(this@AdminRateManagmentActivity) { serverResponse ->
-            when (serverResponse.status) {
-                SUCCESS -> {
-                    AppUtil.stopLoader()
-
-                    if (serverResponse.data != null && serverResponse.data.isSuccessful) {
-                        val baseResponse = serverResponse.data.body()
-                        // showToast(baseResponse?.message ?: "")
-                        val rateDate = baseResponse?.data?.date!!
-                        binding.rateDate.text = rateDate
-                        toDayRateListData = baseResponse.data.rates!! as MutableList<TodayRateItem>
-
-
-
-                        if (toDayRateListData.isNotEmpty()) {
-                            setupTodayRateAdapter()
-                        }
-
-                    }
-
-                }
-
-                ERROR -> {
-                    AppUtil.stopLoader()
-                    showToast(serverResponse.message.toString())
-                }
-
-                LOADING -> {
-                    AppUtil.startLoader(this@AdminRateManagmentActivity)
-                }
-            }
-
-        }
-    }
+//    private fun getTodayRate() {
+//        viewModel.todayRate().observe(this@AdminRateManagmentActivity) { serverResponse ->
+//            when (serverResponse.status) {
+//                SUCCESS -> {
+//                    AppUtil.stopLoader()
+//
+//                    if (serverResponse.data != null && serverResponse.data.isSuccessful) {
+//                        val baseResponse = serverResponse.data.body()
+//                        // showToast(baseResponse?.message ?: "")
+//                        val rateDate = baseResponse?.data?.date!!
+//                        binding.rateDate.text = rateDate
+//                        toDayRateListData = baseResponse.data.rates!! as MutableList<TodayRateItem>
+//
+//
+//
+//                        if (toDayRateListData.isNotEmpty()) {
+//                            setupTodayRateAdapter()
+//                        }
+//
+//                    }
+//
+//                }
+//
+//                ERROR -> {
+//                    AppUtil.stopLoader()
+//                    showToast(serverResponse.message.toString())
+//                }
+//
+//                LOADING -> {
+//                    AppUtil.startLoader(this@AdminRateManagmentActivity)
+//                }
+//            }
+//
+//        }
+//    }
 
     private fun getRateHistory() {
         viewModel.rateHistory(historyCurrentPage)
@@ -128,21 +128,20 @@ class AdminRateManagmentActivity : BaseActivity(),TodayRateAdapter.OnPriceChange
 
                         if (serverResponse.data != null && serverResponse.data.isSuccessful) {
                             val baseResponse = serverResponse.data.body()
-                            // showToast(baseResponse?.message ?: "")
-                            historyListData = baseResponse?.data?.history!!
-                            val pagination = baseResponse.data.pagination!!
-                            historyLastPage = pagination.last_page
-
+                            historyListData = baseResponse?.data?.history ?: emptyList()
+                            val pagination = baseResponse?.data?.pagination
+                            historyLastPage = pagination?.last_page ?: 1
 
                             if (historyListData.isNotEmpty()) {
+                                val newRates = mutableListOf<RatesData>()
                                 for (ratesItem in historyListData) {
-                                    val date = ratesItem.date
-                                    for (item in ratesItem.rates!!) {
-                                        ratesList.add(
+                                    val date = ratesItem.date ?: ""
+                                    for (item in ratesItem.rates.orEmpty()) {
+                                        newRates.add(
                                             RatesData(
                                                 id = item.id,
                                                 product_id = item.product_id,
-                                                product_name = item.product_name,
+                                                product_name = item.product_name ?: "N/A", // Null safety
                                                 packing = item.packing,
                                                 eggs_count = item.eggs_count,
                                                 price = item.price,
@@ -151,11 +150,19 @@ class AdminRateManagmentActivity : BaseActivity(),TodayRateAdapter.OnPriceChange
                                         )
                                     }
                                 }
-                                if (ratesList.isNotEmpty()) setupHistoryAdapter()
+
+                                // Initialize adapter once, update on page changes
+                                if (historyCurrentPage == 1) {
+                                    ratesList.clear()
+                                    ratesList.addAll(newRates)
+                                    setupHistoryAdapter()
+                                } else {
+                                    val startPos = ratesList.size
+                                    ratesList.addAll(newRates)
+                                    rateHistoryAdapter.notifyItemRangeInserted(startPos, newRates.size)
+                                }
                             }
-
                         }
-
                     }
 
                     ERROR -> {
@@ -167,9 +174,9 @@ class AdminRateManagmentActivity : BaseActivity(),TodayRateAdapter.OnPriceChange
                         AppUtil.startLoader(this@AdminRateManagmentActivity)
                     }
                 }
-
             }
     }
+
 
     private fun setupHistoryAdapter() {
         rateHistoryAdapter = RateHistoryAdapter(ratesList)
@@ -177,7 +184,7 @@ class AdminRateManagmentActivity : BaseActivity(),TodayRateAdapter.OnPriceChange
             this.layoutManager =
                 LinearLayoutManager(this@AdminRateManagmentActivity, RecyclerView.VERTICAL, false)
             this.adapter = rateHistoryAdapter
-            // Add scroll listener to detect when last item is reached
+
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -187,7 +194,7 @@ class AdminRateManagmentActivity : BaseActivity(),TodayRateAdapter.OnPriceChange
                     val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
                     val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
-                    // Check if we've reached the last item
+
                     if (lastVisibleItemPosition >= totalItemCount - 1) {
                         // Load more data
                         if (historyCurrentPage < historyLastPage) {
@@ -214,60 +221,60 @@ class AdminRateManagmentActivity : BaseActivity(),TodayRateAdapter.OnPriceChange
         getRateHistory()
     }
 
-    private fun setupTodayRateAdapter() {
+//    private fun setupTodayRateAdapter() {
+//
+//        todayRateAdapter = TodayRateAdapter(toDayRateListData,this)
+//        binding.todatRateRv.apply {
+//            this.layoutManager =
+//                LinearLayoutManager(this@AdminRateManagmentActivity, RecyclerView.VERTICAL, false)
+//            this.adapter = todayRateAdapter
+//
+//
+//        }
+//
+//    }
 
-        todayRateAdapter = TodayRateAdapter(toDayRateListData,this)
-        binding.todatRateRv.apply {
-            this.layoutManager =
-                LinearLayoutManager(this@AdminRateManagmentActivity, RecyclerView.VERTICAL, false)
-            this.adapter = todayRateAdapter
-
-
-        }
-
-    }
-
-    private fun updateProductRate() {
-       var updateRateModel=UpdateRateModel()
-        var updateRateItem=mutableListOf<UpdateRateItem>()
-       // updateRateModel.date=binding.rateDate.text.toString()
-        if (toDayRateListData.isNotEmpty()) {
-            for (ratesListItem in toDayRateListData) {
-                if(ratesListItem.price!=0){
-                    updateRateItem.add(UpdateRateItem(ratesListItem.product_id,ratesListItem.price))
-                }
-
-               // Log.v("updateProductRate","product id: ${ratesListItem.product_id}"+ "product Name: ${ratesListItem.product_name}"+"-- price: ${ratesListItem.price}")
-            }
-
-            val tomorrowDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Calendar.getInstance().apply { add(Calendar.DATE, 1) }.time)
-            Log.v("tomorrowDate","tomorrow "+tomorrowDate)
-            updateRateModel.date=tomorrowDate
-          //  updateRateModel.date=tomorrowDate
-            updateRateModel.rates=updateRateItem
-            updateProductRateApi(updateRateModel)
-            Log.v("updateProductRate","updateRateItem size ${updateRateItem.size}")
-            Log.v("updateProductRate","updateRateModel .rates size ${updateRateModel.rates?.size}")
-          //  Log.v("updateProductRate","product id: ${ratesListItem.product_id}"+ "product Name: ${ratesListItem.price}")
-           val rates= updateRateModel.rates
-            if (rates != null) {
-                for (ratesListItem in rates) {
-                    Log.v("updateProductRate","product id: ${ratesListItem.product_id}"+ "product Name: ${ratesListItem.price}")
-                }
-            }
-
-        }
-
-
-    }
-
-    override fun onPriceChanged(
-        position: Int,
-        newPrice: String
-    ) {
-        toDayRateListData[position].price=newPrice.toInt()
-        Log.v("updateProductRate", "newPrice : ${toDayRateListData[position].price}")
-    }
+//    private fun updateProductRate() {
+//       var updateRateModel=UpdateRateModel()
+//        var updateRateItem=mutableListOf<UpdateRateItem>()
+//       // updateRateModel.date=binding.rateDate.text.toString()
+//        if (toDayRateListData.isNotEmpty()) {
+//            for (ratesListItem in toDayRateListData) {
+//                if(ratesListItem.price!=0.0){
+//                    updateRateItem.add(UpdateRateItem(ratesListItem.product_id,ratesListItem.price))
+//                }
+//
+//               // Log.v("updateProductRate","product id: ${ratesListItem.product_id}"+ "product Name: ${ratesListItem.product_name}"+"-- price: ${ratesListItem.price}")
+//            }
+//
+//            val tomorrowDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Calendar.getInstance().apply { add(Calendar.DATE, 1) }.time)
+//            Log.v("tomorrowDate","tomorrow "+tomorrowDate)
+//            updateRateModel.date=tomorrowDate
+//          //  updateRateModel.date=tomorrowDate
+//            updateRateModel.rates=updateRateItem
+//            updateProductRateApi(updateRateModel)
+//            Log.v("updateProductRate","updateRateItem size ${updateRateItem.size}")
+//            Log.v("updateProductRate","updateRateModel .rates size ${updateRateModel.rates?.size}")
+//          //  Log.v("updateProductRate","product id: ${ratesListItem.product_id}"+ "product Name: ${ratesListItem.price}")
+//           val rates= updateRateModel.rates
+//            if (rates != null) {
+//                for (ratesListItem in rates) {
+//                    Log.v("updateProductRate","product id: ${ratesListItem.product_id}"+ "product Name: ${ratesListItem.price}")
+//                }
+//            }
+//
+//        }
+//
+//
+//    }
+//
+//    override fun onPriceChanged(
+//        position: Int,
+//        newPrice: String
+//    ) {
+//        toDayRateListData[position].price = newPrice.toDoubleOrNull() ?: 0.0
+//        Log.v("updateProductRate", "newPrice : ${toDayRateListData[position].price}")
+//    }
 //    private fun updateProductRateApi(updateRateModel: UpdateRateModel) {
 //        viewModel.updateRate(updateRateModel).observe(this@AdminRateManagmentActivity){serverResponse ->
 //            when (serverResponse.status) {
@@ -279,56 +286,56 @@ class AdminRateManagmentActivity : BaseActivity(),TodayRateAdapter.OnPriceChange
 //    }
 
 
-    private fun updateProductRateApi(updateRateModel: UpdateRateModel) {
-        viewModel.updateRate(updateRateModel).observe(this@AdminRateManagmentActivity) { serverResponse ->
-
-            when (serverResponse.status) {
-
-                LOADING -> {
-                    AppUtil.startLoader(this@AdminRateManagmentActivity)
-                }
-
-                SUCCESS -> {
-                    AppUtil.stopLoader()
-                    val retrofitResponse = serverResponse.data
-
-                    if (retrofitResponse != null) {
-                        if (retrofitResponse.isSuccessful) {
-                            // ✅ 2xx response
-                            val baseResponse = retrofitResponse.body()
-                            val message = baseResponse?.message ?: "Operation successful"
-                            Toast.makeText(this@AdminRateManagmentActivity, message, Toast.LENGTH_SHORT).show()
-                        } else {
-                            // ❗ HTTP error (401, 422, 500, etc.)
-                            val errorMessage = try {
-                                val errorBody = retrofitResponse.errorBody()?.string()
-                                if (!errorBody.isNullOrEmpty()) {
-                                    val baseResponse = Gson().fromJson(errorBody, BaseResponse::class.java)
-                                    baseResponse.message ?: "Update failed"
-                                } else {
-                                    "Update failed"
-                                }
-                            } catch (e: Exception) {
-                                "Update failed"
-                            }
-                            Toast.makeText(this@AdminRateManagmentActivity, errorMessage, Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        Toast.makeText(this@AdminRateManagmentActivity, "No response from server", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                ERROR -> {
-                    AppUtil.stopLoader()
-                    Toast.makeText(
-                        this@AdminRateManagmentActivity,
-                        serverResponse.message ?: "Network Error",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        }
-    }
+//    private fun updateProductRateApi(updateRateModel: UpdateRateModel) {
+//        viewModel.updateRate(updateRateModel).observe(this@AdminRateManagmentActivity) { serverResponse ->
+//
+//            when (serverResponse.status) {
+//
+//                LOADING -> {
+//                    AppUtil.startLoader(this@AdminRateManagmentActivity)
+//                }
+//
+//                SUCCESS -> {
+//                    AppUtil.stopLoader()
+//                    val retrofitResponse = serverResponse.data
+//
+//                    if (retrofitResponse != null) {
+//                        if (retrofitResponse.isSuccessful) {
+//                            // ✅ 2xx response
+//                            val baseResponse = retrofitResponse.body()
+//                            val message = baseResponse?.message ?: "Operation successful"
+//                            Toast.makeText(this@AdminRateManagmentActivity, message, Toast.LENGTH_SHORT).show()
+//                        } else {
+//                            // ❗ HTTP error (401, 422, 500, etc.)
+//                            val errorMessage = try {
+//                                val errorBody = retrofitResponse.errorBody()?.string()
+//                                if (!errorBody.isNullOrEmpty()) {
+//                                    val baseResponse = Gson().fromJson(errorBody, BaseResponse::class.java)
+//                                    baseResponse.message ?: "Update failed"
+//                                } else {
+//                                    "Update failed"
+//                                }
+//                            } catch (e: Exception) {
+//                                "Update failed"
+//                            }
+//                            Toast.makeText(this@AdminRateManagmentActivity, errorMessage, Toast.LENGTH_SHORT).show()
+//                        }
+//                    } else {
+//                        Toast.makeText(this@AdminRateManagmentActivity, "No response from server", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//
+//                ERROR -> {
+//                    AppUtil.stopLoader()
+//                    Toast.makeText(
+//                        this@AdminRateManagmentActivity,
+//                        serverResponse.message ?: "Network Error",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+//            }
+//        }
+//    }
 
 
 

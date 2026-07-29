@@ -32,7 +32,7 @@ class SaleHistoryDamageAdapter(
 
         holder.binding.tvProductName.text = item.product_name
         holder.binding.tvQty.text = "Qty: ${item.qty}"
-        holder.binding.tvTotalEggs.text = "Total Eggs: ${item.total_eggs}"
+        //holder.binding.tvTotalEggs.text = "Total Eggs: ${item.total_eggs}"
 
         val colorRes = when (type) {
             "expire" -> R.color.pink_lite

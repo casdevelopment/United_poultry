@@ -256,18 +256,47 @@ class HistoryFragment : Fragment() {
 
     private fun bindPickedItemsData(data: ProductStatus) {
 
-        val expireList = data.expire.map { it.key to it.value }
-        val returnList = data.`return`.map { it.key to it.value }
+        val rawExpireList = data.expire.map { it.key to it.value }
+        val rawReturnList = data.`return`.map { it.key to it.value }
+
+        // Convert raw Tray counts into Pettis + Remaining Trays
+        val expireList = convertTraysToPettiAndTrays(rawExpireList)
+        val returnList = convertTraysToPettiAndTrays(rawReturnList)
 
         binding.tvLiquidQuantity.text = data.liquid.kg.toString()
-
 
         expireAdapter.submitList(expireList)
         returnAdapter.submitList(returnList)
 
-
         toggleSection(binding.rvExpire, binding.emptyExpire, expireList.isNotEmpty())
         toggleSection(binding.rvReturn, binding.emptyReturn, returnList.isNotEmpty())
+    }
+
+
+    private fun convertTraysToPettiAndTrays(list: List<Pair<String, Int>>): List<Pair<String, Int>> {
+        val result = mutableListOf<Pair<String, Int>>()
+        var pettiCount = 0
+
+        for ((key, count) in list) {
+            if (count <= 0) continue
+
+            if (key.contains("tray", ignoreCase = true)) {
+                pettiCount += count / 12
+                val remainingTrays = count % 12
+
+                if (remainingTrays > 0) {
+                    result.add(key to remainingTrays)
+                }
+            } else {
+                result.add(key to count)
+            }
+        }
+
+        if (pettiCount > 0) {
+            result.add(0, "Petti" to pettiCount)
+        }
+
+        return result
     }
 
 
