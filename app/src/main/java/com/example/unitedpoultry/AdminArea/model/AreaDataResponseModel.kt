@@ -9,7 +9,10 @@ data class AreaModel(
     val is_active: Boolean,
     val created_at: String,
     val updated_at: String,
-    val shops_count: Int
+    val shops_count: Int,
+    val visited: Int,
+    val pending:Int
+
 )
 
 // PaginationModel.kt

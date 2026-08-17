@@ -27,12 +27,17 @@ class AreaAdapter(
         val tvAreaName: TextView = itemView.findViewById(R.id.tvAreaName)
         val tvAreaAddress: TextView = itemView.findViewById(R.id.tvAreaAddress)
         val tvTotalShops: TextView = itemView.findViewById(R.id.tvTotalShops)
-//        val tvRiders: TextView = itemView.findViewById(R.id.tvRiders)
-//        val tvRecieveable: TextView = itemView.findViewById(R.id.tvRecieveable)
+
+        val tvVisitedToday: TextView = itemView.findViewById(R.id.tvVisitedToday)
+        val tvPending: TextView = itemView.findViewById(R.id.tvPending)
+
+
         val ivIcon: ImageView = itemView.findViewById(R.id.ivIcon)
         val iconContainer: CardView = itemView.findViewById(R.id.iconContainer)
         val ivNext: ImageView = itemView.findViewById(R.id.ivNext)
 //        val btnViewShops: MaterialButton = itemView.findViewById(R.id.btnViewShops)
+
+
 
 
 
@@ -52,8 +57,8 @@ class AreaAdapter(
         holder.tvAreaName.text = item.name
         holder.tvAreaAddress.text = "${item.city}, ${item.description ?: ""}"
         holder.tvTotalShops.text = item.shops_count.toString()
-//        holder.tvRiders.text = "-"        // ignore for now
-//        holder.tvRecieveable.text = "-"
+        holder.tvVisitedToday.text = item.visited.toString()
+        holder.tvPending.text = item.pending.toString()
 
         val cardColor = cardColors[position % cardColors.size]
         val iconColor = iconColors[position % iconColors.size]

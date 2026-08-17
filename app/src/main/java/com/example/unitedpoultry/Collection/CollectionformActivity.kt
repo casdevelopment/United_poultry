@@ -44,7 +44,7 @@ class CollectionformActivity : BaseActivity() {
     private var name: String = ""
     private var address: String = ""
 
-    private var borrowed: Int = 0
+    private var borrowed: Double = 0.0
 
     private var paymentType = "cash"
 
@@ -75,7 +75,7 @@ class CollectionformActivity : BaseActivity() {
         name = intent.getStringExtra("NAME") ?: "N/A"
         address = intent.getStringExtra("ADDRESS") ?: "N/A"
 
-        borrowed = intent.getIntExtra("BORROWED", 0)
+        borrowed = intent.getDoubleExtra("BORROWED", 0.0)
 
         showData()
 
@@ -217,7 +217,7 @@ class CollectionformActivity : BaseActivity() {
 
         // Get borrowed amount
         val borrowedAmount = borrowed  // use class variable
-        if (borrowedAmount == 0) {
+        if (borrowedAmount == 0.0) {
             binding.etCollectionAmountError.visibility = View.VISIBLE
             binding.etCollectionAmountError.text = "Cannot add collection. Borrowed amount is zero."
             binding.tvAfterBalance.text = "Rs 0"
@@ -398,11 +398,6 @@ class CollectionformActivity : BaseActivity() {
                 }
             }
     }
-
-
-
-
-
 
 
 
