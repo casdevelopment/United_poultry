@@ -181,48 +181,6 @@ class SaleFormActivity : BaseActivity() {
 
     }
 
-//    private fun submitSale(selectedItems: Map<Int, Int>) {
-//        val subTotal = calculateSubtotal(selectedItems)
-//        val discountAmount = subTotal * (discountPercent / 100.0)
-//        val totalAmount = (subTotal - discountAmount).coerceAtLeast(0.0)
-//
-//        val items = selectedItems.map { (productId, qty) ->
-//            SaleItem(product_id = productId, qty = qty)
-//        }
-//
-//        val request = SaleRequest(
-//            shop_id = shopId,
-//            area_id = areaId,
-//            sub_total = subTotal,
-//            discount = discountAmount,
-//            total = totalAmount,
-//            cash_received = totalAmount,
-//            items = items
-//        )
-//
-//        saleViewModel.createNewSale(request).observe(this) { response ->
-//            when (response.status) {
-//                Status.LOADING -> AppUtil.startLoader(this)
-//                Status.SUCCESS -> {
-//                    AppUtil.stopLoader()
-//                    val res = response.data
-//                    if (res != null && res.isSuccessful) {
-//                        val body = res.body()
-//                        if (body?.result == "success") {
-//                            Toast.makeText(this, "Sale created successfully", Toast.LENGTH_SHORT).show()
-//                            finish()
-//                        } else {
-//                            Toast.makeText(this, body?.message ?: "Failed to create sale", Toast.LENGTH_SHORT).show()
-//                        }
-//                    }
-//                }
-//                Status.ERROR -> {
-//                    AppUtil.stopLoader()
-//                    Toast.makeText(this, response.message ?: "Network Error", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        }
-//    }
 
     override fun onResume() {
         super.onResume()
@@ -756,45 +714,6 @@ class SaleFormActivity : BaseActivity() {
         )
     }
 
-//    private fun buildExpireMap(): Map<String, Int> {
-//        val result = mutableMapOf<String, Int>()
-//
-//        quantityMap.forEach { (productId, qty) ->
-//            val productName = allproductList
-//                .find { it.id == productId }
-//                ?.name
-//                ?.lowercase()
-//                ?: return@forEach
-//
-//            result[productName] = qty
-//        }
-//
-//        return result
-//    }
-//
-//
-//    private fun buildExpireMap(): Map<String, Int> {
-//        val result = mutableMapOf<String, Int>()
-//
-//        quantityMap.forEach { (productId, qty) ->
-//            val productName = allproductList
-//                .find { it.id == productId }
-//                ?.name
-//                ?.lowercase()
-//                ?: return@forEach
-//
-//            result[productName] = qty
-//        }
-//
-//        return result
-//    }
-//
-//
-//    private fun buildDamageEggs(): Map<String, Any> {
-//        return mapOf(
-//            "expire" to buildExpireMap()
-//        )
-//    }
 
     private fun submitSale() {
 

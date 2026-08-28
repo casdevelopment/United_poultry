@@ -312,26 +312,26 @@ class Repository(private val api: ApiInterface) {
 
 
     suspend fun addExpenseByCash(
-        title: RequestBody,
-        amount: RequestBody,
-        note: RequestBody? = null,
-        payment_type: RequestBody,
-        expense_date: RequestBody
+        expenses: RequestBody,
+        totalAmount: RequestBody,
+        paymentType: RequestBody,
+        expenseDate: RequestBody,
+        note: RequestBody? = null
     ): Response<BaseResponse<ExpenseModel>> {
-        return api.addExpenseByCash(title, amount, note, payment_type,expense_date)
+        return api.addExpenseByCash(expenses, totalAmount, paymentType, expenseDate, note)
     }
 
 
     suspend fun addExpenseByCheque(
-        title: RequestBody,
-        amount: RequestBody,
+        expenses: RequestBody,
+        totalAmount: RequestBody,
+        paymentType: RequestBody,
+        expenseDate: RequestBody,
         note: RequestBody? = null,
-        payment_type: RequestBody,
-        expense_date: RequestBody,
         payment_record: MultipartBody.Part,
         payment_note: RequestBody? = null
     ): Response<BaseResponse<ExpenseModel>> {
-        return api.addExpenseByCheque(title, amount, note, payment_type,expense_date,payment_record,payment_note)
+        return api.addExpenseByCheque(expenses, totalAmount, paymentType, expenseDate,note,payment_record,payment_note)
     }
 
     suspend fun addCollectionByCash(
@@ -376,5 +376,8 @@ class Repository(private val api: ApiInterface) {
     suspend fun getExpenseDetail(id: Int): Response<BaseResponse<ExpenseItem>> {
         return api.getExpenseDetail(id)
     }
+
+
+    suspend fun getExpenses() = api.getExpenses()
 }
 

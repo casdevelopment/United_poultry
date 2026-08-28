@@ -96,7 +96,7 @@ class AdminExpenseActivity : BaseActivity() {
             if (validateInputs()) {
 
                 if(paymentType == "cash") {
-                    addExpenseByCash()
+                    //addExpenseByCash()
                 }else{
                     addExpenseByCheque()
                 }
@@ -218,74 +218,74 @@ class AdminExpenseActivity : BaseActivity() {
     }
 
 
-    private fun addExpenseByCash() {
-
-
-        val title = binding.etExpenseTitle.text.toString().trim().toRequestBody()
-
-        val amount = binding.etAmount.text.toString().trim().toRequestBody()
-
-        val note = binding.etNote1.text.toString().trim().toRequestBody()
-
-        val payment_type = paymentType.toRequestBody()
-
-        val todayDate = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
-            .format(java.util.Date())
-
-        val expense_date = todayDate.toRequestBody()
-
-
-        AppUtil.startLoader(this)
-        viewModel.addExpenseByCash(title, amount, note, payment_type,expense_date)
-            .observe(this) { apiResponse ->
-                AppUtil.stopLoader()
-                when (apiResponse.status) {
-                    Status.SUCCESS -> {
-                        val retrofitResponse = apiResponse.data
-                        if (retrofitResponse != null) {
-                            if (retrofitResponse.isSuccessful) {
-                                val baseResponse = retrofitResponse.body()
-                                val message = baseResponse?.message ?: "Expense added"
-                                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-
-                                if (baseResponse?.result == "success") {
-
-//                                    val jsonData = Gson().toJson(baseResponse.data)
-//                                    val intent = Intent(this, ExpenseSuccessActivity::class.java)
-//                                    intent.putExtra("expense_data_json", jsonData)
-//                                    startActivity(intent)
-                                    finish()
-                                }
-                            } else {
-                                val errorMessage = try {
-                                    val errorBody = retrofitResponse.errorBody()?.string()
-                                    if (!errorBody.isNullOrEmpty()) {
-                                        val baseResponse =
-                                            Gson().fromJson(errorBody, BaseResponse::class.java)
-                                        baseResponse.message ?: "Something went wrong"
-                                    } else {
-                                        "Something went wrong"
-                                    }
-                                } catch (e: Exception) {
-                                    "Something went wrong"
-                                }
-                                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
-                            }
-                        } else {
-                            Toast.makeText(this, "No response from server", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-
-                    Status.ERROR -> {
-                        Toast.makeText(this,"Network connection problem. Please try again.", Toast.LENGTH_SHORT).show()
-                    }
-
-                    Status.LOADING -> {
-                        AppUtil.stopLoader()
-                    }
-                }
-            }
-    }
+//    private fun addExpenseByCash() {
+//
+//
+//        val title = binding.etExpenseTitle.text.toString().trim().toRequestBody()
+//
+//        val amount = binding.etAmount.text.toString().trim().toRequestBody()
+//
+//        val note = binding.etNote1.text.toString().trim().toRequestBody()
+//
+//        val payment_type = paymentType.toRequestBody()
+//
+//        val todayDate = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
+//            .format(java.util.Date())
+//
+//        val expense_date = todayDate.toRequestBody()
+//
+//
+//        AppUtil.startLoader(this)
+//        viewModel.addExpenseByCash(title, amount, note, payment_type,expense_date)
+//            .observe(this) { apiResponse ->
+//                AppUtil.stopLoader()
+//                when (apiResponse.status) {
+//                    Status.SUCCESS -> {
+//                        val retrofitResponse = apiResponse.data
+//                        if (retrofitResponse != null) {
+//                            if (retrofitResponse.isSuccessful) {
+//                                val baseResponse = retrofitResponse.body()
+//                                val message = baseResponse?.message ?: "Expense added"
+//                                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+//
+//                                if (baseResponse?.result == "success") {
+//
+////                                    val jsonData = Gson().toJson(baseResponse.data)
+////                                    val intent = Intent(this, ExpenseSuccessActivity::class.java)
+////                                    intent.putExtra("expense_data_json", jsonData)
+////                                    startActivity(intent)
+//                                    finish()
+//                                }
+//                            } else {
+//                                val errorMessage = try {
+//                                    val errorBody = retrofitResponse.errorBody()?.string()
+//                                    if (!errorBody.isNullOrEmpty()) {
+//                                        val baseResponse =
+//                                            Gson().fromJson(errorBody, BaseResponse::class.java)
+//                                        baseResponse.message ?: "Something went wrong"
+//                                    } else {
+//                                        "Something went wrong"
+//                                    }
+//                                } catch (e: Exception) {
+//                                    "Something went wrong"
+//                                }
+//                                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+//                            }
+//                        } else {
+//                            Toast.makeText(this, "No response from server", Toast.LENGTH_SHORT).show()
+//                        }
+//                    }
+//
+//                    Status.ERROR -> {
+//                        Toast.makeText(this,"Network connection problem. Please try again.", Toast.LENGTH_SHORT).show()
+//                    }
+//
+//                    Status.LOADING -> {
+//                        AppUtil.stopLoader()
+//                    }
+//                }
+//            }
+//    }
 
 
     private fun String.toRequestBody() = toRequestBody("text/plain".toMediaTypeOrNull())

@@ -26,6 +26,7 @@ import com.example.unitedpoultry.Profile.model.ChangePasswordRequestModel
 import com.example.unitedpoultry.adminproduct.model.ProductData
 import com.example.unitedpoultry.exchange_return.model.ReturnOrExchangeRequest
 import com.example.unitedpoultry.network.retrofit.BaseResponse
+import com.example.unitedpoultry.rider_expense.Model.ExpenseHeadData
 import com.example.unitedpoultry.rider_expense.Model.ExpenseModel
 import com.example.unitedpoultry.rider_home.model.DailyPaymentStatsData
 import com.example.unitedpoultry.rider_home.model.EggPickupData
@@ -44,6 +45,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
+import retrofit2.http.PartMap
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -301,22 +303,21 @@ interface ApiInterface {
     @Multipart
     @POST("seller/expenses")
     suspend fun addExpenseByCash(
-        @Part("title") title: RequestBody,
-        @Part("amount") amount: RequestBody,
-        @Part("note") note: RequestBody? = null,
-        @Part("payment_type") payment_type: RequestBody,
-        @Part("expense_date") expense_date: RequestBody
+        @Part("expenses") expenses: RequestBody,
+        @Part("total_amount") totalAmount: RequestBody,
+        @Part("payment_type") paymentType: RequestBody,
+        @Part("expense_date") expenseDate: RequestBody,
+        @Part("note") note: RequestBody? = null
     ): Response<BaseResponse<ExpenseModel>>
-
 
     @Multipart
     @POST("seller/expenses")
     suspend fun addExpenseByCheque(
-        @Part("title") title: RequestBody,
-        @Part("amount") amount: RequestBody,
-        @Part("note") note: RequestBody? = null,
+        @Part("expenses") expenses: RequestBody,
+        @Part("total_amount") totalAmount: RequestBody,
         @Part("payment_type") payment_type: RequestBody,
         @Part("expense_date") expense_date: RequestBody,
+        @Part("note") note: RequestBody? = null,
         @Part image: MultipartBody.Part,
         @Part("payment_note") payment_note: RequestBody? = null,
     ): Response<BaseResponse<ExpenseModel>>
@@ -366,5 +367,8 @@ interface ApiInterface {
     @GET("seller/expenses/{id}")
     suspend fun getExpenseDetail(@Path("id") id: Int): Response<BaseResponse<ExpenseItem>>
 
+
+    @GET("seller/expenses/heads")
+    suspend fun getExpenses(): Response<BaseResponse<ExpenseHeadData>>
 
 }
