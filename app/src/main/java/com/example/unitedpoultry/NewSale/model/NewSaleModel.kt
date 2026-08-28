@@ -17,9 +17,11 @@ data class SaleResponse(
     val payment_record_url: String?,
     val payment_note: String?,
     val sale_date: String,
-    val items: List<Sale>
+    val items: List<Sale>? = emptyList()
    // val damage_eggs: DamageEggsResponse
 )
+
+
 
 
 

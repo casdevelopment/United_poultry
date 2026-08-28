@@ -34,7 +34,7 @@ class SaleSuccessActivity : BaseActivity() {
 
         binding.ivPaymentSlip.setOnClickListener {
             val intent = Intent(this, FullScreenImageActivity::class.java)
-            intent.putExtra("image_url", fullImageUrl) // pass your image URL or local path
+            intent.putExtra("image_url", fullImageUrl)
             startActivity(intent)
         }
 
@@ -50,42 +50,9 @@ class SaleSuccessActivity : BaseActivity() {
 
         binding.tvPaymentType.text = saleData.payment_type
 
-
-//        binding.tvDiscount.text = "Rs ${
-//            if (saleData.discount % 1.0 == 0.0) {
-//                "%.0f".format(saleData.discount) // whole number → no decimal
-//            } else {
-//                "%.2f".format(saleData.discount) // decimal → 2 places
-//            }
-//        }"
-
         binding.tvDate.text = formatDateTime(saleData.sale_date)
 
 
-//        binding.tvTotal.text = "Rs ${
-//            if (saleData.total % 1.0 == 0.0) {
-//                "%.0f".format(saleData.total) // whole number → no decimal
-//            } else {
-//                "%.2f".format(saleData.total) // decimal → 2 places
-//            }
-//        }"
-
-
-//        binding.tvBorrowedAmount.text = "Rs ${
-//            if (saleData.borrowed_amount % 1.0 == 0.0) {
-//                "%.0f".format(saleData.borrowed_amount) // whole number → no decimal
-//            } else {
-//                "%.2f".format(saleData.borrowed_amount) // decimal → 2 places
-//            }
-//        }"
-//
-//        binding.tvCollectionAmount.text = "Rs ${
-//            if (saleData.collection_amount % 1.0 == 0.0) {
-//                "%.0f".format(saleData.collection_amount) // whole number → no decimal
-//            } else {
-//                "%.2f".format(saleData.collection_amount) // decimal → 2 places
-//            }
-//        }"
 
         binding.tvDiscount.text = "Rs ${saleData.discount}"
 
@@ -96,36 +63,17 @@ class SaleSuccessActivity : BaseActivity() {
         binding.tvCollectionAmount.text = "Rs ${saleData.collection_amount}"
 
 
-//        val damageEggs = saleData.damage_eggs
-//
-//        binding.tvExpire.text = "Peti: ${damageEggs.expire.peti} " + "Tray: ${damageEggs.expire.tray} " + "Single: ${damageEggs.expire.single}"
-//
-//        binding.tvReturn.text = "Peti: ${damageEggs.return_.peti} " + "Tray: ${damageEggs.return_.tray} " + "Single: ${damageEggs.return_.single}"
-//
-//        binding.tvLiquid.text = "Kg: ${damageEggs.liquid.kg}"
 
 
+        if (!saleData.items.isNullOrEmpty()) {
+            binding.rvItems.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+            binding.rvItems.adapter = SaleItemsAdapter(saleData.items)
+            binding.rvItems.visibility = View.VISIBLE
+        } else {
+            binding.rvItems.visibility = View.GONE
+        }
 
-//        val itemsText = saleData.items.joinToString(separator = "\n") { item ->
-//
-//            val qty = item.qty
-//            val peti = qty / 12
-//            val tray = qty % 12
-//
-//            val quantityText = if (qty < 12) {
-//                "Tray: $qty"
-//            } else {
-//                if (tray == 0) {
-//                    "Peti: $peti"
-//                } else {
-//                    "Peti: $peti Tray: $tray"
-//                }
-//            }
-//
-//            "$quantityText"
-//        }
 
-     //   binding.tvQuantity.text = itemsText
 
 
         val imageUrl = saleData.payment_record_url
@@ -178,7 +126,7 @@ class SaleSuccessActivity : BaseActivity() {
             val outputFormat = SimpleDateFormat("d MMM yyyy, hh:mm a", Locale.getDefault())
             date?.let { outputFormat.format(it) } ?: dateTimeString
         } catch (e: Exception) {
-            dateTimeString // fallback if parsing fails
+            dateTimeString
         }
     }
 

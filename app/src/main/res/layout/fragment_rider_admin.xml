@@ -228,9 +228,10 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/fabAdd"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_margin="16dp"
+        app:cardCornerRadius="28dp"
         app:cardBackgroundColor="@color/primary"
         app:cardElevation="6dp"
         android:layout_gravity="bottom|end">
@@ -239,8 +240,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/pplussvg"
-            android:scaleType="center"
-            android:padding="12dp"
+            android:scaleType="fitCenter"
+            android:padding="16dp"
             app:tint="@color/white"/>
     </com.google.android.material.card.MaterialCardView>
 
