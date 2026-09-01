@@ -245,10 +245,15 @@ class Repository(private val api: ApiInterface) {
         paymentType: RequestBody,
         collectionAmount: RequestBody,
         borrowedAmount: RequestBody,
+       // previous_payment,
         items: RequestBody,
-        damageEggs: RequestBody
+        //damageEggs: RequestBody
     ): Response<BaseResponse<SaleResponse>> {
-        return api.createNewSale(shopId, areaId, paymentType, collectionAmount, borrowedAmount, items, damageEggs)
+        return api.createNewSale(shopId, areaId, paymentType, collectionAmount, borrowedAmount,
+            //previous_payment,
+            items
+           // damageEggs
+        )
     }
 
 
@@ -256,7 +261,7 @@ class Repository(private val api: ApiInterface) {
         shop_id: RequestBody,
         area_id: RequestBody,
         itemsBody: RequestBody,
-        damageEggsBody: RequestBody,
+       // damageEggsBody: RequestBody,
         payment_type: RequestBody,
         collection_amount: RequestBody,
         borrowed_amount: RequestBody,
@@ -267,7 +272,7 @@ class Repository(private val api: ApiInterface) {
             shop_id,
             area_id,
             itemsBody,
-            damageEggsBody,
+           // damageEggsBody,
             payment_type,
             collection_amount,
             borrowed_amount,

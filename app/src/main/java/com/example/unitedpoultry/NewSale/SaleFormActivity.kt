@@ -66,6 +66,8 @@ class SaleFormActivity : BaseActivity() {
     private var name: String = ""
     private var address: String = ""
 
+    private var borrowed: Double = 0.0
+
     private var paymentType = "cash"
 
 
@@ -122,10 +124,12 @@ class SaleFormActivity : BaseActivity() {
         name = intent.getStringExtra("NAME") ?: "N/A"
         address = intent.getStringExtra("ADDRESS") ?: "N/A"
 
+        borrowed = intent.getDoubleExtra("BORROWED", 0.0)
+
 
         setupRecycler()
-        setupExpireRecycler()
-        setupReturnRecycler()
+//        setupExpireRecycler()
+//        setupReturnRecycler()
 
         setupClicks()
         showData()
@@ -133,6 +137,10 @@ class SaleFormActivity : BaseActivity() {
 
         resetImageViews()
         selectButton(binding.cashLayout)
+
+        //setupPreviousBalanceWatcher()
+
+
     }
 
     private fun showData() {
@@ -143,6 +151,8 @@ class SaleFormActivity : BaseActivity() {
         binding.tvDiscount.text = "Rs 0"
 
         binding.tvDiscountPerPatti.text = "Rs $discountPerPetti per Petti"
+
+        binding.tvPreviousBalance.text = "Rs $borrowed"
     }
 
     private fun setupClicks() {
@@ -185,7 +195,7 @@ class SaleFormActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         loadProducts()
-        loadAllProducts()
+        //loadAllProducts()
     }
 
     private fun setupRecycler() {
@@ -327,76 +337,76 @@ class SaleFormActivity : BaseActivity() {
     }
 
 
-    private fun setupExpireRecycler() {
-        binding.recyclerExpireProducts.layoutManager = LinearLayoutManager(this)
+//    private fun setupExpireRecycler() {
+//        binding.recyclerExpireProducts.layoutManager = LinearLayoutManager(this)
+//
+//        expireAdapter = NewSaleAdapter(allproductList, expireQuantityMap)
+//        binding.recyclerExpireProducts.adapter = expireAdapter
+//    }
+//
+//    private fun setupReturnRecycler() {
+//        binding.recyclerReturnProducts.layoutManager = LinearLayoutManager(this)
+//
+//        returnAdapter = NewSaleAdapter(allproductList, returnQuantityMap)
+//        binding.recyclerReturnProducts.adapter = returnAdapter
+//    }
 
-        expireAdapter = NewSaleAdapter(allproductList, expireQuantityMap)
-        binding.recyclerExpireProducts.adapter = expireAdapter
-    }
-
-    private fun setupReturnRecycler() {
-        binding.recyclerReturnProducts.layoutManager = LinearLayoutManager(this)
-
-        returnAdapter = NewSaleAdapter(allproductList, returnQuantityMap)
-        binding.recyclerReturnProducts.adapter = returnAdapter
-    }
-
-    private fun loadAllProducts() {
-        productViewModel.getProducts().observe(this) { response ->
-            when (response.status) {
-                Status.LOADING -> AppUtil.startLoader(this)
-                Status.SUCCESS -> {
-                    AppUtil.stopLoader()
-                    val res = response.data
-                    if (res != null && res.isSuccessful) {
-                        val baseResponse = res.body() as BaseResponse<ProductData>?
-                        if (baseResponse?.result == "success" && baseResponse.data != null) {
-
-                            val fetchedProducts = baseResponse.data.products.toMutableList()
-
-                            // 1. Find the base Tray product
-                            val trayProduct = fetchedProducts.find { it.name.contains("Tray", ignoreCase = true) }
-
-                            // 2. Add Virtual Petti (ID = -1) at the top if Tray exists
-                            if (trayProduct != null) {
-                                // Parse string price safely to double
-                                val trayBasePrice = trayProduct.price.toDoubleOrNull() ?: 0.0
-                                val calculatedPettiPrice = (trayBasePrice * 12.0).toString()
-
-                                val pettiProduct = trayProduct.copy(
-                                    id = -1,
-                                    name = "Petti",
-                                    price = calculatedPettiPrice,
-                                    eggs_count = trayProduct.eggs_count * 12 // Optional: adjust eggs count for Petti
-                                )
-
-                                fetchedProducts.add(0, pettiProduct)
-                            }
-
-                            allproductList = fetchedProducts
-
-                            expireAdapter = NewSaleAdapter(allproductList, expireQuantityMap)
-                            returnAdapter = NewSaleAdapter(allproductList, returnQuantityMap)
-
-                            binding.recyclerExpireProducts.adapter = expireAdapter
-                            binding.recyclerReturnProducts.adapter = returnAdapter
-
-                        } else {
-                            Toast.makeText(this, baseResponse?.message ?: "Failed to fetch products", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-                Status.ERROR -> {
-                    AppUtil.stopLoader()
-                    Toast.makeText(this, response.message ?: "Network Error", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
+//    private fun loadAllProducts() {
+//        productViewModel.getProducts().observe(this) { response ->
+//            when (response.status) {
+//                Status.LOADING -> AppUtil.startLoader(this)
+//                Status.SUCCESS -> {
+//                    AppUtil.stopLoader()
+//                    val res = response.data
+//                    if (res != null && res.isSuccessful) {
+//                        val baseResponse = res.body() as BaseResponse<ProductData>?
+//                        if (baseResponse?.result == "success" && baseResponse.data != null) {
+//
+//                            val fetchedProducts = baseResponse.data.products.toMutableList()
+//
+//                            // 1. Find the base Tray product
+//                            val trayProduct = fetchedProducts.find { it.name.contains("Tray", ignoreCase = true) }
+//
+//                            // 2. Add Virtual Petti (ID = -1) at the top if Tray exists
+//                            if (trayProduct != null) {
+//                                // Parse string price safely to double
+//                                val trayBasePrice = trayProduct.price.toDoubleOrNull() ?: 0.0
+//                                val calculatedPettiPrice = (trayBasePrice * 12.0).toString()
+//
+//                                val pettiProduct = trayProduct.copy(
+//                                    id = -1,
+//                                    name = "Petti",
+//                                    price = calculatedPettiPrice,
+//                                    eggs_count = trayProduct.eggs_count * 12 // Optional: adjust eggs count for Petti
+//                                )
+//
+//                                fetchedProducts.add(0, pettiProduct)
+//                            }
+//
+//                            allproductList = fetchedProducts
+//
+//                            expireAdapter = NewSaleAdapter(allproductList, expireQuantityMap)
+//                            returnAdapter = NewSaleAdapter(allproductList, returnQuantityMap)
+//
+//                            binding.recyclerExpireProducts.adapter = expireAdapter
+//                            binding.recyclerReturnProducts.adapter = returnAdapter
+//
+//                        } else {
+//                            Toast.makeText(this, baseResponse?.message ?: "Failed to fetch products", Toast.LENGTH_SHORT).show()
+//                        }
+//                    }
+//                }
+//                Status.ERROR -> {
+//                    AppUtil.stopLoader()
+//                    Toast.makeText(this, response.message ?: "Network Error", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        }
+//    }
 
 
     private fun updateTotal(subtotal: Double, totalEggs: Int) {
-        // 1. Use .contains() instead of .equals() since the name string now contains prices
+
         val pettiProduct = productList.find { it.name.contains("Petti", ignoreCase = true) }
         val trayProduct = productList.find { it.name.contains("Tray", ignoreCase = true) }
 
@@ -454,6 +464,7 @@ class SaleFormActivity : BaseActivity() {
 
 
 
+
     private fun setupCollectionWatcher() {
         binding.etCollectionAmount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -476,6 +487,31 @@ class SaleFormActivity : BaseActivity() {
             }
         })
     }
+
+
+
+//    private fun setupPreviousBalanceWatcher() {
+//
+//        binding.etPayPreviousBalance.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+//
+//            override fun afterTextChanged(s: Editable?) {
+//                val total = borrowed
+//
+//
+//                var collection = s.toString().toDoubleOrNull() ?: 0.0
+//
+//                val remaining = (total - collection).coerceAtLeast(0.0)
+//
+//                val remainingText = formatAmount(remaining)
+//
+//                binding.tvPreviousBalance.text = "Rs $remainingText"
+//            }
+//        })
+//    }
+
+
 
 
     private fun getInitials(name: String): String {
@@ -608,21 +644,21 @@ class SaleFormActivity : BaseActivity() {
 
         val itemsList = mutableListOf<Map<String, Int>>()
 
-        // 1. Process selected items and separate Tray/Petti from regular items
+
         quantityMap.forEach { (productId, qty) ->
             val product = productList.find { it.id == productId }
 
             when {
-                // Virtual Petti item
+
                 productId == -1 || product?.name?.contains("Petti", ignoreCase = true) == true -> {
                     pettiQty = qty
                 }
-                // Base Tray item
+
                 product?.name?.contains("Tray", ignoreCase = true) == true -> {
                     trayQty = qty
                     realTrayProductId = productId
                 }
-                // Other regular products
+
                 else -> {
                     if (qty > 0) {
                         itemsList.add(
@@ -636,14 +672,14 @@ class SaleFormActivity : BaseActivity() {
             }
         }
 
-        // 2. Convert (Petti * 12) + Tray into total Trays
+
         val totalTrays = (pettiQty * 12) + trayQty
 
         if (totalTrays > 0) {
-            // Find real Tray ID if not directly in quantityMap
+
             val targetTrayId = realTrayProductId
                 ?: productList.find { it.name.contains("Tray", ignoreCase = true) }?.id
-                ?: 1 // Fallback Tray ID
+                ?: 1
 
             itemsList.add(
                 0,
@@ -701,18 +737,18 @@ class SaleFormActivity : BaseActivity() {
     }
 
 
-    private fun buildRequest(): Damage {
-        liquidKg = binding.etLiquidKg.text.toString().toDoubleOrNull() ?: 0.0
-
-        val expire = convertMapToQtyRequests(expireQuantityMap)
-        val returnList = convertMapToQtyRequests(returnQuantityMap)
-
-        return Damage(
-            expire = expire,
-            returnData = returnList,
-            liquid = LiquidItem(liquidKg)
-        )
-    }
+//    private fun buildRequest(): Damage {
+//       // liquidKg = binding.etLiquidKg.text.toString().toDoubleOrNull() ?: 0.0
+//
+//        val expire = convertMapToQtyRequests(expireQuantityMap)
+//        val returnList = convertMapToQtyRequests(returnQuantityMap)
+//
+//        return Damage(
+//            expire = expire,
+//            returnData = returnList,
+//            liquid = LiquidItem(liquidKg)
+//        )
+//    }
 
 
     private fun submitSale() {
@@ -730,10 +766,10 @@ class SaleFormActivity : BaseActivity() {
         val itemsJson = gson.toJson(itemsList)
         val itemsBody = itemsJson.toRequestBody("application/json".toMediaTypeOrNull())
 
-        val damageEggs = buildRequest()
+       // val damageEggs = buildRequest()
 
-        val damageEggsJson = gson.toJson(damageEggs)
-        val damageEggsBody = damageEggsJson.toRequestBody("application/json".toMediaTypeOrNull())
+      //  val damageEggsJson = gson.toJson(damageEggs)
+       // val damageEggsBody = damageEggsJson.toRequestBody("application/json".toMediaTypeOrNull())
 
 
 
@@ -746,6 +782,7 @@ class SaleFormActivity : BaseActivity() {
         val collectionAmountValue = binding.etCollectionAmount.text.toString().trim().toDoubleOrNull() ?: 0
         val collection_amount = collectionAmountValue.toString().toPart()
         val borrowed_amount = binding.etBorrowedAmount.text.toString().trim().toPart()
+     //   val previous_payment = binding.etPayPreviousBalance.text.toString().trim().toPart()
 
         // ---------------- API CALL ----------------
         AppUtil.startLoader(this)
@@ -756,8 +793,9 @@ class SaleFormActivity : BaseActivity() {
             payment_type,
             collection_amount,
             borrowed_amount,
-            itemsBody,
-            damageEggsBody
+           // previous_payment,
+            itemsBody
+          //  damageEggsBody
         ).observe(this) { apiResponse ->
             AppUtil.stopLoader()
 
@@ -811,11 +849,11 @@ class SaleFormActivity : BaseActivity() {
         val itemsJson = gson.toJson(itemsList)
         val itemsBody = itemsJson.toRequestBody("application/json".toMediaTypeOrNull())
 
-        val damageEggs = buildRequest()
-
-        val damageEggsJson = gson.toJson(damageEggs)
-        val damageEggsBody = damageEggsJson.toRequestBody("application/json".toMediaTypeOrNull())
-
+//        val damageEggs = buildRequest()
+//
+//        val damageEggsJson = gson.toJson(damageEggs)
+//        val damageEggsBody = damageEggsJson.toRequestBody("application/json".toMediaTypeOrNull())
+//
 
 
 
@@ -865,7 +903,7 @@ class SaleFormActivity : BaseActivity() {
             shop_id,
             area_id,
             itemsBody,
-            damageEggsBody,
+          //  damageEggsBody,
             payment_type,
             collection_amount,
             borrowed_amount,
