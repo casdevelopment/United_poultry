@@ -154,11 +154,15 @@ class AddExpenseActivity : BaseActivity() {
     }
 
     private fun selectButton(selected: LinearLayout) {
+
+        val primaryColor = ContextCompat.getColor(this, R.color.primary)
+        val whiteColor = ContextCompat.getColor(this, R.color.white)
+
+
         if (selected == binding.cashLayout) {
             paymentType = "cash"
 
-            val primaryColor = ContextCompat.getColor(this, R.color.primary)
-            val whiteColor = ContextCompat.getColor(this, R.color.white)
+
 
             binding.cashLayout.backgroundTintList = ColorStateList.valueOf(primaryColor)
             binding.addExpenseLayout.backgroundTintList = ColorStateList.valueOf(whiteColor)
@@ -174,11 +178,9 @@ class AddExpenseActivity : BaseActivity() {
         } else {
             paymentType = "online_cheque"
 
-            val primaryColor = ContextCompat.getColor(this, R.color.white)
-            val whiteColor = ContextCompat.getColor(this, R.color.primary)
 
-            binding.cashLayout.backgroundTintList = ColorStateList.valueOf(primaryColor)
-            binding.addExpenseLayout.backgroundTintList = ColorStateList.valueOf(whiteColor)
+            binding.cashLayout.backgroundTintList = ColorStateList.valueOf(whiteColor)
+            binding.addExpenseLayout.backgroundTintList = ColorStateList.valueOf(primaryColor)
 
             binding.cashText.setTextColor(primaryColor)
             binding.cashIcon.setColorFilter(primaryColor)

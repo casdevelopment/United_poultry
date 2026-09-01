@@ -31,6 +31,7 @@ data class ShopModel(
     val is_active: Boolean?
 )
 
+
 data class ShopsPagination(
     val last_page: Int,
     val current_page: Int,

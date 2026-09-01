@@ -143,6 +143,7 @@ class RiderShopListAdapter(
                     intent.putExtra("NAME", item.name)
                     intent.putExtra("ADDRESS", item.address)
                     intent.putExtra("DISCOUNT", item.discount_per_petti)
+                    intent.putExtra("BORROWED", item.borrowed)
                     context.startActivity(intent)
                 },
 

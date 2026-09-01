@@ -311,6 +311,10 @@
 
 
 
+
+
+
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -377,7 +381,70 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Expire"
+                        android:text="Sabut"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="12dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvSabut"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="120dp" />
+
+
+                        <LinearLayout
+                            android:id="@+id/emptySabut"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:src="@drawable/emptybox"
+                                android:alpha="0.7"
+                                android:contentDescription="No Data" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="No items Sabut"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/gray"
+                                android:fontFamily="@font/poppins" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Items will appear here when available"
+                                android:textSize="12sp"
+                                android:textColor="@color/gray"
+                                android:fontFamily="@font/poppins" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mela"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:layout_marginStart="12dp"
@@ -390,7 +457,7 @@
                     android:orientation="vertical">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvExpire"
+                        android:id="@+id/rvMela"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="120dp" />
@@ -398,7 +465,7 @@
 
 
                     <LinearLayout
-                        android:id="@+id/emptyExpire"
+                        android:id="@+id/emptyMela"
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
                         android:gravity="center"
@@ -445,7 +512,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Return"
+                        android:text="Toota"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:layout_marginStart="12dp"
@@ -461,7 +528,7 @@
 
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvReturn"
+                        android:id="@+id/rvToota"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="120dp"
@@ -470,7 +537,7 @@
 
 
                     <LinearLayout
-                        android:id="@+id/emptyReturn"
+                        android:id="@+id/emptyToota"
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
                         android:gravity="center"

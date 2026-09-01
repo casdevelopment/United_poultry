@@ -239,8 +239,9 @@ interface ApiInterface {
         @Part("payment_type") paymentType: RequestBody,
         @Part("collection_amount") collectionAmount: RequestBody,
         @Part("borrowed_amount") borrowedAmount: RequestBody,
-        @Part("items") items: RequestBody,
-        @Part("damage_eggs") damageEggs: RequestBody
+        //@Part("previous_payment") previous_payment: RequestBody,
+        @Part("items") items: RequestBody
+      //  @Part("damage_eggs") damageEggs: RequestBody
     ): Response<BaseResponse<SaleResponse>>
 
 
@@ -250,7 +251,7 @@ interface ApiInterface {
         @Part("shop_id") shop_id: RequestBody,
         @Part("area_id") area_id: RequestBody,
         @Part("items") itemsBody: RequestBody,
-        @Part("damage_eggs") damageEggsBody: RequestBody,
+       // @Part("damage_eggs") damageEggsBody: RequestBody,
         @Part("payment_type") payment_type: RequestBody,
         @Part("collection_amount") collection_amount: RequestBody,
         @Part("borrowed_amount") borrowed_amount: RequestBody,
