@@ -12,9 +12,11 @@ data class PickedToday(
 
 
 data class PickedTodayCategories(
-    val expire: Map<String, Int>,
-    val `return`: Map<String, Int>,
+    val sabut: Map<String, Int>,
+    val mela: Map<String, Int>,
+    val toota: Map<String, Int>,
     val liquid: PickedTodayLiquid
+    //val liquid: Map<String, Int>,
 )
 
 data class PickedTodayLiquid(
