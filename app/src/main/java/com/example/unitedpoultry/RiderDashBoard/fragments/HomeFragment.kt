@@ -57,8 +57,10 @@ class HomeFragment : Fragment() {
 
     private lateinit var totalPickedAdapter: RiderHomeStatsAdapter
     private lateinit var remainingAdapter: RiderHomeStatsAdapter
-    private lateinit var expireAdapter: RiderHomeStatsAdapter
-    private lateinit var returnAdapter: RiderHomeStatsAdapter
+
+    private lateinit var sabutAdapter: RiderHomeStatsAdapter
+    private lateinit var melaAdapter: RiderHomeStatsAdapter
+    private lateinit var tootaAdapter: RiderHomeStatsAdapter
 
 
     override fun onCreateView(
@@ -261,15 +263,15 @@ class HomeFragment : Fragment() {
         }
 
 
-        expireAdapter = RiderHomeStatsAdapter()
+        sabutAdapter = RiderHomeStatsAdapter()
 
-        binding.rvExpire.apply {
+        binding.rvSabut.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(),
                 LinearLayoutManager.HORIZONTAL,
                 false
             )
-            adapter = expireAdapter
+            adapter = sabutAdapter
             setHasFixedSize(true)
             isNestedScrollingEnabled = false
             overScrollMode = View.OVER_SCROLL_NEVER
@@ -277,15 +279,30 @@ class HomeFragment : Fragment() {
 
 
 
-        returnAdapter = RiderHomeStatsAdapter()
+        melaAdapter = RiderHomeStatsAdapter()
 
-        binding.rvReturn.apply {
+        binding.rvMela.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(),
                 LinearLayoutManager.HORIZONTAL,
                 false
             )
-            adapter = returnAdapter
+            adapter = melaAdapter
+            setHasFixedSize(true)
+            isNestedScrollingEnabled = false
+            overScrollMode = View.OVER_SCROLL_NEVER
+        }
+
+
+        tootaAdapter = RiderHomeStatsAdapter()
+
+        binding.rvToota.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            adapter = tootaAdapter
             setHasFixedSize(true)
             isNestedScrollingEnabled = false
             overScrollMode = View.OVER_SCROLL_NEVER
@@ -342,26 +359,30 @@ class HomeFragment : Fragment() {
 
         val rawTotalPickedList = data.total_picked.map { it.key to it.value }
         val rawRemainingList = data.remaining.map { it.key to it.value }
-        val rawExpireList = data.categories.expire.map { it.key to it.value }
-        val rawReturnList = data.categories.`return`.map { it.key to it.value }
+        val rawSabutList = data.categories.sabut.map { it.key to it.value }
+        val rawMelaList = data.categories.mela.map { it.key to it.value }
+        val rawTootaList = data.categories.mela.map { it.key to it.value }
 
         // Convert raw trays into Pettis + Remaining Trays for ALL lists
         val totalPickedList = convertTraysToPettiAndTrays(rawTotalPickedList)
         val remainingList = convertTraysToPettiAndTrays(rawRemainingList)
-        val expireList = convertTraysToPettiAndTrays(rawExpireList)
-        val returnList = convertTraysToPettiAndTrays(rawReturnList)
+        val sabutList = convertTraysToPettiAndTrays(rawSabutList)
+        val melaList = convertTraysToPettiAndTrays(rawMelaList)
+        val tootaList = convertTraysToPettiAndTrays(rawTootaList)
 
         binding.tvLiquidQuantity.text = data.categories.liquid.kg.toString()
 
         totalPickedAdapter.submitList(totalPickedList)
         remainingAdapter.submitList(remainingList)
-        expireAdapter.submitList(expireList)
-        returnAdapter.submitList(returnList)
+        sabutAdapter.submitList(sabutList)
+        melaAdapter.submitList(melaList)
+        tootaAdapter.submitList(tootaList)
 
         toggleSection(binding.rvTotalPicked, binding.emptyTotalPicked, totalPickedList.isNotEmpty())
         toggleSection(binding.rvRemaining, binding.emptyRemaining, remainingList.isNotEmpty())
-        toggleSection(binding.rvExpire, binding.emptyExpire, expireList.isNotEmpty())
-        toggleSection(binding.rvReturn, binding.emptyReturn, returnList.isNotEmpty())
+        toggleSection(binding.rvSabut, binding.emptySabut, sabutList.isNotEmpty())
+        toggleSection(binding.rvMela, binding.emptyMela, melaList.isNotEmpty())
+        toggleSection(binding.rvToota, binding.emptyToota, tootaList.isNotEmpty())
     }
 
     private fun convertTraysToPettiAndTrays(list: List<Pair<String, Int>>): List<Pair<String, Int>> {

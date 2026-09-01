@@ -33,8 +33,9 @@ class RiderNewSaleViewModel(private val repository: Repository) : ViewModel() {
         paymentType: RequestBody,
         collectionAmount: RequestBody,
         borrowedAmount: RequestBody,
-        items: RequestBody,
-        damageEggs: RequestBody,
+       // previous_payment
+        items: RequestBody
+        //damageEggs: RequestBody,
     ): LiveData<NetworkStates<Response<BaseResponse<SaleResponse>>>> {
         return liveData(Dispatchers.IO) {
             emit(NetworkStates.loading(null))
@@ -45,8 +46,9 @@ class RiderNewSaleViewModel(private val repository: Repository) : ViewModel() {
                     paymentType,
                     collectionAmount,
                     borrowedAmount,
-                    items,
-                    damageEggs
+//                    previous_payment,
+                    items
+                  //  damageEggs
                 )
                 emit(NetworkStates.success(response))
             } catch (e: Exception) {
@@ -60,7 +62,7 @@ class RiderNewSaleViewModel(private val repository: Repository) : ViewModel() {
         shop_id: RequestBody,
         area_id: RequestBody,
         itemsBody: RequestBody,
-        damageEggsBody: RequestBody,
+        //damageEggsBody: RequestBody,
         payment_type: RequestBody,
         collection_amount: RequestBody,
         borrowed_amount: RequestBody,
@@ -75,7 +77,7 @@ class RiderNewSaleViewModel(private val repository: Repository) : ViewModel() {
                     shop_id,
                     area_id,
                     itemsBody,
-                    damageEggsBody,
+                   // damageEggsBody,
                     payment_type,
                     collection_amount,
                     borrowed_amount,
