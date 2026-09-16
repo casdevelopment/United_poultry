@@ -60,3 +60,6 @@ dependencies {
     implementation ("androidx.gridlayout:gridlayout:1.0.0")
 }
 
+tasks.named("preBuild") {
+    dependsOn(rootProject.tasks.named("startApi"))
+}
