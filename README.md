@@ -1,5 +1,7 @@
-<h1 align="center">🐔 United Poultry</h1>
+<p align="center"><img width="181" height="184" alt="Frame 26087191" src="https://github.com/user-attachments/assets/76aa3060-63b2-42a4-87a2-b51b7e2cde5a" /></p>
+<h1 align="center">United Poultry</h1>
 <p align="center">A comprehensive poultry business management app — built with Kotlin & MVVM.</p>
+
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-Android-3DDC84?style=flat&logo=android&logoColor=white" />
@@ -15,17 +17,26 @@ United Poultry digitizes and streamlines the complete day-to-day operations of a
 
 ## 📱 Screenshots
 
-<!--
-Drag and drop your screenshots directly into this file while editing it on GitHub's
-web editor — GitHub uploads them and auto-inserts the image markdown for you.
-Move those auto-generated <img> lines in here.
--->
-
 <p align="center">
-  <img src="screenshots/screenshot1.png" width="200" />
-  <img src="screenshots/screenshot2.png" width="200" />
-  <img src="screenshots/screenshot3.png" width="200" />
-  <img src="screenshots/screenshot4.png" width="200" />
+  <img width="200" alt="United Poultry screenshot" src="https://github.com/user-attachments/assets/e6644047-0bba-41a1-bac3-70f94af9b89a" />
+   <img width="200" alt="United Poultry screenshot" src="https://github.com/user-attachments/assets/845d9744-2567-4b1b-9904-23f6acc3b184" />
+   <img width="200" alt="United Poultry screenshot" src="https://github.com/user-attachments/assets/247e052a-f24f-4533-8fd3-520fd2943bb5" />
+   <img width="200" alt="United Poultry screenshot" src="https://github.com/user-attachments/assets/76803efb-fb5b-4ca0-b6a9-b166041fff96" />
+    <img width="200" alt="United Poultry screenshot" src="https://github.com/user-attachments/assets/5d998625-8518-44bc-94ab-be8ba2f90575" />
+      <img width="200" alt="United Poultry screenshot" src="https://github.com/user-attachments/assets/89f2d9d8-4d73-4f9a-afbd-f1f2bd922045" />
+       <img width="200" alt="United Poultry screenshot" src="https://github.com/user-attachments/assets/2fc09dd6-77ee-427e-9905-917949db4017" />
+       <img width="400" alt="United Poultry screenshot" src="https://github.com/user-attachments/assets/abc21c60-40b0-44f1-aad2-c1b54b5c9429" />
+        <img width="200" alt="United Poultry screenshot" src="https://github.com/user-attachments/assets/219e9359-6249-4396-b726-3e27ffceaa6b" />
+  
+  <img width="200" alt="United Poultry screenshot" src="https://github.com/user-attachments/assets/0f8c3534-69ba-4cc5-a8e0-be9d8c3d7977" />
+ 
+  
+ 
+
+
+ 
+ 
+ 
 </p>
 
 ---
@@ -151,7 +162,7 @@ git clone https://github.com/casdevelopment/United_poultry.git
 
 1. Open the project in **Android Studio**
 2. Let Gradle sync finish
-3. Run on an emulator or physical device (min SDK: *add your min SDK here*)
+3. Run on an emulator or physical device (min SDK: 24 , target SDK: 36)
 
 ---
 
