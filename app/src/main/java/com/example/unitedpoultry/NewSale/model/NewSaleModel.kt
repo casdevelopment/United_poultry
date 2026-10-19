@@ -16,6 +16,8 @@ data class SaleResponse(
     val borrowed_amount: Double,
     val payment_record_url: String?,
     val payment_note: String?,
+    val previous_balance: String?,
+    val dozen_rate: String?,
     val sale_date: String,
     val items: List<Sale>? = emptyList()
    // val damage_eggs: DamageEggsResponse

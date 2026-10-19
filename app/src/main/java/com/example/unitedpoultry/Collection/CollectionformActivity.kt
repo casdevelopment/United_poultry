@@ -246,7 +246,8 @@ class CollectionformActivity : BaseActivity() {
             else -> {
                 // Valid amount → update remaining
                 val remaining = borrowedAmount - enteredAmount
-                binding.tvAfterBalance.text = "Rs $remaining"
+            //    binding.tvAfterBalance.text = "Rs $remaining"
+                binding.tvAfterBalance.text = String.format("Rs %.2f", remaining)
             }
         }
 

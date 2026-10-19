@@ -17,8 +17,8 @@ data class CollectionResponse(
     val payment_type: String,
     val payment_note: String?,
     val payment_record_url: String?,
-    val previous_balance: Int,
-    val remaining_balance: Int,
+    val previous_balance: String,
+    val remaining_balance: String,
     val collected_at: String,
     val seller_id: Int
 )

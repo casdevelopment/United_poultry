@@ -57,6 +57,8 @@ class SaleSuccessActivity : BaseActivity() {
         binding.tvDiscount.text = "Rs ${saleData.discount}"
 
         binding.tvTotal.text = "Rs ${saleData.total}"
+        binding.tvPreviousBalance.text = "Rs ${saleData.previous_balance}"
+        binding.tvDozenRate.text =  saleData.dozen_rate
 
         binding.tvBorrowedAmount.text = "Rs ${saleData.borrowed_amount}"
 

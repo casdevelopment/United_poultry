@@ -1,5 +1,6 @@
 package com.example.unitedpoultry.Collection.ViewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
@@ -24,6 +25,7 @@ class CollectionViewModel(private val repository: Repository) : ViewModel() {
             val response = repository.addCollectionByCash(shop_id, payment_type, amount)
             emit(NetworkStates.success(response))
         } catch (e: Exception) {
+            Log.v("addCollectionByCash","Exception " +e.message.toString())
             emit(NetworkStates.error(null, e.message ?: "Something went wrong"))
         }
     }
