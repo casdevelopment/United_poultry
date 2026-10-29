@@ -154,6 +154,7 @@ class SaleFormActivity : BaseActivity() {
         binding.tvDiscountPerPatti.text = "Rs $discountPerPetti per Petti"
 
         binding.tvPreviousBalance.text = "Rs $borrowed"
+        binding.tvPreviousBorrowAmount.text = "Rs $borrowed"
     }
 
     private fun setupClicks() {
@@ -787,7 +788,9 @@ class SaleFormActivity : BaseActivity() {
         val area_id = areaId.toString().toPart()
         val payment_type = paymentType.toPart()
         val collectionAmountValue = binding.etCollectionAmount.text.toString().trim().toDoubleOrNull() ?: 0
+        val collectionPreviousAmountValue= binding.etCollectionPreviousAmount.text.toString().trim().toDoubleOrNull() ?: 0
         val collection_amount = collectionAmountValue.toString().toPart()
+        val collectionPreviousAmount = collectionPreviousAmountValue.toString().toPart()
         val borrowed_amount = binding.etBorrowedAmount.text.toString().trim().toPart()
      //   val previous_payment = binding.etPayPreviousBalance.text.toString().trim().toPart()
 
@@ -801,7 +804,8 @@ class SaleFormActivity : BaseActivity() {
             collection_amount,
             borrowed_amount,
            // previous_payment,
-            itemsBody
+            itemsBody,
+            collectionPreviousAmount
           //  damageEggsBody
         ).observe(this) { apiResponse ->
             AppUtil.stopLoader()
@@ -871,7 +875,11 @@ class SaleFormActivity : BaseActivity() {
 
 
         val collectionAmountValue = binding.etCollectionAmount.text.toString().trim().toDoubleOrNull() ?: 0
+        val collectionPreviousAmountValue = binding.etCollectionPreviousAmount.text.toString().trim().toDoubleOrNull() ?: 0
+
         val collection_amount = collectionAmountValue.toString().toPart()
+
+        val collectionPreviousAmount = collectionPreviousAmountValue.toString().toPart()
 
         val borrowed_amount = binding.etBorrowedAmount.text.toString().trim().toPart()
 
@@ -915,7 +923,8 @@ class SaleFormActivity : BaseActivity() {
             collection_amount,
             borrowed_amount,
             payment_record,
-            note
+            note,
+            collectionPreviousAmount
         ).observe(this) { apiResponse ->
             AppUtil.stopLoader()
 

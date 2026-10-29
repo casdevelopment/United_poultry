@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows = "true"
-    android:fillViewport="true"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -1091,7 +1090,7 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="Total Amount"
+                            android:text="Current Total Amount"
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             android:textStyle="bold"
@@ -1302,10 +1301,11 @@
 
 
                     <TextView
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="Borrowed Amount"
+                        android:text="Current Borrowed Amount"
                         android:textColor="@color/black"
                         android:textSize="15sp"
                         android:textStyle="bold"
@@ -1313,8 +1313,9 @@
 
 
                     <EditText
+                        android:visibility="gone"
                         android:id="@+id/etBorrowedAmount"
-                        android:hint="Borrowed Amount"
+                        android:hint="Current Borrowed Amount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_bg_black"
@@ -1345,7 +1346,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="Collection Amount"
+                        android:text="Collection Current Amount"
                         android:textColor="@color/black"
                         android:textSize="15sp"
                         android:textStyle="bold"
@@ -1354,7 +1355,7 @@
 
                     <EditText
                         android:id="@+id/etCollectionAmount"
-                        android:hint="Enter collection amount"
+                        android:hint="Enter collection Current amount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_bg_black"
@@ -1371,6 +1372,98 @@
 
                     <TextView
                         android:id="@+id/etCollectionAmountError"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        android:layout_marginBottom="7dp"
+                        android:layout_marginStart="10dp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardPreviousBorrowTotal"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="2dp"
+
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:backgroundTint="@color/primary"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:weightSum="2"
+                            android:layout_margin="20dp"
+                            android:gravity="center|start"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:layout_weight="1.2"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/poppins"
+                                android:text="Previous Borrow Amount"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                               />
+
+                            <TextView
+                                android:gravity="center"
+                                android:id="@+id/tvPreviousBorrowAmount"
+                                android:layout_weight="0.8"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/poppins"
+                                tools:text="1234"
+                                android:textColor="@color/red"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Collection Previous Amount"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="10dp"/>
+
+
+                    <EditText
+                        android:id="@+id/etCollectionPreviousAmount"
+                        android:hint="Enter collection Previous amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_bg_black"
+                        android:textColor="@color/black60"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:scrollHorizontally="true"
+                        android:imeOptions="actionDone"
+                        />
+
+                    <TextView
+                        android:id="@+id/etCollectionPreviousAmountError"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/holo_red_dark"
@@ -1567,8 +1660,6 @@
 
 
             </androidx.cardview.widget.CardView>
-
-
 
 
             <LinearLayout

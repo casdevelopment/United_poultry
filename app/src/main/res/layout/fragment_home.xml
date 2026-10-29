@@ -277,44 +277,6 @@
 
 
 
-
-
-                        <!-- SECOND ROW -->
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:orientation="vertical"-->
-<!--                            android:layout_marginTop="4dp">-->
-
-<!--                            <TextView-->
-<!--                                android:id="@+id/tvTotalPickedPeti"-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:text="Peti: -"-->
-<!--                                android:textSize="16sp"-->
-<!--                                android:textStyle="bold"-->
-<!--                                android:textColor="@color/primary"-->
-<!--                                android:fontFamily="@font/poppins" />-->
-
-<!--                            <TextView-->
-<!--                                android:id="@+id/tvTotalPickedTray"-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:text="Tray: -"-->
-<!--                                android:textStyle="bold"-->
-<!--                                android:textSize="16sp"-->
-<!--                                android:textColor="@color/primary"-->
-<!--                                android:fontFamily="@font/poppins" />-->
-
-
-<!--                        </LinearLayout>-->
-
-
-
-
-
-
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -377,18 +339,120 @@
                 </LinearLayout>
 
 
+                    <View
+                        android:background="@color/primary"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginBottom="10dp"/>
+
+
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Sabut"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         android:layout_marginStart="12dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/primary"
                         android:fontFamily="@font/poppins" />
 
                     <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:weightSum="2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Peti"
+                                android:textColor="@color/black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:layout_gravity="center_vertical"/>
+
+                            <EditText
+                                android:id="@+id/etSabutPetiQuantity"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="40dp"
+                                android:background="@drawable/edit_text_bg_no_border"
+                                android:textColor="@color/black60"
+                                android:textSize="14sp"
+                                android:inputType="number"
+                                android:gravity="center"
+                                android:backgroundTint="@color/primary20"
+                                android:hint="Enter Quantity" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginTop="4dp"
+                            android:weightSum="2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Tray"
+                                android:textColor="@color/black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:layout_gravity="center_vertical"/>
+
+                            <EditText
+                                android:id="@+id/etSabutTrayQuantity"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="40dp"
+                                android:background="@drawable/edit_text_bg_no_border"
+                                android:textColor="@color/black60"
+                                android:textSize="14sp"
+                                android:inputType="number"
+                                android:gravity="center"
+                                android:backgroundTint="@color/primary20"
+                                android:hint="Enter Quantity" />
+
+                        </LinearLayout>
+
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btSaveSabut"
+                            android:textColor="@color/white"
+                            android:text="Return Sabut"
+                            android:background="@color/primary"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"/>
+
+
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:background="@color/primary"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginBottom="10dp"/>
+
+                    <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -445,13 +509,103 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Mela"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         android:layout_marginStart="12dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/primary"
                         android:fontFamily="@font/poppins" />
 
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:weightSum="2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Peti"
+                                android:textColor="@color/black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:layout_gravity="center_vertical"/>
+
+                            <EditText
+                                android:id="@+id/etMelaPetiQuantity"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="40dp"
+                                android:background="@drawable/edit_text_bg_no_border"
+                                android:textColor="@color/black60"
+                                android:textSize="14sp"
+                                android:inputType="number"
+                                android:gravity="center"
+                                android:backgroundTint="@color/primary20"
+                                android:hint="Enter Quantity" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginTop="4dp"
+                            android:weightSum="2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Tray"
+                                android:textColor="@color/black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:layout_gravity="center_vertical"/>
+
+                            <EditText
+                                android:id="@+id/etMelaTrayQuantity"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="40dp"
+                                android:background="@drawable/edit_text_bg_no_border"
+                                android:textColor="@color/black60"
+                                android:textSize="14sp"
+                                android:inputType="number"
+                                android:gravity="center"
+                                android:backgroundTint="@color/primary20"
+                                android:hint="Enter Quantity" />
+
+                        </LinearLayout>
+
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btSaveMela"
+                            android:textColor="@color/white"
+                            android:text="Return Sabut"
+                            android:background="@color/primary"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"/>
+
+
+
+                    </LinearLayout>
+
+
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -506,6 +660,12 @@
 
                 </LinearLayout>
 
+                    <View
+                        android:background="@color/primary"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginBottom="10dp"/>
+
 
 
 
@@ -513,15 +673,112 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Toota"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         android:layout_marginStart="12dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/primary"
                         android:fontFamily="@font/poppins" />
+
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:weightSum="2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Peti"
+                                android:textColor="@color/black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:layout_gravity="center_vertical"/>
+
+                            <EditText
+                                android:id="@+id/etTootaPetiQuantity"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="40dp"
+                                android:background="@drawable/edit_text_bg_no_border"
+                                android:textColor="@color/black60"
+                                android:textSize="14sp"
+                                android:inputType="number"
+                                android:gravity="center"
+                                android:backgroundTint="@color/primary20"
+                                android:hint="Enter Quantity" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginTop="4dp"
+                            android:weightSum="2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Tray"
+                                android:textColor="@color/black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:layout_gravity="center_vertical"/>
+
+                            <EditText
+                                android:id="@+id/etTootaTrayQuantity"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="40dp"
+                                android:background="@drawable/edit_text_bg_no_border"
+                                android:textColor="@color/black60"
+                                android:textSize="14sp"
+                                android:inputType="number"
+                                android:gravity="center"
+                                android:backgroundTint="@color/primary20"
+                                android:hint="Enter Quantity" />
+
+                        </LinearLayout>
+
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btSaveToota"
+                            android:textColor="@color/white"
+                            android:text="Return Sabut"
+                            android:background="@color/primary"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"/>
+
+
+
+                    </LinearLayout>
+
+
+
+                    <View
+                        android:background="@color/primary"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginBottom="10dp"/>
 
 
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -580,10 +837,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Liquid"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         android:layout_marginStart="12dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/primary"
                         android:fontFamily="@font/poppins" />
 
 
