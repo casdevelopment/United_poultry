@@ -25,6 +25,7 @@ import com.example.unitedpoultry.History.model.HistoryData
 import com.example.unitedpoultry.History.model.SaleHistory
 import com.example.unitedpoultry.NewSale.model.SaleResponse
 import com.example.unitedpoultry.Profile.model.ChangePasswordRequestModel
+import com.example.unitedpoultry.RiderDashBoard.EggReturnModel
 import com.example.unitedpoultry.adminproduct.model.ProductData
 import com.example.unitedpoultry.exchange_return.model.ReturnOrExchangeRequest
 import com.example.unitedpoultry.network.retrofit.BaseResponse
@@ -230,6 +231,9 @@ interface ApiInterface {
     @GET("seller/egg-pickup/picked-today")
     suspend fun getRiderProducts(): Response<BaseResponse<PickedToday>>
 
+    @POST("seller/egg-pickup/save-returned")
+    suspend fun returnEggApi(@Body eggReturnModel:EggReturnModel): Response<BaseResponse<Any>>
+
 //    @POST("seller/sales") // Replace with your actual endpoint
 //    suspend fun createNewSale(@Body request: SaleRequest): Response<BaseResponse<Any>>
 
@@ -242,7 +246,8 @@ interface ApiInterface {
         @Part("collection_amount") collectionAmount: RequestBody,
         @Part("borrowed_amount") borrowedAmount: RequestBody,
         //@Part("previous_payment") previous_payment: RequestBody,
-        @Part("items") items: RequestBody
+        @Part("items") items: RequestBody,
+        @Part("previous_collection_amount") collectionPreviousAmountValue: RequestBody
       //  @Part("damage_eggs") damageEggs: RequestBody
     ): Response<BaseResponse<SaleResponse>>
 
@@ -259,6 +264,7 @@ interface ApiInterface {
         @Part("borrowed_amount") borrowed_amount: RequestBody,
         @Part payment_record: MultipartBody.Part,
         @Part("payment_note") note: RequestBody,
+        @Part("previous_collection_amount") collectionPreviousAmountValue: RequestBody
         ): Response<BaseResponse<SaleResponse>>
 
 

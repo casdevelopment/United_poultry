@@ -26,7 +26,10 @@ class EggPickUpAdapter(
         val product = products[position]
 
         holder.binding.tvProductName.text = product.name
-        holder.binding.etQuantity.setText(product.picked_quantity.toString())
+        if(product.picked_quantity.toString() != "0"){
+            holder.binding.etQuantity.setText(product.picked_quantity.toString())
+        }
+
 
 
 

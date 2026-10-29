@@ -2,11 +2,13 @@ package com.example.unitedpoultry.NewSale.Adapter
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.unitedpoultry.NewSale.model.RiderProductUI
 import com.example.unitedpoultry.databinding.SaleProductItemBinding
+import java.util.Locale
 
 class SaleProductAdapter(
     private val products: List<RiderProductUI>,
@@ -32,7 +34,9 @@ class SaleProductAdapter(
         val product = products[position]
 
         holder.binding.tvProductName.text = product.name
-        holder.binding.tvPrice.text = "price: ${product.price}/${product.name}"
+        Log.v("productPrice","productPrice "+product.price)
+        var formattedValue = String.format(Locale.ENGLISH, "%.1f", product.price)
+        holder.binding.tvPrice.text = "price: ${formattedValue}/${product.name}"
 
         // Remove old watcher before recycling
         holder.textWatcher?.let { holder.binding.etQuantity.removeTextChangedListener(it) }

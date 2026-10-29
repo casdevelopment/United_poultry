@@ -27,6 +27,7 @@ import com.example.unitedpoultry.History.model.SaleHistory
 
 import com.example.unitedpoultry.NewSale.model.SaleResponse
 import com.example.unitedpoultry.Profile.model.ChangePasswordRequestModel
+import com.example.unitedpoultry.RiderDashBoard.EggReturnModel
 import com.example.unitedpoultry.exchange_return.model.ReturnOrExchangeRequest
 import com.example.unitedpoultry.network.api.ApiInterface
 import com.example.unitedpoultry.network.retrofit.BaseResponse
@@ -236,6 +237,9 @@ class Repository(private val api: ApiInterface) {
     suspend fun getRiderProducts(): Response<BaseResponse<PickedToday>> {
         return api.getRiderProducts()
     }
+    suspend fun returnEggApi(eggReturnModel:EggReturnModel): Response<BaseResponse<Any>> {
+        return api.returnEggApi(eggReturnModel)
+    }
 
 //    suspend fun createNewSale(request: SaleRequest): Response<BaseResponse<Any>> {
 //        return api.createNewSale(request)
@@ -249,11 +253,12 @@ class Repository(private val api: ApiInterface) {
         borrowedAmount: RequestBody,
        // previous_payment,
         items: RequestBody,
+        collectionPreviousAmountValue: RequestBody
         //damageEggs: RequestBody
     ): Response<BaseResponse<SaleResponse>> {
         return api.createNewSale(shopId, areaId, paymentType, collectionAmount, borrowedAmount,
             //previous_payment,
-            items
+            items,collectionPreviousAmountValue
            // damageEggs
         )
     }
@@ -268,7 +273,8 @@ class Repository(private val api: ApiInterface) {
         collection_amount: RequestBody,
         borrowed_amount: RequestBody,
         payment_record: MultipartBody.Part,
-        note: RequestBody
+        note: RequestBody,
+        collectionPreviousAmountValue: RequestBody
     ): Response<BaseResponse<SaleResponse>> {
         return api.createNewSaleCheque(
             shop_id,
@@ -279,7 +285,8 @@ class Repository(private val api: ApiInterface) {
             collection_amount,
             borrowed_amount,
             payment_record,
-            note
+            note,
+            collectionPreviousAmountValue
         )
     }
 

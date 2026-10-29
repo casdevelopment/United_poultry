@@ -14,32 +14,28 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.unitedpoultry.AdminRiderModule.model.RiderModel
 import com.example.unitedpoultry.AdminRiderModule.viewmodel.RiderDetailsViewModel
 import com.example.unitedpoultry.Authentications.login.model.LoginResponseModel
+import com.example.unitedpoultry.NewSale.viewmodel.GetRiderProductViewModel
 import com.example.unitedpoultry.R
-import com.example.unitedpoultry.Notification.NotificationActivity
-import com.example.unitedpoultry.rider_home.EggPickupActivity
-import com.example.unitedpoultry.rider_home.adapter.RiderHomeAdapter
+import com.example.unitedpoultry.RiderDashBoard.EggReturnModel
+import com.example.unitedpoultry.RiderDashBoard.EggType
+import com.example.unitedpoultry.SessionManager
 import com.example.unitedpoultry.databinding.FragmentHomeBinding
 import com.example.unitedpoultry.network.Status
 import com.example.unitedpoultry.network.retrofit.BaseResponse
-import com.example.unitedpoultry.rider_home.viewmodel.DailyPaymentStatsViewModel
-import com.example.unitedpoultry.rider_home.viewmodel.DailyStatsViewModel
-import com.example.unitedpoultry.util.AppConstants.userData
-import com.example.unitedpoultry.util.AppUtil
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.example.unitedpoultry.NewSale.model.Product
-import com.example.unitedpoultry.NewSale.viewmodel.GetRiderProductViewModel
-import com.example.unitedpoultry.SessionManager
 import com.example.unitedpoultry.rider_expense.AddExpenseActivity
+import com.example.unitedpoultry.rider_home.EggPickupActivity
 import com.example.unitedpoultry.rider_home.adapter.RiderHomeStatsAdapter
 import com.example.unitedpoultry.rider_home.model.PickedToday
-import com.example.unitedpoultry.rider_home.model.PickedTodayProduct
-import com.example.unitedpoultry.rider_home.viewmodel.ReturnWasteViewModel
 import com.example.unitedpoultry.status_check.UserStatusChecker
 import com.example.unitedpoultry.status_check.viewmodel.UserStatusViewModel
 import com.example.unitedpoultry.util.AppConstants
+import com.example.unitedpoultry.util.AppConstants.userData
+import com.example.unitedpoultry.util.AppUtil
+import com.example.unitedpoultry.util.showToast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -219,7 +215,29 @@ class HomeFragment : Fragment() {
             bottomNav.selectedItemId = R.id.nav_address
         }
 
+        binding.btSaveSabut.setOnClickListener {
+                val eggReturnModel=EggReturnModel()
 
+            val trayText = binding.etSabutTrayQuantity.text.toString()
+            val petiText = binding.etSabutPetiQuantity.text.toString()
+
+
+            if (trayText.isEmpty() && petiText.isEmpty()) {
+                showToast("Please enter quantity")
+            }else{
+                if (eggReturnModel.sabut == null) {
+                    eggReturnModel.sabut = EggType()
+                }
+
+                if (trayText.isNotEmpty()) {
+                    eggReturnModel.sabut?.tray = trayText
+                }
+                if (petiText.isNotEmpty()) {
+                    eggReturnModel.sabut?.peti = petiText
+                }
+                returnEggApi(eggReturnModel)
+            }
+        }
 
     }
 
@@ -451,5 +469,36 @@ class HomeFragment : Fragment() {
         }
     }
 
+
+    private fun returnEggApi(eggReturnModel:EggReturnModel) {
+        eggReturnModel.date=getCurrentFormattedDate()
+        Log.d("returnEggApi", "returnEggApi: "+eggReturnModel)
+        ViewModel3.returnEggApi(eggReturnModel).observe(viewLifecycleOwner) { response ->
+            when (response.status) {
+
+                Status.LOADING -> {
+                    AppUtil.startLoader(requireContext())
+
+                }
+
+                Status.SUCCESS -> {
+                    Log.d("returnEggApi", "returnEggApi: SUCCESS "+response)
+                    showToast(response.data?.body()?.message ?: "Saved")
+                    AppUtil.stopLoader()
+
+                }
+
+                Status.ERROR -> {
+                    Log.d("returnEggApi", "returnEggApi: ERROR "+response)
+                    AppUtil.stopLoader()
+                    Toast.makeText(requireContext(),"Network connection problem. Please try again.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+    fun getCurrentFormattedDate(): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+        return sdf.format(Date())
+    }
 
 }
