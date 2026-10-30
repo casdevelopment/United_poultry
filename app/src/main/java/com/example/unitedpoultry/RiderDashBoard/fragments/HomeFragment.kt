@@ -215,7 +215,7 @@ class HomeFragment : Fragment() {
             bottomNav.selectedItemId = R.id.nav_address
         }
 
-        binding.btSaveSabut.setOnClickListener {
+     /*   binding.btSaveSabut.setOnClickListener {
                 val eggReturnModel=EggReturnModel()
 
             val trayText = binding.etSabutTrayQuantity.text.toString()
@@ -237,6 +237,106 @@ class HomeFragment : Fragment() {
                 }
                 returnEggApi(eggReturnModel)
             }
+        }
+
+        binding.btSaveMela.setOnClickListener {
+            val eggReturnModel=EggReturnModel()
+
+            val trayText = binding.etMelaTrayQuantity.text.toString()
+
+
+
+            if (trayText.isEmpty() ) {
+                showToast("Please enter quantity")
+            }else{
+                if (eggReturnModel.mela == null) {
+                    eggReturnModel.mela = EggType()
+                }
+
+                if (trayText.isNotEmpty()) {
+                    eggReturnModel.mela?.tray = trayText
+                }
+
+                returnEggApi(eggReturnModel)
+            }
+        }
+
+        binding.btSaveToota.setOnClickListener {
+            val eggReturnModel=EggReturnModel()
+
+            val trayText = binding.etTootaTrayQuantity.text.toString()
+
+
+
+            if (trayText.isEmpty() ) {
+                showToast("Please enter quantity")
+            }else{
+                if (eggReturnModel.toota == null) {
+                    eggReturnModel.toota = EggType()
+                }
+
+                if (trayText.isNotEmpty()) {
+                    eggReturnModel.toota?.tray = trayText
+                }
+
+                returnEggApi(eggReturnModel)
+            }
+        }*/
+
+        binding.btSaveReturn.setOnClickListener {
+            val eggReturnModel=EggReturnModel()
+            val traySabutText = binding.etSabutTrayQuantity.text.toString()
+            val trayMelaText = binding.etMelaTrayQuantity.text.toString()
+            val trayTootaText = binding.etTootaTrayQuantity.text.toString()
+            val liquidText = binding.etLiquidQuantity.text.toString()
+
+            if (traySabutText.isEmpty() && trayMelaText.isEmpty() && trayTootaText.isEmpty() && liquidText.isEmpty() ) {
+                showToast("Please enter quantity")
+            }else{
+
+
+                if (eggReturnModel.sabut == null) {
+                    eggReturnModel.sabut = EggType()
+                }
+
+                if (traySabutText.isNotEmpty()) {
+                    eggReturnModel.sabut?.tray = traySabutText
+                }
+
+
+                if (eggReturnModel.mela == null) {
+                    eggReturnModel.mela = EggType()
+                }
+
+                if (trayMelaText.isNotEmpty()) {
+                    eggReturnModel.mela?.tray = trayMelaText
+                }
+
+
+
+                if (eggReturnModel.toota == null) {
+                    eggReturnModel.toota = EggType()
+                }
+
+                if (trayTootaText.isNotEmpty()) {
+                    eggReturnModel.toota?.tray = trayTootaText
+                }
+
+                if (eggReturnModel.liquid == null) {
+                    eggReturnModel.liquid = EggType()
+                }
+
+                if (liquidText.isNotEmpty()) {
+                    eggReturnModel.liquid?.kg = liquidText
+                }
+
+
+
+            }
+
+
+            returnEggApi(eggReturnModel)
+
         }
 
     }
@@ -333,9 +433,12 @@ class HomeFragment : Fragment() {
         ViewModel3.getRiderProducts().observe(viewLifecycleOwner) { response ->
             when (response.status) {
 
-                Status.LOADING -> {  }
+                Status.LOADING -> {   AppUtil.startLoader(requireContext())
+                }
 
                 Status.SUCCESS -> {
+                    AppUtil.stopLoader()
+
                     val res = response.data
                     if (res != null && res.isSuccessful) {
 
@@ -352,6 +455,7 @@ class HomeFragment : Fragment() {
                 }
 
                 Status.ERROR -> {
+                    AppUtil.stopLoader()
                     //showProductEmptyState(true)
                     Toast.makeText(requireContext(),"Network connection problem. Please try again.", Toast.LENGTH_SHORT).show()
                 }
@@ -485,6 +589,11 @@ class HomeFragment : Fragment() {
                     Log.d("returnEggApi", "returnEggApi: SUCCESS "+response)
                     showToast(response.data?.body()?.message ?: "Saved")
                     AppUtil.stopLoader()
+                    loadProducts()
+                    binding.etSabutTrayQuantity.setText("")
+                    binding.etMelaTrayQuantity.setText("")
+                    binding.etTootaTrayQuantity.setText("")
+                    binding.etLiquidQuantity.setText("")
 
                 }
 

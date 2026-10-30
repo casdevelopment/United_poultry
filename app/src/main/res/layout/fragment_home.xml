@@ -343,7 +343,8 @@
                         android:background="@color/primary"
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="20dp"/>
 
 
 
@@ -365,6 +366,7 @@
                         android:orientation="vertical">
 
                         <LinearLayout
+                            android:visibility="gone"
                             android:weightSum="2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -431,6 +433,7 @@
 
 
                         <androidx.appcompat.widget.AppCompatButton
+                            android:visibility="gone"
                             android:id="@+id/btSaveSabut"
                             android:textColor="@color/white"
                             android:text="Return Sabut"
@@ -449,7 +452,8 @@
                         android:background="@color/primary"
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="20dp"/>
 
                     <LinearLayout
                         android:visibility="gone"
@@ -524,6 +528,7 @@
                         android:orientation="vertical">
 
                         <LinearLayout
+                            android:visibility="gone"
                             android:weightSum="2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -590,9 +595,10 @@
 
 
                         <androidx.appcompat.widget.AppCompatButton
+                            android:visibility="gone"
                             android:id="@+id/btSaveMela"
                             android:textColor="@color/white"
-                            android:text="Return Sabut"
+                            android:text="Return Mela"
                             android:background="@color/primary"
                             android:layout_marginTop="20dp"
                             android:layout_marginBottom="20dp"
@@ -664,7 +670,8 @@
                         android:background="@color/primary"
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="20dp"/>
 
 
 
@@ -688,6 +695,7 @@
                         android:orientation="vertical">
 
                         <LinearLayout
+                            android:visibility="gone"
                             android:weightSum="2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -754,9 +762,10 @@
 
 
                         <androidx.appcompat.widget.AppCompatButton
+                            android:visibility="gone"
                             android:id="@+id/btSaveToota"
                             android:textColor="@color/white"
-                            android:text="Return Sabut"
+                            android:text="Return Toota"
                             android:background="@color/primary"
                             android:layout_marginTop="20dp"
                             android:layout_marginBottom="20dp"
@@ -773,7 +782,8 @@
                         android:background="@color/primary"
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="20dp"/>
 
 
 
@@ -844,7 +854,54 @@
                         android:fontFamily="@font/poppins" />
 
 
+                    <LinearLayout
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="4dp"
+                        android:weightSum="2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Enter Value"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center_vertical"/>
+
+                        <EditText
+                            android:id="@+id/etLiquidQuantity"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="40dp"
+                            android:background="@drawable/edit_text_bg_no_border"
+                            android:textColor="@color/black60"
+                            android:textSize="14sp"
+                            android:inputType="number"
+                            android:gravity="center"
+                            android:backgroundTint="@color/primary20"
+                            android:hint="Enter Quantity in KG" />
+
+                    </LinearLayout>
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btSaveReturn"
+                        android:textColor="@color/white"
+                        android:text="Return"
+                        android:background="@color/primary"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"/>
+
+
                     <androidx.cardview.widget.CardView
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
