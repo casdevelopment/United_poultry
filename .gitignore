@@ -24,3 +24,5 @@ local.properties
 /.idea/shelf/Uncommitted_changes_before_Update_at_7_29_2026_4_12_PM_[Changes]/shelved.patch
 /.idea/shelf/Uncommitted_changes_before_Update_at_7_29_2026_4_12_PM__Changes_.xml
 /.idea/vcs.xml
+config.bat
+node_modules
