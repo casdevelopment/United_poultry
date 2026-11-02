@@ -26,5 +26,10 @@ data class PickedTodayLiquid(
 data class PickedTodayProduct(
     val id: Int,
     val name: String,
-    val latest_price: Double
+    val latest_price: Double,
+    var picked_quantity: Int,
+    var picked_qty: Int,
+    var total_eggs_picked: Int,
+    var eggs_count: Int,
+
 )
