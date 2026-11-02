@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.unitedpoultry.adminproduct.model.Product
 import com.example.unitedpoultry.databinding.ItemProductBinding
+import com.example.unitedpoultry.rider_home.model.PickedTodayProduct
 
 class EggPickUpAdapter(
-    private val products: List<Product>,
+    private val products: List<PickedTodayProduct>,
     private val quantityMap: MutableMap<Int, Int>
 ) : RecyclerView.Adapter<EggPickUpAdapter.ProductViewHolder>() {
 
@@ -26,18 +27,13 @@ class EggPickUpAdapter(
         val product = products[position]
 
         holder.binding.tvProductName.text = product.name
-        if(product.picked_quantity.toString() != "0"){
-            holder.binding.etQuantity.setText(product.picked_quantity.toString())
-        }
 
-
-
-
-        // Remove old watcher before recycling views
+        // Remove old watcher before setting text to avoid infinite listener callbacks
         holder.textWatcher?.let { holder.binding.etQuantity.removeTextChangedListener(it) }
 
-      //  val currentQty = quantityMap[product.id]
-       // holder.binding.etQuantity.setText(currentQty?.toString() ?: "")
+        // Use value from quantityMap or default product quantity
+        val currentQty = quantityMap[product.id] ?: if (product.picked_quantity > 0) product.picked_quantity else null
+        holder.binding.etQuantity.setText(currentQty?.toString() ?: "")
 
         val watcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -46,7 +42,6 @@ class EggPickUpAdapter(
             override fun afterTextChanged(s: Editable?) {
                 var qty = s.toString().toIntOrNull() ?: 0
 
-                // Limit Tray input to max 11
                 if (product.name.contains("Tray", ignoreCase = true) && qty > 11) {
                     qty = 11
                     holder.binding.etQuantity.removeTextChangedListener(this)

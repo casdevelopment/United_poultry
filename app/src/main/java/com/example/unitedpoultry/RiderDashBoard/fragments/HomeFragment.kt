@@ -26,6 +26,7 @@ import com.example.unitedpoultry.rider_expense.AddExpenseActivity
 import com.example.unitedpoultry.rider_home.EggPickupActivity
 import com.example.unitedpoultry.rider_home.adapter.RiderHomeStatsAdapter
 import com.example.unitedpoultry.rider_home.model.PickedToday
+import com.example.unitedpoultry.rider_home.model.PickedTodayProduct
 import com.example.unitedpoultry.status_check.UserStatusChecker
 import com.example.unitedpoultry.status_check.viewmodel.UserStatusViewModel
 import com.example.unitedpoultry.util.AppConstants
@@ -57,6 +58,7 @@ class HomeFragment : Fragment() {
     private lateinit var sabutAdapter: RiderHomeStatsAdapter
     private lateinit var melaAdapter: RiderHomeStatsAdapter
     private lateinit var tootaAdapter: RiderHomeStatsAdapter
+    private lateinit var products: List<PickedTodayProduct>
 
 
     override fun onCreateView(
@@ -161,6 +163,7 @@ class HomeFragment : Fragment() {
 
                 onActive = {
                     val intent = Intent(requireContext(), EggPickupActivity::class.java)
+                    intent.putExtra("products", Gson().toJson(products))
                     startActivity(intent)
                 },
 
@@ -484,6 +487,7 @@ class HomeFragment : Fragment() {
         val rawSabutList = data.categories.sabut.map { it.key to it.value }
         val rawMelaList = data.categories.mela.map { it.key to it.value }
         val rawTootaList = data.categories.mela.map { it.key to it.value }
+         products=data.products
 
         // Convert raw trays into Pettis + Remaining Trays for ALL lists
         val totalPickedList = convertTraysToPettiAndTrays(rawTotalPickedList)
